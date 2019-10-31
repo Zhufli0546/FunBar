@@ -1,14 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
-</head>
-
-<body>
+	<link href="<c:url value="/images/icons/favicon.png" />" rel="icon">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="<c:url value="/vendor/bootstrap/css/bootstrap.min.css" />">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="<c:url value="/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>">
+		<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="<c:url value="/fonts/themify/themify-icons.css"/>">
+		<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="<c:url value="/vendor/animate/animate.css"/>">
+		<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="<c:url value="/vendor/css-hamburgers/hamburgers.min.css"/>">
+		<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="<c:url value="/vendor/animsition/css/animsition.min.css"/>">
+		<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="<c:url value="/vendor/select2/select2.min.css"/>">
+		<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="<c:url value="/vendor/daterangepicker/daterangepicker.css"/>">
+		<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="<c:url value="/vendor/slick/slick.css"/>">
+		<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="<c:url value="/vendor/lightbox2/css/lightbox.min.css"/>">
+		<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="<c:url value="/css/util.css"/>"> <link rel="stylesheet" type="text/css"
+		href="<c:url value="/css/main.css"/>"> <link rel="stylesheet" type="text/css"
+		href="<c:url value="/css/own.css"/>"> </head> <body>
 	<!-- Header -->
 	<header>
 		<!-- Header desktop -->
@@ -109,6 +130,6 @@
 			</li>
 		</ul>
 	</aside>
-</body>
+	</body>
 
 </html>

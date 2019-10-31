@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
@@ -36,6 +37,38 @@
 			<i class="fa fa-angle-double-up" aria-hidden="true"></i>
 		</span>
 	</div>
+
+<!--===============================================================================================-->
+<script type="text/javascript" src="<c:url value="/vendor/jquery/jquery-3.2.1.min.js"/>"> </script>
+<!--===============================================================================================-->
+<script type="text/javascript"
+src="<c:url value="/vendor/animsition/js/animsition.min.js"/>"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="<c:url value="/vendor/bootstrap/js/popper.js"/>"> </script> <script
+type="text/javascript" src="<c:url value="/vendor/bootstrap/js/bootstrap.min.js"/>"> </script>
+<!--===============================================================================================-->
+<script type="text/javascript"
+src="<c:url value="/vendor/select2/select2.min.js"/>"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="<c:url value="/vendor/daterangepicker/moment.min.js"/>"> </script> <script
+type="text/javascript" src="<c:url value="/vendor/daterangepicker/daterangepicker.js"/>"> </script>
+<!--===============================================================================================-->
+<script type="text/javascript"
+src="<c:url value="/vendor/slick/slick.min.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/js/slick-custom.js"/>"> </script>
+<!--===============================================================================================-->
+<script type="text/javascript"
+src="<c:url value="/vendor/parallax100/parallax100.js"/>"></script>
+<script type="text/javascript">
+$('.parallax100').parallax100();
+</script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="<c:url value="/vendor/countdowntime/countdowntime.js"/>"> </script>
+<!--===============================================================================================-->
+<script type="text/javascript"
+src="<c:url value="/vendor/lightbox2/js/lightbox.min.js"/>"></script>
+<!--===============================================================================================-->
+<script src="<c:url value="/js/main.js"/>"> </script> 
 </body>
 
 </html>
