@@ -46,7 +46,11 @@ public class BookingController {
 	}
 	
 	@RequestMapping("/confirm")
-	public String confirm() {
+	public String confirm(@RequestParam(name="date")String date,@RequestParam(name="people")Integer people,@RequestParam(name="time")String time,Model model) {
+		
+		model.addAttribute("date", date);
+		model.addAttribute("people", people);
+		model.addAttribute("time", time);
 		return "confirm";
 	}
 

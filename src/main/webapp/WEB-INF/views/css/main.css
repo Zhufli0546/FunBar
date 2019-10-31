@@ -150,7 +150,6 @@ ul, li {
 /* ------------------------------------ */
 input {
 	outline: none;
-	border: none !important;
 }
 
 textarea {
@@ -185,6 +184,7 @@ textarea::-webkit-input-placeholder { color: #aaaaaa; }
 textarea:-moz-placeholder { color: #aaaaaa; }
 textarea::-moz-placeholder { color: #aaaaaa; }
 textarea:-ms-input-placeholder { color: #aaaaaa; }
+
 
 /* ------------------------------------ */
 button {
