@@ -68,15 +68,14 @@
 								<jsp:useBean id="date" class="java.util.Date"></jsp:useBean>
 								<div class="text-right">
 									<br>
-									<p>dataBase = ${post.postTime.time}</p>
-									<p>JSTL = ${date.time}</p>
-
+									<%-- 									<p>dataBase = ${post.postTime.time}</p> --%>
+									<%-- 									<p>JSTL = ${date.time}</p> --%>
 									<c:set var="postInterval"
 										value="${(date.time-post.postTime.time)/1000*60*60}" />
-										
-									<p>${date}</p>
+
+									<%-- 									<p>${date}</p> --%>
 									<p>${post.postTime}</p>
-									<p>差距 ： ${postInterval}</p>
+									<%-- 									<p>差距 ： ${postInterval}</p> --%>
 									<br>
 									<form:form method="post" modelAttribute="Post"
 										class="from-horizontal">
@@ -127,8 +126,6 @@
 											</c:forEach>
 										</c:if>
 									</c:forEach>
-
-
 								</div>
 							</div>
 						</div>
@@ -154,22 +151,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3">
-				<c:forEach var="post" items="${post}">
-					<p>${post.postId}</p>
-					<p>${post.postContent}</p>
-					<p>${post.postTime}</p>
-					<p>${post.memberId}</p>
-				</c:forEach>
-			</div>
-
-			<button id='clickmeS'>Click Me(JavaScript)</button>
-			<button id='clickmeQ'>Click Me(JQuery)</button>
-			<hr>
-			<div id='somedivS'></div>
-			<hr>
-
-
 		</div>
 	</section>
 	<!-- Footer -->

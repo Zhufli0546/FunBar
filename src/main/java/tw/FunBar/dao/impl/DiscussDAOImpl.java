@@ -59,5 +59,12 @@ public class DiscussDAOImpl implements DiscussDAO {
 		list = session.createQuery(hql).getResultList();
 		return list;
 	}
+	
+	@Override
+	public void createLike(Like like) {
+		Session session = factory.getCurrentSession();
+		session.save(like);
+	}
+
 
 }

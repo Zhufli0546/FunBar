@@ -12,4 +12,8 @@ public interface DiscussDAO {
 	void createPost(Post post);
 
 	List<Like> getAllLike();
+	
+	void createLike(Like like);
+	
+	
 }
