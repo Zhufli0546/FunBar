@@ -60,7 +60,7 @@
 								</li>
 
 								<li>
-									<a href="gallery.html">Gallery</a>
+									<a href="activities">熱門活動</a>
 								</li>
 
 								<li>
