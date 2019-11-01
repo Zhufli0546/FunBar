@@ -1,11 +1,15 @@
 package tw.FunBar.config;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
+import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.support.OpenSessionInViewFilter;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
@@ -13,7 +17,6 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer
 		implements WebApplicationInitializer {
@@ -23,9 +26,8 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 		return new Class[] { RootAppConfig.class };
 	}
 
-
 	@Override
-	protected Class<?>[] getServletConfigClasses() { 
+	protected Class<?>[] getServletConfigClasses() {
 		return new Class[] { WebAppConfig.class };
 	}
 
@@ -50,13 +52,19 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 				new DispatcherServlet(rootContext));
 		dispatcher.setLoadOnStartup(1);
 		dispatcher.addMapping("/");
+		FilterRegistration.Dynamic filterRegistration = servletContext.addFilter("endcodingFilter",
+				new CharacterEncodingFilter());
+		filterRegistration.setInitParameter("encoding", "UTF-8");
+		filterRegistration.setInitParameter("forceEncoding", "true");
+		// make sure encodingFilter is matched first
+		filterRegistration.addMappingForUrlPatterns(null, false, "/*");
+		filterRegistration = servletContext.addFilter("OpenSessionInViewFilter", OpenSessionInViewFilter.class);
+		filterRegistration.setInitParameter("singleSession", "true");
+		filterRegistration.addMappingForServletNames(null, true, "dispatcher");
 
-		FilterRegistration.Dynamic filter = servletContext.addFilter("OpenSessionInViewFilter",
-				OpenSessionInViewFilter.class);
-		filter.setInitParameter("singleSession", "true");
-		filter.addMappingForServletNames(null, true, "dispatcher");
-
-
+		/**
+		 * Add Spring ContextLoaderListener
+		 */
 		servletContext.addListener(new ContextLoaderListener(rootContext));
 	}
 
