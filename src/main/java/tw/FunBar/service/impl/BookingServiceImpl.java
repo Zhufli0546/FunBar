@@ -34,6 +34,14 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 
+	@Override
+	public void addReservations(String date, Integer people, String time,String sex, String name, String phone, String email,
+			String remark) {
+		bookingDAO.addReservations(date,people,time,sex,name,phone,email,remark);
+		
+	}
+
+
 
 
 

@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="BOOKINGDATA")
@@ -13,6 +14,10 @@ public class BookingData {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer booking_id;
+	
+	private String sex;
+	
+	private String email;
 	
 	private Integer people;
 	
@@ -24,7 +29,36 @@ public class BookingData {
 	
 	private String phone;
 	
+	@Transient
 	private String create_time;
+	
+	private String remark;
+	
+	
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public Integer getBooking_id() {
 		return booking_id;

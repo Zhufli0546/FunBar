@@ -1,5 +1,4 @@
 var url = "/FunBar/";
-var bookingdate;
 var people;
 document.onclick = function () {
     var obj = event.srcElement;
@@ -49,9 +48,11 @@ function refreshDate() {
 
     var totalDay = daysMonth(my_month, my_year);
     var firstDay = dayStart(my_month, my_year);
-
+    
+    var sum = 0;
     for (var i = 0; i < firstDay; i++) {
         str += "<li >" + "</li>";
+        sum  += 1 ;
     }
 
     for (var i = 1; i <= totalDay; i++) {
@@ -65,8 +66,8 @@ function refreshDate() {
             myclass = " class='lightgrey'";
         } else if (my_year == my_date.getFullYear()
             && my_month == my_date.getMonth() && i == my_day) {
-            today = i - 1;
-            console.log(i);
+            today = sum;
+            console.log(sum);
             myclass = "class = 'box'";
         } else {
             myclass = "class = 'li'";
@@ -74,9 +75,9 @@ function refreshDate() {
         }
         str += "<li tabindex='1' " + myclass + " >" + i + "</li>";
     }
-    holder.innerHTML = str;
-    ctitle.innerHTML = month_name[my_month];
-    cyear.innerHTML = my_year;
+    $("#days").html(str);
+    $("#calendar-title").html(month_name[my_month]);
+    $("#calendar-year").html(my_year);
 }
 
 refreshDate();
@@ -121,31 +122,30 @@ function day() {
 
             date = my_year + "-" + (my_month + 1) + "-"
                 + this.firstChild.nodeValue;
-
-            document.getElementById("abc").value = date;
-            document.getElementById("slc").value = 1;
+            var txt;
+//            document.getElementById("abc").value = date;
+//            document.getElementById("slc").value = 1;
             $.ajax({
                 url: "http://localhost:8080" + url + "pulltime",
                 data: {
                     date: date,
                     people: 1
                 },
-                method: "post",
+                type: "POST",
                 dataType: "JSON",
                 success: function (data) {
-
-                    console.log(data)
-                    var txt;
-
-                    for (let i = 0; i < data.length; i++) {
-
+                   txt = "";
+                		
+                   for (let i = 0; i < data.length; i++) {
+                    	
                         txt += "<form method='POST' action='confirm'>";
-                        txt += "<input type='hidden' name='date' value="+date+">"
-                        txt += "<input type='hidden' name='people' value="+1+">"
-                        txt += "<button class='button'  id='button' type='submit' name='time' value=" + data[i].time + "><span>" + data[i].time + "</span></button>";
+                        txt += "<input type='hidden' name='date' value="+date+">";
+                        txt += "<input type='hidden' name='people' value="+1+">";
+                        txt += "<button class='button'  id='button' type='submit' name='time' value="+data[i].time+"><span>"+data[i].time+"</span></button>";
                         txt += "</form>";
                     }
-
+                    
+                   
                     $("#time").html(txt);
                 }
 
@@ -156,38 +156,39 @@ function day() {
 }
 
 
+var p;
 $("#slc").change(function () {
 	
-	 bookingdate = date;
-	 people = $(this).children('option:selected').val();
+
+	 p =$(this).children('option:selected').val()
 	
 	
     $.ajax({
 
-        url: "http://locahost:8080" + url + "pulltime",
+        url: "http://localhost:8080" + url + "pulltime",
         data: {
             date: date,
-            people: $(this).children('option:selected').val()
+            people: p
         },
-        dataType: "JSON",
         type: "POST",
+        dataType: "JSON",
         success: function (data) {
-            var txt;
-
+            txt = "";
+    		
             for (let i = 0; i < data.length; i++) {
-
-                txt += "<form method='POST' action='confirm'>";
-                txt += "<input type='hidden' name='date' value="+bookingdate+">"
-                txt += "<input type='hidden' name='people' value="+people+">"
-                txt += "<button class='button'  id='button' type='submit' name='time' value=" + data[i].time + "><span>" + data[i].time + "</span></button>";
-                txt += "</form>";
-            }
-
-            $("#time").html(txt);
+             	
+                 txt += "<form method='POST' action='confirm'>";
+                 txt += "<input type='hidden' name='date' value="+date+">";
+                 txt += "<input type='hidden' name='people' value="+p+">";
+                 txt += "<button class='button'  id='button' type='submit' name='time' value="+data[i].time+"><span>"+data[i].time+"</span></button>";
+                 txt += "</form>";
+             }
+             
+            
+             $("#time").html(txt);
         }
     })
 
 });
-
-$("#days li").get(today + 2).click();
 console.log(today);
+$("#days li").get(today).click();
