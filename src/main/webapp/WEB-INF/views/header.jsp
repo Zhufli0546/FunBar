@@ -52,7 +52,7 @@
 								</li>
 
 								<li>
-									<a href="menu.html">Menu</a>
+									<a href="shoppingCart">購物區</a>
 								</li>
 
 								<li>
