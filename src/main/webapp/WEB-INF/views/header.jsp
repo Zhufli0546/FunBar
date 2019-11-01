@@ -74,6 +74,10 @@
 								<li>
 									<a href="booking">線上訂位</a>
 								</li>
+								
+								<li>
+									<a href="discuss">討論區</a>
+								</li>
 							</ul>
 						</nav>
 					</div>
@@ -120,6 +124,10 @@
 
 			<li class="t-center m-b-33">
 				<a href="contact.html" class="txt19">Contact</a>
+			</li>
+			
+			<li class="t-center m-b-33">
+				<a href="discuss.jsp" class="txt19">討論區</a>
 			</li>
 
 			<li class="t-center">
