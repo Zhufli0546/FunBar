@@ -8,48 +8,9 @@
 <title>購物區</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<link href="<c:url value="/css/shoppingCarts.css" />" rel="stylesheet">
 </head>
-<style>
-.page {overflow: hidden;}
-.prodlist {
-	float: left;
-	width: 18%;
-	min-height: 360px;
-	padding: 5px;
-	text-align: center;
-	margin: 0 auto;
-	border: 1px dashed black;
-	margin: 1%;
-}
 
-.prodlist .prodtitle {
-	height: 25px;
-}
-
-.prodlist img {
-	display: block;
-	width: 50%;
-	height: 200px;
-	margin: 0 auto;
-}
-
-.btnMargin {
-	margin-top: 10px;
-}
-
-@media ( max-width : 960px) {
-	.prodlist {
-		width: 31%;
-	}
-}
-
-@media ( max-width : 600px) {
-	.prodlist {
-		width: 48%;
-	}
-}
-</style>
 <body>
 
 	<jsp:include page="header.jsp" />
