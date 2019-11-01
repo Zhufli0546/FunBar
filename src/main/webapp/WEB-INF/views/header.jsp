@@ -67,7 +67,13 @@
 							<ul class="main_menu">
 								<li><a href="index.html">Home</a></li>
 
+<<<<<<< HEAD
 								<li><a href="menu.html">Menu</a></li>
+=======
+								<li>
+									<a href="shoppingCart">購物區</a>
+								</li>
+>>>>>>> e3514b5ee1624ccd614ab2822bee0ac64ef71441
 
 								<li><a href="reservation.html">Reservation</a></li>
 
@@ -77,7 +83,17 @@
 
 								<li><a href="blog.html">Blog</a></li>
 
+<<<<<<< HEAD
 								<li><a href="booking">線上訂位</a></li>
+=======
+								<li>
+									<a href="booking">線上訂位</a>
+								</li>
+								
+								<li>
+									<a href="discuss">討論區</a>
+								</li>
+>>>>>>> e3514b5ee1624ccd614ab2822bee0ac64ef71441
 							</ul>
 						</nav>
 					</div>
@@ -119,6 +135,10 @@
 			</li>
 
 			<li class="t-center m-b-33"><a href="contact.html" class="txt19">Contact</a>
+			</li>
+			
+			<li class="t-center m-b-33">
+				<a href="discuss.jsp" class="txt19">討論區</a>
 			</li>
 
 			<li class="t-center">
