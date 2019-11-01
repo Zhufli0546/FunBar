@@ -3,3 +3,9 @@
 	margin-top:120px;
 	margin-bottom:30px;	
 }
+
+@media (min-width: 576px) {
+	.modal-dialog {
+		max-width: 1600px;
+	}
+}
