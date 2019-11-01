@@ -12,5 +12,7 @@ public interface DiscussService {
 	void createPost(Post post);
 
 	List<Like> getAllLike();
+
+	void createLike(Like like);
 	
 }

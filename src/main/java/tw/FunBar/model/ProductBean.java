@@ -22,7 +22,7 @@ public class ProductBean implements Serializable{
 	private String productNo ;
 	private String productName;
 	private String productDetail ;
-	private String productImage;
+	private Blob productImage;
 	private String fileName;
 	private String category;
 	private Double unitPrice;
@@ -39,12 +39,22 @@ public class ProductBean implements Serializable{
 	public MultipartFile getProductCover() {
 		return productCover;
 	}
+
 	public void setProductCover(MultipartFile productCover) {
 		this.productCover = productCover;
 	}
 	
+//	public MultipartFile getProductCover() {
+//		return productCover;
+//	}
+//	public void setProductCover(MultipartFile productCover) {
+//		this.productCover = productCover;
+//	}
+	
+
+
 	public ProductBean(Integer productId,String productNo, String productName,
-			String productDetail, String productImage, String fileName, String category,
+			String productDetail, Blob productImage, String fileName, String category,
 			double unitPrice, double discount, Integer stock, String payment) {
 			this.productId = productId;
 			this.productNo = productNo;
@@ -86,14 +96,22 @@ public class ProductBean implements Serializable{
 	public void setProductDetail(String productDetail) {
 		this.productDetail = productDetail;
 	}
-	public String getProductImage() {
-		return productImage;
-	}
-	public void setProductImage(String productImage) {
-		this.productImage = productImage;
-	}
+//	public String getProductImage() {
+//		return productImage;
+//	}
+//	public void setProductImage(String productImage) {
+//		this.productImage = productImage;
+//	}
+	
 	public String getFileName() {
 		return fileName;
+	}
+
+	public Blob getProductImage() {
+		return productImage;
+	}
+	public void setProductImage(Blob productImage) {
+		this.productImage = productImage;
 	}
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
