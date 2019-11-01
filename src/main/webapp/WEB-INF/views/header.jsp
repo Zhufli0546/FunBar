@@ -56,7 +56,7 @@
 								</li>
 
 								<li>
-									<a href="reservation.html">Reservation</a>
+									<a href="addProduct">新增產品資料</a>
 								</li>
 
 								<li>

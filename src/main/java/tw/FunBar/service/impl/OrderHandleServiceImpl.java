@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tw.FunBar.dao.OrderHandleDAO;
 import tw.FunBar.model.OrderBean;
+import tw.FunBar.model.ProductBean;
 import tw.FunBar.service.OrderHandleService;
 
 @Service
@@ -22,25 +23,17 @@ public class OrderHandleServiceImpl implements OrderHandleService{
 		return dao.orderSetup() ;
 	}
 
-	@Transactional
-	@Override
-	public void tally() {
-		dao.tally();
-		
-	}
 
 	@Transactional
 	@Override
-	public void delivery() {
-		dao.delivery();
+	public void addProduct(ProductBean pb) {
+		dao.addProduct(pb);
 		
 	}
 
-	@Transactional
 	@Override
-	public void paymentHandle() {
-		dao.paymentHandle();
-		
+	public ProductBean getProductById(Integer productId) {
+		return dao.getProductById(productId);
 	}
 	
 }

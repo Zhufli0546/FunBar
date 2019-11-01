@@ -61,7 +61,7 @@
 		<div class="prodlist">
 			<p class="prodtitle">${t.productName}</p>
 			<figure>
-				<img src="<c:url value='/${t.productImage}'/>" />
+				<img src="<c:url value='/getPicture/${t.productId}'/>" />
 			</figure>
 			<figcaption>
 				<p>建議售價: $${t.unitPrice}</p>
@@ -79,6 +79,7 @@
 						</select>
 					</div>
 					<input type="hidden" name="prod_id" >
+					<p>商品說明: ${t.productDetail}</p>
 					<button type="submit" class="btn btn-success btnMargin">加入購物車</button>
 				</form>
 			</figcaption>

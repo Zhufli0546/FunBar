@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import tw.FunBar.dao.OrderHandleDAO;
 import tw.FunBar.model.OrderBean;
+import tw.FunBar.model.ProductBean;
 @Repository
 public class OrderHandleDAOImpl implements OrderHandleDAO{
 		@Autowired
@@ -39,10 +40,17 @@ public class OrderHandleDAOImpl implements OrderHandleDAO{
 	}
 
 	@Override
-	public void addProduct() {
+	public void addProduct(ProductBean pb) {
+		System.out.println("name:" + pb.getFileName());
 		Session session = sessionFactory.getCurrentSession();
-		
-		
+		session.save(pb);
+	
+	}
+	@Override
+	public ProductBean getProductById(Integer productId) {
+		Session session = sessionFactory.getCurrentSession();
+		ProductBean pb = session.get(ProductBean.class, productId);
+		return pb;
 	}
 
 }
