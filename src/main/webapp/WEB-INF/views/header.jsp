@@ -65,13 +65,8 @@
 					<div class="wrap_menu p-l-45 p-l-0-xl">
 						<nav class="menu">
 							<ul class="main_menu">
-								<li><a href="index.html">Home</a></li>
-								<li><a href="menu.html">Menu</a></li>
+								<li><a href="">Home</a></li>
 								<li><a href="shoppingCart">購物區</a></li>
-								<li><a href="reservation.html">Reservation</a></li>
-								<li><a href="gallery.html">Gallery</a></li>
-								<li><a href="about.html">About</a></li>
-								<li><a href="blog.html">Blog</a></li>
 								<li><a href="booking">線上訂位</a></li>
 								<li><a href="discuss">討論區</a></li>
 							</ul>
@@ -84,7 +79,6 @@
 						<a href="#"><i class="fa fa-facebook m-l-21"
 							aria-hidden="true"></i></a> <a href="#"><i
 							class="fa fa-twitter m-l-21" aria-hidden="true"></i></a>
-
 						<button class="btn-show-sidebar m-l-33 trans-0-4"></button>
 					</div>
 				</div>
