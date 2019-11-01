@@ -1,7 +1,5 @@
 package tw.FunBar.dao.impl;
 
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,8 +9,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
 import tw.FunBar.dao.DiscussDAO;
+import tw.FunBar.model.Like;
 import tw.FunBar.model.Post;
 
 @Repository
@@ -39,17 +37,27 @@ public class DiscussDAOImpl implements DiscussDAO {
 	@Override
 	public void createPost(Post post) {
 		Session session = factory.getCurrentSession();
-		int id = (int) (Math.floor(Math.random()*99999999)+10000000);
+		int id = (int) (Math.floor(Math.random() * 99999999) + 10000000);
 		post.setMemberId(id);
-		//post.setPostId(4);
+		// post.setPostId(4);
 		Date dateTime = new Date();
-		SimpleDateFormat formDate = new SimpleDateFormat ("yyyy/MM/dd HH:mm:ss");
-		String date =formDate.format(dateTime);
-		System.out.println(date);
-		post.setPostTime(date);
+		// SimpleDateFormat formDate = new SimpleDateFormat ("yyyy/MM/dd HH:mm:ss");
+		// String date =formDate.format(dateTime);
+		// System.out.println(date);
+		post.setPostTime(dateTime);
 //		post.setParentPostId(2);
 		session.save(post);
 	}
-	
-	
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Like> getAllLike() {
+		String hql = "FROM Like";
+		Session session = null;
+		List<Like> list = new ArrayList<>();
+		session = factory.getCurrentSession();
+		list = session.createQuery(hql).getResultList();
+		return list;
+	}
+
 }

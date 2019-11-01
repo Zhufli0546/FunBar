@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 
@@ -62,9 +63,20 @@
 								<blockquote class="blockquote mb-0">
 									<div class="font-weight-bold">${post.postContent}</div>
 								</blockquote>
+
+								<!--時間顯示 未完成 -->
+								<jsp:useBean id="date" class="java.util.Date"></jsp:useBean>
 								<div class="text-right">
 									<br>
+									<p>dataBase = ${post.postTime.time}</p>
+									<p>JSTL = ${date.time}</p>
+
+									<c:set var="postInterval"
+										value="${(date.time-post.postTime.time)/1000*60*60}" />
+										
+									<p>${date}</p>
 									<p>${post.postTime}</p>
+									<p>差距 ： ${postInterval}</p>
 									<br>
 									<form:form method="post" modelAttribute="Post"
 										class="from-horizontal">
@@ -104,8 +116,12 @@
 											<!-- 第三層留言 -->
 											<c:forEach var="childPost2" items="${reply2}">
 												<c:if test="${childPost.postId==childPost2.parentPostId}">
-													<div class="text-left">
-														<p>${childPost2.postContent}</p>
+													<div class="card">
+														<div class="card-body">
+															<div class="text-left">
+																<p>${childPost2.postContent}</p>
+															</div>
+														</div>
 													</div>
 												</c:if>
 											</c:forEach>

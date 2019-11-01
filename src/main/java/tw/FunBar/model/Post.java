@@ -1,6 +1,7 @@
 package tw.FunBar.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ public class Post implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer postId;
 	private String postContent;
-	private String postTime;
+	private Date postTime;
 	private Integer memberId;
 	private Integer parentPostId;
 
@@ -37,11 +38,11 @@ public class Post implements Serializable {
 		this.postContent = postContent;
 	}
 
-	public String getPostTime() {
+	public Date getPostTime() {
 		return postTime;
 	}
 
-	public void setPostTime(String postTime) {
+	public void setPostTime(Date postTime) {
 		this.postTime = postTime;
 	}
 

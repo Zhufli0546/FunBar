@@ -12,7 +12,9 @@ public class Like implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	private Integer likeId;
 	private Integer postId;
+	private Integer memberId;
 
 	public Integer getPostId() {
 		return postId;
@@ -30,5 +32,12 @@ public class Like implements Serializable {
 		this.memberId = memberId;
 	}
 
-	private Integer memberId;
+	public Integer getLikeId() {
+		return likeId;
+	}
+
+	public void setLikeId(Integer likeId) {
+		this.likeId = likeId;
+	}
+
 }

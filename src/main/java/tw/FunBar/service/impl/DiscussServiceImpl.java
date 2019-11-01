@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import tw.FunBar.dao.DiscussDAO;
+import tw.FunBar.model.Like;
 import tw.FunBar.model.Post;
 import tw.FunBar.service.DiscussService;
 
@@ -35,7 +36,11 @@ public class DiscussServiceImpl implements DiscussService {
 		
 	}
 
-	
+	@Transactional
+	@Override
+	public List<Like> getAllLike() {
+		return dao.getAllLike();
+	}
 	
 	
 }
