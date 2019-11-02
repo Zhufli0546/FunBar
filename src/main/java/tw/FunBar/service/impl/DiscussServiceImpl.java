@@ -42,5 +42,11 @@ public class DiscussServiceImpl implements DiscussService {
 		return dao.getAllLike();
 	}
 	
+	@Transactional
+	@Override
+	public void createLike(Like like) {
+		dao.createLike(like);
+	}
+	
 	
 }

@@ -2,17 +2,12 @@ package tw.FunBar.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import tw.FunBar.model.Like;
 import tw.FunBar.model.Post;
@@ -31,14 +26,14 @@ public class DiscussController {
 	@RequestMapping(value = "/discuss", method = RequestMethod.GET)
 	public String discuss(Model model) {
 		List<Post> postList = service.getAllPostDetail();
-		//List<Like> listLike = service.getAllLike();
+//		List<Like> listLike = service.getAllLike();
 		model.addAttribute("title", "討論區");
 		model.addAttribute("post", postList);
 		model.addAttribute("reply", postList);
 		model.addAttribute("reply2", postList);
 		model.addAttribute("Post", new Post());
 		model.addAttribute("Reply", new Post());
-		//model.addAttribute("like",listLike);
+//		model.addAttribute("like",listLike);
 		return "discuss";
 	}
 	
@@ -60,6 +55,12 @@ public class DiscussController {
 		 service.createPost(post);
 		 return "redirect:/discuss";
 	 }
+	 
+//	 @RequestMapping(value = "/discuss", method = RequestMethod.POST)
+//	 public String createLike(@ModelAttribute("Like") Like like) {
+//		 service.createLike(like);
+//		 return "redirect:/discuss";
+//	 }
 	 
 
 }
