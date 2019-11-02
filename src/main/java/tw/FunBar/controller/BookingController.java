@@ -63,12 +63,10 @@ public class BookingController {
 			@RequestParam(name = "name") String name, @RequestParam(name = "phone") String phone,
 			@RequestParam(name = "email") String email, @RequestParam(name = "remark") String remark, Model model) {
 		
-		
-		System.out.print(name);
-		System.out.print(people);
+
 		bookingService.addReservations(date,people,time,sex,name,phone,email,remark);
-			
-		return "index";
+		model.addAttribute("date", date);
+		return "completeOk";
 	}
 
 }
