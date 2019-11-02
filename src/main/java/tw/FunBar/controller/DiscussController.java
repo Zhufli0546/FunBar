@@ -27,7 +27,7 @@ public class DiscussController {
 	public String discuss(Model model) {
 		List<Post> postList = service.getAllPostDetail();
 //		List<Like> listLike = service.getAllLike();
-		model.addAttribute("title", "è¨è«–å€");
+		model.addAttribute("title", "°Q½×°Ï");
 		model.addAttribute("post", postList);
 		model.addAttribute("reply", postList);
 		model.addAttribute("reply2", postList);
