@@ -71,7 +71,7 @@
 
 								<li><a href="booking">線上訂位</a></li>
 								
-								<li><a href="blog">Blog</a></li>
+								<li><a href="${pageContext.request.contextPath}/blogs">部落格</a></li>
 
 								<li><a href="discuss">討論區</a></li>
 								
@@ -112,7 +112,7 @@
 			<li class="t-center m-b-13"><a href="about.html" class="txt19">About</a>
 			</li>
 
-			<li class="t-center m-b-13"><a href="blog.html" class="txt19">Blog</a>
+			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/blogs" class="txt19">部落格</a>
 			</li>
 
 			<li class="t-center m-b-33"><a href="contact.html" class="txt19">Contact</a>
