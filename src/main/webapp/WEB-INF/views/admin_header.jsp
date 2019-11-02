@@ -88,7 +88,7 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">######</h6>
-					<a class="dropdown-item" href="addProduct">新增商品</a> <a
+					<a class="dropdown-item" href="showAllProduct">所有商品</a> <a
 						class="dropdown-item" href="#">###</a> <a
 						class="dropdown-item" href="#">###</a>
 				</div></li>

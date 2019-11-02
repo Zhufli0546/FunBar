@@ -20,7 +20,7 @@
 	height: 380px;
 	background-color: 	#DDDDDD;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, .1);
-	margin: 0 auto;
+	margin: 0;
 	text-align: center;
 	color: #003C9D;
 	border:2px solid black;
@@ -30,7 +30,7 @@
 	padding:20px;
 
 	margin-right:10px;
-	margin-left:25%;
+	margin-left:5%;
 	float:left;
 	
 }
