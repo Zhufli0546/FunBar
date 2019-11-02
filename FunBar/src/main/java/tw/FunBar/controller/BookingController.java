@@ -38,8 +38,6 @@ public class BookingController {
 	@ResponseBody
 	public ArrayList<Alltime> displayTime(@RequestParam(name = "date") String date,
 			@RequestParam(name = "people") Integer people, Model model) {
-		System.out.print(date);
-		System.out.print(people+"66666666666666666666666666");
 		ArrayList<Alltime> oktime = bookingService.okTime(date, people);
 		model.addAttribute("oktime", oktime);
 		return oktime;
@@ -67,6 +65,32 @@ public class BookingController {
 		bookingService.addReservations(date,people,time,sex,name,phone,email,remark);
 		model.addAttribute("date", date);
 		return "completeOk";
+	}
+	
+	@RequestMapping("/allbooking")
+	public String queryAllBooking(Model model) {
+		ArrayList<BookingData> all = bookingService.queryAllBooking();
+		model.addAttribute("All", all);
+		return "allbooking";
+	}
+	
+	
+	@RequestMapping("/admin/booking")
+	public String adminBooking() {
+		return "admin_booking";
+	}
+	
+	@RequestMapping(value = "/pullTodayStatus",method=RequestMethod.POST)
+	@ResponseBody
+	public ArrayList<Alltime> pullTodayStatus(@RequestParam(name = "date")String date,Model model) {
+		ArrayList<Alltime> fulltime = bookingService.pullTime();
+		ArrayList<Alltime> todayStatus = bookingService.pullTodayStatus(date);
+		
+		model.addAttribute("fulltime", fulltime);
+		model.addAttribute("todayStatus", todayStatus);
+		
+		return todayStatus;
+		
 	}
 
 }

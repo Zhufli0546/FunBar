@@ -16,36 +16,36 @@ import tw.FunBar.service.MemberService;
 
 @Controller
 public class MemberController {
-	
-	@Autowired
-	MemberService memberService;
-	
-	
-	@RequestMapping("/signin")
-	public String signIn() {
-		return "signin" ;
-	}
-	
-	@RequestMapping(value="/check",method=RequestMethod.POST)
-	public String check(@RequestParam(name="username") String username,
-						@RequestParam(name="password") String password,
-						Model model,HttpServletRequest request) {
-		Member member = memberService.checkMember(username, password);
-		
-		if(member != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("user",member);
-			model.addAttribute("Member", member);
-			return "redirect:/";
-		}else {
-			return "index";
-		}
-	}
-	
-	@RequestMapping("/logout")
-	public String logout(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		session.removeAttribute("user");
-		return "index";
-	}
+ 
+ @Autowired
+ MemberService memberService;
+ 
+ 
+ @RequestMapping("/signin")
+ public String signIn() {
+  return "signin" ;
+ }
+ 
+ @RequestMapping(value="/check",method=RequestMethod.POST)
+ public String check(@RequestParam(name="username") String username,
+      @RequestParam(name="password") String password,
+      Model model,HttpServletRequest request) {
+  Member member = memberService.checkMember(username, password);
+  
+  if(member != null) {
+   HttpSession session = request.getSession();
+   session.setAttribute("user",member);
+   model.addAttribute("Member", member);
+   return "redirect:/";
+  }else {
+   return "index";
+  }
+ }
+ 
+ @RequestMapping("/logout")
+ public String logout(HttpServletRequest request) {
+  HttpSession session = request.getSession();
+  session.removeAttribute("user");
+  return "index";
+ }
 }

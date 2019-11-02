@@ -16,21 +16,21 @@ import tw.FunBar.model.Member;
 
 @Repository
 public class MemberDAOImpl implements MemberDAO {
-	
-	@Autowired
-	SessionFactory sessionFactory;
-	
-	@Override
-	public Member checkMember(String username, String password) {
-		Session session = sessionFactory.getCurrentSession();
-		String hql="From Member m where m.username=:username and m.password=:password";
-		Query query = session.createQuery(hql);
-		query.setParameter("username",username);
-		query.setParameter("password", password);
-		
-		Member member = (Member) query.getSingleResult();
-		
-		 return member;
-	}
+ 
+ @Autowired
+ SessionFactory sessionFactory;
+ 
+ @Override
+ public Member checkMember(String username, String password) {
+  Session session = sessionFactory.getCurrentSession();
+  String hql="From Member m where m.username=:username and m.password=:password";
+  Query query = session.createQuery(hql);
+  query.setParameter("username",username);
+  query.setParameter("password", password);
+  
+  Member member = (Member) query.getSingleResult();
+  
+   return member;
+ }
 
 }

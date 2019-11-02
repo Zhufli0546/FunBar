@@ -14,13 +14,13 @@ import tw.FunBar.service.MemberService;
 @Service
 @Transactional
 public class MemberServiceImpl implements MemberService {
-	
-	@Autowired
-	MemberDAO memberDAO;
-	
-	@Override
-	public Member checkMember(String username, String password) {
-		return  memberDAO.checkMember(username, password);
-		
-	}
+ 
+ @Autowired
+ MemberDAO memberDAO;
+ 
+ @Override
+ public Member checkMember(String username, String password) {
+  return  memberDAO.checkMember(username, password);
+  
+ }
 }
