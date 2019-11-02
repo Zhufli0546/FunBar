@@ -7,7 +7,15 @@ import tw.FunBar.model.ProductBean;
 
 public interface OrderHandleService {
 	List <OrderBean> orderSetup(); //成立訂單
-	void addProduct(ProductBean pb);
+	
 	public ProductBean getProductById(Integer productId);
+	
+	void addProduct(ProductBean pb);
+	
+//	void updateProduct(int prodId, double discount, int stock);
+	
+	void updateProduct(ProductBean pb);
+	
+	void deleteProduct(ProductBean pb);
 
 }

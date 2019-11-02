@@ -100,4 +100,45 @@ public class BookingDAOImpl implements BookingDAO {
 		session.save(d);
 	}
 
+
+
+	@Override
+	public ArrayList<BookingData> queryAllBooking() {
+		
+		String hql = "From BookingData order by date asc" ;
+		ArrayList<BookingData> bookings = new ArrayList<>();
+		Session session = sessionFactory.getCurrentSession();
+		bookings = (ArrayList<BookingData>)session.createQuery(hql).getResultList();
+		return bookings;
+		
+	}
+
+
+
+	@Override
+	public ArrayList<Alltime> pullTodayStatus(String date) {
+		Integer peo = 0 ;
+		String hql = "From BookingData where date = :date and time = :time";
+		Session session = sessionFactory.getCurrentSession();
+		ArrayList<Alltime> alltime = pullTime();
+		
+		ArrayList<Alltime> todayStatus = new ArrayList<>();
+		
+		for(Alltime all : alltime) {
+		ArrayList<BookingData> query =(ArrayList<BookingData>)session.createQuery(hql).setParameter("date",date).setParameter("time",all.getTime()).getResultList();
+		for(BookingData data : query) {
+			peo += data.getPeople();
+		}
+		int lastPeo = all.getPeople()-peo;
+		peo = 0 ;
+		
+		Alltime onetime = new Alltime();
+		onetime.setTime(all.getTime());
+		onetime.setPeople(lastPeo);
+		todayStatus.add(onetime);
+		}
+		
+		return todayStatus;
+	}
+
 }
