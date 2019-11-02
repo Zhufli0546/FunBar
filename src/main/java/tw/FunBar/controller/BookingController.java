@@ -81,15 +81,14 @@ public class BookingController {
 	}
 	
 	@RequestMapping(value = "/pullTodayStatus",method=RequestMethod.POST)
-	@ResponseBody
-	public ArrayList<Alltime> pullTodayStatus(@RequestParam(name = "date")String date,Model model) {
+	public String pullTodayStatus(@RequestParam(name = "date")String date,Model model) {
 		ArrayList<Alltime> fulltime = bookingService.pullTime();
 		ArrayList<Alltime> todayStatus = bookingService.pullTodayStatus(date);
 		
 		model.addAttribute("fulltime", fulltime);
 		model.addAttribute("todayStatus", todayStatus);
 		
-		return todayStatus;
+		return "pullTodayStatus";
 		
 	}
 

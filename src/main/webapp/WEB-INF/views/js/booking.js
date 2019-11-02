@@ -166,11 +166,9 @@ function day() {
                 success: function (data) {
                 	
                 	console.log(data);
-                   txt = "";
-                   
-                   txt = "12345dnhfjruhfsdfjdsfhsughsfhsfjsdfjsdfjksdfjsdh";
+
                 		
-                   
+                   txt = "";
                     $("#today_status").html(txt);
                 }
 

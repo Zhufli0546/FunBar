@@ -70,6 +70,8 @@
 								<li><a href="shoppingCart">購物區</a></li>
 
 								<li><a href="booking">線上訂位</a></li>
+								
+								<li><a href="blog">Blog</a></li>
 
 								<li><a href="discuss">討論區</a></li>
 								

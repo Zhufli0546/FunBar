@@ -328,7 +328,24 @@ select::-ms-expand { display: none; }
 	<jsp:include page="admin_header.jsp" />
 	
 	
-	<div id="today_status"></div>
+	<div id="today_status">
+	<span>今日訂位狀況:</span>
+		<table class="table table-striped" >
+<thead><tr>
+<th>時段<th>人數限制<th>可預約人數
+</tr></thead>
+<tbody>
+<c:forEach var="b" items="${All}">
+<tr>
+<td>${b.booking_id}</td>
+<td>${b.name}</td>
+<td>${b.sex}</td>
+</tr>
+</c:forEach>
+</tbody>
+</table>
+	
+	</div>
 	
 	<div class="calendar" style="border:1px solid #003C9D;border-radius:5px">
 

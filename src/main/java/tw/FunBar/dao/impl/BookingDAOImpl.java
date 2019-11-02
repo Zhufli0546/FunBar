@@ -128,12 +128,13 @@ public class BookingDAOImpl implements BookingDAO {
 		ArrayList<BookingData> query =(ArrayList<BookingData>)session.createQuery(hql).setParameter("date",date).setParameter("time",all.getTime()).getResultList();
 		for(BookingData data : query) {
 			peo += data.getPeople();
-			int lastPeo = all.getPeople()-peo;
 		}
+		int lastPeo = all.getPeople()-peo;
+		peo = 0 ;
 		
 		Alltime onetime = new Alltime();
 		onetime.setTime(all.getTime());
-		onetime.setPeople(peo);
+		onetime.setPeople(lastPeo);
 		todayStatus.add(onetime);
 		}
 		
