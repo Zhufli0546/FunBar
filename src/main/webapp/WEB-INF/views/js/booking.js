@@ -116,9 +116,9 @@ function day() {
     var lis = ul.getElementsByTagName("li");
 
     for (var i = 0; i < lis.length; i++) {
-
+    	
         lis[i].onclick = function () {
-
+        	$("#slc")[0].selectedIndex = 0;
             $("#days li").removeClass("add");
             $(this).addClass("add");
 
@@ -135,7 +135,7 @@ function day() {
                 },
                 type: "POST",
                 dataType: "JSON",
-                success: function (data) {
+                success: function (data,today_status) {
                    txt = "";
                 		
                    for (let i = 0; i < data.length; i++) {
@@ -149,12 +149,38 @@ function day() {
                     
                    
                     $("#time").html(txt);
+                    
                 }
 
             })
 
         }
+      
     }
+}
+
+function today_status(){
+	
+    $.ajax({
+        url: "http://localhost:8080" + url + "pullTodayStatus",
+        data: {
+            date: date,
+        },
+        type: "POST",
+        dataType: "JSON",
+        success: function (data) {
+        	
+        	console.log(data);
+           txt = "";
+           
+           txt = "12345dnhfjruhfsdfjdsfhsughsfhsfjsdfjsdfjksdfjsdh";
+        		
+           
+            $("#today_status").html(txt);
+        }
+
+    })
+	
 }
 
 
