@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +16,7 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@Entity
 public class Comment {
 
 	@Id
@@ -28,7 +30,7 @@ public class Comment {
 	@Transient
 	private Integer commentStatus;
 
-	@JsonIgnoreProperties("blog")
+	@JsonIgnoreProperties("blogComments")
 	@ManyToOne
 	@JoinColumn(name = "BLOGID")
 	private Blog blog;
@@ -40,5 +42,77 @@ public class Comment {
 	@JoinColumn(name = "PARENTCOMMENTID")
 	private Comment parentComment;
 
-	//private Integer memberId;
+	public int getCommentId() {
+		return commentId;
+	}
+
+	public void setCommentId(int commentId) {
+		this.commentId = commentId;
+	}
+
+	public String getCommentName() {
+		return commentName;
+	}
+
+	public void setCommentName(String commentName) {
+		this.commentName = commentName;
+	}
+
+	public String getCommentEmail() {
+		return commentEmail;
+	}
+
+	public void setCommentEmail(String commentEmail) {
+		this.commentEmail = commentEmail;
+	}
+
+	public String getCommentContent() {
+		return commentContent;
+	}
+
+	public void setCommentContent(String commentContent) {
+		this.commentContent = commentContent;
+	}
+
+	public String getCommentCreatedTime() {
+		return commentCreatedTime;
+	}
+
+	public void setCommentCreatedTime(String commentCreatedTime) {
+		this.commentCreatedTime = commentCreatedTime;
+	}
+
+	public Integer getCommentStatus() {
+		return commentStatus;
+	}
+
+	public void setCommentStatus(Integer commentStatus) {
+		this.commentStatus = commentStatus;
+	}
+
+	public Blog getBlog() {
+		return blog;
+	}
+
+	public void setBlog(Blog blog) {
+		this.blog = blog;
+	}
+
+	public Set<Comment> getReplyComment() {
+		return replyComment;
+	}
+
+	public void setReplyComment(Set<Comment> replyComment) {
+		this.replyComment = replyComment;
+	}
+
+	public Comment getParentComment() {
+		return parentComment;
+	}
+
+	public void setParentComment(Comment parentComment) {
+		this.parentComment = parentComment;
+	}
+
+	//	private Integer memberId;
 }

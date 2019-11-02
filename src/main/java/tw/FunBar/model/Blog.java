@@ -34,9 +34,10 @@ public class Blog {
 	@JoinColumn(name = "CATEGORYID")
 	private Category category;
 
-	@JsonIgnoreProperties("comments")
+	@JsonIgnoreProperties("blog")
 	@OneToMany(mappedBy = "blog", cascade = CascadeType.ALL)
 	private Set<Comment> comments = new LinkedHashSet<Comment>();
+
 //	private int memberId;
 //
 //	public int getMemberId() {
@@ -101,6 +102,14 @@ public class Blog {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public Set<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
 	}
 
 }
