@@ -56,8 +56,8 @@
 				<div class="wrap_header trans-0-3">
 					<!-- Logo -->
 					<div class="logo">
-						<a href="index.html"> <img src="images/icons/logo.png"
-							alt="IMG-LOGO" data-logofixed="images/icons/logo2.png">
+						<a href="index.html"> <img src="<c:url value='/images/icons/logo.png' />"
+							alt="IMG-LOGO" data-logofixed="<c:url value='/images/icons/logo2.png' />">
 						</a>
 					</div>
 
