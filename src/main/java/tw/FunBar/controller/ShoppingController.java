@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import tw.FunBar.model.ProductBean;
 import tw.FunBar.service.OrderHandleService;
@@ -48,17 +49,35 @@ public class ShoppingController {
 	@RequestMapping("/shoppingCart")
 	public String shoppingCart(Model model) {
 		List<ProductBean> show = shoppingService.getAllProducts();
-
 		model.addAttribute("all", show);
 		return "shoppingCart";
 	}
+	
+	
+	
+	//後臺顯示所有商品
+	@RequestMapping("/showAllProduct")
+	public String showAllProduct(Model model) {
+		List<ProductBean> show = shoppingService.getAllProducts();
+		model.addAttribute("all", show);
+		return "showAllProduct";
+	}
 
+	
+	@RequestMapping("/updateProduct")
+	public String getProductsById(@RequestParam("id") Integer id, Model model) {
+		model.addAttribute("product", orderService.getProductById(id));
+		return "redirect:/showAllProduct";
+	}
+	
+	
 	@RequestMapping(value = "/addProduct", method = RequestMethod.GET)
 	public String getAddNewProductForm(Model model) {
 		ProductBean pb = new ProductBean();
 		model.addAttribute("productBean", pb);
 		return "addProduct";
 	}
+	
 
 	@RequestMapping(value = "/addProduct", method = RequestMethod.POST)
 	public String addProduct(@ModelAttribute("productBean") ProductBean pb, BindingResult result) {
