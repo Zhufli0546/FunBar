@@ -23,7 +23,7 @@
 
 	go();
 	function go() {
-		setTimeout("location.href='http://localhost:8080/FunBar/'", 10000);
+		setTimeout("location.href='http://localhost:8080/FunBar/'", 3000);
 	}
 </script>
 

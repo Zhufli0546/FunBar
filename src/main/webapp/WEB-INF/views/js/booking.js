@@ -54,6 +54,8 @@ function refreshDate() {
         str += "<li >" + "</li>";
         sum  += 1 ;
     }
+    
+
 
     for (var i = 1; i <= totalDay; i++) {
 
@@ -66,8 +68,8 @@ function refreshDate() {
             myclass = " class='lightgrey'";
         } else if (my_year == my_date.getFullYear()
             && my_month == my_date.getMonth() && i == my_day) {
-            today = sum;
-            console.log(sum);
+            today = sum+(i-1);
+            console.log(i);
             myclass = "class = 'box'";
         } else {
             myclass = "class = 'li'";
