@@ -14,13 +14,10 @@ import tw.FunBar.model.ProductBean;
 
 @Repository
 public class ShoppingDAOImpl implements ShoppingDAO{
+	@Autowired
 	SessionFactory factory;
 	
-	@Autowired
-	public void setFactory(SessionFactory factory) {
-		this.factory= factory;
-	}
-	
+
 	@Override
 	public List<ProductBean> getAllProducts() {
 		String hql = "From ProductBean";

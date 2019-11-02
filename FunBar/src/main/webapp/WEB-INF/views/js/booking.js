@@ -135,6 +135,7 @@ function day() {
                 },
                 type: "POST",
                 dataType: "JSON",
+                async : false,
                 success: function (data,today_status) {
                    txt = "";
                 		
@@ -152,11 +153,37 @@ function day() {
                     
                 }
 
-            })
+            });
+            
+            
+            $.ajax({
+                url: "http://localhost:8080" + url + "pullTodayStatus",
+                data: {
+                    date: date,
+                },
+                type: "POST",
+                dataType: "JSON",
+                success: function (data) {
+                	
+                	console.log(data);
+                   txt = "";
+                   
+                   txt = "12345dnhfjruhfsdfjdsfhsughsfhsfjsdfjsdfjksdfjsdh";
+                		
+                   
+                    $("#today_status").html(txt);
+                }
 
-        }
+            })
+           
+
+    }
       
     }
+    
+    
+    
+    
 }
 
 function today_status(){

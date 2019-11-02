@@ -27,13 +27,32 @@ public class OrderHandleServiceImpl implements OrderHandleService{
 	@Transactional
 	@Override
 	public void addProduct(ProductBean pb) {
-		dao.addProduct(pb);
-		
+		dao.addProduct(pb);	
 	}
 
+	@Transactional
 	@Override
 	public ProductBean getProductById(Integer productId) {
 		return dao.getProductById(productId);
+	}
+
+	@Transactional
+	@Override
+	public void deleteProduct(ProductBean pb) {
+		dao.deleteProduct(pb);	
+	}
+
+//	@Transactional
+//	@Override
+//	public void updateProduct(int prodId, double discount, int stock) {
+//		dao.updateProduct(prodId, discount, stock);
+//	}
+
+
+	@Transactional
+	@Override
+	public void updateProduct(ProductBean pb) {
+		dao.updateProduct(pb);
 	}
 	
 }
