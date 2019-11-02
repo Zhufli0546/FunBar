@@ -77,7 +77,7 @@
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">######</h6>
 					<a class="dropdown-item" href="allbooking">查詢所有訂位</a> <a
-						class="dropdown-item" href="#">Register</a> <a
+						class="dropdown-item" href="admin/booking">來電訂位</a> <a
 						class="dropdown-item" href="#">Forgot Password</a>
 				</div></li>
 

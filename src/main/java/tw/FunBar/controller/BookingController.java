@@ -73,5 +73,24 @@ public class BookingController {
 		model.addAttribute("All", all);
 		return "allbooking";
 	}
+	
+	
+	@RequestMapping("/admin/booking")
+	public String adminBooking() {
+		return "admin_booking";
+	}
+	
+	@RequestMapping(value = "/pullTodayStatus",method=RequestMethod.POST)
+	@ResponseBody
+	public ArrayList<Alltime> pullTodayStatus(@RequestParam(name = "date")String date,Model model) {
+		ArrayList<Alltime> fulltime = bookingService.pullTime();
+		ArrayList<Alltime> todayStatus = bookingService.pullTodayStatus(date);
+		
+		model.addAttribute("fulltime", fulltime);
+		model.addAttribute("todayStatus", todayStatus);
+		
+		return todayStatus;
+		
+	}
 
 }

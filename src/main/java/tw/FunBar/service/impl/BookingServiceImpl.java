@@ -49,6 +49,12 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 
+	@Override
+	public ArrayList<Alltime> pullTodayStatus(String date) {
+		return bookingDAO.pullTodayStatus(date);
+	}
+
+
 
 
 

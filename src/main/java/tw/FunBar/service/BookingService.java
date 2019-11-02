@@ -17,4 +17,6 @@ public interface BookingService {
 			String remark);
 	
 	ArrayList<BookingData> queryAllBooking();
+	
+	ArrayList<Alltime> pullTodayStatus(String date);
 }

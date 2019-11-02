@@ -16,4 +16,6 @@ public interface BookingDAO {
 			String remark);
 	
 	ArrayList<BookingData> queryAllBooking();
+	
+	ArrayList<Alltime> pullTodayStatus(String date);
 }
