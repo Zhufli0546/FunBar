@@ -34,4 +34,14 @@ public class BlogServiceImpl implements BlogService {
 		return blogDao.findByIdCategory(id);
 	}
 
+	@Override
+	public List<Blog> queryAllBlogs() {
+		return blogDao.queryAllBlogs();
+	}
+
+	@Override
+	public Blog findByIdBlog(int id) {
+		return blogDao.findByIdBlog(id);
+	}
+
 }

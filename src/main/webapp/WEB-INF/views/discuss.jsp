@@ -60,6 +60,7 @@
 						<div class="card">
 							<div class="card-body">
 								<p>${post.memberId}</p>
+								<%-- 								<p>${post.Like.memberId}</p> --%>
 								<blockquote class="blockquote mb-0">
 									<div class="font-weight-bold">${post.postContent}</div>
 								</blockquote>
@@ -80,7 +81,7 @@
 									<form:form method="post" modelAttribute="Post"
 										class="from-horizontal">
 										<div class="input-group mb-6">
-											<form:input path="parentPostId" type="hidden"
+											<form:input path="parentPostId" type="hidden" id="postId"
 												value="${post.postId}"></form:input>
 											<form:input path="postContent" class="form-control"
 												name="replyBody" type="text" placeholder="Reply..."></form:input>
@@ -155,6 +156,6 @@
 	</section>
 	<!-- Footer -->
 	<jsp:include page="footer.jsp" />
-
+	<script type="text/javascript" src="<c:url value="/js/discuss.js"/>"></script>
 </body>
 </html>

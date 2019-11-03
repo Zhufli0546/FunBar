@@ -116,9 +116,9 @@ function day() {
     var lis = ul.getElementsByTagName("li");
 
     for (var i = 0; i < lis.length; i++) {
-
+    	
         lis[i].onclick = function () {
-
+        	$("#slc")[0].selectedIndex = 0;
             $("#days li").removeClass("add");
             $(this).addClass("add");
 
@@ -135,7 +135,8 @@ function day() {
                 },
                 type: "POST",
                 dataType: "JSON",
-                success: function (data) {
+                async : false,
+                success: function (data,today_status) {
                    txt = "";
                 		
                    for (let i = 0; i < data.length; i++) {
@@ -149,12 +150,72 @@ function day() {
                     
                    
                     $("#time").html(txt);
+                    
+                }
+
+            });
+            
+            
+            $.ajax({
+                url: "http://localhost:8080" + url + "pullTodayStatus",
+                data: {
+                    date: date,
+                },
+                type: "POST",
+                dataType: "JSON",
+                success: function (data) {
+                	txt = "";
+                	console.log(data);
+                	
+            		txt += "<span style='color:#003C9D'>今日訂位狀況:</span>";
+            		txt += "<table class='table table-striped' style='text-align:center'>";
+            		txt += "<thead><tr><th>時段<th>人數限制<th>尚可預約人數</tr></thead>";
+            		txt += "<tbody>";
+                	for(let i =0;i<data.fulltime.length;i++){
+                		if(data.todayStatus[i].people<20){
+                			txt += "<tr><td>"+data.fulltime[i].time+"</td><td>"+data.fulltime[i].people+"</td><td class='tension'>"+data.todayStatus[i].people+"</td></tr>";
+                		}else{
+                			txt += "<tr><td>"+data.fulltime[i].time+"</td><td>"+data.fulltime[i].people+"</td><td class='Ample'>"+data.todayStatus[i].people+"</td></tr>";
+                		}
+                	}
+                	txt += "</tbody></table>";
+                    $("#today_status").html(txt);
                 }
 
             })
+           
 
-        }
     }
+      
+    }
+    
+    
+    
+    
+}
+
+function today_status(){
+	
+    $.ajax({
+        url: "http://localhost:8080" + url + "pullTodayStatus",
+        data: {
+            date: date,
+        },
+        type: "POST",
+        dataType: "JSON",
+        success: function (data) {
+        	
+        	console.log(data);
+           txt = "";
+           
+           txt = "12345dnhfjruhfsdfjdsfhsughsfhsfjsdfjsdfjksdfjsdh";
+        		
+           
+            $("#today_status").html(txt);
+        }
+
+    })
+	
 }
 
 

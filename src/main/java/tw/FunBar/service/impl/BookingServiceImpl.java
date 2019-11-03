@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tw.FunBar.dao.BookingDAO;
 import tw.FunBar.model.Alltime;
+import tw.FunBar.model.BookingData;
 import tw.FunBar.service.BookingService;
 
 
@@ -39,6 +40,18 @@ public class BookingServiceImpl implements BookingService {
 			String remark) {
 		bookingDAO.addReservations(date,people,time,sex,name,phone,email,remark);
 		
+	}
+
+
+	@Override
+	public ArrayList<BookingData> queryAllBooking() {
+		return bookingDAO.queryAllBooking();
+	}
+
+
+	@Override
+	public ArrayList<Alltime> pullTodayStatus(String date) {
+		return bookingDAO.pullTodayStatus(date);
 	}
 
 

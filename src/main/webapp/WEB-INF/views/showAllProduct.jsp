@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"  %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>購物區</title>
+<title>顯示所有商品</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="<c:url value="/css/shoppingCarts.css" />" rel="stylesheet">
@@ -50,13 +51,9 @@
 	margin: 1%;
 }
 
-
 .prodlist .prodtitle {
 	height: 25px;
-	font-weight:bold;
-	color:#000;
 }
-
 
 .prodlist img {
 	display: block;
@@ -71,7 +68,7 @@
 </style>
 <body>
 
-<jsp:include page="header.jsp" />
+<jsp:include page="admin_header.jsp" />
 
 <!-- Content 區塊 -->
 
@@ -79,8 +76,8 @@
 	<c:forEach var="pb" items="${all}">
 <div class="prodlist">
 
-<p>${pb.productNo}</p> 
-<p>${pb.productDetail}</p> <!--商品說明 -->
+<p>${pb.productNo}</p>
+<p>${pb.productDetail}</p>
 <p class="prodtitle">${pb.productName}</p>
 
 <figure>
@@ -88,22 +85,21 @@
 </figure>
 
 <figcaption>
-<p>建議售價: $${pb.unitPrice}</p>
-<form class="form-group row" action="<c:url value='/shoppingcart/InsertCartItemServlet' />" method="post">
-<label for="selectCount" class="col-sm-6 col-xs-12">購買數量:</label>
-<div class="col-sm-6 col-xs-12">
 
-<select class="form-control" id="selectCount" name="count">
-	<option value="1">1</option>
-	<option value="2">2</option>
-	<option value="3">3</option>
-	<option value="4">4</option>
-	<option value="5">5</option>
-</select>
+<p>建議售價: $${pb.unitPrice}</p>
+<p>折扣:${pb.discount}</p>
+<p>庫存數量:${pb.stock}</p>
+
+<div>
+<p><a href="<spring:uri value='pb?id=${pb.productId}'/>" class="btn btn-success btnMargin">修改</a></p>
+
 </div>
 
-<button type="submit" class="btn btn-success btnMargin">加入購物車</button>
+<form method="post" class="form-group row" action="<c:url value='/deleteProduct' />" >
+<input type="submit" value="刪除" clas="btn btn-success btnMargin"/>
+<input type="hidden" value="${pb.productId}" name="productId"  />
 </form>
+
 </figcaption>
 
 </div>
@@ -111,7 +107,7 @@
 </div>
 
 
-<jsp:include page="footer.jsp" />
+<jsp:include page="admin_footer.jsp" />
 
 </body>
 </html>
