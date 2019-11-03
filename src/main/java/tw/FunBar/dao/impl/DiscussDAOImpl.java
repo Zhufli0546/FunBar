@@ -51,20 +51,23 @@ public class DiscussDAOImpl implements DiscussDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Like> getAllLike() {
-		String hql = "FROM Like";
-		Session session = null;
-		List<Like> list = new ArrayList<>();
-		session = factory.getCurrentSession();
-		list = session.createQuery(hql).getResultList();
-		return list;
+	public Integer getLikeByPostId(int postId) {
+		Integer count = 0;
+		String hql = "SELECT COUNT(DISTINCT postId) FROM Like WHERE postId = :postId";
+		Session session = factory.getCurrentSession();
+//		System.out.println("Checkpoint" + session.createQuery(hql));
+		List<Integer> list = session.createQuery(hql).setParameter("postId", postId).list();
+		System.out.println(list);
+		if (list.size() > 0) {
+			count = list.get(0);
+		}
+		return count;
 	}
-	
+
 	@Override
 	public void createLike(Like like) {
 		Session session = factory.getCurrentSession();
 		session.save(like);
 	}
-
 
 }

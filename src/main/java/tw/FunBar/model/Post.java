@@ -2,15 +2,20 @@ package tw.FunBar.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Post")
+@Table
 public class Post implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -21,6 +26,16 @@ public class Post implements Serializable {
 	private Date postTime;
 	private Integer memberId;
 	private Integer parentPostId;
+//	@OneToMany(mappedBy = "postId", cascade = CascadeType.ALL)
+//	private Set<Like> likes = new LinkedHashSet<Like>();
+//	
+//	public Set<Like> getLikes() {
+//		return likes;
+//	}
+//
+//	public void setLikes(Set<Like> likes) {
+//		this.likes = likes;
+//	}
 
 	public Integer getPostId() {
 		return postId;
@@ -61,5 +76,7 @@ public class Post implements Serializable {
 	public void setParentPostId(Integer parentPostId) {
 		this.parentPostId = parentPostId;
 	}
+
+
 
 }

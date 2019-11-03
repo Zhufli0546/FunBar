@@ -36,16 +36,17 @@ public class DiscussServiceImpl implements DiscussService {
 		
 	}
 
-	@Transactional
-	@Override
-	public List<Like> getAllLike() {
-		return dao.getAllLike();
-	}
 	
 	@Transactional
 	@Override
 	public void createLike(Like like) {
 		dao.createLike(like);
+	}
+
+	@Transactional
+	@Override
+	public Integer getLikeByPostId(int postId) {
+		return dao.getLikeByPostId(postId);
 	}
 	
 	
