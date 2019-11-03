@@ -322,32 +322,23 @@ padding: 0 0 0 25%;
 
 select::-ms-expand { display: none; }
 
+.tension{
+color:red;
+}
+
+.Ample{
+color:blue;
+}
+
 </style>
 </head>
 <body id="page-top">
 	<jsp:include page="admin_header.jsp" />
 	
 	
-	<div id="today_status">
-	<span>今日訂位狀況:</span>
-		<table class="table table-striped" >
-<thead><tr>
-<th>時段<th>人數限制<th>可預約人數
-</tr></thead>
-<tbody>
-<c:forEach var="b" items="${All}">
-<tr>
-<td>${b.booking_id}</td>
-<td>${b.name}</td>
-<td>${b.sex}</td>
-</tr>
-</c:forEach>
-</tbody>
-</table>
+	<div id="today_status" style="height:550px"></div>
 	
-	</div>
-	
-	<div class="calendar" style="border:1px solid #003C9D;border-radius:5px">
+	<div class="calendar" style="border:1px solid #003C9D;border-radius:5px;margin-top:35px">
 
 			選擇訂位日期:
 			<div class="title">
@@ -375,7 +366,7 @@ select::-ms-expand { display: none; }
 
 		</div>
 
-		<div class="calendar1">
+		<div class="calendar1" style="margin-top:35px">
 			選擇人數: <select id="slc" class="text" style="text-align: center">
 
 	<c:forEach var="i" begin="1" end="50" step="1">

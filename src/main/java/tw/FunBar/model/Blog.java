@@ -1,14 +1,19 @@
 package tw.FunBar.model;
 
-import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Blog {
@@ -22,11 +27,26 @@ public class Blog {
 	
 	@Transient
 	private Integer blogIsHot;
-	private Date blogCreatedTime;
+	private String blogCreatedTime;
 	
+	@JsonIgnoreProperties("blogs")
 	@ManyToOne
 	@JoinColumn(name = "CATEGORYID")
 	private Category category;
+
+	@JsonIgnoreProperties("blog")
+	@OneToMany(mappedBy = "blog", cascade = CascadeType.ALL)
+	private Set<Comment> comments = new LinkedHashSet<Comment>();
+
+//	private int memberId;
+//
+//	public int getMemberId() {
+//		return memberId;
+//	}
+//
+//	public void setMemberId(int memberId) {
+//		this.memberId = memberId;
+//	}
 
 	public Integer getBlogId() {
 		return blogId;
@@ -68,11 +88,11 @@ public class Blog {
 		this.blogIsHot = blogIsHot;
 	}
 
-	public Date getBlogCreatedTime() {
+	public String getBlogCreatedTime() {
 		return blogCreatedTime;
 	}
 
-	public void setBlogCreatedTime(Date blogCreatedTime) {
+	public void setBlogCreatedTime(String blogCreatedTime) {
 		this.blogCreatedTime = blogCreatedTime;
 	}
 
@@ -82,6 +102,14 @@ public class Blog {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public Set<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
 	}
 
 }
