@@ -45,23 +45,38 @@ public class ActivityDaoImpl implements ActivityDao {
 		session.save(activity);
 	}
 	
-//	@Override
-//	public List<String> getAllCategories() {
-//		String hql = "SELECT DISTINCT a.category FROM Activity a";
-//		List<String> list = new ArrayList<>();
-//		Session session = factory.getCurrentSession();
-//		list = session.createQuery(hql).getResultList();
-//		return list;
-//	}
-//	
-//	@Override
-//	public List<Activity> getActivityByCategory(String category) {
-//		String hql = "FROM Activity ac WHERE ac.catgoryId = :category";
-//		List<Activity> list = new ArrayList<>();
-//		Session session = factory.getCurrentSession();
-//		list = session.createQuery(hql).setParameter("category", category).getResultList();
-//		return list;
-//	}
+	@Override
+	public List<String> getAllActivityCategories() {
+		String hql = "SELECT DISTINCT a.category FROM Activity a";
+		List<String> list = new ArrayList<>();
+		Session session = factory.getCurrentSession();
+		list = session.createQuery(hql).getResultList();
+		return list;
+	}
+	
+	@Override
+	public List<Activity> getActivityByCategory(String category) {
+		String hql = "FROM Activity ac WHERE ac.category = :category";
+		List<Activity> list = new ArrayList<>();
+		Session session = factory.getCurrentSession();
+		list = session.createQuery(hql).setParameter("category", category).getResultList();
+		return list;
+	}
+
+	@Override
+	public void updateActivity(Activity activity) {
+		Session session = factory.getCurrentSession();
+		session.update(activity);
+		
+	}
+
+	@Override
+	public void deleteActivityById(int activityId) {
+		Session session = factory.getCurrentSession();
+		Activity activity = new Activity();
+		activity.setActivityId(activityId);
+		session.delete(activity);
+	}
 
 //
 //	@Override

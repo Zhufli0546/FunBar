@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
@@ -21,7 +22,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,11 +52,24 @@ public class ActivityController {
 		this.context = context;
 	}
 
-	@RequestMapping("/activities")
+	@RequestMapping(value= {"/activities"})
 	public String list(Model model) {
+		List<String> list1 = service.getAllActivityCategories();
+		model.addAttribute("categoryList", list1);
 		List<Activity> list = service.getAllActivities();
 		model.addAttribute("activities", list);
+		
 		return "activities";
+	}
+	
+	@RequestMapping(value= { "/activityQuery"})
+	public String Management(Model model) {
+		List<String> list1 = service.getAllActivityCategories();
+		model.addAttribute("categoryList", list1);
+		List<Activity> list = service.getAllActivities();
+		model.addAttribute("activities", list);
+		
+		return "activityQuery";
 	}
 
 	@RequestMapping("/activity")
@@ -67,17 +84,29 @@ public class ActivityController {
 		return "addActivity";
 	}
 
-	@RequestMapping(value = "/activities", method = RequestMethod.POST)
-	public String addActivity(Activity activity) {
-		Activity ac = new Activity();
-		MultipartFile activityImage = ac.getActivityImage();
+//	@RequestMapping(value = "/activities", method = RequestMethod.POST)
+//	public String addActivity(Activity activity) {
+//		service.addActivity(activity);
+//		return "redirect: activities";
+//	}
+	
+	
+	@RequestMapping(value = "activities", method = RequestMethod.POST)
+	public String addActivity(@ModelAttribute("activity") Activity activity) {
+//		String[] suppressedFields = result.getSuppressedFields();
+//		if (suppressedFields.length > 0) {
+//			throw new RuntimeException("嘗試傳入不允許的欄位: " + StringUtils.arrayToCommaDelimitedString(suppressedFields));
+//		}
+//		
+		MultipartFile activityImage = activity.getActivityImage();
 		String originalFilename = activityImage.getOriginalFilename();
-		ac.setFileName(originalFilename);
+		System.out.println("originalFilename:" +originalFilename);
+		activity.setFileName(originalFilename);
 		if (activityImage != null && !activityImage.isEmpty()) {
 			try {
 				byte[] b = activityImage.getBytes();
 				Blob blob = new SerialBlob(b);
-				ac.setPicture(blob);
+				activity.setPicture(blob);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -91,7 +120,7 @@ public class ActivityController {
 			File imageFolder = new File(rootDirectory, "activityimages");
 			if (!imageFolder.exists())
 				imageFolder.mkdirs();
-			File file = new File(imageFolder, ac.getActivityId() + ext);
+			File file = new File(imageFolder, activity.getActivityId() + ext);
 			activityImage.transferTo(file);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -99,9 +128,9 @@ public class ActivityController {
 		return "redirect: activities";
 	}
 
-	@RequestMapping(value = "/getPicture/{activityId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/ActivitygetPicture/{activityId}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPitcure(HttpServletResponse resp, @PathVariable Integer activityId) {
-		String filePath = "/views/activityimages/wine.jpg";
+		String filePath = "/WEB-INF/views/activityimages/wine.jpg";
 		byte[] media = null;
 		HttpHeaders headers = new HttpHeaders();
 		String filename = "";
@@ -152,24 +181,46 @@ public class ActivityController {
 		return b;
 	}
 
+	@RequestMapping("/activities/{category}")
+	public String getActivityByCategory(@PathVariable("category") String category, Model model) {
+		List<Activity> activities = service.getActivityByCategory(category);
+		model.addAttribute("activities", activities);
+		return "activities";
+	}
+	
+	@RequestMapping(value = "/activityQuery/${activityId}" ,method = RequestMethod.DELETE)
+	public String deleteActivity(@PathVariable Integer activityId, Activity activity,
+			HttpServletRequest req ) {
+		service.deleteActivityById(activityId);
+		return "redirect:" + req.getContextPath() +"/activityQuery";
+	}
+	
+	@RequestMapping(value = "/activityQuery/${activityId}" ,method = RequestMethod.PUT)
+	public String updateActivity(@PathVariable Integer activityId, Activity activity,
+			HttpServletRequest req) {
+		service.updateActivity(activity);
+		return "redirect:" + req.getContextPath() +"/activityQuery";
+	}
+	
+	@ModelAttribute("categoryList")
+	public List<String> getCategoryList(){
+		return service.getAllActivityCategories();
+	}
+	
+	
 //	public void whiteListing(WebDataBinder binder) {
-//		binder.setAllowedFields("activityimage");
+//		binder.setAllowedFields("activityimage","eventName","eventDate","address",
+//				"introduction","activities","information","eventCreateTime"
+//				);
 //	}
 
 //	@RequestMapping("/queryByCategory")
 //	public String getAllCategoryList(Model model) {
-//		List<String> list = service.getAllCategories();
+//		List<String> list = service.getAllActivityCategories();
 //		model.addAttribute("categoryList", list);
-//		return "types/category";
-//	}
-//	
-//	@RequestMapping("/activities/{category}")
-//	public String getActivityByCategory(@PathVariable("category") String category, Model model) {
-//		List<Activity> activities = service.getActivityByCategory(category);
-//		model.addAttribute("activities", activities);
 //		return "activities";
-//		
 //	}
+	
 
 //	@RequestMapping("")
 //	public String getAddNewActivityForm(Model model) {

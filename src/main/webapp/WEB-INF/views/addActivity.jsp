@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix='form' uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +22,14 @@
 			活動簡介:<form:input path='introduction' /><p>
 			活動介紹<form:input path='activities' /><p>
 			活動資訊<form:input path='information' /><p>
-			建立時間<form:input path='eventCreateTime' /><p>
+			
+			活動分類
+			<form:select path="category">
+			<form:option value="-1" >請選擇分類
+							</form:option>
+			<form:options items="${categoryList}" />
+			</form:select>
+			
 			
 			<div class='col-lg-10'>
 				<form:input id="activityImage" path="activityImage" type='file'

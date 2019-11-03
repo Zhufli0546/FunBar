@@ -11,7 +11,8 @@
 <jsp:include page="header.jsp" />
 
 <div class="container" style="margin-top: 150px ;width:60%">
-        <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+        <img class="img-fluid rounded" src="<c:url value='/ActivitygetPicture/${activity.activityId }'/>">
+        
 
         <hr>
 

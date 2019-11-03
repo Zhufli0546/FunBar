@@ -13,11 +13,14 @@ public interface ActivityDao {
 
 	public void addActivity(Activity activity);
 	
-//	List<String> getAllCategories();
-//	
-//	List<Activity> getActivityByCategory(String category);
-//	
-//	
+	List<String> getAllActivityCategories();
+	
+	List<Activity> getActivityByCategory(String category);
+	
+	public void updateActivity(Activity activity);
+	
+	public void deleteActivityById(int activityId);
+
 //	public EventCategory getCategoryById(int categoryId);
 //	
 //	List<EventCategory> getCategoryList();

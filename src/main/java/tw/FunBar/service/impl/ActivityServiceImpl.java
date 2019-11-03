@@ -39,18 +39,31 @@ public class ActivityServiceImpl implements ActivityService {
 		dao.addActivity(activity);
 	}
 	
-//	@Transactional
-//	@Override
-//	public List<String> getAllCategories() {
-//		return dao.getAllCategories();
-//	}
-//	
-//	@Transactional
-//	@Override
-//	public List<Activity> getActivityByCategory(String category) {
-//		return dao.getActivityByCategory(category);
-//	}
-//	
+	@Transactional
+	@Override
+	public List<String> getAllActivityCategories() {
+		return dao.getAllActivityCategories();
+	}
+	
+	@Transactional
+	@Override
+	public List<Activity> getActivityByCategory(String category) {
+		return dao.getActivityByCategory(category);
+	}
+
+	@Transactional
+	@Override
+	public void updateActivity(Activity activity) {
+		dao.updateActivity(activity);
+		
+	}
+	
+	@Transactional
+	@Override
+	public void deleteActivityById(int activityId) {
+		dao.deleteActivityById(activityId);
+		
+	}
 //
 //	@Transactional
 //	@Override
@@ -63,6 +76,7 @@ public class ActivityServiceImpl implements ActivityService {
 //	public List<EventCategory> getCategoryList() {
 //		return dao.getCategoryList();
 //	}
+
 
 
 }

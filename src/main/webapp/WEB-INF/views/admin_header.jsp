@@ -77,6 +77,11 @@
           <i class="fas fa-fw fa-table"></i>
           <span>hij</span></a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="activityQuery">
+          <i class="fas fa-fw fa-table"></i>
+          <span>活動管理</span></a>
+      </li>
     </ul>
 </body>
 </html>

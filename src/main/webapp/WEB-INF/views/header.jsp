@@ -76,6 +76,8 @@
 								<li><a href="discuss">討論區</a></li>
 								
 								<li><a href="admin">後台管理</a></li>
+								
+								<li><a href="activities">熱門活動</a></li>
 							</ul>
 						</nav>
 					</div>
