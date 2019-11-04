@@ -1,5 +1,6 @@
 package tw.FunBar.service.impl;
 
+import java.sql.Blob;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,23 +37,25 @@ public class OrderHandleServiceImpl implements OrderHandleService{
 		return dao.getProductById(productId);
 	}
 
-	@Transactional
-	@Override
-	public void deleteProduct(ProductBean pb) {
-		dao.deleteProduct(pb);	
-	}
-
-//	@Transactional
-//	@Override
-//	public void updateProduct(int prodId, double discount, int stock) {
-//		dao.updateProduct(prodId, discount, stock);
-//	}
 
 
 	@Transactional
 	@Override
-	public void updateProduct(ProductBean pb) {
-		dao.updateProduct(pb);
+	public ProductBean deleteProduct(Integer productId) {
+		return dao.deleteProduct(productId);		
 	}
+
+
+
+
+	@Transactional
+	@Override
+	public void updateProduct(Integer productId, String productNo, Blob productCover,String productDetail, String productName,
+			 String category, Double discount, Integer stock) {
+		 dao.updateProduct(productId, productNo, productCover,productDetail, productName, category, discount, stock);
+		
+	}
+	
+	
 	
 }
