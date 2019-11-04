@@ -13,8 +13,8 @@ public class Like implements Serializable {
 
 	@Id
 	private Integer likeId;
-	private Integer postId;
 	private Integer memberId;
+	private Integer postId;
 
 	public Integer getPostId() {
 		return postId;

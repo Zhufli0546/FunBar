@@ -11,7 +11,7 @@ public interface DiscussService {
 	
 	void createPost(Post post);
 
-	List<Like> getAllLike();
+	Integer getLikeByPostId(int postId);
 
 	void createLike(Like like);
 	
