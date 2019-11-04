@@ -35,6 +35,7 @@
 	
 }
 
+
 .calendar1 {
 	width: 300px;
 	margin: 5px 5px;
@@ -336,9 +337,9 @@ color:blue;
 	<jsp:include page="admin_header.jsp" />
 	
 	
-	<div id="today_status" style="height:550px"></div>
+	<div id="today_status" style="height:590px"></div>
 	
-	<div class="calendar" style="border:1px solid #003C9D;border-radius:5px;margin-top:35px">
+	<div class="calendar" style="border:1px solid #003C9D;border-radius:5px;margin-top:50px">
 
 			選擇訂位日期:
 			<div class="title">
@@ -366,7 +367,7 @@ color:blue;
 
 		</div>
 
-		<div class="calendar1" style="margin-top:35px">
+		<div class="calendar1" style="margin-top:50px">
 			選擇人數: <select id="slc" class="text" style="text-align: center">
 
 	<c:forEach var="i" begin="1" end="50" step="1">
@@ -379,6 +380,6 @@ color:blue;
 		
 	<jsp:include page="admin_footer.jsp" />
 	
-		<script src="<c:url value="/js/booking.js"/>"></script>
+		<script src="<c:url value="/js/ad_booking.js"/>"></script>
 </body>
 </html>

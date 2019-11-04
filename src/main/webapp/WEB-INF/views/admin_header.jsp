@@ -77,8 +77,8 @@
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">######</h6>
 					<a class="dropdown-item" href="allbooking">查詢所有訂位</a> <a
-						class="dropdown-item" href="admin/booking">來電訂位</a> <a
-						class="dropdown-item" href="#">Forgot Password</a>
+						class="dropdown-item" href="ad_booking">來電訂位</a> <a
+						class="dropdown-item" href="reset_time_people">重設時段及人數</a>
 				</div></li>
 
 			<li class="nav-item dropdown"><a

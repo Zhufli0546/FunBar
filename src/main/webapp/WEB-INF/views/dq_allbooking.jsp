@@ -48,8 +48,8 @@ function del() {var msg ="是否刪除";if (confirm(msg)==true){return true;}els
 <td>${b.time}</td>
 <td>${b.people}</td>
 <td>${b.phone}</td>
-<td><a href="cancelBooking?id=${b.booking_id}&date=${b.date}&phone=${b.phone}"><button class="button" type="button" onclick="return confirm('是否刪除');">取消訂位</button></a></td>
-<td><a href="pullSingle?id=${b.booking_id}&date=${b.date}&phone=${b.phone}"><button class="button" type="button">更改訂位</button></a></td>
+<td><a href="cancelBooking?id=${b.booking_id}"><button class="button" type="button" onclick="return confirm('是否刪除');">取消訂位</button></a></td>
+<td><a href="pullSingle?id=${b.booking_id}"><button class="button" type="button">更改訂位</button></a></td>
 </tr>
 </c:forEach>
 </tbody>
@@ -96,7 +96,7 @@ $("#D").click(function(){
 							+"</tr>";
 						}
 					txt += "</tbody></table>";
-					
+
 					
 					$("#ch").html(txt);
 				}
