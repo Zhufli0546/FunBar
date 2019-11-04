@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import tw.FunBar.dao.BlogDAO;
 import tw.FunBar.model.Blog;
 import tw.FunBar.model.Category;
+import tw.FunBar.model.Comment;
 import tw.FunBar.service.BlogService;
 
 @Service
@@ -42,6 +43,11 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public Blog findByIdBlog(int id) {
 		return blogDao.findByIdBlog(id);
+	}
+
+	@Override
+	public List<Comment> getComments() {
+		return blogDao.getComments();
 	}
 
 }

@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -26,16 +25,20 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
-import javassist.Loader.Simple;
 import tw.FunBar.model.Blog;
 import tw.FunBar.model.Category;
+import tw.FunBar.model.Comment;
 import tw.FunBar.service.BlogService;
+import tw.FunBar.service.CommentService;
 import tw.FunBar.util.JSONFileUpload;
 
 @Controller
 public class BlogController {
 	@Autowired
 	BlogService blogService;
+	
+	@Autowired
+	CommentService CommentService;
 	
 	@Autowired
 	ServletContext context;
@@ -144,7 +147,10 @@ public class BlogController {
 	@RequestMapping("/blog/{id}")
 	public String blog(@PathVariable Integer id, Model model) {
 		Blog blog = blogService.findByIdBlog(id);
+		List<Comment> comments = CommentService.findCommentByBlog(id);
+		
 		model.addAttribute("blog", blog);
+		model.addAttribute("comments", comments);
 		return "showBlog";
 	}
 }
