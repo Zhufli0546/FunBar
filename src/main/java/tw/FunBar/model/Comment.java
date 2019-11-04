@@ -1,7 +1,6 @@
 package tw.FunBar.model;
 
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -30,17 +30,26 @@ public class Comment {
 	@Transient
 	private Integer commentStatus;
 
-	@JsonIgnoreProperties("blogComments")
+	@JsonIgnoreProperties("comments")
 	@ManyToOne
 	@JoinColumn(name = "BLOGID")
 	private Blog blog;
 
+	@JsonIgnoreProperties("parentComment")
 	@OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
+	@OrderBy("commentCreatedTime ASC")
 	private Set<Comment> replyComment = new LinkedHashSet<Comment>();
 
+
+	@JsonIgnoreProperties("replyComment")
 	@ManyToOne
 	@JoinColumn(name = "PARENTCOMMENTID")
 	private Comment parentComment;
+
+	@Transient
+	private Integer blogId;
+	
+//	private Member memberId;
 
 	public int getCommentId() {
 		return commentId;
@@ -114,5 +123,12 @@ public class Comment {
 		this.parentComment = parentComment;
 	}
 
-	//	private Integer memberId;
+	public Integer getBlogId() {
+		return blogId;
+	}
+
+	public void setBlogId(Integer blogId) {
+		this.blogId = blogId;
+	}
+	
 }
