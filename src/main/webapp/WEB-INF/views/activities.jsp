@@ -20,10 +20,9 @@
 			<div class="col-lg-3">
 
 				<div class="list-group" style="width: 120px">
-				<a href="addActivity" class="list-group-item">新增活動</a> 
-					<a href="activities" class="list-group-item">所有活動</a>
+					<a href="${pageContext.request.contextPath}/activities" class="list-group-item">所有活動</a>
 					<c:forEach var="category" items="${categoryList}">
-						<a href="activities/${category}" class="list-group-item">${category}</a>
+						<a href="${pageContext.request.contextPath}/activities/${category}" class="list-group-item">${category}</a>
 					</c:forEach>
 
 				</div>

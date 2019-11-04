@@ -22,9 +22,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,52 +49,49 @@ public class ActivityController {
 		this.context = context;
 	}
 
-	@RequestMapping(value= {"/activities"})
+	//查詢多筆
+	@RequestMapping(value= {"activities"})
 	public String list(Model model) {
-		List<String> list1 = service.getAllActivityCategories();
-		model.addAttribute("categoryList", list1);
-		List<Activity> list = service.getAllActivities();
-		model.addAttribute("activities", list);
+		List<String> list = service.getAllActivityCategories();
+		model.addAttribute("categoryList", list);
+		List<Activity> activity = service.getAllActivities();
+		model.addAttribute("activities", activity);
 		
 		return "activities";
 	}
 	
-	@RequestMapping(value= { "/activityQuery"})
+	//活動管理查詢
+	@RequestMapping(value= { "activityQuery"})
 	public String Management(Model model) {
-		List<String> list1 = service.getAllActivityCategories();
-		model.addAttribute("categoryList", list1);
-		List<Activity> list = service.getAllActivities();
-		model.addAttribute("activities", list);
+		List<Activity> activity = service.getAllActivities();
+		model.addAttribute("activities", activity);
 		
 		return "activityQuery";
 	}
 
-	@RequestMapping("/activity")
+	//查詢單筆
+	@RequestMapping(value= {"/activity"})
 	public String getActivity(@RequestParam("id") Integer id, Model model) {
 		model.addAttribute("activity", service.getActivity(id));
 		return "activity";
 	}
+	
+	@RequestMapping(value= {"/activityUpdate"})
+	public String getActivity1(@RequestParam("id") Integer id, Model model) {
+		model.addAttribute("activity", service.getActivity(id));
+		return "activityUpdate";
+	}
 
+	//新增資料 送回新增資料的表單
 	@RequestMapping(value = "/addActivity", method = RequestMethod.GET)
 	public String input(Model model) {
 		model.addAttribute("activity", new Activity());
 		return "addActivity";
 	}
-
-//	@RequestMapping(value = "/activities", method = RequestMethod.POST)
-//	public String addActivity(Activity activity) {
-//		service.addActivity(activity);
-//		return "redirect: activities";
-//	}
 	
-	
+	//新增資料、圖片
 	@RequestMapping(value = "activities", method = RequestMethod.POST)
-	public String addActivity(@ModelAttribute("activity") Activity activity) {
-//		String[] suppressedFields = result.getSuppressedFields();
-//		if (suppressedFields.length > 0) {
-//			throw new RuntimeException("嘗試傳入不允許的欄位: " + StringUtils.arrayToCommaDelimitedString(suppressedFields));
-//		}
-//		
+	public String addActivity(@ModelAttribute("activity") Activity activity) {		
 		MultipartFile activityImage = activity.getActivityImage();
 		String originalFilename = activityImage.getOriginalFilename();
 		System.out.println("originalFilename:" +originalFilename);
@@ -125,9 +119,10 @@ public class ActivityController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect: activities";
+		return "redirect:/activities";
 	}
 
+	//讀取資料庫圖片
 	@RequestMapping(value = "/ActivitygetPicture/{activityId}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPitcure(HttpServletResponse resp, @PathVariable Integer activityId) {
 		String filePath = "/WEB-INF/views/activityimages/wine.jpg";
@@ -181,6 +176,7 @@ public class ActivityController {
 		return b;
 	}
 
+	//分類查詢
 	@RequestMapping("/activities/{category}")
 	public String getActivityByCategory(@PathVariable("category") String category, Model model) {
 		List<Activity> activities = service.getActivityByCategory(category);
@@ -188,61 +184,64 @@ public class ActivityController {
 		return "activities";
 	}
 	
-	@RequestMapping(value = "/activityQuery/${activityId}" ,method = RequestMethod.DELETE)
+	@RequestMapping(value = "/activities/{activityId}" ,method = RequestMethod.DELETE)
 	public String deleteActivity(@PathVariable Integer activityId, Activity activity,
 			HttpServletRequest req ) {
 		service.deleteActivityById(activityId);
-		return "redirect:" + req.getContextPath() +"/activityQuery";
+		return "redirect:" + req.getContextPath() +"/activities";
 	}
 	
-	@RequestMapping(value = "/activityQuery/${activityId}" ,method = RequestMethod.PUT)
-	public String updateActivity(@PathVariable Integer activityId, Activity activity,
-			HttpServletRequest req) {
-		service.updateActivity(activity);
-		return "redirect:" + req.getContextPath() +"/activityQuery";
+	@RequestMapping(value = "/activityQuery", method = RequestMethod.POST)
+	public String updateActivity(@RequestParam(value="activityId",required=false)int activityId,
+			@RequestParam("eventName") String eventName,
+			@RequestParam("eventDate") String eventDate,
+			@RequestParam("address") String address,
+			@RequestParam("introduction") String introduction,
+			@RequestParam("activities") String activities,
+			@RequestParam("information") String information,
+			@RequestParam("category") String category,
+			@RequestParam("activityImage") MultipartFile activityImage,Model model) throws IOException, SerialException, SQLException {
+		
+		
+		byte[] b1 = activityImage.getBytes();
+		Blob blob = new SerialBlob(b1);
+		
+		service.updateActivity(activityId, eventName, eventDate, address, introduction, activities, information, category, blob);
+		
+		return "redirect:/activityQuery";
 	}
+	
+	
+	
+//	@RequestMapping(value = "/activityQuery", method = RequestMethod.POST)
+//	public String updateActivity(@RequestParam(value="activityId",required=false)int activityId,
+//			@RequestParam("eventName") String eventName, Model model) {
+//		service.updateActivity(activityId, eventName);
+//		return "redirect:/activityQuery";
+//	}
+	
+//	// 顯示單筆活動資料，然後導向更新畫面
+//		@RequestMapping(value = "/activityQuery/{activityId}", method = RequestMethod.GET)
+//		public String findActivity(@PathVariable Integer activityId, Model model) {
+//			Activity activity = service.getActivity(activityId);
+//			model.addAttribute(activity);
+//			return "/activityUpdate1";
+//		}
+//		
+//	@RequestMapping(value = "/activityQuery/{activityId}" ,method = RequestMethod.PUT)
+//	public String updateActivity(@PathVariable Integer activityId,@RequestBody Activity activity,
+//			HttpServletRequest req) {
+//		service.updateActivity(activity);
+//		return "redirect:" + req.getContextPath() +"/activityQuery";
+//	}
 	
 	@ModelAttribute("categoryList")
 	public List<String> getCategoryList(){
 		return service.getAllActivityCategories();
 	}
 	
-	
-//	public void whiteListing(WebDataBinder binder) {
-//		binder.setAllowedFields("activityimage","eventName","eventDate","address",
-//				"introduction","activities","information","eventCreateTime"
-//				);
-//	}
 
-//	@RequestMapping("/queryByCategory")
-//	public String getAllCategoryList(Model model) {
-//		List<String> list = service.getAllActivityCategories();
-//		model.addAttribute("categoryList", list);
-//		return "activities";
-//	}
-	
 
-//	@RequestMapping("")
-//	public String getAddNewActivityForm(Model model) {
-//		Activity ac = new Activity();
-//		model.addAttribute("Activity", ac);
-//		return "addActivity";
-//	}
-//	
-//	@RequestMapping(value = "" ,method = RequestMethod.GET)
-//	public String processAddNewActivityForm(@ModelAttribute("activity") Activity ac) {
-//		service.addActivity(ac);
-//		return "addActivity";
-//	}
-//	
-//	@ModelAttribute("")
-//	public Map<Integer, String> getEventCategoryList(){
-//		 Map<Integer, String> categorymap = new HashMap<>();
-//		 List<EventCategory> list = service.getCategoryList();
-//		 for(EventCategory ec : list) {
-//			 categorymap.put(ec.getCategoryId(), ec.getCategoryName());
-//		 }
-//		 return categorymap;
-//	}
+
 
 }
