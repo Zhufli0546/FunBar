@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import tw.FunBar.dao.DiscussDAO;
-import tw.FunBar.model.Like;
+import tw.FunBar.model.LikePost;
 import tw.FunBar.model.Post;
 import tw.FunBar.service.DiscussService;
 
@@ -36,18 +36,22 @@ public class DiscussServiceImpl implements DiscussService {
 		
 	}
 
+	@Transactional
+	@Override
+	public long getLikeByPostId(Integer postId) {
+		return dao.getLikeByPostId(postId);
+	}
 	
 	@Transactional
 	@Override
-	public void createLike(Like like) {
-		dao.createLike(like);
+	public void addLike(LikePost like) {
+		dao.addLike(like);
 	}
 
 	@Transactional
 	@Override
-	public Integer getLikeByPostId(int postId) {
-		return dao.getLikeByPostId(postId);
+	public void unLike(LikePost like) {
+		dao.unLike(like);
+		
 	}
-	
-	
 }

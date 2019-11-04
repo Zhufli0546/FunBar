@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import tw.FunBar.dao.DiscussDAO;
-import tw.FunBar.model.Like;
+import tw.FunBar.model.LikePost;
 import tw.FunBar.model.Post;
 
 @Repository
@@ -51,23 +51,34 @@ public class DiscussDAOImpl implements DiscussDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Integer getLikeByPostId(int postId) {
-		Integer count = 0;
-		String hql = "SELECT COUNT(DISTINCT postId) FROM Like WHERE postId = :postId";
+	public long getLikeByPostId(Integer postId) {
+		long count = 0;
+		String hql = "SELECT COUNT(DISTINCT memberId) FROM LikePost WHERE postId = :postId";
 		Session session = factory.getCurrentSession();
-//		System.out.println("Checkpoint" + session.createQuery(hql));
-		List<Integer> list = session.createQuery(hql).setParameter("postId", postId).list();
-		System.out.println(list);
-		if (list.size() > 0) {
-			count = list.get(0);
-		}
+		List<Long> list = session.createQuery(hql).setParameter("postId", postId).getResultList();
+		System.out.println(list.get(0));
+		count = list.get(0);
 		return count;
 	}
 
 	@Override
-	public void createLike(Like like) {
+	public void addLike(LikePost like) {
 		Session session = factory.getCurrentSession();
+//		int id = (int) (Math.floor(Math.random() * 99999999) + 10000000);
+//		LikePost like = new LikePost();
+//		like.setMemberId(id);
 		session.save(like);
 	}
+
+	@Override
+	public void unLike(LikePost like) {
+		String hql = "DELETE FROM LikePost WHERE postId = :postId AND memberId = :memberId";
+		Session session = factory.getCurrentSession();
+		session.createQuery(hql).setParameter("postId", like.getLikePK().getPostId())
+		.setParameter("memberId", like.getLikePK().getMemberId()).executeUpdate();
+		
+	}
+	
+	
 
 }

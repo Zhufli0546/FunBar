@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import tw.FunBar.model.LikePK;
+import tw.FunBar.model.LikePost;
 import tw.FunBar.model.Post;
 import tw.FunBar.service.DiscussService;
 
@@ -39,14 +41,39 @@ public class DiscussController {
 //		model.addAttribute("like",listLike);
 		return "discuss";
 	}
-
+	
+	@RequestMapping(value = "/discuss", method = RequestMethod.POST)
+	public String processCreatePost(@ModelAttribute("Post") Post post) {
+		service.createPost(post);
+		return "redirect:/discuss";
+	}
+	
 	@GetMapping(value = "Like")
-	public @ResponseBody Integer getLikes(@RequestParam(value = "postId") Integer postId) {
-		Integer count = service.getLikeByPostId(postId);
+	public @ResponseBody long getLikes(@RequestParam(value = "postId") Integer postId) {
+		long count = service.getLikeByPostId(postId);
 		return count;
-		
-//		List<Like> list = service.getAllLike();
-//		return list;
+	}
+
+	@GetMapping(value = "addLike")
+	public @ResponseBody void addLike(@RequestParam(value = "postId") Integer postId,
+			@RequestParam(value = "memberId") Integer memberId) {
+		LikePK likepk = new LikePK();
+		likepk.setPostId(postId);
+		likepk.setMemberId(memberId);
+		LikePost like = new LikePost();
+		like.setLikePK(likepk);;
+		service.addLike(like);
+	}
+	
+	@GetMapping(value = "unLike")
+	public @ResponseBody void unLike(@RequestParam(value = "postId") Integer postId,
+			@RequestParam(value = "memberId") Integer memberId) {
+		LikePK likepk = new LikePK();
+		likepk.setPostId(postId);
+		likepk.setMemberId(memberId);
+		LikePost like = new LikePost();
+		like.setLikePK(likepk);;
+		service.unLike(like);
 	}
 
 //	 @GetMapping("/discuss") 
@@ -55,11 +82,7 @@ public class DiscussController {
 //	     return "discuss"; 
 //	 }
 
-	@RequestMapping(value = "/discuss", method = RequestMethod.POST)
-	public String processCreatePost(@ModelAttribute("Post") Post post) {
-		service.createPost(post);
-		return "redirect:/discuss";
-	}
+
 
 //	 @RequestMapping(value = "/discuss", method = RequestMethod.POST)
 //	 public String createLike(@ModelAttribute("Like") Like like) {
