@@ -6,12 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.script.ScriptContext;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.rowset.serial.SerialBlob;
 
@@ -31,20 +28,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
 import tw.FunBar.model.ProductBean;
 import tw.FunBar.service.OrderHandleService;
 import tw.FunBar.service.ShoppingService;
 
 @Controller
 public class ShoppingController {
-	@Autowired
 	ShoppingService shoppingService;
+	@Autowired
+	public void setShoppingService(ShoppingService shoppingService) {
+		this.shoppingService = shoppingService;
+	}
 	
 	@Autowired
 	OrderHandleService orderService;
+	public void setOrderHandleService(OrderHandleService orderService) {
+		this.orderService = orderService;
+	}
 
-	@Autowired
 	ServletContext context;
+	@Autowired
+	public void setContext(ServletContext context) {
+		this.context = context;
+	}
 
 	@RequestMapping("/shoppingCart")
 	public String shoppingCart(Model model) {
