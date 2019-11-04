@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
@@ -21,7 +22,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,36 +49,58 @@ public class ActivityController {
 		this.context = context;
 	}
 
-	@RequestMapping("/activities")
+	//查詢多筆
+	@RequestMapping(value= {"activities"})
 	public String list(Model model) {
-		List<Activity> list = service.getAllActivities();
-		model.addAttribute("activities", list);
+		List<String> list = service.getAllActivityCategories();
+		model.addAttribute("categoryList", list);
+		List<Activity> activity = service.getAllActivities();
+		model.addAttribute("activities", activity);
+		
 		return "activities";
 	}
+	
+	//活動管理查詢
+	@RequestMapping(value= { "activityQuery"})
+	public String Management(Model model) {
+		List<Activity> activity = service.getAllActivities();
+		model.addAttribute("activities", activity);
+		
+		return "activityQuery";
+	}
 
-	@RequestMapping("/activity")
+	//查詢單筆
+	@RequestMapping(value= {"/activity"})
 	public String getActivity(@RequestParam("id") Integer id, Model model) {
 		model.addAttribute("activity", service.getActivity(id));
 		return "activity";
 	}
+	
+	@RequestMapping(value= {"/activityUpdate"})
+	public String getActivity1(@RequestParam("id") Integer id, Model model) {
+		model.addAttribute("activity", service.getActivity(id));
+		return "activityUpdate";
+	}
 
+	//新增資料 送回新增資料的表單
 	@RequestMapping(value = "/addActivity", method = RequestMethod.GET)
 	public String input(Model model) {
 		model.addAttribute("activity", new Activity());
 		return "addActivity";
 	}
-
-	@RequestMapping(value = "/activities", method = RequestMethod.POST)
-	public String addActivity(Activity activity) {
-		Activity ac = new Activity();
-		MultipartFile activityImage = ac.getActivityImage();
+	
+	//新增資料、圖片
+	@RequestMapping(value = "activities", method = RequestMethod.POST)
+	public String addActivity(@ModelAttribute("activity") Activity activity) {		
+		MultipartFile activityImage = activity.getActivityImage();
 		String originalFilename = activityImage.getOriginalFilename();
-		ac.setFileName(originalFilename);
+		System.out.println("originalFilename:" +originalFilename);
+		activity.setFileName(originalFilename);
 		if (activityImage != null && !activityImage.isEmpty()) {
 			try {
 				byte[] b = activityImage.getBytes();
 				Blob blob = new SerialBlob(b);
-				ac.setPicture(blob);
+				activity.setPicture(blob);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -91,17 +114,18 @@ public class ActivityController {
 			File imageFolder = new File(rootDirectory, "activityimages");
 			if (!imageFolder.exists())
 				imageFolder.mkdirs();
-			File file = new File(imageFolder, ac.getActivityId() + ext);
+			File file = new File(imageFolder, activity.getActivityId() + ext);
 			activityImage.transferTo(file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect: activities";
+		return "redirect:/activities";
 	}
 
-	@RequestMapping(value = "/getPicture/{activityId}", method = RequestMethod.GET)
+	//讀取資料庫圖片
+	@RequestMapping(value = "/ActivitygetPicture/{activityId}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPitcure(HttpServletResponse resp, @PathVariable Integer activityId) {
-		String filePath = "/views/activityimages/wine.jpg";
+		String filePath = "/WEB-INF/views/activityimages/wine.jpg";
 		byte[] media = null;
 		HttpHeaders headers = new HttpHeaders();
 		String filename = "";
@@ -152,46 +176,72 @@ public class ActivityController {
 		return b;
 	}
 
-//	public void whiteListing(WebDataBinder binder) {
-//		binder.setAllowedFields("activityimage");
+	//分類查詢
+	@RequestMapping("/activities/{category}")
+	public String getActivityByCategory(@PathVariable("category") String category, Model model) {
+		List<Activity> activities = service.getActivityByCategory(category);
+		model.addAttribute("activities", activities);
+		return "activities";
+	}
+	
+	@RequestMapping(value = "/activities/{activityId}" ,method = RequestMethod.DELETE)
+	public String deleteActivity(@PathVariable Integer activityId, Activity activity,
+			HttpServletRequest req ) {
+		service.deleteActivityById(activityId);
+		return "redirect:" + req.getContextPath() +"/activities";
+	}
+	
+	@RequestMapping(value = "/activityQuery", method = RequestMethod.POST)
+	public String updateActivity(@RequestParam(value="activityId",required=false)int activityId,
+			@RequestParam("eventName") String eventName,
+			@RequestParam("eventDate") String eventDate,
+			@RequestParam("address") String address,
+			@RequestParam("introduction") String introduction,
+			@RequestParam("activities") String activities,
+			@RequestParam("information") String information,
+			@RequestParam("category") String category,
+			@RequestParam("activityImage") MultipartFile activityImage,Model model) throws IOException, SerialException, SQLException {
+		
+		
+		byte[] b1 = activityImage.getBytes();
+		Blob blob = new SerialBlob(b1);
+		
+		service.updateActivity(activityId, eventName, eventDate, address, introduction, activities, information, category, blob);
+		
+		return "redirect:/activityQuery";
+	}
+	
+	
+	
+//	@RequestMapping(value = "/activityQuery", method = RequestMethod.POST)
+//	public String updateActivity(@RequestParam(value="activityId",required=false)int activityId,
+//			@RequestParam("eventName") String eventName, Model model) {
+//		service.updateActivity(activityId, eventName);
+//		return "redirect:/activityQuery";
 //	}
-
-//	@RequestMapping("/queryByCategory")
-//	public String getAllCategoryList(Model model) {
-//		List<String> list = service.getAllCategories();
-//		model.addAttribute("categoryList", list);
-//		return "types/category";
-//	}
-//	
-//	@RequestMapping("/activities/{category}")
-//	public String getActivityByCategory(@PathVariable("category") String category, Model model) {
-//		List<Activity> activities = service.getActivityByCategory(category);
-//		model.addAttribute("activities", activities);
-//		return "activities";
+	
+//	// 顯示單筆活動資料，然後導向更新畫面
+//		@RequestMapping(value = "/activityQuery/{activityId}", method = RequestMethod.GET)
+//		public String findActivity(@PathVariable Integer activityId, Model model) {
+//			Activity activity = service.getActivity(activityId);
+//			model.addAttribute(activity);
+//			return "/activityUpdate1";
+//		}
 //		
+//	@RequestMapping(value = "/activityQuery/{activityId}" ,method = RequestMethod.PUT)
+//	public String updateActivity(@PathVariable Integer activityId,@RequestBody Activity activity,
+//			HttpServletRequest req) {
+//		service.updateActivity(activity);
+//		return "redirect:" + req.getContextPath() +"/activityQuery";
 //	}
+	
+	@ModelAttribute("categoryList")
+	public List<String> getCategoryList(){
+		return service.getAllActivityCategories();
+	}
+	
 
-//	@RequestMapping("")
-//	public String getAddNewActivityForm(Model model) {
-//		Activity ac = new Activity();
-//		model.addAttribute("Activity", ac);
-//		return "addActivity";
-//	}
-//	
-//	@RequestMapping(value = "" ,method = RequestMethod.GET)
-//	public String processAddNewActivityForm(@ModelAttribute("activity") Activity ac) {
-//		service.addActivity(ac);
-//		return "addActivity";
-//	}
-//	
-//	@ModelAttribute("")
-//	public Map<Integer, String> getEventCategoryList(){
-//		 Map<Integer, String> categorymap = new HashMap<>();
-//		 List<EventCategory> list = service.getCategoryList();
-//		 for(EventCategory ec : list) {
-//			 categorymap.put(ec.getCategoryId(), ec.getCategoryName());
-//		 }
-//		 return categorymap;
-//	}
+
+
 
 }

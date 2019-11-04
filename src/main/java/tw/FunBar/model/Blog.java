@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -34,7 +35,7 @@ public class Blog {
 	@JoinColumn(name = "CATEGORYID")
 	private Category category;
 
-	@JsonIgnoreProperties("blog")
+	@JsonIgnore
 	@OneToMany(mappedBy = "blog", cascade = CascadeType.ALL)
 	private Set<Comment> comments = new LinkedHashSet<Comment>();
 

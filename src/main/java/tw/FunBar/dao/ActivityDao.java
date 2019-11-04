@@ -1,9 +1,11 @@
 package tw.FunBar.dao;
 
+import java.sql.Blob;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import tw.FunBar.model.Activity;
-import tw.FunBar.model.EventCategory;
 
 public interface ActivityDao {
 	
@@ -13,13 +15,18 @@ public interface ActivityDao {
 
 	public void addActivity(Activity activity);
 	
-//	List<String> getAllCategories();
-//	
-//	List<Activity> getActivityByCategory(String category);
-//	
-//	
-//	public EventCategory getCategoryById(int categoryId);
-//	
-//	List<EventCategory> getCategoryList();
+	List<String> getAllActivityCategories();
+	
+	List<Activity> getActivityByCategory(String category);
+	
+	public void updateActivity(int activityId, String eventName, String eventDate, String address, String introduction,
+			String activities, String information, String category, Blob blob);
+	
+//	public void updateActivity(int activityId, String eventName);
+	
+//	public void updateActivity(Activity activity);
+	
+	public void deleteActivityById(int activityId);
+
 	
 }
