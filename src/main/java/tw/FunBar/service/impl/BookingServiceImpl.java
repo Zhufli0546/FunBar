@@ -55,6 +55,51 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 
+	@Override
+	public void resetTimePeople(String time0, String time1, String time2, String time3, String time4, String time5,
+			String time6, String time7, String time8, Integer people0, Integer people1, Integer people2,
+			Integer people3, Integer people4, Integer people5, Integer people6, Integer people7, Integer people8) {
+			
+		bookingDAO.resetTimePeople(time0,time1,time2,time3,time4,time5,
+			time6,time7,time8,people0,people1,people2,people3,people4,people5,people6,people7,people8);
+	}
+
+
+	@Override
+	public void cancelBooking(Integer id) {
+		bookingDAO.cancelBooking(id);
+	}
+
+
+	@Override
+	public BookingData pullSingle(Integer id) {
+		
+		return bookingDAO.pullSingle(id);
+	}
+
+
+	@Override
+	public void modifyBooking(Integer id, String name, String phone, String date, String time, Integer people,
+			String remark) {
+		bookingDAO.modifyBooking(id,name,phone,date,time,people,remark);
+		
+	}
+
+
+	@Override
+	public ArrayList<Alltime> dateQuery(String date) {
+		return bookingDAO.dateQuery(date);
+		
+	}
+
+
+	@Override
+	public ArrayList<Alltime> phoneQuery(String phone) {
+		return bookingDAO.phoneQuery(phone);
+	}
+
+
+
 
 
 
