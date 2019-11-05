@@ -84,21 +84,30 @@ $("#D").click(function(){
 
 				},
 			success:function(data){
+
+				if(data.length == 0){
+
 					console.log(data);
-					txt +="<thead><tr><th>訂單編號<th>訂位人<th>性別<th>訂位日期<th>訂位時間<th>訂位人數<th>手機<th>取消訂位<th>更改訂位</tr></thead><tbody>";
-					for(let i=0;i<data.length;i++){
-							txt += "<tr><td>"+data[i].booking_id+"</td><td>"
-							+data[i].name+"</td><td>"+data[i].sex+"</td><td>"
-							+data[i].date+"</td><td>"+data[i].time+"</td><td>"
-							+data[i].people+"</td><td>"+data[i].phone+"</td><td>"
-							+"<a href='cancelBooking?id="+data[i].booking_id+"'><button class='button' type='button'"+"onclick='return del()'"+">取消訂位</button></a></td>"
-							+"<td><a href='pullSingle?id="+data[i].booking_id+"'><button class='button' type='button'>更改訂位</button></a></td>"
-							+"</tr>";
+							
+					}else{
+
+						console.log(data);
+						txt +="<thead><tr><th>訂單編號<th>訂位人<th>性別<th>訂位日期<th>訂位時間<th>訂位人數<th>手機<th>取消訂位<th>更改訂位</tr></thead><tbody>";
+						for(let i=0;i<data.length;i++){
+								txt += "<tr><td>"+data[i].booking_id+"</td><td>"
+								+data[i].name+"</td><td>"+data[i].sex+"</td><td>"
+								+data[i].date+"</td><td>"+data[i].time+"</td><td>"
+								+data[i].people+"</td><td>"+data[i].phone+"</td><td>"
+								+"<a href='cancelBooking?id="+data[i].booking_id+"'><button class='button' type='button'"+"onclick='return del()'"+">取消訂位</button></a></td>"
+								+"<td><a href='pullSingle?id="+data[i].booking_id+"'><button class='button' type='button'>更改訂位</button></a></td>"
+								+"</tr>";
+							}
+						txt += "</tbody></table>";
+						
+						
+						$("#ch").html(txt);
 						}
-					txt += "</tbody></table>";
 					
-					
-					$("#ch").html(txt);
 				}
 
 
@@ -119,21 +128,29 @@ $("#P").click(function(){
 
 				},
 			success:function(data){
-					console.log(data);
-					txt +="<thead><tr><th>訂單編號<th>訂位人<th>性別<th>訂位日期<th>訂位時間<th>訂位人數<th>手機<th>取消訂位<th>更改訂位</tr></thead><tbody>";
-					for(let i=0;i<data.length;i++){
-							txt += "<tr><td>"+data[i].booking_id+"</td><td>"
-							+data[i].name+"</td><td>"+data[i].sex+"</td><td>"
-							+data[i].date+"</td><td>"+data[i].time+"</td><td>"
-							+data[i].people+"</td><td>"+data[i].phone+"</td><td>"
-							+"<a href='cancelBooking?id="+data[i].booking_id+"'><button class='button' type='button'"+"onclick='return del()'"+">取消訂位</button></a></td>"
-							+"<td><a href='pullSingle?id="+data[i].booking_id+"'><button class='button' type='button'>更改訂位</button></a></td>"
-							+"</tr>";
-						}
-					txt += "</tbody></table>";
 
+				if(data.length == 0){
+					console.log(data);
+					}else{
+
+						console.log(data);
+						txt +="<thead><tr><th>訂單編號<th>訂位人<th>性別<th>訂位日期<th>訂位時間<th>訂位人數<th>手機<th>取消訂位<th>更改訂位</tr></thead><tbody>";
+						for(let i=0;i<data.length;i++){
+								txt += "<tr><td>"+data[i].booking_id+"</td><td>"
+								+data[i].name+"</td><td>"+data[i].sex+"</td><td>"
+								+data[i].date+"</td><td>"+data[i].time+"</td><td>"
+								+data[i].people+"</td><td>"+data[i].phone+"</td><td>"
+								+"<a href='cancelBooking?id="+data[i].booking_id+"'><button class='button' type='button'"+"onclick='return del()'"+">取消訂位</button></a></td>"
+								+"<td><a href='pullSingle?id="+data[i].booking_id+"'><button class='button' type='button'>更改訂位</button></a></td>"
+								+"</tr>";
+							}
+						txt += "</tbody></table>";
+
+						
+						$("#ch").html(txt);
+
+						}
 					
-					$("#ch").html(txt);
 				}
 
 

@@ -34,4 +34,6 @@ public class ShoppingServiceImpl implements ShoppingService{
 		return dao.getProductByCategory();
 	}
 
+	
+
 }
