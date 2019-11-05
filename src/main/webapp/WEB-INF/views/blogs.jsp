@@ -7,8 +7,17 @@
     <title>blog</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/blog.css"/>">
 </head>
+<style>
+.box {
+	width: 90%;
+	padding: 5px 15px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    transition: 1s;
+}
+</style>
 <body>
 <!-- Header -->
 <jsp:include page="header.jsp" />
@@ -24,6 +33,7 @@
             <button type="button" class="btn btn-light page-btn">全部文章</button>
         </div>
     </div>
+    <ul id="show" class="pagination"></ul>
 </div>
 
 <!-- Modal -->
