@@ -106,8 +106,8 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">######</h6>
-					<a class="dropdown-item" href="activityQuery">活動管理</a> 
-					<a class="dropdown-item" href="addActivity">新增活動</a> 
+					<a class="dropdown-item" href="<c:url value='/activityQuery' />">活動管理</a> 
+					<a class="dropdown-item" href="<c:url value='/addActivity' />">新增活動</a>
 				</div></li>
 
 				<!-- 討論區後台 -->

@@ -12,4 +12,5 @@ public interface ShoppingDAO {
 	 
 	 List <ProductBean> getProductByCategory();
 	 
+	 
 }
