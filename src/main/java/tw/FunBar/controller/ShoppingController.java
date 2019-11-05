@@ -53,11 +53,11 @@ public class ShoppingController {
 		this.context = context;
 	}
 
-	@RequestMapping("/shoppingCart")
+	@RequestMapping("/s_showProducts_front")
 	public String shoppingCart(Model model) {
 		List<ProductBean> show = shoppingService.getAllProducts();
-		model.addAttribute("all", show);
-		return "shoppingCart";
+		model.addAttribute("allProducts", show);
+		return "s_showProducts_front";
 	}
 	
 	

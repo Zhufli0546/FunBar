@@ -91,7 +91,7 @@
 <p>庫存數量:${pb.stock}</p>
 
 <div>
-<p><a href="<spring:uri value='pb?id=${pb.productId}'/>" class="btn btn-success btnMargin">修改</a></p>
+<p><a href="<spring:url value='pb?id=${pb.productId}'/>" class="btn btn-success btnMargin">修改</a></p>
 
 </div>
 
