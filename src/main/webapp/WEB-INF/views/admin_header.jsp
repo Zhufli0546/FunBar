@@ -109,6 +109,19 @@
 					<a class="dropdown-item" href="activityQuery">活動管理</a> 
 					<a class="dropdown-item" href="addActivity">新增活動</a> 
 				</div></li>
+
+				<!-- 討論區後台 -->
+				<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" href="#" id="pagesDropdown"
+				role="button" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="false"> <i class="fas fa-fw fa-folder"></i> <span>討論區</span>
+			</a>
+				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
+					<h6 class="dropdown-header">Discuss</h6>
+					<a class="dropdown-item" href="#">好友系統</a> <a
+						class="dropdown-item" href="#">貼文管理</a> <a
+						class="dropdown-item" href="#"></a>
+				</div></li>
 		</ul>
 </body>
 </html>
