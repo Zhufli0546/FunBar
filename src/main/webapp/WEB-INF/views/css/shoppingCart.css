@@ -17,7 +17,7 @@
 	margin: 1%;
 }
 
-<<<<<<< HEAD
+
 .jumbotron {
 	position: relative;
 	padding: 20px;
@@ -33,7 +33,7 @@
 	height: 25px;
 	font-weight: bold;
 	color: #000;
-=======
+	}
 
 .prodlist {
 	float: left;
@@ -50,8 +50,6 @@
 	font-size:20px;
 	font-weight:bold;
 	color:#000;
-	
->>>>>>> 45b3dac5352c7baa8ac5c0c9ee105ea4c0e666a7
 }
 
 .prodlist img {
