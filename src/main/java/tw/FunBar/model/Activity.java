@@ -26,7 +26,9 @@ public class Activity {
 	private String information;
 	private Blob picture;
 	private String fileName;
+	@Transient
 	private String eventCreateTime;
+	private String category;
 	
 	@Transient
 	private MultipartFile activityImage;
@@ -116,6 +118,14 @@ public class Activity {
 	}
 	public void setEventCreateTime(String eventCreateTime) {
 		this.eventCreateTime = eventCreateTime;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	
 }

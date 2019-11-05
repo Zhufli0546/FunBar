@@ -56,8 +56,9 @@
 				<div class="wrap_header trans-0-3">
 					<!-- Logo -->
 					<div class="logo">
-						<a href="index.html"> <img src="<c:url value='/images/icons/logo.png' />"
-							alt="IMG-LOGO" data-logofixed="<c:url value='/images/icons/logo2.png' />">
+						<a href="index.html"> <img
+							src="<c:url value='/images/icons/logo.png' />" alt="IMG-LOGO"
+							data-logofixed="<c:url value='/images/icons/logo2.png' />">
 						</a>
 					</div>
 
@@ -70,12 +71,18 @@
 								<li><a href="shoppingCart">購物區</a></li>
 
 								<li><a href="booking">線上訂位</a></li>
-								
+
 								<li><a href="${pageContext.request.contextPath}/blogs">部落格</a></li>
 
 								<li><a href="discuss">討論區</a></li>
-								
+
 								<li><a href="admin">後台管理</a></li>
+								
+								<li><a href="signin">登入</a></li>
+								
+								<li><a href="showAllmember">註冊</a></li>
+								
+								<li><a href="activities">熱門活動</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -112,7 +119,8 @@
 			<li class="t-center m-b-13"><a href="about.html" class="txt19">About</a>
 			</li>
 
-			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/blogs" class="txt19">部落格</a>
+			<li class="t-center m-b-13"><a
+				href="${pageContext.request.contextPath}/blogs" class="txt19">部落格</a>
 			</li>
 
 			<li class="t-center m-b-33"><a href="contact.html" class="txt19">Contact</a>

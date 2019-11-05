@@ -8,69 +8,11 @@
 <title>購物區</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="<c:url value="/css/shoppingCarts.css" />" rel="stylesheet">
+<link href="<c:url value="/css/shoppingCart.css" />" rel="stylesheet">
 </head>
-<style>
-* {
-	font-family: 微軟正黑體;
-}
-
-.page {overflow: hidden;}
-
-.prodlist {
-	float: left;
-	width: 18%;
-	min-height: 360px;
-	padding: 5px;
-	text-align: center;
-	margin: 0 auto;
-	border: 1px dashed black;
-	margin: 1%;
-}
-
-.jumbotron {
-	position: relative;
-	padding: 20px;
-}
-
-.jumbotron .username {
-	position: absolute;
-	right: 10px;
-	bottom: 2.5px;
-}
-
-.prodlist {
-	float: left;
-	width: 18%;
-	min-height: 360px;
-	padding: 5px;
-	text-align: center;
-	margin: 0 auto;
-	border: 1px dashed black;
-	margin: 1%;
-}
 
 
-.prodlist .prodtitle {
-	height: 25px;
-	font-weight:bold;
-	color:#000;
-}
-
-
-.prodlist img {
-	display: block;
-	width: 50%;
-	height: 200px;
-	margin: 0 auto;
-}
-
-.btnMargin {margin-top: 10px;}
-
-
-</style>
 <body>
-
 <jsp:include page="header.jsp" />
 
 <!-- Content 區塊 -->
@@ -84,7 +26,7 @@
 <p class="prodtitle">${pb.productName}</p>
 
 <figure>
-	<img src="<c:url value='/getPicture/${pb.productCover}'/>" />
+	<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />
 </figure>
 
 <figcaption>
@@ -102,7 +44,7 @@
 </select>
 </div>
 
-<button type="submit" class="btn btn-success btnMargin">加入購物車</button>
+<button type="submit" class="button">加入購物車</button>
 </form>
 </figcaption>
 

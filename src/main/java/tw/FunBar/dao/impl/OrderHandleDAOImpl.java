@@ -1,5 +1,6 @@
 package tw.FunBar.dao.impl;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
@@ -15,6 +16,7 @@ import tw.FunBar.model.ProductBean;
 public class OrderHandleDAOImpl implements OrderHandleDAO{
 		@Autowired
 		SessionFactory sessionFactory;
+
 		
 	@Override
 	public List<OrderBean> orderSetup() {
@@ -38,34 +40,42 @@ public class OrderHandleDAOImpl implements OrderHandleDAO{
 	}
 
 
-//	@Override
-//	public void updateProduct(int prodId, double discount, int stock) {
-//		String hql = "Update ProductBean Set discount= :discount,stock= :stock Where productId= :productId";
-//		Session session = sessionFactory.getCurrentSession();
-//		int n = session.createQuery(hql)
-//				.setParameter("discount", discount)
-//				.setParameter("stok", stock)
-//				.setParameter("productId", prodId)
-//				.executeUpdate();
-//	}
-//	
-	
-	@Override
-	public void updateProduct(ProductBean pb) {
-		String hql = "Update ProductBean Set productName= :productName, productDetail= :productDetail,category= :category, discount= :discount, Where productId= :productId";
-		Session session = sessionFactory.getCurrentSession();
-		session.update(pb);
-	}
-
-	
 
 	@Override
-	public void deleteProduct(ProductBean pb) {
-		String hql = "Delete From ProductBean where productId = :productId";
-		Session session = sessionFactory.getCurrentSession();
+	public ProductBean deleteProduct(Integer productId) {
+//		String hql = "Delete From ProductBean where productId = :productId";
+		Session session = sessionFactory.getCurrentSession();	
+		ProductBean pb = session.get(ProductBean.class,productId);
 		session.delete(pb);
+		return pb;
 		
 	}
+
+
+
+
+	@Override
+	public void updateProduct(Integer productId, String productNo, Blob productCover, String productDetail,String productName,
+			 String category, Double discount, Integer stock) {
+		
+		System.out.print(productDetail);
+		String hql = "Update ProductBean Set productName= :productName, productDetail= :productDetail,productImage= :productImage ,category= :category, discount= :discount,stock= :stock,productNo = :productNo Where productId= :id";
+		Session session = sessionFactory.getCurrentSession();
+		session.createQuery(hql)	
+				.setParameter("productName", productName)
+				.setParameter("productDetail", productDetail)
+				.setParameter("productImage", productCover)
+				.setParameter("category", category)	
+				.setParameter("discount", discount)
+				.setParameter("stock", stock)
+				.setParameter("productNo",productNo)
+				.setParameter("id", productId)
+				.executeUpdate();	
+		
+	}
+
+
+	
 
 	
 
