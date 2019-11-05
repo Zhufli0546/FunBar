@@ -118,7 +118,7 @@ function day() {
     for (var i = 0; i < lis.length; i++) {
     	
         lis[i].onclick = function () {
-        	$("#slc")[0].selectedIndex = 0;
+        	//$("#slc")[0].selectedIndex = 0;
             $("#days li").removeClass("add");
             $(this).addClass("add");
 
@@ -127,32 +127,6 @@ function day() {
             var txt;
 //            document.getElementById("abc").value = date;
 //            document.getElementById("slc").value = 1;
-            $.ajax({
-                url: "http://localhost:8080" + url + "pulltime",
-                data: {
-                    date: date,
-                    people: 1
-                },
-                type: "POST",
-                dataType: "JSON",
-                success: function (data) {
-                   txt = "";
-                		
-                   for (let i = 0; i < data.length; i++) {
-                    	
-                        txt += "<form method='POST' action='confirm'>";
-                        txt += "<input type='hidden' name='date' value="+date+">";
-                        txt += "<input type='hidden' name='people' value="+1+">";
-                        txt += "<button class='button'  id='button' type='submit' name='time' value="+data[i].time+"><span>"+data[i].time+"</span></button>";
-                        txt += "</form>";
-                    }
-                    
-                   
-                    $("#time").html(txt);
-                    
-                }
-
-            });
     }
       
     }
@@ -161,39 +135,6 @@ function day() {
 
 
 
-var p;
-$("#slc").change(function () {
-	
 
-	 p =$(this).children('option:selected').val()
-	
-	
-    $.ajax({
-
-        url: "http://localhost:8080" + url + "pulltime",
-        data: {
-            date: date,
-            people: p
-        },
-        type: "POST",
-        dataType: "JSON",
-        success: function (data) {
-            txt = "";
-    		
-            for (let i = 0; i < data.length; i++) {
-             	
-                 txt += "<form method='POST' action='confirm'>";
-                 txt += "<input type='hidden' name='date' value="+date+">";
-                 txt += "<input type='hidden' name='people' value="+p+">";
-                 txt += "<button class='button'  id='button' type='submit' name='time' value="+data[i].time+"><span>"+data[i].time+"</span></button>";
-                 txt += "</form>";
-             }
-             
-            
-             $("#time").html(txt);
-        }
-    })
-
-});
 console.log(today);
 $("#days li").get(today).click();
