@@ -71,6 +71,8 @@
 								<li><a href="s_showProducts_front">購物區</a></li>
 
 								<li><a href="booking">線上訂位</a></li>
+								
+								<li><a href="booking_room">線上訂房</a></li>
 
 								<li><a href="${pageContext.request.contextPath}/blogs">部落格</a></li>
 

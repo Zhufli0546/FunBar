@@ -50,4 +50,9 @@ public class BlogServiceImpl implements BlogService {
 		return blogDao.getComments();
 	}
 
+	@Override
+	public List<Blog> queryAllBlogsByASC() {
+		return blogDao.queryAllBlogsByASC();
+	}
+
 }

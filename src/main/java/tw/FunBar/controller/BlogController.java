@@ -153,4 +153,12 @@ public class BlogController {
 		model.addAttribute("comments", comments);
 		return "showBlog";
 	}
+	
+	@RequestMapping("/admin_blog")
+	public String adminBlog(Model model) {
+		List<Blog> blogs = blogService.queryAllBlogsByASC();
+
+		model.addAttribute("blogs", blogs);
+		return "admin_blog";
+	}
 }

@@ -49,6 +49,8 @@ public class ShoppingDAOImpl implements ShoppingDAO{
 		list = session.createQuery(hql).setParameter("category", category).getResultList();
 		return list;
 	}
+
+	
 	
 
 }

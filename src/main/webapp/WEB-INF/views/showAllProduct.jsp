@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"  %>
+<%-- <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"  %> --%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,63 +10,11 @@
 <title>顯示所有商品</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="<c:url value="/css/shoppingCarts.css" />" rel="stylesheet">
+<link href="<c:url value="/css/shoppingCart.css" />" rel="stylesheet">
 </head>
-<style>
-* {
-	font-family: 微軟正黑體;
-}
-
-.page {overflow: hidden;}
-
-.prodlist {
-	float: left;
-	width: 18%;
-	min-height: 360px;
-	padding: 5px;
-	text-align: center;
-	margin: 0 auto;
-	border: 1px dashed black;
-	margin: 1%;
-}
-
-.jumbotron {
-	position: relative;
-	padding: 20px;
-}
-
-.jumbotron .username {
-	position: absolute;
-	right: 10px;
-	bottom: 2.5px;
-}
-
-.prodlist {
-	float: left;
-	width: 18%;
-	min-height: 360px;
-	padding: 5px;
-	text-align: center;
-	margin: 0 auto;
-	border: 1px dashed black;
-	margin: 1%;
-}
-
-.prodlist .prodtitle {
-	height: 25px;
-}
-
-.prodlist img {
-	display: block;
-	width: 50%;
-	height: 200px;
-	margin: 0 auto;
-}
-
-.btnMargin {margin-top: 10px;}
 
 
-</style>
+
 <body>
 
 <jsp:include page="admin_header.jsp" />
@@ -75,32 +24,43 @@
 <div class="container page">
 	<c:forEach var="pb" items="${all}">
 <div class="prodlist">
-
+<p>${pb.productId}</p>
 <p>${pb.productNo}</p>
 <p>${pb.productDetail}</p>
 <p class="prodtitle">${pb.productName}</p>
 
 <figure>
-	<img src="<c:url value='/getPicture/${pb.productCover}'/>" />
+	<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />
 </figure>
 
-<figcaption>
 
+<p>分類: ${pb.category}</p>
 <p>建議售價: $${pb.unitPrice}</p>
 <p>折扣:${pb.discount}</p>
 <p>庫存數量:${pb.stock}</p>
 
+<<<<<<< HEAD
 <div>
 <p><a href="<spring:url value='pb?id=${pb.productId}'/>" class="btn btn-success btnMargin">修改</a></p>
 
 </div>
+=======
+>>>>>>> 45b3dac5352c7baa8ac5c0c9ee105ea4c0e666a7
 
-<form method="post" class="form-group row" action="<c:url value='/deleteProduct' />" >
-<input type="submit" value="刪除" clas="btn btn-success btnMargin"/>
+<form method="post" class="form-group row" action="<c:url value='/deleteProduct?id=${pb.productId}'/>" >
+<input type="submit" value="刪除" class="button"/>
 <input type="hidden" value="${pb.productId}" name="productId"  />
 </form>
 
-</figcaption>
+<%-- <p><a href="<c:url value='/update?id=${pb.productId}'/>" class="button">修改</a></p> --%>
+
+
+<form method="get" class="form-group row" action="<c:url value='update?id=${pb.productId}'/>" >
+<input type="submit" value="修改" class="button" />
+<input type="hidden" name="id" value="${pb.productId}" >
+</form>
+
+
 
 </div>
 </c:forEach>

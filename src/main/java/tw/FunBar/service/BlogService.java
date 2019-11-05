@@ -9,6 +9,8 @@ import tw.FunBar.model.Comment;
 public interface BlogService {
 	public List<Blog> queryAllBlogs();
 	
+	public List<Blog> queryAllBlogsByASC();
+	
 	public Blog findByIdBlog(int id);
 
 	public void insertBlog(Blog blog);

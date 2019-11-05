@@ -2,18 +2,15 @@ package tw.FunBar.dao.impl;
 
 import java.util.List;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import net.bytebuddy.asm.Advice.ArgumentHandler.Factory;
 import tw.FunBar.dao.BlogDAO;
 import tw.FunBar.model.Blog;
 import tw.FunBar.model.Category;
 import tw.FunBar.model.Comment;
-import tw.FunBar.service.BlogService;
 
 @Repository
 public class BlogDAOImpl implements BlogDAO {
@@ -45,7 +42,7 @@ public class BlogDAOImpl implements BlogDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Blog> queryAllBlogs() {
-		String hql = "From Blog";
+		String hql = "From Blog Order By blogCreatedTime DESC";
 		Session session = sessionFactory.getCurrentSession();
 		List<Blog> blogs = (List<Blog>)session.createQuery(hql).getResultList();
 		return blogs;
@@ -64,6 +61,14 @@ public class BlogDAOImpl implements BlogDAO {
 		Session session = sessionFactory.getCurrentSession();
 		List<Comment> comments = (List<Comment>)session.createQuery(hql).getResultList();
 		return comments;
+	}
+
+	@Override
+	public List<Blog> queryAllBlogsByASC() {
+		String hql = "From Blog Order By blogCreatedTime ASC";
+		Session session = sessionFactory.getCurrentSession();
+		List<Blog> blogs = (List<Blog>)session.createQuery(hql).getResultList();
+		return blogs;
 	}
 
 }
