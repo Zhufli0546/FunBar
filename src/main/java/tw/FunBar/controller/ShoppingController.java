@@ -61,6 +61,12 @@ public class ShoppingController {
 		return "shoppingCart";
 	}
 	
+//	@RequestMapping(value = "/cart", method = RequestMethod.POST) 
+//    public String someAction(@ModelAttribute("cpu") ProductBean cpu, Model model) { 
+//     model.addAttribute("cpu", cpu); 
+//     return "cart"; 
+//    } 
+	
 	//----------後台功能----------
 	
 	
