@@ -1,11 +1,12 @@
 var requestUrl = "/FunBar/";
 var blogTemplate = "<div class='row blogMargin box'><div class='col-md-5'><img src='{{blogImage}}' /></div><div class='col-md-7'><div class='blog-title'>{{blogTitle}}</div><p><span>{{blogUser}}</span><span>{{blogCreatedTime}}</span><span>文章分類:{{categoryName}}</span></p><div class='blog-content'  data-id='{{data-id}}'>{{blogContent}}</div></div></div>";
-let clickArray = new Array();
 let pageRow = 5;
 let pageRowStart = 0;
 let pageRowEnd = 5;
 let tododata;
 let now = 1;
+
+// init()
 $.ajax({
 	url: "http://localhost:8080" + requestUrl + "blogJson",
 	method: "POST",
@@ -13,12 +14,11 @@ $.ajax({
 	success: function (res) {
 		tododata = res.blogs;
 		init();
-		
 	}
 })
 
 function init() {
-	blogs = tododata;
+	let blogs = tododata;
 	// 每頁最多筆數 ex: 第一頁最大筆數為10
     let maxRow = now * pageRow;
 
@@ -62,6 +62,26 @@ function init() {
     });
 }
 
+// categoryinit()
+$(".categoryClick").click(function() {
+	let categoryId = $(this).data("category");
+	$.ajax({
+		url: "http://localhost:8080" + requestUrl + "blogsByCategoryId/" + categoryId,
+		method: "POST",
+		dataType: "JSON",
+		success: function(res) {
+			tododata = res.blogsByCategory;
+			$(".blogs").html("");
+	        $("#show").html("");
+
+	        // 回歸第一頁
+	        now = 1;
+	        console.log("目前頁數" + now);
+			init();
+		}
+	})
+})
+
 
 function hiddenContent() {
 	$(".blog-title").each(function() {
@@ -98,3 +118,17 @@ function preview(input) {
 $('#blog_img').on('change', function () {
 	preview(this);
 });
+
+$(".allBlogs").click(function() {
+	$(".blogs").html("");
+    $("#show").html("");
+    $.ajax({
+    	url: "http://localhost:8080" + requestUrl + "blogJson",
+    	method: "POST",
+    	dataType: "JSON",
+    	success: function (res) {
+    		tododata = res.blogs;
+    		init();
+    	}
+    })
+})
