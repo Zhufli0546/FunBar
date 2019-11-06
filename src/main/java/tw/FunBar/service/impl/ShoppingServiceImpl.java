@@ -28,6 +28,12 @@ public class ShoppingServiceImpl implements ShoppingService{
 	public List<ProductBean> getAllProducts() {
 		return dao.getAllProducts();
 	}
+	
+	@Transactional
+	@Override
+	public List<ProductBean> getProductById(int productId) {
+		return dao.getProductById(productId);
+	}
 
 	@Transactional
 	@Override
@@ -40,7 +46,6 @@ public class ShoppingServiceImpl implements ShoppingService{
 	public List<ProductBean> getProductByCategory(String category) {
 		return dao.getProductByCategory(category);
 	}
-
 	
 
 }

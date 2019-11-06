@@ -21,6 +21,15 @@ public class ShoppingDAOImpl implements ShoppingDAO{
 	}
 	
 
+	public List<ProductBean> getProductById(int productId){
+		String hql = "From ProductBean where productId = :productId";
+		Session session = null;
+		List<ProductBean> list = new ArrayList<>();
+		session = factory.getCurrentSession();
+		list = session.createQuery(hql).getResultList();
+		return list;
+	}
+	
 	@Override
 	public List<ProductBean> getAllProducts() {
 		String hql = "From ProductBean";

@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
@@ -30,6 +31,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import tw.FunBar.model.Cart;
+import tw.FunBar.model.CartItem;
 import tw.FunBar.model.ProductBean;
 import tw.FunBar.service.OrderHandleService;
 import tw.FunBar.service.ShoppingService;
@@ -61,12 +64,14 @@ public class ShoppingController {
 		return "shoppingCart";
 	}
 	
-//	@RequestMapping(value = "/cart", method = RequestMethod.POST) 
-//    public String someAction(@ModelAttribute("cpu") ProductBean cpu, Model model) { 
-//     model.addAttribute("cpu", cpu); 
-//     return "cart"; 
-//    } 
 	
+//	@RequestMapping(value = "/cart", method = RequestMethod.POST) 
+//    public String addCart(@RequestParam ProductBean proxduct,
+//    					  @RequestParam Integer count) { 
+//		
+//		return "redirect:/showAllProduct"; 
+//    } 
+
 	//----------後台功能----------
 	
 	

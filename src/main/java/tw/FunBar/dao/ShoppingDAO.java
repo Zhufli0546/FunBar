@@ -8,6 +8,8 @@ public interface ShoppingDAO {
 	
 	 List <ProductBean> getAllProducts();
 	 
+	 List <ProductBean> getProductById(int productId);
+	 
 	 List <String> getAllCategories();
 	 
 	 List <ProductBean> getProductByCategory(String category);
