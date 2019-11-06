@@ -18,7 +18,7 @@
 <!-- Content 區塊 -->
 
 <div class="container page">
-	<c:forEach var="pb" items="${all}">
+	<c:forEach var="pb" items="${allProducts}">
 <div class="prodlist">
 
 <p>${pb.productNo}</p> 

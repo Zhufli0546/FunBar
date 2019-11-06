@@ -2,7 +2,6 @@ package tw.FunBar.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,8 +13,12 @@ import tw.FunBar.model.ProductBean;
 
 @Repository
 public class ShoppingDAOImpl implements ShoppingDAO{
-	@Autowired
 	SessionFactory factory;
+	
+	@Autowired
+	public void setFactory(SessionFactory factory) {
+		this.factory = factory;
+	}
 	
 
 	@Override
@@ -33,14 +36,18 @@ public class ShoppingDAOImpl implements ShoppingDAO{
 		String hql = "Select Distict category from ProductBean";
 		Session session = factory.getCurrentSession();
 		List<String> list = new ArrayList<>();
-		
-		return null;
+		list = session.createQuery(hql).getResultList();
+		return list;
 	}
 
+
 	@Override
-	public List<ProductBean> getProductByCategory() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ProductBean> getProductByCategory(String category) {
+		String hql = "From ProductBean WHERE category = :category";
+		List<ProductBean> list = new ArrayList<>();
+		Session session = factory.getCurrentSession();
+		list = session.createQuery(hql).setParameter("category", category).getResultList();
+		return list;
 	}
 
 	

@@ -39,6 +39,10 @@
 <p>折扣:${pb.discount}</p>
 <p>庫存數量:${pb.stock}</p>
 
+<div>
+<p><a href="<spring:url value='pb?id=${pb.productId}'/>" class="btn btn-success btnMargin">修改</a></p>
+
+</div>
 
 <form method="post" class="form-group row" action="<c:url value='/deleteProduct?id=${pb.productId}'/>" >
 <input type="submit" value="刪除" class="button"/>
