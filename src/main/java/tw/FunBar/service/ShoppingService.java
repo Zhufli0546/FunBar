@@ -6,7 +6,7 @@ import tw.FunBar.model.ProductBean;
 
 public interface ShoppingService {
 	
-	List <ProductBean> getAllProducts();
+	 List <ProductBean> getAllProducts();
 	 
 	 List <String> getAllCategories();
 	 

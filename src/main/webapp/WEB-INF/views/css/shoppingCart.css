@@ -18,6 +18,23 @@
 }
 
 
+.jumbotron {
+	position: relative;
+	padding: 20px;
+}
+
+.jumbotron .username {
+	position: absolute;
+	right: 10px;
+	bottom: 2.5px;
+}
+
+.prodlist .prodtitle {
+	height: 25px;
+	font-weight: bold;
+	color: #000;
+	}
+
 .prodlist {
 	float: left;
 	width: 18%;
@@ -33,7 +50,6 @@
 	font-size:20px;
 	font-weight:bold;
 	color:#000;
-	
 }
 
 .prodlist img {

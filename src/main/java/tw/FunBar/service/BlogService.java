@@ -17,6 +17,8 @@ public interface BlogService {
 
 	public List<Category> getCategories();
 
+	public List<Blog> findBlogsByCategoryId(int id);
+
 	public Category findByIdCategory(int id);
 	
 	public List<Comment> getComments();
