@@ -49,21 +49,15 @@ public class ShoppingController {
 
 	@RequestMapping("/shoppingCart")
 	public String shoppingCart(Model model) {
+		List<String> list = shoppingService.getAllCategories();
+		model.addAttribute("categoryList", list);
 		List<ProductBean> show = shoppingService.getAllProducts();
 		model.addAttribute("all", show);
 		return "shoppingCart";
 	}
 	
 	//----------後台功能----------
-	
-	
-	//刪除單筆資料
-	@RequestMapping("/deleteProduct")
-	public String deleteProduct(@RequestParam("id") Integer productId, Model model) {
-		model.addAttribute("pb", orderService.deleteProduct(productId));
-		return "redirect:/showAllProduct" ;
-	}
-	
+
 		
 	//後臺顯示所有商品
 	@RequestMapping("/showAllProduct")
@@ -72,6 +66,13 @@ public class ShoppingController {
 		model.addAttribute("all", show);
 		return "showAllProduct";
 	}
+	
+	//刪除單筆資料
+		@RequestMapping("/deleteProduct")
+		public String deleteProduct(@RequestParam("id") Integer productId, Model model) {
+			model.addAttribute("pb", orderService.deleteProduct(productId));
+			return "redirect:/showAllProduct" ;
+		}
 
 	//點擊"修改"按鈕單筆查詢該資料
 	@RequestMapping("/update")
@@ -93,9 +94,9 @@ public class ShoppingController {
 								@RequestParam("stock")Integer stock,
 								@RequestParam("productNo") String productNo, Model model) throws IOException, SerialException, SQLException {
 					
-								System.out.print(productDetail);
-		byte[] c = productCover.getBytes();
-					Blob blob = new SerialBlob(c);
+//								System.out.print(productDetail);
+								byte[] c = productCover.getBytes();
+								Blob blob = new SerialBlob(c);
 		
 					orderService.updateProduct(productId,productNo,blob,productDetail, productName,category, discount, stock);
 					return "redirect:/showAllProduct";	
@@ -209,5 +210,18 @@ public class ShoppingController {
 		}
 		return b;
 	}
+	
+//	RequestMapping請求不能有多個相同路徑
+	
+//	依分類查詢商品
+	@RequestMapping("/shoppingCart/{category}")
+	public String getProductByCategory(@PathVariable("category")String category, Model model ) {
+		List <ProductBean> products = shoppingService.getProductByCategory(category);
+		model.addAttribute("category", products);
+		 return "shoppingCart";		
+	}
+	
+	
+	
 	
 }

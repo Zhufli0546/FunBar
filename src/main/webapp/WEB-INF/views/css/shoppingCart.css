@@ -43,22 +43,38 @@
 	margin: 0 auto;
 }
 
-.button {
+.button-add {
 	margin: 0 auto;
 	padding:5px 10px;
 	background-color: #01B468;
 	color: #fff;
 	outline: none;
-	border-radius: 5px;	
-	
+	border-radius: 5px;		
 }
 
 
-.button:hover{
+.button-add:hover{
 		background-color:#fff;
 		color:#019858;
-		text-decoration:none;
+		border:1px solid #019858;
 }
+
+.button-confirm {
+	margin: 0 auto;
+	padding:5px 10px;
+	background-color: #FF359A;
+	color: #fff;
+	outline: none;
+	border-radius: 5px;		
+}
+
+.button-confirm:hover{
+	background-color:#fff;
+	color:#FF359A;
+	border:1px solid #FF359A;
+}
+
+
 
 @media ( max-width : 960px) {
 	.prodlist {

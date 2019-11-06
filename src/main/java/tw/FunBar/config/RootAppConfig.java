@@ -28,7 +28,7 @@ public class RootAppConfig {
 	        } catch (PropertyVetoException e) {
 	            e.printStackTrace();
 	        }
-	        ds.setJdbcUrl("jdbc:sqlserver://localhost:1433;databaseName=FunBar");
+	        ds.setJdbcUrl("jdbc:sqlserver://localhost:1402;databaseName=FunBar");
 	        ds.setInitialPoolSize(4);
 	        ds.setMaxPoolSize(8);
 	        return ds;

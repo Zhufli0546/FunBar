@@ -10,7 +10,7 @@ public interface ShoppingDAO {
 	 
 	 List <String> getAllCategories();
 	 
-	 List <ProductBean> getProductByCategory();
+	 List <ProductBean> getProductByCategory(String category);
 	 
 	 
 }
