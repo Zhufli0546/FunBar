@@ -14,8 +14,10 @@ public interface BlogDAO {
 	public Blog findByIdBlog(int id);
 
 	public void insertBlog(Blog blog);
-
+	
 	public List<Category> getCategories();
+	
+	public List<Blog> findBlogsByCategoryId(int id);
 
 	public Category findByIdCategory(int id);
 	

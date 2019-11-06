@@ -55,4 +55,9 @@ public class BlogServiceImpl implements BlogService {
 		return blogDao.queryAllBlogsByASC();
 	}
 
+	@Override
+	public List<Blog> findBlogsByCategoryId(int id) {
+		return blogDao.findBlogsByCategoryId(id);
+	}
+
 }

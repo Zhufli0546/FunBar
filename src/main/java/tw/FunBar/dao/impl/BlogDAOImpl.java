@@ -71,4 +71,14 @@ public class BlogDAOImpl implements BlogDAO {
 		return blogs;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Blog> findBlogsByCategoryId(int id) {
+		String hql = "From Blog Where categoryId = :categoryId Order By blogCreatedTime DESC";
+		Session session = sessionFactory.getCurrentSession();
+		List<Blog> blogs = (List<Blog>)session.createQuery(hql)
+								.setParameter("categoryId", id).getResultList();
+		return blogs;
+	}
+
 }

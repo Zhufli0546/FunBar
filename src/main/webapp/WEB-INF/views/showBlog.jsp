@@ -13,6 +13,8 @@
 		max-height: auto !important;
 	}
 
+	.categoryBlock:hover { background-color: #eee;}
+
 	@media(max-width: 600px) {
 		.blogContent img {
 			max-width: 480px !important;
@@ -26,7 +28,7 @@
 	<!-- content 區塊 -->
 	<div style="padding: 50px" class="container row page animsition">
 		<!-- Post Content Column -->
-		<div class="col-md-7">
+		<div class="col-md-8" style="margin: 0 auto;">
 			<!-- Title -->
 			<h1 style="word-break: break-all;" class="mt-4">${blog.blogTitle}</h1>
 			<!-- Author -->
@@ -67,44 +69,6 @@
 			<div class="media mt-4 row">
 				<input type="text" id="replyComment" class="col-md-8 form-control" placeholder="請輸入評論訊息..." />
 				<button id="replySubmit" class="btn btn-primary">送出</button>
-			</div>
-		</div>
-
-		<!-- Sidebar Widgets Column -->
-		<div class="col-md-5">
-			<!-- Categories Widget -->
-			<div class="card my-4">
-				<h5 class="card-header">Categories</h5>
-				<div class="card-body">
-					<div class="row">
-						<div class="col-lg-6">
-							<ul class="list-unstyled mb-0">
-								<li>
-									<a href="#">Web Design</a>
-								</li>
-								<li>
-									<a href="#">HTML</a>
-								</li>
-								<li>
-									<a href="#">Freebies</a>
-								</li>
-							</ul>
-						</div>
-						<div class="col-lg-6">
-							<ul class="list-unstyled mb-0">
-								<li>
-									<a href="#">JavaScript</a>
-								</li>
-								<li>
-									<a href="#">CSS</a>
-								</li>
-								<li>
-									<a href="#">Tutorials</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
