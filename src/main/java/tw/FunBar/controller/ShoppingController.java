@@ -45,8 +45,8 @@ public class ShoppingController {
 		this.shoppingService = shoppingService;
 	}
 	
-	@Autowired
 	OrderHandleService orderService;
+	@Autowired
 	public void setOrderHandleService(OrderHandleService orderService) {
 		this.orderService = orderService;
 	}
