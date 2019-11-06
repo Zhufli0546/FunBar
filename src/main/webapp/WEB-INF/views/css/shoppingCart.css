@@ -12,28 +12,11 @@
 	min-height: 360px;
 	padding: 5px;
 	text-align: center;
-	margin: 0 auto;
+	margin: 0 auto ;
 	border: 1px dashed black;
 	margin: 1%;
 }
 
-
-.jumbotron {
-	position: relative;
-	padding: 20px;
-}
-
-.jumbotron .username {
-	position: absolute;
-	right: 10px;
-	bottom: 2.5px;
-}
-
-.prodlist .prodtitle {
-	height: 25px;
-	font-weight: bold;
-	color: #000;
-	}
 
 .prodlist {
 	float: left;
@@ -48,6 +31,7 @@
 
 .prodlist .prodtitle {
 	font-size:20px;
+	margin: 0 auto 5px;
 	font-weight:bold;
 	color:#000;
 }

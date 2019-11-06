@@ -5,15 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>購物區</title>
+<title>分類商品</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="<c:url value="/css/shoppingCart.css" />" rel="stylesheet">
 </head>
-<style>
 
-
-</style>
 
 <body>
 <jsp:include page="header.jsp" />
@@ -32,7 +29,8 @@
 
 
 <div class="container page">
-<c:forEach var="pb" items="${all}">
+
+<c:forEach var="pb" items="${category}">
 <div class="prodlist">
 <p>${pb.productNo}</p> 
 <p>${pb.productDetail}</p> 
@@ -59,7 +57,6 @@
 
 </div>	<!-- .prodlist -->
 </c:forEach>
-
 </form>
 </div> <!-- .container -->
 

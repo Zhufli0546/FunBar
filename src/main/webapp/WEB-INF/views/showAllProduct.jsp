@@ -81,7 +81,7 @@
 <td>${pb.stock}
 <td>
 <form method="post" class="form-group row" action="<c:url value='/deleteProduct?id=${pb.productId}'/>" >
-<input type="submit" value="刪除" class="button"/>
+<input type="submit" value="刪除" class="button" onclick="return confirm('確定刪除？');"/>
 <input type="hidden" value="${pb.productId}" name="productId"  />
 </form>
 

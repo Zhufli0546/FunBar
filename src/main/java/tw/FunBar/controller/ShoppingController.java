@@ -49,8 +49,6 @@ public class ShoppingController {
 
 	@RequestMapping("/shoppingCart")
 	public String shoppingCart(Model model) {
-		List<String> list = shoppingService.getAllCategories();
-		model.addAttribute("categoryList", list);
 		List<ProductBean> show = shoppingService.getAllProducts();
 		model.addAttribute("all", show);
 		return "shoppingCart";
@@ -211,16 +209,20 @@ public class ShoppingController {
 		return b;
 	}
 	
-//	RequestMapping請求不能有多個相同路徑
+//	*RequestMapping請求不能有多個相同路徑
 	
-//	依分類查詢商品
+//	依分類查詢商品(點擊分類連結進入分類商品頁面）
 	@RequestMapping("/shoppingCart/{category}")
 	public String getProductByCategory(@PathVariable("category")String category, Model model ) {
 		List <ProductBean> products = shoppingService.getProductByCategory(category);
 		model.addAttribute("category", products);
-		 return "shoppingCart";		
+		 return "showProductByCategory";		
 	}
 	
+	@ModelAttribute("categoryList")
+	public List<String> getAllCategories() {
+		return shoppingService.getAllCategories();
+	}
 	
 	
 	
