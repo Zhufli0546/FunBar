@@ -43,6 +43,7 @@
 <figcaption>
 <p>建議售價: $${pb.unitPrice}</p>
 <form class="form-group row" action="<c:url value='' />" method="post">
+
 <label for="selectCount" class="col-sm-6 col-xs-12">購買數量:</label>
 <div class="col-sm-6 col-xs-12">
 <select class="form-control" id="selectCount" name="count">
@@ -55,6 +56,7 @@
 </div>
 
 <button type="submit" class="button-add">加入購物車</button>
+
 </figcaption>
 
 </div>	<!-- .prodlist -->

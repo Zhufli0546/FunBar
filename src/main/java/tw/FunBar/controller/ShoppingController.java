@@ -32,6 +32,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
 import tw.FunBar.model.ProductBean;
 import tw.FunBar.service.OrderHandleService;
 import tw.FunBar.service.ShoppingService;
@@ -47,12 +49,38 @@ public class ShoppingController {
 	@Autowired
 	ServletContext context;
 
+	//---------前台功能-------	
+	
 	@RequestMapping("/shoppingCart")
 	public String shoppingCart(Model model) {
 		List<ProductBean> show = shoppingService.getAllProducts();
 		model.addAttribute("all", show);
 		return "shoppingCart";
 	}
+	
+//	*RequestMapping請求不能有多個相同路徑
+	
+//	依分類查詢商品(點擊分類連結進入分類商品頁面）
+	@RequestMapping("/shoppingCart/{category}")
+	public String getProductByCategory(@PathVariable("category")String category, Model model ) {
+		List <ProductBean> products = shoppingService.getProductByCategory(category);
+		model.addAttribute("category", products);
+		 return "showProductByCategory";		
+	}
+	
+	//取得所有分類
+	@ModelAttribute("categoryList")
+	public List<String> getAllCategories() {
+		return shoppingService.getAllCategories();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//----------後台功能----------
 
@@ -209,20 +237,7 @@ public class ShoppingController {
 		return b;
 	}
 	
-//	*RequestMapping請求不能有多個相同路徑
-	
-//	依分類查詢商品(點擊分類連結進入分類商品頁面）
-	@RequestMapping("/shoppingCart/{category}")
-	public String getProductByCategory(@PathVariable("category")String category, Model model ) {
-		List <ProductBean> products = shoppingService.getProductByCategory(category);
-		model.addAttribute("category", products);
-		 return "showProductByCategory";		
-	}
-	
-	@ModelAttribute("categoryList")
-	public List<String> getAllCategories() {
-		return shoppingService.getAllCategories();
-	}
+
 	
 	
 	
