@@ -6,9 +6,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.script.ScriptContext;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
@@ -29,54 +32,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
 import tw.FunBar.model.ProductBean;
 import tw.FunBar.service.OrderHandleService;
 import tw.FunBar.service.ShoppingService;
 
 @Controller
 public class ShoppingController {
-	ShoppingService shoppingService;
 	@Autowired
-	public void setShoppingService(ShoppingService shoppingService) {
-		this.shoppingService = shoppingService;
-	}
+	ShoppingService shoppingService;
 	
 	@Autowired
 	OrderHandleService orderService;
-	public void setOrderHandleService(OrderHandleService orderService) {
-		this.orderService = orderService;
-	}
 
-	ServletContext context;
 	@Autowired
-	public void setContext(ServletContext context) {
-		this.context = context;
-	}
+	ServletContext context;
 
 	@RequestMapping("/shoppingCart")
 	public String shoppingCart(Model model) {
+		List<String> list = shoppingService.getAllCategories();
+		model.addAttribute("categoryList", list);
 		List<ProductBean> show = shoppingService.getAllProducts();
-		model.addAttribute("allProducts", show);
+		model.addAttribute("all", show);
 		return "shoppingCart";
 	}
 	
-//	@RequestMapping(value = "/cart", method = RequestMethod.POST) 
-//    public String someAction(@ModelAttribute("cpu") ProductBean cpu, Model model) { 
-//     model.addAttribute("cpu", cpu); 
-//     return "cart"; 
-//    } 
-	
 	//----------後台功能----------
-	
-	
-	//刪除單筆資料
-	@RequestMapping("/deleteProduct")
-	public String deleteProduct(@RequestParam("id") Integer productId, Model model) {
-		model.addAttribute("pb", orderService.deleteProduct(productId));
-		return "redirect:/showAllProduct" ;
-	}
-	
+
 		
 	//後臺顯示所有商品
 	@RequestMapping("/showAllProduct")
@@ -85,6 +66,13 @@ public class ShoppingController {
 		model.addAttribute("all", show);
 		return "showAllProduct";
 	}
+	
+	//刪除單筆資料
+		@RequestMapping("/deleteProduct")
+		public String deleteProduct(@RequestParam("id") Integer productId, Model model) {
+			model.addAttribute("pb", orderService.deleteProduct(productId));
+			return "redirect:/showAllProduct" ;
+		}
 
 	//點擊"修改"按鈕單筆查詢該資料
 	@RequestMapping("/update")
@@ -106,9 +94,9 @@ public class ShoppingController {
 								@RequestParam("stock")Integer stock,
 								@RequestParam("productNo") String productNo, Model model) throws IOException, SerialException, SQLException {
 					
-								System.out.print(productDetail);
-		byte[] c = productCover.getBytes();
-					Blob blob = new SerialBlob(c);
+//								System.out.print(productDetail);
+								byte[] c = productCover.getBytes();
+								Blob blob = new SerialBlob(c);
 		
 					orderService.updateProduct(productId,productNo,blob,productDetail, productName,category, discount, stock);
 					return "redirect:/showAllProduct";	
@@ -222,5 +210,18 @@ public class ShoppingController {
 		}
 		return b;
 	}
+	
+//	RequestMapping請求不能有多個相同路徑
+	
+//	依分類查詢商品
+	@RequestMapping("/shoppingCart/{category}")
+	public String getProductByCategory(@PathVariable("category")String category, Model model ) {
+		List <ProductBean> products = shoppingService.getProductByCategory(category);
+		model.addAttribute("category", products);
+		 return "shoppingCart";		
+	}
+	
+	
+	
 	
 }

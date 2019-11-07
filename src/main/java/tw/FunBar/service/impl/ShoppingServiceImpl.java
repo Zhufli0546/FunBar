@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-
 import tw.FunBar.dao.ShoppingDAO;
 import tw.FunBar.model.ProductBean;
 import tw.FunBar.service.ShoppingService;
@@ -16,11 +14,6 @@ import tw.FunBar.service.ShoppingService;
 public class ShoppingServiceImpl implements ShoppingService{
 	@Autowired
 	ShoppingDAO dao;
-	
-	@Autowired
-	public void setDao(ShoppingDAO dao) {
-		this.dao = dao;
-	}
 		
 
 	@Transactional

@@ -2,6 +2,7 @@ package tw.FunBar.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,14 +14,11 @@ import tw.FunBar.model.ProductBean;
 
 @Repository
 public class ShoppingDAOImpl implements ShoppingDAO{
+	@Autowired
 	SessionFactory factory;
 	
-	@Autowired
-	public void setFactory(SessionFactory factory) {
-		this.factory = factory;
-	}
-	
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<ProductBean> getAllProducts() {
 		String hql = "From ProductBean";
@@ -31,22 +29,28 @@ public class ShoppingDAOImpl implements ShoppingDAO{
 		return list;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<String> getAllCategories() {
-		String hql = "Select Distict category from ProductBean";
+		String hql = "Select Distinct category From ProductBean";
 		Session session = factory.getCurrentSession();
 		List<String> list = new ArrayList<>();
-		list = session.createQuery(hql).getResultList();
+		list  = session.createQuery(hql).getResultList();
 		return list;
 	}
 
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<ProductBean> getProductByCategory(String category) {
-		String hql = "From ProductBean WHERE category = :category";
-		List<ProductBean> list = new ArrayList<>();
+		String hql = "From ProductBean Where category = :category ";
 		Session session = factory.getCurrentSession();
-		list = session.createQuery(hql).setParameter("category", category).getResultList();
+		List<ProductBean> list = new ArrayList<>();
+		list = session.createQuery(hql).setParameter("category",category).getResultList();
+		
+		for(ProductBean p:list) {
+			System.out.println("ProductBean:" + p.getCategory());
+			System.out.println("ProductBean:" + p.getProductName());
+		}
 		return list;
 	}
 
