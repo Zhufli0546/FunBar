@@ -50,6 +50,13 @@ public class BlogController {
 		return "blogs";
 	}
 	
+	@RequestMapping("/blogsByCategoryId/{categoryId}")
+	public String findBlogsByCategoryId(@PathVariable Integer categoryId, Model model) {
+		List<Blog> blogs = blogService.findBlogsByCategoryId(categoryId);
+		model.addAttribute("blogsByCategory", blogs);
+		return "/blogsByCategoryId";
+	}
+	
 	@RequestMapping(value = "/blogJson", produces = "application/json")
 	public String blogJson(Model model) {
 		List<Blog> blogs = blogService.queryAllBlogs();
@@ -146,10 +153,12 @@ public class BlogController {
 	
 	@RequestMapping("/blog/{id}")
 	public String blog(@PathVariable Integer id, Model model) {
+		List<Category> categoryList = blogService.getCategories();
 		Blog blog = blogService.findByIdBlog(id);
 		List<Comment> comments = CommentService.findCommentByBlog(id);
 		
 		model.addAttribute("blog", blog);
+		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("comments", comments);
 		return "showBlog";
 	}
@@ -160,5 +169,20 @@ public class BlogController {
 
 		model.addAttribute("blogs", blogs);
 		return "admin_blog";
+	}
+	
+	@RequestMapping("/admin_delete/{id}")
+	public String adminBlogDelete(@PathVariable Integer id) {
+		Blog blog = blogService.findByIdBlog(id);
+		blogService.deleteBlog(blog);
+		return "redirect:/admin_blog";
+	}
+	
+	@RequestMapping("/search")
+	public String searchKey(@RequestParam String searchKey, Model model) {
+		System.out.println("Controller:" + searchKey);
+		List<Blog> blogs = blogService.searchBlogs(searchKey);
+		model.addAttribute("blogs", blogs);
+		return "searchKey";
 	}
 }

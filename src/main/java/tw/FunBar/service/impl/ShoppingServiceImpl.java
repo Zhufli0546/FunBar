@@ -30,8 +30,8 @@ public class ShoppingServiceImpl implements ShoppingService{
 
 	@Transactional
 	@Override
-	public List<ProductBean> getProductByCategory() {
-		return dao.getProductByCategory();
+	public List<ProductBean> getProductByCategory(String category) {
+		return dao.getProductByCategory(category);
 	}
 
 	

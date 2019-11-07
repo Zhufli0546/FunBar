@@ -45,7 +45,7 @@
 .button {
 	margin: 10px 15px;
 	padding:5px 10px;
-	background-color: #0080FF;
+	background-color: #272727;
 	color: #fff;
 	outline: none;
 	border-radius: 5px;	
@@ -54,7 +54,7 @@
 
 .button:hover{
 		background-color:#fff;
-		color: #0080FF;
+		color: #272727;
 		text-decoration:none;
 }
 
@@ -78,12 +78,12 @@
 <jsp:include page="admin_header.jsp" />
 
 <!-- Content 區塊 -->
-<div class="container page">
-	
-<form:form method='POST' modelAttribute="productBean" class='form-horizontal' enctype="multipart/form-data">
-		
-<fieldset >
 
+<div class="container page" style="margin:tt6u">
+<h1>新增商品</h1>
+<hr>
+<form:form method='POST' modelAttribute="productBean" class='form-horizontal' enctype="multipart/form-data">		
+<fieldset >
 <div class="form-group">
 <label class='control-label col-lg-2 col-lg-2' for="productNo">商品編號</label>
 <form:input autocomplete="off" id="productNo" path="productNo" type='text' class='form:input-large' />
@@ -102,8 +102,11 @@
 <div class="form-group">
 <label class='control-label col-lg-2 col-lg-2' for="category">商品分類</label>
 <form:select path="category">
-<form:option value="無酒精類">無酒精類</form:option>
-<form:option value="酒器/酒杯">酒器/酒杯</form:option>
+<form:option value="無酒精">無酒精</form:option>
+<form:option value="啤酒與低酒精">啤酒與低酒精</form:option>
+<form:option value="葡萄酒">葡萄酒</form:option>
+<form:option value="威士忌">威士忌</form:option>
+<form:option value="酒器與酒杯">酒器與酒杯</form:option>
 <form:option value="調酒器具">調酒器具</form:option>
 <form:option value="下酒菜">下酒菜</form:option>	
 </form:select>

@@ -11,12 +11,22 @@
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/blog.css"/>">
 </head>
 <style>
-.box {
-	width: 90%;
-	padding: 5px 15px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.2);
-    transition: 1s;
-}
+	.box {
+		width: 90%;
+		padding: 5px 15px;
+	    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+	    transition: 1s;
+	}
+
+	.categoryBlock { 
+		border: 1px solid #eee;
+		text-align: center; padding: 2px 10px;
+		margin: 1px;
+		cursor: pointer;
+		transition: .5s;
+	}
+
+	.categoryBlock:hover { background-color: #eee;}
 </style>
 <body>
 <!-- Header -->
@@ -25,12 +35,46 @@
 <!-- content 區塊 -->
 <div class="container page">
     <div class="row col-md-12">
-        <div class="row col-md-10 blogs">
+        <div class="row col-md-9 blogs">
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <button type="button" class="btn btn-info page-btn" data-toggle="modal"
                 data-target="#createBlog">新增文章</button>
-            <button type="button" class="btn btn-light page-btn">全部文章</button>
+            <button type="button" class="btn btn-light page-btn allBlogs">全部文章</button>
+            
+            <!-- Sidebar Widgets Column -->
+            
+            <!-- Search Widget -->
+	        <div class="card my-4">
+	          <h5 class="card-header">Search</h5>
+	          <div class="card-body">
+	            <div class="input-group">
+	              <input type="text" class="form-control searchValue" placeholder="Search for...">
+	              <span class="input-group-btn">
+	                <button class="btn btn-secondary searchClick" type="button">Go!</button>
+	              </span>
+	            </div>
+	          </div>
+	        </div>
+			
+			<!-- Categories Widget -->
+			<div class="card my-4">
+				<h5 class="card-header">Categories</h5>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<ul class="list-unstyled mb-0 row">
+								<c:forEach var="category" items="${categoryList}">
+									<li class="categoryBlock categoryClick col-md-3" data-category="${category.categoryId}">
+										<a href="javascript:;">${category.categoryName}</a>
+									</li>
+								</c:forEach>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			
         </div>
     </div>
     <ul id="show" class="pagination"></ul>
@@ -98,13 +142,13 @@
 <script src="<c:url value='/vendor/ckeditor/ckeditor.js'/>"></script>
 <script src="<c:url value='/js/blog.js'/>"></script>
 <script>
-    $(document).ready(function () {
-        CKEDITOR.replace('blogContent', {
-            height: 400,
-            filebrowserUploadUrl: '${pageContext.request.contextPath}/blogInsert',
-            filebrowserBrowseUrl: '${pageContext.request.contextPath}/blogBrowse'
-        });
-    })
+$(document).ready(function () {
+    CKEDITOR.replace('blogContent', {
+        height: 400,
+        filebrowserUploadUrl: '${pageContext.request.contextPath}/blogInsert',
+        filebrowserBrowseUrl: '${pageContext.request.contextPath}/blogBrowse'
+    });
+})
 </script>
 </body>
 </html>

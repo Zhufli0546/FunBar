@@ -5,15 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>購物區</title>
+<title>分類商品</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="<c:url value="/css/shoppingCart.css" />" rel="stylesheet">
 </head>
-<style>
 
-
-</style>
 
 <body>
 <jsp:include page="header.jsp" />
@@ -32,7 +29,8 @@
 
 
 <div class="container page">
-<c:forEach var="pb" items="${all}">
+
+<c:forEach var="pb" items="${category}">
 <div class="prodlist">
 <p>${pb.productNo}</p> 
 <p>${pb.productDetail}</p> 
@@ -43,7 +41,6 @@
 <figcaption>
 <p>建議售價: $${pb.unitPrice}</p>
 <form class="form-group row" action="<c:url value='' />" method="post">
-
 <label for="selectCount" class="col-sm-6 col-xs-12">購買數量:</label>
 <div class="col-sm-6 col-xs-12">
 <select class="form-control" id="selectCount" name="count">
@@ -56,12 +53,10 @@
 </div>
 
 <button type="submit" class="button-add">加入購物車</button>
-
 </figcaption>
 
 </div>	<!-- .prodlist -->
 </c:forEach>
-
 </form>
 </div> <!-- .container -->
 

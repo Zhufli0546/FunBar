@@ -18,6 +18,10 @@
  	overflow: hidden;		
 }  
 
+form{
+	padding:20px;
+}
+
  img { 
  	display: block; 
  	width: 50%; 
@@ -62,9 +66,7 @@
 
 
 <div>
-<label for="productId">商品ID</label>
-</div>
-<div>
+<label for="productId">商品	ID</label>
 <input name="productId" value="${pb.productId}" type='text' disabled />
 <input type="hidden" name="id" value="${pb.productId}" />
 </div>
@@ -72,68 +74,53 @@
 
 <div>
 <label for="productNo">商品編號</label>
-<div>
-<input id="productNo" name="productNo" value="${pb.productNo}" type='text' disabled />
-<input type="hidden" name="productNo" value="${pb.productNo}" />
-</div>
+<input id="productNo" name="productNo" value="${pb.productNo}" type='text' />
 </div>
 	
-<fieldset>
 <div>
 <label  for='productDetail'>商品說明</label>
-<div>
 <input autocomplete="off" name="productDetail" id="productDetail" value="${pb.productDetail}" type='text' />
-</div>
 </div>
 
 <div>
 <label for='productName'>商品名稱</label>
-<div>
 <input autocomplete="off" name="productName" id="productName" value="${pb.productName}" type='text'  />
-</div>
 </div>
 
 <div>
 <label  for="category">商品分類</label>
-<div>
 <select name="category">
 <option>${pb.category}</option>
-<option value="無酒精類">無酒精類</option>
-<option value="酒器/酒杯">酒器/酒杯</option>
+<option value="無酒精">無酒精</option>
+<option value="啤酒與低酒精">啤酒與低酒精</option>
+<option value="葡萄酒">葡萄酒</option>
+<option value="威士忌">威士忌</option>
+<option value="酒器與酒杯">酒器與酒杯</option>
 <option value="調酒器具">調酒器具</option>
 <option value="下酒菜">下酒菜</option>	
 </select>
 </div>
-</div>
 
 <div>
-<label for="unitPrice">單價</label>
-<div>
+<label for="unitPrice">商品單價</label>
 <input autocomplete="off"  name="unitPrice" id="unitPrice" value="${pb.unitPrice}" type='text' disabled />
 </div>
-</div>
 
 <div>
-<label  for="unitPrice">折扣</label>
-<div>
+<label  for="unitPrice">商品折扣</label>
 <input autocomplete="off" name="discount"  id="discount" value="${pb.discount}" type='text' />
-</div>
 </div>
 
 <div>
 <label  for="unitPrice">庫存數量</label>
-<div>
 <input autocomplete="off" name="stock"  id="stock" value="${pb.stock}" type='text' />
-
-</div>
 </div>
 
 
 <div>
 <label  for="productCover">商品圖片</label>
-<div>
-<input name="image"  value="${pb.productId}" type='file' />
-</div>
+<input type='file' name="image"  value="${pb.productId}"  />
+<input type="hidden" name="image" value="${pb.productId}" />
 </div>
 
 
@@ -141,7 +128,6 @@
 <input type='submit' class='btn btn-primary' value="送出" />
 </div>
 
-</fieldset>
 </form>
 </div>
 

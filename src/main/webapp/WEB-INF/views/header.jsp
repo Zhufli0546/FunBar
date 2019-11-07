@@ -56,7 +56,9 @@
 				<div class="wrap_header trans-0-3">
 					<!-- Logo -->
 					<div class="logo">
-						<a href="${pageContext.request.contextPath}/index"> <img
+						
+
+						<a href="${pageContext.request.contextPath}"> <img
 							src="<c:url value='/images/icons/logo.png' />" alt="IMG-LOGO"
 							data-logofixed="<c:url value='/images/icons/logo2.png' />">
 						</a>
@@ -66,6 +68,10 @@
 					<div class="wrap_menu p-l-45 p-l-0-xl">
 						<nav class="menu">
 							<ul class="main_menu">
+
+
+								<li><a href="/FunBar">Home</a></li>
+
 
 								<li><a href="${pageContext.request.contextPath}/activities">熱門活動</a></li>
 								
@@ -80,9 +86,10 @@
 								<li><a href="${pageContext.request.contextPath}/booking_room">線上訂房</a></li>
 								
 								<li><a href="${pageContext.request.contextPath}/signin">登入</a></li>
-								
-								
-							</ul>
+
+								<li><a href="${pageContext.request.contextPath}/activities">熱門活動</a></li>
+
+								</ul>
 						</nav>
 					</div>
 
@@ -107,8 +114,12 @@
 		<!-- - -->
 		<ul class="menu-sidebar p-t-95 p-b-70">
 
+		<li class="t-center m-b-13"><a href="/FunBar" class="txt19">Home</a>
+			</li>
 
-			<li class="t-center m-b-13"><a href="activities" class="txt19">熱門活動</a>
+
+
+		<li class="t-center m-b-13"><a href="activities" class="txt19">熱門活動</a>
 			</li>
 			
 			<li class="t-center m-b-13"><a href="shoppingCart">購物區</a></li>

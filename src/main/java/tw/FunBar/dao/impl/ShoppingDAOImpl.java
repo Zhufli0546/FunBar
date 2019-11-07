@@ -18,6 +18,7 @@ public class ShoppingDAOImpl implements ShoppingDAO{
 	SessionFactory factory;
 	
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<ProductBean> getAllProducts() {
 		String hql = "From ProductBean";
@@ -28,19 +29,29 @@ public class ShoppingDAOImpl implements ShoppingDAO{
 		return list;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<String> getAllCategories() {
-		String hql = "Select Distict category from ProductBean";
+		String hql = "Select Distinct category From ProductBean";
 		Session session = factory.getCurrentSession();
 		List<String> list = new ArrayList<>();
-		
-		return null;
+		list  = session.createQuery(hql).getResultList();
+		return list;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<ProductBean> getProductByCategory() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ProductBean> getProductByCategory(String category) {
+		String hql = "From ProductBean Where category = :category ";
+		Session session = factory.getCurrentSession();
+		List<ProductBean> list = new ArrayList<>();
+		list = session.createQuery(hql).setParameter("category",category).getResultList();
+		
+		for(ProductBean p:list) {
+			System.out.println("ProductBean:" + p.getCategory());
+			System.out.println("ProductBean:" + p.getProductName());
+		}
+		return list;
 	}
 
 	
