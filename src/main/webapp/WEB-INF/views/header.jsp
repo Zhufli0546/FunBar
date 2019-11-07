@@ -87,7 +87,6 @@
 								
 								<li><a href="${pageContext.request.contextPath}/signin">登入</a></li>
 
-								<li><a href="${pageContext.request.contextPath}/activities">熱門活動</a></li>
 
 								</ul>
 						</nav>
