@@ -81,4 +81,22 @@ public class BlogDAOImpl implements BlogDAO {
 		return blogs;
 	}
 
+	@Override
+	public void deleteBlog(Blog blog) {
+		Session session = sessionFactory.getCurrentSession();
+		session.delete(blog);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Blog> searchBlogs(String searchKey) {
+		System.out.println("searchKey:" + searchKey);
+
+		String hql = "From Blog Where blogTitle Like :blogTitle";
+		Session session = sessionFactory.getCurrentSession();
+		List<Blog> blogs = session.createQuery(hql)
+							.setParameter("blogTitle", "%" + searchKey + "%").getResultList();
+		return blogs;
+	}
+
 }

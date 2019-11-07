@@ -132,3 +132,22 @@ $(".allBlogs").click(function() {
     	}
     })
 })
+
+// Like
+$(".searchClick").click(function() {
+	$.ajax({
+		url: "http://localhost:8080" + requestUrl + "search",
+		method: "POST",
+		data:{
+			searchKey: $(".searchValue").val()
+		},
+		dataType: "JSON",
+		success: function(res) {
+			tododata = res.blogs;
+			console.log(tododata);
+			$(".blogs").html("");
+	        $("#show").html("");
+			init();
+		}
+	})
+})

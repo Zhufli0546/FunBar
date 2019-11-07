@@ -15,6 +15,8 @@ public interface BlogDAO {
 
 	public void insertBlog(Blog blog);
 	
+	public void deleteBlog(Blog blog);
+	
 	public List<Category> getCategories();
 	
 	public List<Blog> findBlogsByCategoryId(int id);
@@ -22,4 +24,6 @@ public interface BlogDAO {
 	public Category findByIdCategory(int id);
 	
 	public List<Comment> getComments();
+	
+	public List<Blog> searchBlogs(String searchKey);
 }
