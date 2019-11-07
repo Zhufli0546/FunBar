@@ -1,83 +1,177 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>填寫訂位資料</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Home</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	
+	
+<style>
+
+#signup {
+    width: 550px;
+    margin: 50px auto 50px auto;
+    padding: 20px;
+    position: relative;
+    background: #fff url(data:image/png;base64,iVBORw0K[...]CYII=);
+    border: 1px solid #ccc;
+    border-radius: 3px;  
+}
+
+
+#signup::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 2px;
+    right: 2px;
+    top: 0;
+    z-index: -1;
+    background: #fff;
+    border: 1px solid #ccc;         
+}
+
+#signup::after {
+    left: 4px;
+    right: 4px;
+    bottom: -5px;
+    z-index: -2;
+    box-shadow: 0 8px 8px -5px rgba(0,0,0,.3);
+}
+
+#signup h1 {
+    position: relative;
+    font: italic 1em/3.5em 'trebuchet MS',Arial, Helvetica;
+    color: #999;
+    text-align: center;
+    margin: 0 0 20px;
+}
+
+#signup h1::after{
+    content:'';
+    position: absolute;
+    border: 1px solid rgba(0,0,0,.15);
+    top: 10px;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+}
+
+#signup h1::after{
+    top: 0;
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+}
+
+::-webkit-input-placeholder {
+   color: #bbb;
+}
+
+:-moz-placeholder {
+   color: #bbb;
+}                       
+
+.placeholder{
+    color: #bbb; /* polyfill */
+}       
+
+#signup input{
+    margin: 5px 0;
+    padding: 15px;
+    width: 100%;
+    *width: 518px; /* IE7 and below */
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3px; 
+}
+
+#signup input:focus{
+        outline: 0;
+        border-color: #aaa;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, .3) inset;
+}       
+
+#signup button{
+    margin: 20px 0 0 0;
+    padding: 15px 8px;
+    cursor: pointer;
+    border: 1px solid red;
+    overflow: visible;
+    color: #fff;
+    font: bold  arial, helvetica;
+    text-shadow: 0 -1px 0 rgba(0,0,0,.4);         
+    background-color: orange;
+    background-image: linear-gradient(top, rgba(255,255,255,.5), rgba(255,255,255,0)); 
+    transition: background-color .2s ease-out;
+    border-radius: 3px;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, .3),
+                0 1px 0 rgba(255, 255, 255, .5) inset;                               
+}
+
+#signup button:hover{
+    background-color: #7cbfff;
+        border-color: #7cbfff;
+}
+
+#signup button:active{
+    position: relative;
+    top: 3px;
+    text-shadow: none;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .3) inset;
+}
+
+input{
+	height:30px;
+	text-align:center;
+
+}
+
+button{
+	height:50px;
+	width:220px;
+}
+</style>	
 </head>
+
 <body>
 
+	<!-- Header -->
 	<jsp:include page="header.jsp" />
 
-	<!-- Content 區塊 -->
-
-	<div class="page row">
-		<div class="col-md-4" style="height: 350px; background-color: #DDDDDD">
-
-			<img
-				style="margin: 5px 5px 5px 5px; border: 2px solid red; border-radius: 10px"
-				src="images/mini_img.jpg" alt="" title="" height="190px">
-			<div style="padding: 5px 10px">
-				<span style="font-weight: bold;">訂位日期:<span
-					style="margin-left: 100px">${date}</span></span><br> <span
-					style="font-weight: bold;">訂位時間:<span
-					style="margin-left: 120px">${time}</span></span><br> <span
-					style="font-weight: bold;">訂位人數:<span
-					style="margin-left: 135px">${people} 人</span></span>
-			</div>
-			<div style="text-align: center; margin-bottom: 0px">
-				<button type="submit" class="btn btn-primary"
-					onclick="location.href='booking'"
-					style="background-color: orange; border: 1px solid red;">重新選擇日期及時段</button>
-			</div>
-		</div>
-
-		<div class="col-md-8">
-			<form method="POST" action="addReservations">
-				<div class="form-group">
-					<label for="inputname">Name <span style="color: red">*</span></label>
-					<input type="text" class="form-control col-md-4" id="inputname" name="name"
-						placeholder="請輸入姓名"> <input type="radio" name="sex"
-						value="male" style="margin-left: 15px">Mr<input
-						type="radio" name="sex" value="female">Ms
-				</div>
 
 
+	<!-- Blog -->
+	<section class="page animsition">
+		<form id="signup" method="post" action="addReservations">
+    <h1>填寫訂位人資料</h1>
+    <input name="date" type="text" value="${date}"  readonly="readonly">
+    <input name="time" type="text" value="${time}"  readonly="readonly">
+    <input name="people" type="text" value="${people}" readonly="readonly">
+    
+    <input name="name" type="text" placeholder="姓名" required="required">
+    <input name="sex" type="text" placeholder="性別" required="required">
+    <input name="phone" type="text" placeholder="連絡電話" required="required">
+    <input name="email" type="text" placeholder="e-mail" required="required">
+    <input name="remark" type="text" placeholder="備註" required="required">
+    <div style="text-align:center">
+    <button type="button"
+					onclick="location.href='booking'">重新選擇日期及時段</button>               
+    <button type="submit">預約</button>
+    </div>
+</form>
+	</section>
 
-				<div class="form-group">
-					<label for="inputphone">Phone <span style="color: red">*</span></label>
-					<input type="text" class="form-control col-md-4" id="inputphone" name="phone"
-						placeholder="請輸入電話號碼">
-										<label for="inputemail">E-mail <span style="color: red">*</span></label>
-					<input type="text" class="form-control col-md-4" id="inputemail" name="email"
-						placeholder="請輸入電子郵件">
-				</div>
-
-
-				<div class="form-group">
-					<label for="inputremark">Remark</label> <input type="text"
-						class="form-control col-md-8" id="inputremark" name="remark"
-						placeholder="如有需要請輸入備註">
-				</div>
-				<input type="hidden" name="date" value="${date}" />
-				<input type="hidden" name="time" value="${time}" />
-				<input type="hidden" name="people" value="${people}" />
-				<button type="submit" class="btn btn-primary"
-					style="background-color: orange; border: 1px solid red">Complete
-					Reservation</button>
-			</form>
-		</div>
-	</div>
-
-
+	<!-- Footer -->
 	<jsp:include page="footer.jsp" />
 
-
-
+	
 
 </body>
+
 </html>

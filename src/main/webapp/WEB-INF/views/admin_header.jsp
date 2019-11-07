@@ -76,9 +76,21 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">######</h6>
-					<a class="dropdown-item" href="allbooking">查詢所有訂位</a> <a
-						class="dropdown-item" href="ad_booking">來電訂位</a> <a
-						class="dropdown-item" href="reset_time_people">重設時段及人數</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/allbooking">查詢所有訂位</a> <a
+						class="dropdown-item" href="${pageContext.request.contextPath}/ad_booking">來電訂位</a> <a
+						class="dropdown-item" href="${pageContext.request.contextPath}/reset_time_people">重設時段及人數</a>
+				</div></li>
+				
+							<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" href="#" id="pagesDropdown"
+				role="button" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="false"> <i class="fas fa-fw fa-folder"></i> <span>訂房</span>
+			</a>
+				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
+					<h6 class="dropdown-header">######</h6>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/allbooking">查詢所有訂房</a> <a
+						class="dropdown-item" href="${pageContext.request.contextPath}/ad_booking">來電訂房</a> <a
+						class="dropdown-item" href="${pageContext.request.contextPath}/room_type">房型</a>
 				</div></li>
 
 			<li class="nav-item dropdown"><a
@@ -88,8 +100,8 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">######</h6>
-					<a class="dropdown-item" href="showAllProduct">所有商品</a> <a
-						class="dropdown-item" href="addProduct">新增商品</a> <a
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/showAllProduct">所有商品</a> <a
+						class="dropdown-item" href="${pageContext.request.contextPath}/addProduct">新增商品</a> <a
 						class="dropdown-item" href="#">###</a>
 				</div></li>
 			<li class="nav-item"><a class="nav-link" href="charts.html">
@@ -106,8 +118,8 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">######</h6>
-					<a class="dropdown-item" href="<c:url value='/activityQuery' />">活動管理</a> 
-					<a class="dropdown-item" href="<c:url value='/addActivity' />">新增活動</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/activityQuery">活動管理</a> 
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/addActivity">新增活動</a>
 				</div></li>
 				
 							<li class="nav-item dropdown"><a
@@ -117,7 +129,7 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">######</h6>
-					<a class="dropdown-item" href="<c:url value='/admin_blog' />">部落格管理</a> 
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin_blog">部落格管理</a> 
 				</div></li>
 		</ul>
 </body>

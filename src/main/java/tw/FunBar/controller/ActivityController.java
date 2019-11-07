@@ -154,7 +154,7 @@ public class ActivityController {
 		String mimeType = context.getMimeType(filename);
 		MediaType mediaType = MediaType.valueOf(mimeType);
 		headers.setContentType(mediaType);
-		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media, headers, HttpStatus.OK);
+		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media,HttpStatus.OK);
 		return responseEntity;
 	}
 
