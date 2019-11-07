@@ -17,17 +17,26 @@
 
 .product-list table{
 	padding: 20px;
-}
-
-.product-list th, td{
-	padding: 10px 0;
-	text-align: center;
-	border-top:1px solid #ebebeb;
-    border-bottom: 1px solid #ebebeb;
+	background-color:#272727;
 }
 
 .product-list th{
-	background-color: #ebebeb;
+	padding: 10px 0;
+	text-align: center;
+	color:#fff;
+	border-top:1px solid #272727;
+    border-bottom: 1px solid #272727;
+}
+
+.product-list td{
+	padding: 10px 0;
+	text-align: center;
+	color:#000;
+
+}
+
+.product-list th{
+	background-color: #272727;
 	padding: 0 20px;
 }
 
@@ -41,7 +50,7 @@
 .button {
 	margin: 0 auto;
 	padding:5px 10px;
-	background-color: #01B468;
+	background-color: #272727;
 	color: #fff;
 	outline: none;
 	border-radius: 5px;	
@@ -50,7 +59,7 @@
 
 .button:hover{
 		background-color:#fff;
-		color:#019858;
+		color:#272727;
 		text-decoration:none;
 }
 
@@ -81,13 +90,14 @@
 <td>${pb.stock}
 <td>
 <form method="post" class="form-group row" action="<c:url value='/deleteProduct?id=${pb.productId}'/>" >
-<input type="submit" value="刪除" class="button" onclick="return confirm('確定刪除？');"/>
-<input type="hidden" value="${pb.productId}" name="productId"  />
+<input type="hidden" name="id" value="${pb.productId}"   />
+<input type="submit" value="刪除" class="button" onclick="return confirm('確定刪除？')"/>
 </form>
 
 <form method="get" class="form-group row" action="<c:url value='update?id=${pb.productId}'/>" >
-<input type="submit" value="修改" class="button" />
 <input type="hidden" name="id" value="${pb.productId}" >
+<input type="submit" value="修改" class="button" />
+
 </form>
 
 </c:forEach>

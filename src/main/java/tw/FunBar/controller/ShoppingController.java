@@ -13,6 +13,7 @@ import javax.script.ScriptContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
@@ -120,10 +121,22 @@ public class ShoppingController {
 								@RequestParam("stock")Integer stock,
 								@RequestParam("productNo") String productNo, Model model) throws IOException, SerialException, SQLException {
 					
-//								System.out.print(productDetail);
+//								ProductBean pb ;
+//								MultipartFile picture = pb.getProductCover();
+//									if(picture.getSize() == 0) {
+//									ProductBean original = orderService.getProductById(productId);
+//									pb.setProductCover(original.getProductCover());
+//								}else {
+//									String originalFilename = picture.getOriginalFilename();
+//									if( originalFilename.length() > 0 && originalFilename.lastIndexOf(".") > -1 ) {
+//										pb.setFileName(originalFilename);
+//									}
+//								}
+								
 								byte[] c = productCover.getBytes();
 								Blob blob = new SerialBlob(c);
-		
+				
+								
 					orderService.updateProduct(productId,productNo,blob,productDetail, productName,category, discount, stock);
 					return "redirect:/showAllProduct";	
 	}
@@ -140,7 +153,7 @@ public class ShoppingController {
 	
 
 	@RequestMapping(value = "/addProduct", method = RequestMethod.POST)
-	public String addProduct(@ModelAttribute("productBean") ProductBean pb, BindingResult result) {
+	public String addProduct(@ModelAttribute("productBean") ProductBean pb, BindingResult result, HttpSession session) {
 		String[] suppressedFields = result.getSuppressedFields();
 		if (suppressedFields.length > 0) {
 			throw new RuntimeException("嘗試傳入不允許的欄位: " + StringUtils.arrayToCommaDelimitedString(suppressedFields));
@@ -149,9 +162,11 @@ public class ShoppingController {
 			pb.setStock(0);
 		}
 		MultipartFile productCover = pb.getProductCover();
+		
 		String originalFilename = productCover.getOriginalFilename();
 		System.out.println("originalFilename:" + originalFilename);
-		pb.setFileName(originalFilename);
+		
+		
 		// 建立Blob物件，交由 Hibernate 寫入資料庫
 		if (productCover != null && !productCover.isEmpty()) {
 			try {
@@ -173,6 +188,7 @@ public class ShoppingController {
 				imageFolder.mkdirs();
 			File file = new File(imageFolder, pb.getProductImage() + ext);
 			productCover.transferTo(file);
+		//	session.setAttribute(ext, rootDirectory);   //剛剛寫的
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
