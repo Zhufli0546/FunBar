@@ -2,18 +2,15 @@ package tw.FunBar.dao.impl;
 
 import java.util.List;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import net.bytebuddy.asm.Advice.ArgumentHandler.Factory;
 import tw.FunBar.dao.BlogDAO;
 import tw.FunBar.model.Blog;
 import tw.FunBar.model.Category;
 import tw.FunBar.model.Comment;
-import tw.FunBar.service.BlogService;
 
 @Repository
 public class BlogDAOImpl implements BlogDAO {
@@ -45,7 +42,7 @@ public class BlogDAOImpl implements BlogDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Blog> queryAllBlogs() {
-		String hql = "From Blog";
+		String hql = "From Blog Order By blogCreatedTime DESC";
 		Session session = sessionFactory.getCurrentSession();
 		List<Blog> blogs = (List<Blog>)session.createQuery(hql).getResultList();
 		return blogs;
@@ -64,6 +61,42 @@ public class BlogDAOImpl implements BlogDAO {
 		Session session = sessionFactory.getCurrentSession();
 		List<Comment> comments = (List<Comment>)session.createQuery(hql).getResultList();
 		return comments;
+	}
+
+	@Override
+	public List<Blog> queryAllBlogsByASC() {
+		String hql = "From Blog Order By blogCreatedTime ASC";
+		Session session = sessionFactory.getCurrentSession();
+		List<Blog> blogs = (List<Blog>)session.createQuery(hql).getResultList();
+		return blogs;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Blog> findBlogsByCategoryId(int id) {
+		String hql = "From Blog Where categoryId = :categoryId Order By blogCreatedTime DESC";
+		Session session = sessionFactory.getCurrentSession();
+		List<Blog> blogs = (List<Blog>)session.createQuery(hql)
+								.setParameter("categoryId", id).getResultList();
+		return blogs;
+	}
+
+	@Override
+	public void deleteBlog(Blog blog) {
+		Session session = sessionFactory.getCurrentSession();
+		session.delete(blog);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Blog> searchBlogs(String searchKey) {
+		System.out.println("searchKey:" + searchKey);
+
+		String hql = "From Blog Where blogTitle Like :blogTitle";
+		Session session = sessionFactory.getCurrentSession();
+		List<Blog> blogs = session.createQuery(hql)
+							.setParameter("blogTitle", "%" + searchKey + "%").getResultList();
+		return blogs;
 	}
 
 }
