@@ -14,6 +14,8 @@ public interface BlogService {
 	public Blog findByIdBlog(int id);
 
 	public void insertBlog(Blog blog);
+	
+	public void deleteBlog(Blog blog);
 
 	public List<Category> getCategories();
 
@@ -22,4 +24,6 @@ public interface BlogService {
 	public Category findByIdCategory(int id);
 	
 	public List<Comment> getComments();
+	
+	public List<Blog> searchBlogs(String searchKey);
 }

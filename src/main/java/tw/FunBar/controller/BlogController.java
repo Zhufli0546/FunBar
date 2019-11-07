@@ -170,4 +170,19 @@ public class BlogController {
 		model.addAttribute("blogs", blogs);
 		return "admin_blog";
 	}
+	
+	@RequestMapping("/admin_delete/{id}")
+	public String adminBlogDelete(@PathVariable Integer id) {
+		Blog blog = blogService.findByIdBlog(id);
+		blogService.deleteBlog(blog);
+		return "redirect:/admin_blog";
+	}
+	
+	@RequestMapping("/search")
+	public String searchKey(@RequestParam String searchKey, Model model) {
+		System.out.println("Controller:" + searchKey);
+		List<Blog> blogs = blogService.searchBlogs(searchKey);
+		model.addAttribute("blogs", blogs);
+		return "searchKey";
+	}
 }

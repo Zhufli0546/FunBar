@@ -43,6 +43,19 @@
             <button type="button" class="btn btn-light page-btn allBlogs">全部文章</button>
             
             <!-- Sidebar Widgets Column -->
+            
+            <!-- Search Widget -->
+	        <div class="card my-4">
+	          <h5 class="card-header">Search</h5>
+	          <div class="card-body">
+	            <div class="input-group">
+	              <input type="text" class="form-control searchValue" placeholder="Search for...">
+	              <span class="input-group-btn">
+	                <button class="btn btn-secondary searchClick" type="button">Go!</button>
+	              </span>
+	            </div>
+	          </div>
+	        </div>
 			
 			<!-- Categories Widget -->
 			<div class="card my-4">
