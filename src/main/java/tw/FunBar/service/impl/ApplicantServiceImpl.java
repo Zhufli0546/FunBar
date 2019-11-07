@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import tw.FunBar.dao.ApplicantDao;
-import tw.FunBar.model.Activity;
 import tw.FunBar.model.Applicant;
 import tw.FunBar.service.ApplicantService;
 
@@ -23,10 +22,11 @@ public class ApplicantServiceImpl implements ApplicantService {
 
 	@Transactional
 	@Override
-	public void addApplicant(String applicantName,String gender, String applicantPhone,String applicantEmail) {
-		dao.addApplicant(applicantName, gender, applicantPhone, applicantEmail);
-		
+	public void addApplicant(String applicantName,String gender, String applicantPhone,
+			String applicantEmail, int activityId) {
+		dao.addApplicant(applicantName, gender, applicantPhone, applicantEmail, activityId);
 	}
+		
 
 	@Transactional
 	@Override

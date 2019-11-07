@@ -14,7 +14,7 @@
 		<h2>填寫報名者資訊</h2>
 		<hr>
 
-		<form  action="applicantSignup" method='POST'>
+		<form  action="applicantSignup" method='POST' enctype="multipart/form-data">
 
 			<div class="form-group">
 				<label for="name">姓名:</label>
@@ -46,6 +46,7 @@
 				<input name="activityId" type="text" class="form-control" value="${activity.activityId}"
 					id="id" />
 			</div>
+			
 			
 			<button type="submit" class="btn btn-outline-secondary">確認報名</button>
 			

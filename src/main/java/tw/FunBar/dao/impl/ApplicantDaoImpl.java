@@ -25,20 +25,39 @@ public class ApplicantDaoImpl implements ApplicantDao{
 	
 	@Override
 	public void addApplicant(String applicantName,String gender, 
-			String applicantPhone,String applicantEmail) {
+			String applicantPhone,String applicantEmail,int activityId) {
 		Applicant al = new Applicant();
 		al.setApplicantName(applicantName);
 		al.setGender(gender);
 		al.setApplicantPhone(applicantPhone);
 		al.setApplicantEmail(applicantEmail);
 		
-		Activity ac = new Activity();
-		
-		al.getActivities().add(ac);
-		
 		Session session = factory.getCurrentSession();
+		Activity ac = session.get(Activity.class, activityId);
+//		ac.setActivityId(activityId);
+//		ac.setEventName(eventName);
+//		ac.setEventDate(eventDate);
+//		ac.setAddress(address);
+//		ac.setIntroduction(introduction);
+//		ac.setActivities(activities);
+//		ac.setInformation(information);
+//		ac.setCategory(category);
+//		ac.setFileName(fileName);
+		
+//		try {
+//			byte[] b = ac.getActivityImage().getBytes();
+//			blob = new SerialBlob(b);
+//			ac.setPicture(blob);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+
+		al.getActivities().add(ac);
+
 		session.save(al);
 	}
+	
+
 
 //	@Override
 //	public void getAllApplicant(int applicantId) {
