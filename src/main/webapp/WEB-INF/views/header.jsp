@@ -84,7 +84,7 @@
 								
 								<li><a href="showAllmember">註冊</a></li>
 								
-								<li><a href="activities">熱門活動</a></li>
+								<li><a href="${pageContext.request.contextPath}/activities">熱門活動</a></li>
 							</ul>
 						</nav>
 					</div>

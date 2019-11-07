@@ -4,15 +4,17 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
 
-<title>Activities</title>
+<head>
+	<meta charset="UTF-8">
+
+	<title>Activities</title>
 </head>
+
 <body>
 	<jsp:include page="header.jsp" />
 	<!-- Page Content -->
-		
+
 	<div class="container" style="margin-top: 150px">
 
 		<div class="row" style="float: left">
@@ -22,13 +24,14 @@
 				<div class="list-group" style="width: 120px">
 					<a href="${pageContext.request.contextPath}/activities" class="list-group-item">所有活動</a>
 					<c:forEach var="category" items="${categoryList}">
-						<a href="${pageContext.request.contextPath}/activities/${category}" class="list-group-item">${category}</a>
+						<a href="${pageContext.request.contextPath}/activities/${category}"
+							class="list-group-item">${category}</a>
 					</c:forEach>
 
 				</div>
 			</div>
 		</div>
-		    
+
 		<!-- /.col-lg-3 -->
 
 		<section>
@@ -36,10 +39,9 @@
 				<c:forEach var="activity" items="${activities}">
 					<div class="col-lg-4 col-sm-6 mb-4">
 						<div class="card h-100">
-							<a
-								href="<spring:url value='/activity?id=${activity.activityId}' />">
+							<a href="<spring:url value='/activity?id=${activity.activityId}' />">
 								<img class="card-img-top"
-								src="<c:url value='/ActivitygetPicture/${activity.activityId }'/>">
+									src="<c:url value='/ActivitygetPicture/${activity.activityId }'/>">
 							</a>
 							<div class="card-body">
 								<h4 class="card-title">
@@ -48,8 +50,8 @@
 								</h4>
 								<p class="card-text">${activity.eventDate}</p>
 								<p class="card-text">${activity.introduction}</p>
-								
-								
+
+
 							</div>
 						</div>
 					</div>
@@ -60,17 +62,15 @@
 
 		<!-- Pagination -->
 		<ul class="pagination justify-content-center">
-			<li class="page-item"><a class="page-link" href="#"
-				aria-label="Previous"> <span aria-hidden="true">&laquo;</span> <span
-					class="sr-only">Previous</span>
-			</a></li>
+			<li class="page-item"><a class="page-link" href="#" aria-label="Previous"> <span
+						aria-hidden="true">&laquo;</span> <span class="sr-only">Previous</span>
+				</a></li>
 			<li class="page-item"><a class="page-link" href="#">1</a></li>
 			<li class="page-item"><a class="page-link" href="#">2</a></li>
 			<li class="page-item"><a class="page-link" href="#">3</a></li>
-			<li class="page-item"><a class="page-link" href="#"
-				aria-label="Next"> <span aria-hidden="true">&raquo;</span> <span
-					class="sr-only">Next</span>
-			</a></li>
+			<li class="page-item"><a class="page-link" href="#" aria-label="Next"> <span
+						aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span>
+				</a></li>
 		</ul>
 
 	</div>
@@ -107,4 +107,5 @@
 	<jsp:include page="footer.jsp" />
 
 </body>
+
 </html>
