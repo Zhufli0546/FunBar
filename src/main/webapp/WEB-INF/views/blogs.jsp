@@ -33,6 +33,8 @@
 	.fa-align-center { font-size: 1.1em;}
 
 	.blogMore { position: absolute; top: 5px; right: 5px; display: block; width: 25px; height:25px; z-index:999;}
+	
+	#closeLeftModal { padding: 5px; border-radius: 2px;}
 </style>
 <body>
 <!-- Header -->
@@ -149,19 +151,18 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span id="closeLeftModal"
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span 
                         aria-hidden="true">&times;</span></button>
             </div>
 
             <div class="modal-body">
-                <form enctype="multipart/form-data" method="post" action="blogPost">
+                <form enctype="multipart/form-data" method="post" action="modifyBlog">
                     <div class="row">
                         <div class="col-md-2">
                             <!-- 圖片區域 -->
-                            <label
-                                style="cursor: pointer; background-color: #eee; padding: 2px; border-radius: 2px;">
-                                <input type="file" name="blogImage" id="blog_img" style="display: none;"> <i
-                                    class="fa fa-photo"></i>上傳圖片
+                            <label style="cursor: pointer; background-color: #eee; padding: 2px; border-radius: 2px;">
+                                <input type="file" name="blogImage" id="blog_img2" style="display: none;">
+                                <i class="fa fa-photo"></i>上傳圖片
                             </label>
                             <!-- 圖片顯示區塊 -->
                             <div id="imgArea" title="" style="padding: 20px;">
@@ -181,15 +182,16 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="blogTitle" class="col-md-2">文章標題:</label> <input type="text"
-                                    id="blogTitle2" name="blogTitle2" class="form-control col-md-5">
+                                <label for="blogTitle" class="col-md-2">文章標題:</label>
+                                <input type="text" id="blogTitle2" name="blogTitle" class="form-control col-md-5">
                             </div>
 
                             <div class="form-group row">
                                 <label for="blogContent2" class="col-md-2">文章內容:</label>
-                                <textarea id="blogContent2" name="blogContent2"></textarea>
+                                <textarea id="blogContent2" name="blogContent"></textarea>
                             </div>
-                            <input type="submit" class="bth btn-success" value="修改" />
+                            <input id="modifyBlogId" type="hidden" name="blogId" value="" />
+                            <input type="submit" id="closeLeftModal" class="bth btn-success" value="修改" />
                         </div>
                     </div>
                 </form>

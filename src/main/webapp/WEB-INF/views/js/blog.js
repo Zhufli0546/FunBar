@@ -93,15 +93,20 @@ function init() {
 	    			CKEDITOR.instances["blogContent2"].destroy(true);
     				CKEDITOR.replace('blogContent2', {
 	    		        height: 400,
-	    		        filebrowserUploadUrl: '${pageContext.request.contextPath}/blogInsert',
-	    		        filebrowserBrowseUrl: '${pageContext.request.contextPath}/blogBrowse'
+	    		        filebrowserUploadUrl: 'http://localhost:8080' + requestUrl + 'blogInsert',
+	    		        filebrowserBrowseUrl: 'http://localhost:8080' + requestUrl + 'blogBrowse'
 	    		    });
 	    			
 	    			
 	    			$("#blogTitle2").val(modifyData.blogTitle);
 	    			$("#blogContent2").val(modifyData.blogContent);
+	    			$("#modifyBlogId").val(modifyData.blogId);
 	    		}
 	    	})
+	    	
+	    	$('#blog_img2').on('change', function () {
+	    		preview(this);
+	    	});
 		})
 	})
 }
