@@ -1,111 +1,108 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"  %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>顯示所有商品</title>
+<title>所有商品管理</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="<c:url value="/css/shoppingCarts.css" />" rel="stylesheet">
 </head>
 <style>
-* {
-	font-family: 微軟正黑體;
+.page {
+	overflow:hidden;
 }
 
-.page {overflow: hidden;}
-
-.prodlist {
-	float: left;
-	width: 18%;
-	min-height: 360px;
-	padding: 5px;
-	text-align: center;
-	margin: 0 auto;
-	border: 1px dashed black;
-	margin: 1%;
-}
-
-.jumbotron {
-	position: relative;
+.product-list table{
 	padding: 20px;
+	background-color:#272727;
 }
 
-.jumbotron .username {
-	position: absolute;
-	right: 10px;
-	bottom: 2.5px;
-}
-
-.prodlist {
-	float: left;
-	width: 18%;
-	min-height: 360px;
-	padding: 5px;
+.product-list th{
+	padding: 10px 0;
 	text-align: center;
-	margin: 0 auto;
-	border: 1px dashed black;
-	margin: 1%;
+	color:#fff;
+	border-top:1px solid #272727;
+    border-bottom: 1px solid #272727;
 }
 
-.prodlist .prodtitle {
-	height: 25px;
+.product-list td{
+	padding: 10px 0;
+	text-align: center;
+	color:#000;
+
 }
 
-.prodlist img {
+.product-list th{
+	background-color: #272727;
+	padding: 0 20px;
+}
+
+.product-list img {
 	display: block;
-	width: 50%;
-	height: 200px;
+	width: 100px;
+	height: 120px;
 	margin: 0 auto;
 }
 
-.btnMargin {margin-top: 10px;}
+.button {
+	margin: 0 auto;
+	padding:5px 10px;
+	background-color: #272727;
+	color: #fff;
+	outline: none;
+	border-radius: 5px;	
+	
+}
 
+.button:hover{
+		background-color:#fff;
+		color:#272727;
+		text-decoration:none;
+}
 
 </style>
+
 <body>
 
 <jsp:include page="admin_header.jsp" />
 
 <!-- Content 區塊 -->
 
-<div class="container page">
-	<c:forEach var="pb" items="${all}">
-<div class="prodlist">
-
-<p>${pb.productNo}</p>
-<p>${pb.productDetail}</p>
-<p class="prodtitle">${pb.productName}</p>
-
-<figure>
-	<img src="<c:url value='/getPicture/${pb.productCover}'/>" />
-</figure>
-
-<figcaption>
-
-<p>建議售價: $${pb.unitPrice}</p>
-<p>折扣:${pb.discount}</p>
-<p>庫存數量:${pb.stock}</p>
-
-<div>
-<p><a href="<spring:uri value='pb?id=${pb.productId}'/>" class="btn btn-success btnMargin">修改</a></p>
-
-</div>
-
-<form method="post" class="form-group row" action="<c:url value='/deleteProduct' />" >
-<input type="submit" value="刪除" clas="btn btn-success btnMargin"/>
-<input type="hidden" value="${pb.productId}" name="productId"  />
+<div class="container page" style="margin:50px auto; width:100%">
+<h1>所有商品管理</h1>
+<hr>
+<table class="product-list">
+<tr>
+<th>照片<th>ID<th>編號<th>名稱<th>說明<th>分類<th>單價<th>折扣<th>庫存<th>編輯
+<c:forEach var="pb" items="${all}">
+<tr>
+<td> <img src="<c:url value='/ProductPicture/${pb.productId}'/>"  /> 
+<td>${pb.productId}
+<td>${pb.productNo}
+<td>${pb.productName}
+<td>${pb.productDetail}
+<td>${pb.category}
+<td>$${pb.unitPrice}
+<td>${pb.discount}
+<td>${pb.stock}
+<td>
+<form method="post" class="form-group row" action="<c:url value='/deleteProduct?id=${pb.productId}'/>" >
+<input type="hidden" name="id" value="${pb.productId}"   />
+<input type="submit" value="刪除" class="button" onclick="return confirm('確定刪除？')"/>
 </form>
 
-</figcaption>
+<form method="get" class="form-group row" action="<c:url value='update?id=${pb.productId}'/>" >
+<input type="hidden" name="id" value="${pb.productId}" >
+<input type="submit" value="修改" class="button" />
 
-</div>
+</form>
+
 </c:forEach>
+</table>
 </div>
-
 
 <jsp:include page="admin_footer.jsp" />
 

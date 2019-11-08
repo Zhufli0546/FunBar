@@ -13,7 +13,9 @@ import javax.script.ScriptContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
@@ -31,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
 import tw.FunBar.model.ProductBean;
 import tw.FunBar.service.OrderHandleService;
 import tw.FunBar.service.ShoppingService;
@@ -46,6 +50,8 @@ public class ShoppingController {
 	@Autowired
 	ServletContext context;
 
+	//---------前台功能-------	
+	
 	@RequestMapping("/shoppingCart")
 	public String shoppingCart(Model model) {
 		List<ProductBean> show = shoppingService.getAllProducts();
@@ -53,8 +59,33 @@ public class ShoppingController {
 		return "shoppingCart";
 	}
 	
+//	*RequestMapping請求不能有多個相同路徑
+	
+//	依分類查詢商品(點擊分類連結進入分類商品頁面）
+	@RequestMapping("/shoppingCart/{category}")
+	public String getProductByCategory(@PathVariable("category")String category, Model model ) {
+		List <ProductBean> products = shoppingService.getProductByCategory(category);
+		model.addAttribute("category", products);
+		 return "showProductByCategory";		
+	}
+	
+	//取得所有分類
+	@ModelAttribute("categoryList")
+	public List<String> getAllCategories() {
+		return shoppingService.getAllCategories();
+	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	//----------後台功能----------
+
+		
 	//後臺顯示所有商品
 	@RequestMapping("/showAllProduct")
 	public String showAllProduct(Model model) {
@@ -62,15 +93,57 @@ public class ShoppingController {
 		model.addAttribute("all", show);
 		return "showAllProduct";
 	}
-
 	
-	@RequestMapping("/updateProduct")
-	public String getProductsById(@RequestParam("id") Integer id, Model model) {
-		model.addAttribute("product", orderService.getProductById(id));
-		return "redirect:/showAllProduct";
+	//刪除單筆資料
+		@RequestMapping("/deleteProduct")
+		public String deleteProduct(@RequestParam("id") Integer productId, Model model) {
+			model.addAttribute("pb", orderService.deleteProduct(productId));
+			return "redirect:/showAllProduct" ;
+		}
+
+	//點擊"修改"按鈕單筆查詢該資料
+	@RequestMapping("/update")
+	public String getProductsById(@RequestParam("id") Integer productId, Model model) {
+		model.addAttribute("pb", orderService.getProductById(productId));
+		return "updateProduct";
 	}
 	
 	
+		
+	//修改單筆資料
+	@RequestMapping(value="/updateProduct", method = RequestMethod.POST)
+	public String updateProduct(@RequestParam("id") Integer productId,
+								@RequestParam("productName") String productName,
+								@RequestParam("productDetail") String productDetail,
+								@RequestParam("category")String category,
+								@RequestParam("image")MultipartFile productCover,
+								@RequestParam("discount")Double discount,
+								@RequestParam("stock")Integer stock,
+								@RequestParam("productNo") String productNo, Model model) throws IOException, SerialException, SQLException {
+					
+//								ProductBean pb ;
+//								MultipartFile picture = pb.getProductCover();
+//									if(picture.getSize() == 0) {
+//									ProductBean original = orderService.getProductById(productId);
+//									pb.setProductCover(original.getProductCover());
+//								}else {
+//									String originalFilename = picture.getOriginalFilename();
+//									if( originalFilename.length() > 0 && originalFilename.lastIndexOf(".") > -1 ) {
+//										pb.setFileName(originalFilename);
+//									}
+//								}
+								
+								byte[] c = productCover.getBytes();
+								Blob blob = new SerialBlob(c);
+				
+								
+					orderService.updateProduct(productId,productNo,blob,productDetail, productName,category, discount, stock);
+					return "redirect:/showAllProduct";	
+	}
+	
+		
+	
+	//新增商品資料
 	@RequestMapping(value = "/addProduct", method = RequestMethod.GET)
 	public String getAddNewProductForm(Model model) {
 		ProductBean pb = new ProductBean();
@@ -80,7 +153,7 @@ public class ShoppingController {
 	
 
 	@RequestMapping(value = "/addProduct", method = RequestMethod.POST)
-	public String addProduct(@ModelAttribute("productBean") ProductBean pb, BindingResult result) {
+	public String addProduct(@ModelAttribute("productBean") ProductBean pb, BindingResult result, HttpSession session) {
 		String[] suppressedFields = result.getSuppressedFields();
 		if (suppressedFields.length > 0) {
 			throw new RuntimeException("嘗試傳入不允許的欄位: " + StringUtils.arrayToCommaDelimitedString(suppressedFields));
@@ -89,9 +162,11 @@ public class ShoppingController {
 			pb.setStock(0);
 		}
 		MultipartFile productCover = pb.getProductCover();
+		
 		String originalFilename = productCover.getOriginalFilename();
 		System.out.println("originalFilename:" + originalFilename);
-		pb.setFileName(originalFilename);
+		
+		
 		// 建立Blob物件，交由 Hibernate 寫入資料庫
 		if (productCover != null && !productCover.isEmpty()) {
 			try {
@@ -113,18 +188,19 @@ public class ShoppingController {
 				imageFolder.mkdirs();
 			File file = new File(imageFolder, pb.getProductImage() + ext);
 			productCover.transferTo(file);
+		//	session.setAttribute(ext, rootDirectory);   //剛剛寫的
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
 		}
 
-		return "addProduct";
+		return "redirect:/showAllProduct";
 	}
 	
-	@RequestMapping(value = "/getPicture/{productId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/ProductPicture/{productId}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPicture(HttpServletResponse resp, 
 			@PathVariable Integer productId) {
-		String filePath = "/images/noImage.png";
+		String filePath = "/WEB-INF/views/ProductImages/noImage.png";
 
 		byte[] media = null;
 		HttpHeaders headers = new HttpHeaders();
@@ -132,8 +208,10 @@ public class ShoppingController {
 		int len = 0;
 		ProductBean pb = orderService.getProductById(productId);
 		if (pb != null) {
-			Blob blob = (Blob) pb.getProductCover();
+			Blob blob = pb.getProductImage();
 			filename = pb.getFileName();
+			System.out.println("filename"+filename);
+			System.out.println("blob"+blob);
 			if (blob != null) {
 				try {
 					len = (int) blob.length();
@@ -174,5 +252,9 @@ public class ShoppingController {
 		}
 		return b;
 	}
+	
+
+	
+	
 	
 }

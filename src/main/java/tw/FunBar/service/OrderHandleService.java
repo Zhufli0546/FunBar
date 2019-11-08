@@ -1,5 +1,6 @@
 package tw.FunBar.service;
 
+import java.sql.Blob;
 import java.util.List;
 
 import tw.FunBar.model.OrderBean;
@@ -11,11 +12,11 @@ public interface OrderHandleService {
 	public ProductBean getProductById(Integer productId);
 	
 	void addProduct(ProductBean pb);
+		
+	ProductBean deleteProduct(Integer productId);
+
+	void updateProduct(Integer productId,String productNo, Blob productImage,String productDetail,String productName, 
+			String category, Double discount,Integer stock);
 	
-//	void updateProduct(int prodId, double discount, int stock);
-	
-	void updateProduct(ProductBean pb);
-	
-	void deleteProduct(ProductBean pb);
 
 }

@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
@@ -40,7 +39,7 @@ public class ActivityController {
 	@Autowired
 	public void setService(ActivityService service) {
 		this.service = service;
-	}
+	}	
 
 	ServletContext context;
 
@@ -49,6 +48,7 @@ public class ActivityController {
 		this.context = context;
 	}
 
+	//------後臺資料新增、修改、刪除、查詢--------
 	//查詢多筆
 	@RequestMapping(value= {"activities"})
 	public String list(Model model) {
@@ -76,12 +76,41 @@ public class ActivityController {
 		return "activity";
 	}
 	
+	//送出更新表單
 	@RequestMapping(value= {"/activityUpdate"})
 	public String getActivity1(@RequestParam("id") Integer id, Model model) {
 		model.addAttribute("activity", service.getActivity(id));
 		return "activityUpdate";
 	}
+	
+	//更新
+	@RequestMapping(value = "/activityQuery", method = RequestMethod.POST)
+	public String updateActivity(@RequestParam(value="activityId",required=false)int activityId,
+			@RequestParam("eventName") String eventName,
+			@RequestParam("eventDate") String eventDate,
+			@RequestParam("address") String address,
+			@RequestParam("introduction") String introduction,
+			@RequestParam("activities") String activities,
+			@RequestParam("information") String information,
+			@RequestParam("category") String category,
+			@RequestParam("activityImage") MultipartFile activityImage,Model model) throws IOException, SerialException, SQLException {
+		
+		
+		byte[] b1 = activityImage.getBytes();
+		Blob blob = new SerialBlob(b1);
+		
+		service.updateActivity(activityId, eventName, eventDate, address, introduction, activities, information, category, blob);
+		
+		return "redirect:/activityQuery";
+	}
 
+	//刪除
+	@RequestMapping("/deleteActivity")
+	public String deleteActivity(@RequestParam("id") Integer activityId, Model model) {
+		model.addAttribute("ac", service.deleteActivityById(activityId));
+		return "redirect:/activityQuery";
+	}
+	
 	//新增資料 送回新增資料的表單
 	@RequestMapping(value = "/addActivity", method = RequestMethod.GET)
 	public String input(Model model) {
@@ -154,7 +183,7 @@ public class ActivityController {
 		String mimeType = context.getMimeType(filename);
 		MediaType mediaType = MediaType.valueOf(mimeType);
 		headers.setContentType(mediaType);
-		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media, headers, HttpStatus.OK);
+		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media,HttpStatus.OK);
 		return responseEntity;
 	}
 
@@ -175,43 +204,19 @@ public class ActivityController {
 		}
 		return b;
 	}
-
+	
 	//分類查詢
+	@ModelAttribute("categoryList")
+	public List<String> getCategoryList(){
+		return service.getAllActivityCategories();
+	}
+	
 	@RequestMapping("/activities/{category}")
 	public String getActivityByCategory(@PathVariable("category") String category, Model model) {
 		List<Activity> activities = service.getActivityByCategory(category);
 		model.addAttribute("activities", activities);
 		return "activities";
 	}
-	
-	@RequestMapping(value = "/activities/{activityId}" ,method = RequestMethod.DELETE)
-	public String deleteActivity(@PathVariable Integer activityId, Activity activity,
-			HttpServletRequest req ) {
-		service.deleteActivityById(activityId);
-		return "redirect:" + req.getContextPath() +"/activities";
-	}
-	
-	@RequestMapping(value = "/activityQuery", method = RequestMethod.POST)
-	public String updateActivity(@RequestParam(value="activityId",required=false)int activityId,
-			@RequestParam("eventName") String eventName,
-			@RequestParam("eventDate") String eventDate,
-			@RequestParam("address") String address,
-			@RequestParam("introduction") String introduction,
-			@RequestParam("activities") String activities,
-			@RequestParam("information") String information,
-			@RequestParam("category") String category,
-			@RequestParam("activityImage") MultipartFile activityImage,Model model) throws IOException, SerialException, SQLException {
-		
-		
-		byte[] b1 = activityImage.getBytes();
-		Blob blob = new SerialBlob(b1);
-		
-		service.updateActivity(activityId, eventName, eventDate, address, introduction, activities, information, category, blob);
-		
-		return "redirect:/activityQuery";
-	}
-	
-	
 	
 //	@RequestMapping(value = "/activityQuery", method = RequestMethod.POST)
 //	public String updateActivity(@RequestParam(value="activityId",required=false)int activityId,
@@ -235,13 +240,13 @@ public class ActivityController {
 //		return "redirect:" + req.getContextPath() +"/activityQuery";
 //	}
 	
-	@ModelAttribute("categoryList")
-	public List<String> getCategoryList(){
-		return service.getAllActivityCategories();
-	}
+	//---------前台使用者報名活動 查詢 取消 修改資料--------
 	
-
-
-
+	//新增使用者報名表單
+	@RequestMapping(value= {"activityRegistration"})
+	public String getActivity2(@RequestParam("id") Integer activityId, Model model) {
+		model.addAttribute("activity", service.getActivity(activityId));
+		return "activityRegistration";
+	}
 
 }

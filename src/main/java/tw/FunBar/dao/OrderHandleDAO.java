@@ -1,5 +1,6 @@
 package tw.FunBar.dao;
 
+import java.sql.Blob;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -17,10 +18,9 @@ public interface OrderHandleDAO {
 	
 	void addProduct(ProductBean pb); 
 	
-	void deleteProduct(ProductBean pb);
+	ProductBean deleteProduct(Integer productId);
 
-//	void updateProduct(int prodId, double discount, int stock);
-	
-	void updateProduct(ProductBean pb);
+	void updateProduct(Integer productId, String productNo, Blob productCover,String productDetail, String productName, 
+			String category, Double discount, Integer stock);
 
 }

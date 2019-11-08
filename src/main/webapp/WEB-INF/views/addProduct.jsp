@@ -14,7 +14,12 @@
 
 </head>
 <style>
-.page {overflow: hidden;}
+.page {
+	overflow: hidden;
+	padding:30px 20px;
+
+}
+
 .prodlist {
 	float: left;
 	width: 18%;
@@ -37,6 +42,34 @@
 	margin: 0 auto;
 }
 
+.button {
+	margin: 10px 15px;
+	padding:5px 10px;
+	background-color: #272727;
+	color: #fff;
+	outline: none;
+	border-radius: 5px;	
+}
+
+
+.button:hover{
+		background-color:#fff;
+		color: #272727;
+		text-decoration:none;
+}
+
+
+@media ( max-width : 960px) {
+	.prodlist {
+		width: 31%;
+	}
+}
+
+@media ( max-width : 600px) {
+	.prodlist {
+		width: 48%;
+	}
+}
 
 }
 </style>
@@ -45,77 +78,63 @@
 <jsp:include page="admin_header.jsp" />
 
 <!-- Content 區塊 -->
-<div class="container page">
-	
-<form:form method='POST' modelAttribute="productBean" class='form-horizontal' enctype="multipart/form-data">
-		
-<fieldset>
 
+<div class="container page" style="margin:tt6u">
+<h1>新增商品</h1>
+<hr>
+<form:form method='POST' modelAttribute="productBean" class='form-horizontal' enctype="multipart/form-data">		
+<fieldset >
 <div class="form-group">
 <label class='control-label col-lg-2 col-lg-2' for="productNo">商品編號</label>
-<div class='col-lg-10'>
-<form:input id="productNo" path="productNo" type='text' class='form:input-large' />
-</div>
+<form:input autocomplete="off" id="productNo" path="productNo" type='text' class='form:input-large' />
 </div>
 
 <div class="form-group">
-<label class="control-label col-lg-2 col-lg-2" for='productName'>商品名稱</label>
-<div class="col-lg-10">
-<form:input id="productName" path="productName" type='text' class='form:input-large' />
-</div>
+<label class="control-label col-lg-2 col-lg-2" for='productName' >商品名稱</label>
+<form:input autocomplete="off" id="productName" path="productName" type='text' class='form:input-large' />
 </div>
 
 <div class="form-group">
 <label class="control-label col-lg-2 col-lg-2" for='productDetail'>商品說明</label>
-<div class="col-lg-10">
-<form:input id="productDetail" path="productDetail" type='text' class='form:input-large' />
-</div>
+<form:input autocomplete="off" id="productDetail" path="productDetail" type='text' class='form:input-large' />
 </div>
 
 <div class="form-group">
 <label class='control-label col-lg-2 col-lg-2' for="category">商品分類</label>
-<div class='col-lg-10'>
 <form:select path="category">
-<form:option value="無酒精類">無酒精類</form:option>
-<form:option value="酒器">酒器</form:option>
+<form:option value="無酒精">無酒精</form:option>
+<form:option value="啤酒與低酒精">啤酒與低酒精</form:option>
+<form:option value="葡萄酒">葡萄酒</form:option>
+<form:option value="威士忌">威士忌</form:option>
+<form:option value="酒器與酒杯">酒器與酒杯</form:option>
+<form:option value="調酒器具">調酒器具</form:option>
 <form:option value="下酒菜">下酒菜</form:option>	
 </form:select>
-</div>
 </div>
 
 <div class="form-group">
 <label class='control-label col-lg-2 col-lg-2' for="unitPrice">單價</label>
-<div class='col-lg-10'>
-<form:input id="unitPrice" path="unitPrice" type='text' class='form:input-large' />
-</div>
+<form:input autocomplete="off" id="unitPrice" path="unitPrice" type='text' class='form:input-large' />
 </div>
 
 <div class="form-group">
 <label class='control-label col-lg-2 col-lg-2' for="discount">折扣</label>
-<div class='col-lg-10'>
-<form:input id="discount" path="discount" type='text' class='form:input-large' />
-</div>
+<form:input autocomplete="off" id="discount" path="discount" type='text' class='form:input-large' />
 </div>
 
 <div class="form-group">
 <label class='control-label col-lg-2 col-lg-2' for="discount">進貨數量</label>
-<div class='col-lg-10'>
-<form:input id="stock" path="stock" type='text' class='form:input-large' />
-</div>
+<form:input autocomplete="off" id="stock" path="stock" type='text' class='form:input-large' />
 </div>
 
 
 <div class="form-group">
 <label class='control-label col-lg-2 col-lg-2' for="productCover">商品圖片</label>
-<div class='col-lg-10'>
 <form:input id="productCover" path="productCover" type='file' class='form:input-large' />
-</div>
 </div>
 
 <div class="form-group">
-<div class='col-lg-offset-2 col-lg-10'>
-<input id="btnAdd" type='submit' class='btn btn-primary' value="送出" />
-</div>
+<input type='submit' class='button' value="送出" />
 </div>
 </fieldset>
 </form:form>

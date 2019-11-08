@@ -56,7 +56,9 @@
 				<div class="wrap_header trans-0-3">
 					<!-- Logo -->
 					<div class="logo">
-						<a href="index.html"> <img
+						
+
+						<a href="${pageContext.request.contextPath}"> <img
 							src="<c:url value='/images/icons/logo.png' />" alt="IMG-LOGO"
 							data-logofixed="<c:url value='/images/icons/logo2.png' />">
 						</a>
@@ -66,24 +68,34 @@
 					<div class="wrap_menu p-l-45 p-l-0-xl">
 						<nav class="menu">
 							<ul class="main_menu">
-								<li><a href="/">Home</a></li>
 
-								<li><a href="shoppingCart">購物區</a></li>
 
-								<li><a href="booking">線上訂位</a></li>
+								<li><a href="/FunBar">Home</a></li>
+
+
+								<li><a href="${pageContext.request.contextPath}/activities">熱門活動</a></li>
+								
+								<li><a href="${pageContext.request.contextPath}/shoppingCart">購物區</a></li>
 
 								<li><a href="${pageContext.request.contextPath}/blogs">部落格</a></li>
 
-								<li><a href="discuss">討論區</a></li>
+								<li><a href="${pageContext.request.contextPath}/discuss">討論區</a></li>
 
-								<li><a href="admin">後台管理</a></li>
+								<li><a href="${pageContext.request.contextPath}/booking">線上訂位</a></li>
 								
-								<li><a href="signin">登入</a></li>
+								<li><a href="${pageContext.request.contextPath}/booking_room">線上訂房</a></li>
 								
-									<c:if test="${memberId}&&${memberPwd} }">
+
+								
 								<li><a href="joinus">註冊</a></li>
-							</c:if>
+							
 							</ul>
+
+								<li><a href="${pageContext.request.contextPath}/signin">登入</a></li>
+
+
+								</ul>
+
 						</nav>
 					</div>
 
@@ -107,27 +119,33 @@
 
 		<!-- - -->
 		<ul class="menu-sidebar p-t-95 p-b-70">
-			<li class="t-center m-b-13"><a href="index.html" class="txt19">Home</a>
+
+		<li class="t-center m-b-13"><a href="/FunBar" class="txt19">Home</a>
 			</li>
 
-			<li class="t-center m-b-13"><a href="menu.html" class="txt19">Menu</a>
-			</li>
 
-			<li class="t-center m-b-13"><a href="gallery.html" class="txt19">Gallery</a>
-			</li>
 
-			<li class="t-center m-b-13"><a href="about.html" class="txt19">About</a>
+		<li class="t-center m-b-13"><a href="activities" class="txt19">熱門活動</a>
 			</li>
+			
+			<li class="t-center m-b-13"><a href="shoppingCart">購物區</a></li>
 
 			<li class="t-center m-b-13"><a
 				href="${pageContext.request.contextPath}/blogs" class="txt19">部落格</a>
 			</li>
-
-			<li class="t-center m-b-33"><a href="contact.html" class="txt19">Contact</a>
+			
+			<li class="t-center m-b-13"><a href="discuss" class="txt19">討論區</a>
 			</li>
+			
+			<li class="t-center m-b-13"><a href="booking">線上訂位</a></li>
+								
+			<li class="t-center m-b-13"><a href="booking_room">線上訂房</a></li>
+								
+			<li class="t-center m-b-13"><a href="signin">登入</a></li>
 
-			<li class="t-center m-b-33"><a href="discuss.jsp" class="txt19">討論區</a>
-			</li>
+			<li class="t-center m-b-13"><a href="admin">後台管理</a></li>
+
+
 
 			<li class="t-center">
 				<!-- Button3 --> <a href="reservation.html"

@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
- <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %> 
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %> 
 
 <!DOCTYPE html>
 <html>
@@ -14,117 +14,120 @@
 
 </head>
 <style>
-.page {overflow: hidden;}
-.prodlist {
-	float: left;
-	width: 18%;
-	min-height: 360px;
-	padding: 5px;
-	text-align: center;
-	margin: 0 auto;
-	border: 1px dashed black;
-	margin: 1%;
+.context {
+ 	overflow: hidden;		
+}  
+
+form{
+	padding:20px;
 }
 
-.prodlist .prodtitle {
-	height: 25px;
+ img { 
+ 	display: block; 
+ 	width: 50%; 
+ 	height: 200px; 
+ 	margin: 0 auto; 
+ } 
+ 
+ .btnMargin { 
+ 	margin-top: 10px; 
+ } 
+
+@media ( max-width : 960px) {
+	.prodlist {
+		width: 31%;
+	}
 }
 
-.prodlist img {
-	display: block;
-	width: 50%;
-	height: 200px;
-	margin: 0 auto;
-}
-
-.btnMargin {
-	margin-top: 10px;
+@media ( max-width : 600px) {
+	.prodlist {
+		width: 48%;
+	}
 }
 
 
-}
 </style>
 <body>
 
 <jsp:include page="admin_header.jsp" />
 
+<jsp:useBean id="pb" scope="request" class="tw.FunBar.model.ProductBean" />
+
 <!-- Content 區塊 -->
-<div class="container page">
+<div class="context">
+
+<!--  <div>  -->
+<!-- <figure> -->
+<%-- 	<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />  --%>
+<!-- </figure>  -->
+<!--  </div>	  -->
+
+<form method='POST' enctype="multipart/form-data" action="updateProduct">
+
 
 <div>
-<figure>
-	<img src="<c:url value='/getPicture/${pb.productCover}'/>" />
-</figure>
-</div>	
-
-<form method='GET' class="form-horizontal" enctype="multipart/form-data">
-
-<div class="">
-<label class='' for="productNo">商品編號</label>
-<div class=''>
-<input id="productNo" value="${pb.productNo}" type='text' disabled class='' />
+<label for="productId">商品	ID</label>
+<input name="productId" value="${pb.productId}" type='text' disabled />
+<input type="hidden" name="id" value="${pb.productId}" />
 </div>
+
+
+<div>
+<label for="productNo">商品編號</label>
+<input id="productNo" name="productNo" value="${pb.productNo}" type='text' />
 </div>
 	
-<fieldset>
-<div class="">
-<label class="" for='productName'>商品名稱</label>
-<div class="">
-<input id="productName" value="${pb.productName}" type='text'  class='' />
-</div>
+<div>
+<label  for='productDetail'>商品說明</label>
+<input autocomplete="off" name="productDetail" id="productDetail" value="${pb.productDetail}" type='text' />
 </div>
 
-<div class="">
-<label class="" for='productDetail'>商品說明</label>
-<div class="">
-<input id="productDetail" value="${pb.productDetail}" type='text' class='' />
-</div>
+<div>
+<label for='productName'>商品名稱</label>
+<input autocomplete="off" name="productName" id="productName" value="${pb.productName}" type='text'  />
 </div>
 
-<div class="">
-<label class='' for="category">商品分類</label>
-<div class=''>
+<div>
+<label  for="category">商品分類</label>
 <select name="category">
-<option>"${pb.category}"</option>
-<option value="無酒精類">無酒精類</option>
-<option value="酒器">酒器</option>
+<option>${pb.category}</option>
+<option value="無酒精">無酒精</option>
+<option value="啤酒與低酒精">啤酒與低酒精</option>
+<option value="葡萄酒">葡萄酒</option>
+<option value="威士忌">威士忌</option>
+<option value="酒器與酒杯">酒器與酒杯</option>
+<option value="調酒器具">調酒器具</option>
 <option value="下酒菜">下酒菜</option>	
 </select>
 </div>
+
+<div>
+<label for="unitPrice">商品單價</label>
+<input autocomplete="off"  name="unitPrice" id="unitPrice" value="${pb.unitPrice}" type='text' disabled />
 </div>
 
-<div class="">
-<label class='' for="unitPrice">單價</label>
-<div class="">
-<input id="unitPrice" value="${pb.unitPrice}" type='text' disabled class='' />
-</div>
+<div>
+<label  for="unitPrice">商品折扣</label>
+<input autocomplete="off" name="discount"  id="discount" value="${pb.discount}" type='text' />
 </div>
 
-<div class="">
-<label class='' for="unitPrice">折扣</label>
-<div class="">
-<input id="discount" value="${pb.discount}" type='text' class='' />
-</div>
+<div>
+<label  for="unitPrice">庫存數量</label>
+<input autocomplete="off" name="stock"  id="stock" value="${pb.stock}" type='text' />
 </div>
 
-<div class="">
-<label class='' for="unitPrice">庫存數量</label>
-<div class="">
-<input id="stock" value="${pb.stock}" type='text'  class='' />
-</div>
+
+<div>
+<label  for="productCover">商品圖片</label>
+<input type='file' name="image"  value="${pb.productId}"  />
+<input type="hidden" name="image" value="${pb.productId}" />
 </div>
 
-<div class="">
-<label class='' for="productCover">商品圖片</label>
-<div class='col-lg-10'>
-<form:input id="productCover" path="productCover" type='file' class='form:input-large' />
-</div>
+
+<div>
+<input type='submit' class='btn btn-primary' value="送出" />
 </div>
 
-<div class="">
-<div class=''><input id="btnAdd" type='submit' class='btn btn-primary' value="修改" /></div>
-</div>
-</fieldset>
 </form>
 </div>
 

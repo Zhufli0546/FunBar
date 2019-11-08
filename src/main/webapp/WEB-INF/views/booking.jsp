@@ -19,7 +19,7 @@
 
 	<jsp:include page="header.jsp" />
 
-	<section class="page" style="background-color:black">
+	<section class="page animsition" style="background-color:black">
 		<div class="calendar" style="border:1px solid orange;border-radius:5px">
 
 			選擇訂位日期:

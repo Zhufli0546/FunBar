@@ -8,17 +8,25 @@
 <meta charset="UTF-8">
 <title>Activity</title>
 </head>
+<style>
+	.container {
+		font-family:微軟正黑體;
+			}
+</style>
+
 <body>
 <jsp:include page="admin_header.jsp" />
 	
 
-<div class="container" style="margin-top: 150px ;width:60%">
+<div class="container" style="margin: 150px auto ;width:60%">
+
+<h2>活動修改</h2><hr>
 
 <form:form modelAttribute="activity" action='activityQuery'
 			method='POST' enctype="multipart/form-data">
 
 <div class="form-group">
-  <label for="id">活動id:</label>
+  <label for="id">活動ID:</label>
   <form:input path="activityId" type="text" class="form-control" id="id" disabled="true"/>
   <form:input path="activityId" type="hidden" class="form-control" id="id" />
 </div>
@@ -55,14 +63,19 @@
 </div>
 
 <div class="form-group">
+<p>活動分類:</p>
 <form:select path="category">
-			<form:option value="-1" >請選擇分類
-							</form:option>
-			<form:options items="${categoryList}" />
+			<form:option value="其他活動">請選擇分類</form:option>
+					<form:option value="放肆朵頤"></form:option>
+					<form:option value="藝見自己"></form:option>
+					<form:option value="品味生活"></form:option>
+					<form:option value="找點樂子"></form:option>
 			</form:select>
 </div>
 
 <div class="form-group">
+<p>活動圖片:</p>
+<div><img style="width:150px; height:80px" src="<c:url value='/ActivitygetPicture/${activity.activityId }'/>"></div>
   <form:input id="activityImage" path="activityImage" type='file'
 					class='form:input-large' />
 </div>
@@ -75,4 +88,6 @@
         
 </div>
 </body>
+
+<jsp:include page="admin_footer.jsp" />
 </html>
