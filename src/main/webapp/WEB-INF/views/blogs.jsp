@@ -199,13 +199,19 @@
     </div><!-- modal-dialog -->
 </div><!-- modal -->
 
-
 <!-- Footer -->
 <jsp:include page="footer.jsp" />
 <script src="<c:url value='/vendor/ckeditor/ckeditor.js'/>"></script>
-<script src="<c:url value='/js/blog.js'/>"></script>
 <script>
 $(document).ready(function () {
+	$('#createBlog').on('shown.bs.modal', function() {
+        $(document).off('focusin.modal');
+    });
+	
+	$('#modifyBlog').on('shown.bs.modal', function() {
+        $(document).off('focusin.modal');
+    });
+
     CKEDITOR.replace('blogContent', {
         height: 400,
         filebrowserUploadUrl: '${pageContext.request.contextPath}/blogInsert',
@@ -219,5 +225,6 @@ $(document).ready(function () {
     });
 })
 </script>
+<script src="<c:url value='/js/blog.js'/>"></script>
 </body>
 </html>

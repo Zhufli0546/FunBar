@@ -197,7 +197,3 @@ $(".searchClick").click(function() {
 		}
 	})
 })
-
-//$("#closeLeftModal").click(function(){
-//	window.location.reload();
-//})
