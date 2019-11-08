@@ -119,7 +119,8 @@ form{
 
 <div>
 <label  for="productCover">商品圖片</label>
-<input name="image"  value="${pb.productId}" type='file' />
+<input type='file' name="image"  value="${pb.productId}"  />
+<input type="hidden" name="image" value="${pb.productId}" />
 </div>
 
 

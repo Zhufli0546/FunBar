@@ -60,7 +60,7 @@
 	padding:20px;
 	float:left;
 	border:none;
-	display:block
+	display:block;
 }
 
 .calendar2 {

@@ -13,6 +13,7 @@ import javax.script.ScriptContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
@@ -32,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
 import tw.FunBar.model.ProductBean;
 import tw.FunBar.service.OrderHandleService;
 import tw.FunBar.service.ShoppingService;
@@ -47,14 +50,38 @@ public class ShoppingController {
 	@Autowired
 	ServletContext context;
 
+	//---------前台功能-------	
+	
 	@RequestMapping("/shoppingCart")
 	public String shoppingCart(Model model) {
-		List<String> list = shoppingService.getAllCategories();
-		model.addAttribute("categoryList", list);
 		List<ProductBean> show = shoppingService.getAllProducts();
 		model.addAttribute("all", show);
 		return "shoppingCart";
 	}
+	
+//	*RequestMapping請求不能有多個相同路徑
+	
+//	依分類查詢商品(點擊分類連結進入分類商品頁面）
+	@RequestMapping("/shoppingCart/{category}")
+	public String getProductByCategory(@PathVariable("category")String category, Model model ) {
+		List <ProductBean> products = shoppingService.getProductByCategory(category);
+		model.addAttribute("category", products);
+		 return "showProductByCategory";		
+	}
+	
+	//取得所有分類
+	@ModelAttribute("categoryList")
+	public List<String> getAllCategories() {
+		return shoppingService.getAllCategories();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//----------後台功能----------
 
@@ -94,10 +121,22 @@ public class ShoppingController {
 								@RequestParam("stock")Integer stock,
 								@RequestParam("productNo") String productNo, Model model) throws IOException, SerialException, SQLException {
 					
-//								System.out.print(productDetail);
+//								ProductBean pb ;
+//								MultipartFile picture = pb.getProductCover();
+//									if(picture.getSize() == 0) {
+//									ProductBean original = orderService.getProductById(productId);
+//									pb.setProductCover(original.getProductCover());
+//								}else {
+//									String originalFilename = picture.getOriginalFilename();
+//									if( originalFilename.length() > 0 && originalFilename.lastIndexOf(".") > -1 ) {
+//										pb.setFileName(originalFilename);
+//									}
+//								}
+								
 								byte[] c = productCover.getBytes();
 								Blob blob = new SerialBlob(c);
-		
+				
+								
 					orderService.updateProduct(productId,productNo,blob,productDetail, productName,category, discount, stock);
 					return "redirect:/showAllProduct";	
 	}
@@ -114,7 +153,7 @@ public class ShoppingController {
 	
 
 	@RequestMapping(value = "/addProduct", method = RequestMethod.POST)
-	public String addProduct(@ModelAttribute("productBean") ProductBean pb, BindingResult result) {
+	public String addProduct(@ModelAttribute("productBean") ProductBean pb, BindingResult result, HttpSession session) {
 		String[] suppressedFields = result.getSuppressedFields();
 		if (suppressedFields.length > 0) {
 			throw new RuntimeException("嘗試傳入不允許的欄位: " + StringUtils.arrayToCommaDelimitedString(suppressedFields));
@@ -123,9 +162,11 @@ public class ShoppingController {
 			pb.setStock(0);
 		}
 		MultipartFile productCover = pb.getProductCover();
+		
 		String originalFilename = productCover.getOriginalFilename();
 		System.out.println("originalFilename:" + originalFilename);
-		pb.setFileName(originalFilename);
+		
+		
 		// 建立Blob物件，交由 Hibernate 寫入資料庫
 		if (productCover != null && !productCover.isEmpty()) {
 			try {
@@ -147,6 +188,7 @@ public class ShoppingController {
 				imageFolder.mkdirs();
 			File file = new File(imageFolder, pb.getProductImage() + ext);
 			productCover.transferTo(file);
+		//	session.setAttribute(ext, rootDirectory);   //剛剛寫的
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
@@ -211,16 +253,7 @@ public class ShoppingController {
 		return b;
 	}
 	
-//	RequestMapping請求不能有多個相同路徑
-	
-//	依分類查詢商品
-	@RequestMapping("/shoppingCart/{category}")
-	public String getProductByCategory(@PathVariable("category")String category, Model model ) {
-		List <ProductBean> products = shoppingService.getProductByCategory(category);
-		model.addAttribute("category", products);
-		 return "shoppingCart";		
-	}
-	
+
 	
 	
 	
