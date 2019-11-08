@@ -62,8 +62,9 @@ public class CartController {
 		cartItem.setProduct(product);
 		cartItem.setCount(count);
 		cart.add(cartItem);
+		session.setAttribute("Cart", cart);
 
-		Collection<CartItem> item = cart.getCartItems();
+//		Collection<CartItem> item = cart.getCartItems();
 //		for (CartItem c : item) {
 //			System.out.println("購買產品id:" + c.getProduct().getProductId());
 //			System.out.println("購買產品名稱:" + c.getProduct().getProductName());
@@ -96,21 +97,21 @@ public class CartController {
 	@RequestMapping(value="/removeCartItem")
 	public String rvemoveCartItem(HttpServletRequest request,
 						 		 HttpSession session,
-								 @RequestParam Integer productId) {
+								 @RequestParam("productId") Integer productId,
+								 Model model) {
 		session = request.getSession(false);
-		Cart cart = (Cart)session.getAttribute("cart");
-		int id = Integer.parseInt(request.getParameter("productId"));
-		cart.delete(id);
+		Cart cart = (Cart)session.getAttribute("Cart");
+//		System.out.println(cart);
+		cart.delete(productId);
 		
 		return "redirect:/showCart";
 	}
 	
 	@RequestMapping(value="/deleteCartItem")
 	public String deleteCartItem(HttpServletRequest request,
-						 		 HttpSession session,
-								 @RequestParam Integer productId) {
+						 		 HttpSession session) {
 		session = request.getSession(false);
-		Cart cart = (Cart)session.getAttribute("cart");
+		Cart cart = (Cart)session.getAttribute("Cart");
 		cart.clear();
 		
 		return "redirect:/showCart";

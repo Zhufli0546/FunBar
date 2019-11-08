@@ -19,7 +19,7 @@ a.orderBtn { text-decoration:none; padding: 5px; background: #fff; border: 1px s
 <div class="container page">
 	<div class="row">
 		<div class="col-sm-offset-10 col-sm-2">
-			<a class="orderBtn" href="<c:url value='/shoppingcart/DeleteCartItemServlet' />">清空購物車</a>
+			<a class="orderBtn" href="<c:url value='/deleteCartItem' />">清空購物車</a>
 		</div>
 	</div>
 	<div class="table-responsive">
