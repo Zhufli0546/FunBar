@@ -42,6 +42,7 @@
 </figure>
 <figcaption>
 <p>建議售價: $${pb.unitPrice}</p>
+<p>折扣：${pb.discount}</p>
 <form class="form-group row" action="<c:url value='' />" method="post">
 
 <label for="selectCount" class="col-sm-6 col-xs-12">購買數量:</label>

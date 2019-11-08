@@ -55,7 +55,7 @@ public class OrderHandleDAOImpl implements OrderHandleDAO{
 
 
 	@Override
-	public void updateProduct(Integer productId, String productNo, Blob productCover, String productDetail,String productName,
+	public void updateProduct(Integer productId, String productNo,Blob productCover, String productDetail,String productName,
 			 String category, Double discount, Integer stock) {
 		
 		System.out.print(productDetail);
