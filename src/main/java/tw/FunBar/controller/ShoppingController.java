@@ -164,6 +164,7 @@ public class ShoppingController {
 		MultipartFile productCover = pb.getProductCover();
 		
 		String originalFilename = productCover.getOriginalFilename();
+		pb.setFileName(originalFilename);
 		System.out.println("originalFilename:" + originalFilename);
 		
 		
