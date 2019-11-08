@@ -185,4 +185,11 @@ public class BlogController {
 		model.addAttribute("blogs", blogs);
 		return "searchKey";
 	}
+	
+	@RequestMapping("/getmodifyBlog/{id}")
+	public String modifyBlog(@PathVariable Integer id, Model model) {
+		Blog blog = blogService.findByIdBlog(id);
+		model.addAttribute("modifyBlog", blog);
+		return "/getmodifyBlog";
+	}
 }
