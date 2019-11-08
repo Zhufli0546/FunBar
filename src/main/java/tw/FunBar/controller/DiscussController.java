@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import tw.FunBar.model.Blog;
+import tw.FunBar.model.LikePK;
+import tw.FunBar.model.LikePost;
 import tw.FunBar.model.Post;
 import tw.FunBar.service.DiscussService;
 
@@ -29,42 +32,79 @@ public class DiscussController {
 	@RequestMapping(value = "/discuss", method = RequestMethod.GET)
 	public String discuss(Model model) {
 		List<Post> postList = service.getAllPostDetail();
-//		List<Like> listLike = service.getAllLike();
 		model.addAttribute("title", "討論區");
 		model.addAttribute("post", postList);
-		model.addAttribute("reply", postList);
-		model.addAttribute("reply2", postList);
-		model.addAttribute("Post", new Post());
-		model.addAttribute("Reply", new Post());
-//		model.addAttribute("like",listLike);
 		return "discuss";
 	}
 
-	@GetMapping(value = "Like")
-	public @ResponseBody Integer getLikes(@RequestParam(value = "postId") Integer postId) {
-		Integer count = service.getLikeByPostId(postId);
-		return count;
-		
-//		List<Like> list = service.getAllLike();
-//		return list;
+	@RequestMapping(value = "/discussJson", produces = "application/json")
+	public String discussJson(Model model) {
+		List<Post> postList = service.getAllPostDetail();
+		model.addAttribute("Post", postList);
+		return "discussJson";
 	}
 
-//	 @GetMapping("/discuss") 
-//	 public String getCreateNewPost(Model model) {
-//	     model.addAttribute("Post", new Post()); 
-//	     return "discuss"; 
-//	 }
-
-	@RequestMapping(value = "/discuss", method = RequestMethod.POST)
-	public String processCreatePost(@ModelAttribute("Post") Post post) {
+	@RequestMapping(value = "createPost", method = RequestMethod.POST)
+	public String createPost(@RequestParam String postContent) {
+		Post post = new Post();
+		post.setPostContent(postContent);
 		service.createPost(post);
 		return "redirect:/discuss";
 	}
 
-//	 @RequestMapping(value = "/discuss", method = RequestMethod.POST)
-//	 public String createLike(@ModelAttribute("Like") Like like) {
-//		 service.createLike(like);
-//		 return "redirect:/discuss";
-//	 }
+	@RequestMapping(value = "replyComment", method = RequestMethod.POST)
+	public String replyComment(@RequestParam String postContent, @RequestParam Integer parentPostId) {
+		Post parentPost = service.findByIdPost(parentPostId);
+		Post post = new Post();
+		post.setPostContent(postContent);
+		post.setParentPostId(parentPost);
+		service.createPost(post);
+		return "redirect:/discuss";
+	}
+
+	@RequestMapping(value = "updateContent", method = RequestMethod.POST)
+	public String updateContent(@RequestParam String postContent, @RequestParam Integer postId) {
+		Post post = new Post();
+		post.setPostContent(postContent);
+		post.setPostId(postId);
+		service.updatePostContent(post);
+		return "redirect:/discuss";
+	}
+	
+	@RequestMapping(value = "deleteContent", method = RequestMethod.GET)
+	public String deleteContent(@RequestParam Integer postId) {
+		service.deletePostContent(postId);
+		return "redirect:/discuss";
+	}
+	
+	
+
+	@GetMapping(value = "Like")
+	public @ResponseBody long getLikes(@RequestParam(value = "postId") Integer postId) {
+		long count = service.getLikeByPostId(postId);
+		return count;
+	}
+
+	@GetMapping(value = "addLike")
+	public @ResponseBody void addLike(@RequestParam(value = "postId") Integer postId,
+			@RequestParam(value = "memberId") Integer memberId) {
+		LikePK likepk = new LikePK();
+		likepk.setPostId(postId);
+		likepk.setMemberId(memberId);
+		LikePost like = new LikePost();
+		like.setLikePK(likepk);
+		service.addLike(like);
+	}
+
+	@GetMapping(value = "unLike")
+	public @ResponseBody void unLike(@RequestParam(value = "postId") Integer postId,
+			@RequestParam(value = "memberId") Integer memberId) {
+		LikePK likepk = new LikePK();
+		likepk.setPostId(postId);
+		likepk.setMemberId(memberId);
+		LikePost like = new LikePost();
+		like.setLikePK(likepk);
+		service.unLike(like);
+	}
 
 }

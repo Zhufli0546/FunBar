@@ -36,15 +36,16 @@ public class CartController {
 	@Autowired
 	OrderHandleService orderHandleService;
 	
-	ServletContext context;
 	@Autowired
-	public void setContext(ServletContext context) {
-		this.context = context;
-	}
-
+	ServletContext context;
+	
+	
 	@RequestMapping(value = "/cart", method = RequestMethod.POST)
-	public String addCart(HttpServletRequest request, HttpSession session, HttpServletRequest response,
-			@RequestParam Integer productId, @RequestParam Integer count) throws IOException {
+	public String addCart(HttpServletRequest request, 
+						  HttpSession session, 
+						  HttpServletRequest response,
+						  @RequestParam Integer productId,
+						  @RequestParam Integer count) throws IOException {
 		session = request.getSession(false);
 
 		// 未來整合 login 才能產生購物車
@@ -61,8 +62,9 @@ public class CartController {
 		cartItem.setProduct(product);
 		cartItem.setCount(count);
 		cart.add(cartItem);
+		session.setAttribute("Cart", cart);
 
-		Collection<CartItem> item = cart.getCartItems();
+//		Collection<CartItem> item = cart.getCartItems();
 //		for (CartItem c : item) {
 //			System.out.println("購買產品id:" + c.getProduct().getProductId());
 //			System.out.println("購買產品名稱:" + c.getProduct().getProductName());
@@ -90,6 +92,29 @@ public class CartController {
 		model.addAttribute("cart", cart);
 
 		return "showCart";
+	}
+	
+	@RequestMapping(value="/removeCartItem")
+	public String rvemoveCartItem(HttpServletRequest request,
+						 		 HttpSession session,
+								 @RequestParam("productId") Integer productId,
+								 Model model) {
+		session = request.getSession(false);
+		Cart cart = (Cart)session.getAttribute("Cart");
+//		System.out.println(cart);
+		cart.delete(productId);
+		
+		return "redirect:/showCart";
+	}
+	
+	@RequestMapping(value="/deleteCartItem")
+	public String deleteCartItem(HttpServletRequest request,
+						 		 HttpSession session) {
+		session = request.getSession(false);
+		Cart cart = (Cart)session.getAttribute("Cart");
+		cart.clear();
+		
+		return "redirect:/showCart";
 	}
 	
 	

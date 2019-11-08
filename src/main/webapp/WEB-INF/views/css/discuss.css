@@ -10,3 +10,14 @@ body{
 
 }
 
+div .media{
+	
+	background-color: white ;
+	
+}
+
+div .media-date { 
+    position: absolute; 
+    right: 25px;
+    top: 25px;
+}

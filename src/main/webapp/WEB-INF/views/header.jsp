@@ -85,10 +85,17 @@
 								
 								<li><a href="${pageContext.request.contextPath}/booking_room">線上訂房</a></li>
 								
+
+								
+								<li><a href="joinus">註冊</a></li>
+							
+							</ul>
+
 								<li><a href="${pageContext.request.contextPath}/signin">登入</a></li>
 
 
 								</ul>
+
 						</nav>
 					</div>
 
