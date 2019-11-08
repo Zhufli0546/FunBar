@@ -8,206 +8,68 @@
 <html>
 
 <head>
-    <title>Discuss</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="<c:url value='/css/discuss.css'/>">
+<title>Discuss</title>
+<meta charset="UTF-8">
+<!-- Header -->
+<jsp:include page="header.jsp" />
+<link rel="stylesheet" type="text/css"
+	href="<c:url value='/css/discuss.css'/>">
 </head>
 
-<body class="animsition" style="background-color: black;">
-    <!-- Header -->
-    <jsp:include page="header.jsp" />
+<body class="animsition">
+	<br>
+	<br>
+	<!-- Body -->
+	<section class="container page">
+		<div class="row">
 
-    <br>
-    <br>
-    <br>
-    <section class="container page">
-        <div class="row">
+			<!-- Member detail block -->
+			<div class="col-md-2">
+				<div class="list-group">
+					<a href="#" class="list-group-item list-group-item-action active">${title}</a>
+					<a href="" class="list-group-item list-group-item-action">會員大頭貼</a>
+					<a href="" class="list-group-item list-group-item-action">會員帳號</a>
+					<a href="" class="list-group-item list-group-item-action">儲存留言</a>
+					<a href="" class="list-group-item list-group-item-action">好友</a>
+				</div>
+			</div>
 
-            <!-- Member detail block -->
-            <div class="col-md-3">
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action active">
-                        ${title}</a>
-                    <a href="" class="list-group-item list-group-item-action">Member Detail</a>
-                    <a href="" class="list-group-item list-group-item-action">Member Image</a>
-                    <a href="" class="list-group-item list-group-item-action">Save Post</a>
-                    <a href="" class="list-group-item list-group-item-action">Friends</a>
-                </div>
-            </div>
-            <br>
-            <br>
-
-            <!-- Post area -->
-            <div class="col-md-6">
-                <!--the create new post block-->
-                <div class="card">
-                    <div class="card-header">Create Post</div>
-                    <div class="card-body">
-                        <form:form method="post" modelAttribute="Post" class="from-horizontal">
-                            <blockquote class="blockquote mb-0">
-                                <form:textarea path="postContent" class="form-control" name="postBody" type="textarea"
-                                    placeholder="What's on your mind ? "></form:textarea>
-                            </blockquote>
-                            <div class="text-right">
-                                <br>
-                                <button class="btn btn-info  btn-sm" type="submit" name="submitPost">Post</button>
-                            </div>
-                        </form:form>
-                    </div>
-                </div>
-                <br>
-
-                <!-- 第一層Post -->
-                <c:forEach var="post" items="${post}">
-                    <c:if test="${post.parentPostId==null}">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="media mt-4">
-                                    <img class="d-flex mr-3 rounded-circle" src='http://placehold.it/50x50'>
-                                    <div>
-                                        <p style="color:blue">${post.memberId}</p>
-                                    </div>
-                                </div>
-                                <br>
-                                <blockquote class="blockquote mb-0">
-                                    <div class="font-weight-bold">${post.postContent}</div>
-                                </blockquote>
-
-                                <!--時間顯示 未完成 -->
-                                <jsp:useBean id="date" class="java.util.Date"></jsp:useBean>
-                                <div class="text-right">
-                                    <br>
-                                    <!-- <p>dataBase = ${post.postTime.time}</p> -->
-                                    <!-- <p>JSTL = ${date.time}</p> -->
-                                    <c:set var="postInterval" value="${(date.time-post.postTime.time)/1000*60*60}" />
-
-                                    <!-- <p>${date}</p> -->
-                                    <p>${post.postTime}</p>
-                                    <!-- <p>差距 ： ${postInterval}</p> -->
-                                    <br>
+			<!-- Post area -->
+			<!--create new post block-->
+			<div class="col-md-7">
+				<div class='card' id="newPost"></div>
+				<br>
+				<!-- 第一層Post -->
+				<div id="firstLevelComment">
+				<!-- 第二層Post -->
+				</div>
+			</div>
 
 
-                                    <!-- post reply -->
-                                    <form:form method="post" modelAttribute="Post" class="from-horizontal">
-                                        <div class="input-group mb-6">
-                                            <form:input path="parentPostId" type="hidden" class="post"
-                                                value="${post.postId}"></form:input>
-                                            <form:input path="postContent" class="form-control" name="replyBody"
-                                                type="text" placeholder="Reply..."></form:input>
-                                            <button class="btn btn-info  btn-sm" type="submit"
-                                                name="submitPost">Reply</button>
-                                        </div>
-                                        <br>
-                                        <!-- like function -->
-                                        <div><span id="${post.postId}" class="text-left">__Likes</span>
-                                            <button id="likebtn" type="button" class="btn btn-secondary"
-                                                value="${post.postId}">Like</button>
-                                            <button type="button" style="display:none"
-                                                value="${post.memberId}"></button>
-                                        </div>
-                                        <br>
+			<!-- friend request block -->
+			<div class="col-md-3" style="background-color: white;">
+				<br>
+				<div class="col-md-12 font-weight-bold">Friend request</div>
+				<div class="col-md-12" style="margin-top: 50px;">
+					<div class="input-group mb-3">
+						<input type="text" class="form-control" id="search_screen_name"
+							placeholder="search friends" aria-describedby="button-addon2">
+						<div class="input-group-append">
+							<button class="btn btn-outline-secondary" type="button"
+								onclick="searchFriend()">search</button>
+						</div>
+					</div>
+					<div id="search_result" class="list-group"></div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-                                    </form:form>
-
-                                    <!-- 第二層留言 -->
-                                    <c:forEach var="childPost" items="${reply}">
-                                        <c:if test="${post.postId==childPost.parentPostId}">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="media mt-4">
-                                                        <img class="d-flex mr-3 rounded-circle"
-                                                            src='http://placehold.it/50x50'>
-                                                        <div>
-                                                            <span style="color:blue">${childPost.memberId}</span>
-                                                            <span>${childPost.postContent}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <form:form method="post" modelAttribute="Post" class="from-horizontal">
-                                                <div class="input-group mb-6">
-                                                    <form:input path="parentPostId" type="hidden" id="postId"
-                                                        class="post" value="${childPost.postId}"></form:input>
-                                                    <form:input path="postContent" class="form-control" type="text"
-                                                        placeholder="Reply..."></form:input>
-                                                    <button class="btn btn-info  btn-sm" type="submit"
-                                                        name="submitPost">Reply</button>
-                                                </div>
-                                                <br>
-                                                <!-- like function -->
-                                                <div><span id="${childPost.postId}" class="text-left">__Likes</span>
-                                                    <button id="likebtn" type="button" class="btn btn-secondary"
-                                                        value="${childPost.postId}">Like</button>
-                                                    <button type="button" style="display:none"
-                                                        value="${childPost.memberId}"></button>
-                                                </div>
-                                                <br>
-                                            </form:form>
-
-                                            <!-- 第三層留言 -->
-                                            <c:forEach var="childPost2" items="${reply2}">
-                                                <c:if test="${childPost.postId==childPost2.parentPostId}">
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <div class="media mt-4">
-                                                                <img class="d-flex mr-3 rounded-circle"
-                                                                    src='http://placehold.it/50x50'>
-                                                                <div>
-                                                                    <span
-                                                                        style="color:blue">${childPost2.memberId}</span>
-                                                                    <span>${childPost2.postContent}</span>
-                                                                    <input type="hidden" class="post" value="${childPost2.postId}">
-                                                                </div>
-                                                            </div>
-                                                            <!-- like function -->
-                                                            <div><span id="${childPost2.postId}"
-                                                                    class="text-left">__Likes</span>
-                                                                <button id="likebtn" type="button"
-                                                                    class="btn btn-secondary"
-                                                                    value="${childPost2.postId}">Like</button>
-                                                                <button type="button" style="display:none"
-                                                                    value="${childPost2.memberId}"></button>
-                                                            </div>
-                                                            <!-- <div class="font-weight-bold">
-                                                                        <p>${childPost2.postContent}</p>
-                                                                    </div> -->
-                                                        </div>
-                                                    </div>
-                                                </c:if>
-                                            </c:forEach>
-                                        </c:if>
-                                    </c:forEach>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                    </c:if>
-                </c:forEach>
-
-            </div>
-            <!-- friend request block -->
-            <div class="col-md-3" style="background-color: white;">
-                <br>
-                <div class="col-md-12 font-weight-bold">Friend request</div>
-                <div class="col-md-12" style="margin-top: 50px;">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="search_screen_name" placeholder="search friends"
-                            aria-describedby="button-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button"
-                                onclick="searchFriend()">search</button>
-                        </div>
-                    </div>
-                    <div id="search_result" class="list-group"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Footer -->
-    <jsp:include page="footer.jsp" />
-    <script type="text/javascript" src="<c:url value='/js/discuss.js'/>">
-    </script>
+	<!-- Footer -->
+	<jsp:include page="footer.jsp" />
+	<script type="text/javascript" src="<c:url value='/js/discuss.js'/>">
+		
+	</script>
 </body>
 
 </html>
