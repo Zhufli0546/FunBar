@@ -36,15 +36,16 @@ public class CartController {
 	@Autowired
 	OrderHandleService orderHandleService;
 	
-	ServletContext context;
 	@Autowired
-	public void setContext(ServletContext context) {
-		this.context = context;
-	}
-
+	ServletContext context;
+	
+	
 	@RequestMapping(value = "/cart", method = RequestMethod.POST)
-	public String addCart(HttpServletRequest request, HttpSession session, HttpServletRequest response,
-			@RequestParam Integer productId, @RequestParam Integer count) throws IOException {
+	public String addCart(HttpServletRequest request, 
+						  HttpSession session, 
+						  HttpServletRequest response,
+						  @RequestParam Integer productId,
+						  @RequestParam Integer count) throws IOException {
 		session = request.getSession(false);
 
 		// 未來整合 login 才能產生購物車
@@ -90,6 +91,29 @@ public class CartController {
 		model.addAttribute("cart", cart);
 
 		return "showCart";
+	}
+	
+	@RequestMapping(value="/removeCartItem")
+	public String rvemoveCartItem(HttpServletRequest request,
+						 		 HttpSession session,
+								 @RequestParam Integer productId) {
+		session = request.getSession(false);
+		Cart cart = (Cart)session.getAttribute("cart");
+		int id = Integer.parseInt(request.getParameter("productId"));
+		cart.delete(id);
+		
+		return "redirect:/showCart";
+	}
+	
+	@RequestMapping(value="/deleteCartItem")
+	public String deleteCartItem(HttpServletRequest request,
+						 		 HttpSession session,
+								 @RequestParam Integer productId) {
+		session = request.getSession(false);
+		Cart cart = (Cart)session.getAttribute("cart");
+		cart.clear();
+		
+		return "redirect:/showCart";
 	}
 	
 	
