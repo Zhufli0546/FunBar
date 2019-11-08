@@ -80,7 +80,9 @@
 								
 								<li><a href="signin">登入</a></li>
 								
-								<li><a href="showAllmember">註冊</a></li>
+									<c:if test="${memberId}&&${memberPwd} }">
+								<li><a href="joinus">註冊</a></li>
+							</c:if>
 							</ul>
 						</nav>
 					</div>
