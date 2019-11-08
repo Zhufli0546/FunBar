@@ -8,25 +8,22 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import sun.print.resources.serviceui;
 import tw.FunBar.model.Member;
 import tw.FunBar.service.MemberService;
 
 @Controller
 public class MemberController {
- 
- @Autowired
- MemberService memberService;
- 
- 
- @RequestMapping("/signin")
- public String signIn() {
-  return "signin" ;
- }
- 
+
+	@Autowired
+	MemberService memberService;
+	private HttpServletRequest request;
+
 // @RequestMapping(value="/check",method=RequestMethod.POST)
 // public String check(@RequestParam(name="memberName") String memberName,
 //      @RequestParam(name="memberPwd") String memberPwd,
@@ -43,28 +40,110 @@ public class MemberController {
 //   return "index";
 //  }
 // }
- 
- @RequestMapping("/logout")
- public String logout(HttpServletRequest request) {
-  HttpSession session = request.getSession();
-  session.removeAttribute("user");
-  return "index";
- }
- 
-@RequestMapping("/showAllmember")
-public String list(Model model) {
-		@SuppressWarnings("unused")
+	//登出
+//	@RequestMapping("/logout")
+//	public String logout(HttpServletRequest request) {
+//		HttpSession session = request.getSession();
+//		session.removeAttribute("user");
+//		return "index";// 結束妳要去的頁面
+//	}
+	
+	//登入
+	@RequestMapping(value = "/signin", method = RequestMethod.GET)
+	public String signIn() {
+		
+		return "signin";
+	}
+	@RequestMapping(value = "/signin", method = RequestMethod.POST)
+	public String signinto(@RequestParam("memberId")String memberId,@RequestParam("memberPwd")String memberPwd,
+			Model model){
+
+        Boolean a =memberService.signin(memberId, memberPwd);
+		if(a) {
+
+
+			return "redirect:/";
+			
+		}else {
+			return "signin";
+		}	
+		
+	}
+	
+	//登入成功後
+	@RequestMapping(value="/login")
+	public String login(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+	
+		
+		
+		
+		return null;
+		
+	}
+	
+	
+	
+	
+// 查詢單筆
+	@RequestMapping("/getONE1")
+	public String getONE1(@RequestParam("id") Integer id, Model model) {
+		model.addAttribute("one", memberService.getONEmember(id));
+
+		return "getONE1";
+	}
+
+	// 查詢全部
+	@RequestMapping("/showAllmember")
+	public String list(Model model) {
+
 		List<Member> list = memberService.getAllmembers();
-		model.addAttribute("member","list");
+		model.addAttribute("members", list);
 		return "showAllmember";
 	}
 
+	// 新增
+	// 這個是對照到jsp的action
+	@RequestMapping(value = "/joinus", method = RequestMethod.GET)
+	public String savemember(Model model) {
+		Member mb = new Member();
+		model.addAttribute("Member", mb);
+		return "joinus";
+	}
 
+	@RequestMapping(value = "/joinus", method = RequestMethod.POST)
+	public String dosavemember(@ModelAttribute("Member") Member mb) {
+		memberService.saveMember(mb);
+		return "redirect:/showAllmember";
+	}
 
+	// 刪除
+	@RequestMapping("/deletemb")
+	public String deletemb(@RequestParam("id") Integer id) {
+		System.out.println("id=" + id);
+		memberService.delete(id);
+		// model.addAttribute("mb",memberService.delete(id));
+		return "redirect:/showAllmember";
+
+	}
+
+	// 修改
+	@RequestMapping(value = "/getONE", method = RequestMethod.GET)
+	public String getONE(@RequestParam("id") Integer id, Model model) {
+		model.addAttribute("one", memberService.getONEmember(id));
+
+		return "getONE";
+
+	}
+
+	@RequestMapping(value = "/updatemb", method = RequestMethod.POST)
+	public String updatemb(@RequestParam Integer id, @RequestParam("memberName") String memberName,
+			@RequestParam("memberAddress") String memberAddress, @RequestParam("memberBirth") String memberBirth,
+			@RequestParam("memberPhone") String memberPhone, @RequestParam("memberPwd") String memberPwd,
+			@RequestParam("memberId") String memberId, @RequestParam("memberEmail") String memberEmail, Model model) {
+		System.out.println("Id=" + id);
+		memberService.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberPwd, memberId,
+				memberEmail);
+		return "redirect:/showAllmember";
+	}
 }
- 
- 
- 
- 
- 
- 

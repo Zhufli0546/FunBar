@@ -1,6 +1,11 @@
 package tw.FunBar.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +32,29 @@ public class BookingController {
 
 	@RequestMapping("/booking")
 	public String booking() {
-
+			
+		String Odate = "2019-11-05";
+		
+		SimpleDateFormat fm =   new SimpleDateFormat("yyyy-MM-dd" );
+		
+		
+		
+		
+		
+		try {
+			Date date = fm.parse(Odate);
+			Calendar calendar   =   new GregorianCalendar();
+			calendar.setTime(date);
+			calendar.add(Calendar.DATE,1);
+			date = calendar.getTime();
+			
+			String str = fm.format(date);
+			System.out.print(str);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return "booking";
 	}
 
@@ -70,7 +97,7 @@ public class BookingController {
 		
 
 		bookingService.addReservations(date,people,time,sex,name,phone,email,remark);
-		emailService.sendEmail(email);
+		//emailService.sendEmail(email);
 		model.addAttribute("date", date);
 		return "completeOk";
 	}

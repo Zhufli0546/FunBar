@@ -3,8 +3,6 @@ package tw.FunBar.dao;
 import java.sql.Blob;
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import tw.FunBar.model.Activity;
 
 public interface ActivityDao {
@@ -26,7 +24,8 @@ public interface ActivityDao {
 	
 //	public void updateActivity(Activity activity);
 	
-	public void deleteActivityById(int activityId);
+	public Activity deleteActivityById(int activityId);
+	
 
 	
 }

@@ -12,7 +12,7 @@
 	min-height: 360px;
 	padding: 5px;
 	text-align: center;
-	margin: 0 auto;
+	margin: 0 auto ;
 	border: 1px dashed black;
 	margin: 1%;
 }
@@ -31,9 +31,9 @@
 
 .prodlist .prodtitle {
 	font-size:20px;
+	margin: 0 auto 5px;
 	font-weight:bold;
 	color:#000;
-	
 }
 
 .prodlist img {
@@ -43,22 +43,38 @@
 	margin: 0 auto;
 }
 
-.button {
+.button-add {
 	margin: 0 auto;
 	padding:5px 10px;
 	background-color: #01B468;
 	color: #fff;
 	outline: none;
-	border-radius: 5px;	
-	
+	border-radius: 5px;		
 }
 
 
-.button:hover{
+.button-add:hover{
 		background-color:#fff;
 		color:#019858;
-		text-decoration:none;
+		border:1px solid #019858;
 }
+
+.button-confirm {
+	margin: 0 auto;
+	padding:5px 10px;
+	background-color: #FF359A;
+	color: #fff;
+	outline: none;
+	border-radius: 5px;		
+}
+
+.button-confirm:hover{
+	background-color:#fff;
+	color:#FF359A;
+	border:1px solid #FF359A;
+}
+
+
 
 @media ( max-width : 960px) {
 	.prodlist {

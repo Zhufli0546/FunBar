@@ -50,4 +50,24 @@ public class BlogServiceImpl implements BlogService {
 		return blogDao.getComments();
 	}
 
+	@Override
+	public List<Blog> queryAllBlogsByASC() {
+		return blogDao.queryAllBlogsByASC();
+	}
+
+	@Override
+	public List<Blog> findBlogsByCategoryId(int id) {
+		return blogDao.findBlogsByCategoryId(id);
+	}
+
+	@Override
+	public void deleteBlog(Blog blog) {
+		blogDao.deleteBlog(blog);
+	}
+
+	@Override
+	public List<Blog> searchBlogs(String searchKey) {
+		return blogDao.searchBlogs(searchKey);
+	}
+
 }

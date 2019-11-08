@@ -20,7 +20,6 @@ public interface OrderHandleDAO {
 	
 	ProductBean deleteProduct(Integer productId);
 
-
 	void updateProduct(Integer productId, String productNo, Blob productCover,String productDetail, String productName, 
 			String category, Double discount, Integer stock);
 

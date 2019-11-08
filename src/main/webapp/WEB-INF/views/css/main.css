@@ -165,10 +165,15 @@ textarea:focus, input:focus {
   -ms-box-shadow: 0 0 0px 2px #ec1d25;
 }
 
-input:focus::-webkit-input-placeholder { color:transparent; }
-input:focus:-moz-placeholder { color:transparent; }
-input:focus::-moz-placeholder { color:transparent; }
-input:focus:-ms-input-placeholder { color:transparent; }
+/* input:focus::-webkit-input-placeholder { color:transparent; } */
+/* input:focus:-moz-placeholder { color:transparent; } */
+/* input:focus::-moz-placeholder { color:transparent; } */
+/* input:focus:-ms-input-placeholder { color:transparent; } */
+
+input:focus::-webkit-input-placeholder { color:#888888; }
+input:focus:-moz-placeholder { color:#888888; }
+input:focus::-moz-placeholder { color:#888888; }
+input:focus:-ms-input-placeholder { color:#888888; }
 
 textarea:focus::-webkit-input-placeholder { color:transparent; }
 textarea:focus:-moz-placeholder { color:transparent; }

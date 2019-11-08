@@ -18,28 +18,37 @@
 			<div class="container" style="text-align: center">
 				<h1>會員管理</h1>
 			</div>
-	
+<table border="1">
+<tr bgcolor="#8fefa"><tr><th>會員編號<th>姓名<th>身分證<th>出生<th>住址<th>電話<th>性別<th>email
+			<c:forEach var="member" items="${members}">
+							<!--  隨便取                      對應Controller-->
+				
+					<tr>
+						<td>${member.id}</td>
+						<td>${member.memberName}</td>
+						<td>${member.memberAddress}</td>
+						<td>${member.memberBirth}</td>
+						<td>${member.memberPhone}</td>
+						<td>${member.memberPwd}</td>
+						<td>${member.memberId}</td>
+						<td>${member.memberEmail}</td>
+						<td><a href="<spring:url value='deletemb?id=${member.id}' />">
+								<button type="button" class="btn btn-outline-secondary">刪除</button>
+						</a></td>
+						<td><a href="<spring:url value='getONE?id=${member.id}' />">
+								<button type="button" class="btn btn-outline-secondary">修改</button>
+						</a></td>
+					</tr>
+				
 
-	
-	
-		
-			<c:forEach var='member' items='${showAllmember}'>
-				<div class="col-sm-6 col-md-3" style="width: 360px; height: 360px">
-					<h1>${member.id}</h1>
-					<h1>${member.memberName}</h1>
-					<h1>${member.memberAddress}</h1>
-					<h1>${member.memberBirth}</h1>
-					<h1>${member.memberPhone}</h1>
-					<h1>${member.memberPwd}</h1>
-					<h1>${member.memberId}</h1>
-					<h1>${member.memberEmail}</h1>
-					
-					
-				</div>
+
+			</c:forEach>
 		</div>
-		</div>
-		</c:forEach>
-		</div>
+	</th>
+	</tr>
+	</table>
+	</div>
 	</section>
+	
 </body>
 </html>

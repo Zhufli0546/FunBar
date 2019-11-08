@@ -2,17 +2,18 @@ package tw.FunBar.dao.impl;
 
 import java.sql.Blob;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartFile;
 
 import tw.FunBar.dao.ActivityDao;
 import tw.FunBar.model.Activity;
-import tw.FunBar.model.EventCategory;
+import tw.FunBar.model.Applicant;
 
 
 @Repository
@@ -64,7 +65,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		list = session.createQuery(hql).setParameter("category", category).getResultList();
 		return list;
 	}
-//未完成
+
 	@Override
 	public void updateActivity(int activityId, String eventName, String eventDate, String address, String introduction,
 			String activities, String information, String category, Blob blob ) {
@@ -80,6 +81,17 @@ public class ActivityDaoImpl implements ActivityDao {
 		.executeUpdate();
 	}
 	
+	@Override
+	public Activity deleteActivityById(int activityId) {
+		Session session = factory.getCurrentSession();	
+		Activity ac = session.get(Activity.class,activityId);
+		Set<Applicant> al = new HashSet<>();
+		al = null;
+		ac.setApplicants(al);
+		
+		session.delete(ac);
+		return ac;
+		
 //	@Override
 //	public void updateActivity(int activityId, String eventName) {
 //		String hql = "UPDATE Activity SET eventName =:eventName WHERE activityId = :activityId";
@@ -93,13 +105,7 @@ public class ActivityDaoImpl implements ActivityDao {
 //		Session session = factory.getCurrentSession();
 //		session.update(activity);
 //	}
-
-	@Override
-	public void deleteActivityById(int activityId) {
-		Session session = factory.getCurrentSession();
-		Activity activity = new Activity();
-		activity.setActivityId(activityId);
-		session.delete(activity);
+	
 	}
 
 

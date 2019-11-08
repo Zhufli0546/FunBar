@@ -2,6 +2,7 @@ package tw.FunBar.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,11 +20,10 @@ public class OrderBean implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	
 	private Integer orderNo;
 	private Integer productId;
 	private String productName;
-	
-
 	private String orderTime;
 	private Double unitPrice;
 	private Integer quantity;
@@ -37,7 +37,6 @@ public class OrderBean implements Serializable {
 	private String shippingAddress;
 	
 	public OrderBean() {
-		
 	}
 
 	public Integer getOrderNo() {
