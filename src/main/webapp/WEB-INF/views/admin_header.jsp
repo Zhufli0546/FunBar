@@ -53,16 +53,16 @@
 		<!-- Sidebar -->
 		<ul class="sidebar navbar-nav">
 			<li class="nav-item active"><a class="nav-link" href="#"> <i
-					class="fas fa-fw fa-tachometer-alt"></i> <span>##########</span>
+					class="fas fa-fw fa-tachometer-alt"></i> <span>管理員您好</span>
 			</a></li>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="pagesDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
-				aria-expanded="false"> <i class="fas fa-fw fa-folder"></i> <span>abc</span>
+				aria-expanded="false"> <i class="fas fa-fw fa-folder"></i> <span>會員管理</span>
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">Login Screens:</h6>
-					<a class="dropdown-item" href="#">Login</a> <a
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/showAllmember">查詢所有會員</a> <a
 						class="dropdown-item" href="#">Register</a> <a
 						class="dropdown-item" href="#">Forgot Password</a>
 				</div></li>

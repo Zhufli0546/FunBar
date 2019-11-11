@@ -19,6 +19,8 @@ public class Member {
 	private String memberPwd;
 	private String memberId;
 	private String memberEmail;
+	private String memberPic;
+	private int memberLevel;
 	public int getId() {
 		return id;
 	}
@@ -67,5 +69,15 @@ public class Member {
 	public void setMemberEmail(String memberEmail) {
 		this.memberEmail = memberEmail;
 	}
+	public String getMemberPic() {
+		return memberPic;
+	}
+	public void setMemberPic(String memberPic) {
+		this.memberPic = memberPic;
+	}
+	public int getMemberLevel() {
+		return memberLevel;
+	}
+	
 	
 }
