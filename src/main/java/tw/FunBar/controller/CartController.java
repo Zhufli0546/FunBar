@@ -35,12 +35,9 @@ import tw.FunBar.service.OrderHandleService;
 public class CartController {
 	@Autowired
 	OrderHandleService orderHandleService;
-	
-	ServletContext context;
+
 	@Autowired
-	public void setContext(ServletContext context) {
-		this.context = context;
-	}
+	ServletContext context;
 
 	@RequestMapping(value = "/cart", method = RequestMethod.POST)
 	public String addCart(HttpServletRequest request, HttpSession session, HttpServletRequest response,
@@ -61,8 +58,9 @@ public class CartController {
 		cartItem.setProduct(product);
 		cartItem.setCount(count);
 		cart.add(cartItem);
+		session.setAttribute("Cart", cart);
 
-		Collection<CartItem> item = cart.getCartItems();
+//		Collection<CartItem> item = cart.getCartItems();
 //		for (CartItem c : item) {
 //			System.out.println("購買產品id:" + c.getProduct().getProductId());
 //			System.out.println("購買產品名稱:" + c.getProduct().getProductName());
@@ -72,30 +70,52 @@ public class CartController {
 		return "redirect:/shoppingCart";
 	}
 
-	
 	@RequestMapping(value = "/showCart")
-	public String showCart(HttpServletRequest request, 
-						   HttpSession session,
-						   Model model) throws IOException {
+	public String showCart(HttpServletRequest request, HttpSession session, Model model) throws IOException {
 		session = request.getSession(false);
 		Cart cart = (Cart) session.getAttribute("Cart");
 
-		Collection<CartItem> cartItems = cart.getCartItems();
-		for (CartItem c : cartItems) {
-			System.out.println("購買產品id:" + c.getProduct().getProductId());
-			System.out.println("購買產品名稱:" + c.getProduct().getProductName());
-			System.out.println("購買產品數量:" + c.getCount());
-		}
+//		Collection<CartItem> cartItems = cart.getCartItems();
+//		for (CartItem c : cartItems) {
+//			System.out.println("購買產品id:" + c.getProduct().getProductId());
+//			System.out.println("購買產品名稱:" + c.getProduct().getProductName());
+//			System.out.println("購買產品數量:" + c.getCount());
+//		}
 
 		model.addAttribute("cart", cart);
-
-		return "showCart";
+		if (cart == null || cart.getCartItems().size() == 0) {
+			return "showEmptyCart";
+		} else {
+			return "showCart";
+		}
 	}
-	
-	
+
+	@RequestMapping(value = "/removeCartItem")
+	public String rvemoveCartItem(HttpServletRequest request, HttpSession session,
+			@RequestParam("productId") Integer productId, Model model) {
+		session = request.getSession(false);
+		Cart cart = (Cart) session.getAttribute("Cart");
+		cart.delete(productId);
+
+		if (cart.getCartItems().size() == 0) {
+			return "showEmptyCart";
+		} else {
+			return "redirect:/showCart";
+		}
+
+	}
+
+	@RequestMapping(value = "/deleteCartItem")
+	public String deleteCartItem(HttpServletRequest request, HttpSession session) {
+		session = request.getSession(false);
+		Cart cart = (Cart) session.getAttribute("Cart");
+		cart.clear();
+
+		return "showEmptyCart";
+	}
+
 	@RequestMapping(value = "/ProductPictures/{productId}", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> getPicture(HttpServletResponse resp, 
-			@PathVariable Integer productId) {
+	public ResponseEntity<byte[]> getPicture(HttpServletResponse resp, @PathVariable Integer productId) {
 		String filePath = "/WEB-INF/views/ProductImages/noImage.png";
 
 		byte[] media = null;
@@ -106,8 +126,8 @@ public class CartController {
 		if (pb != null) {
 			Blob blob = pb.getProductImage();
 			filename = pb.getFileName();
-			System.out.println("filename"+filename);
-			System.out.println("blob"+blob);
+			System.out.println("filename" + filename);
+			System.out.println("blob" + blob);
 			if (blob != null) {
 				try {
 					len = (int) blob.length();
@@ -131,7 +151,7 @@ public class CartController {
 		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media, headers, HttpStatus.OK);
 		return responseEntity;
 	}
-	
+
 	private byte[] toByteArray(String filepath) {
 		byte[] b = null;
 		String realPath = context.getRealPath(filepath);

@@ -36,7 +36,7 @@ public class Cart {
 		map.clear();
 	}
 
-	public void delete(String productId) {
+	public void delete(Integer productId) {
 		map.remove(productId);
 	}
 
