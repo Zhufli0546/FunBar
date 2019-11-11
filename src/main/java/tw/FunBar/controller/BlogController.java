@@ -236,6 +236,6 @@ public class BlogController {
 		blogService.modifyBlog(blog);
 			
 		
-		return "redirect:/blogs";
+		return "redirect:/blog/" + blogId;
 	}
 }

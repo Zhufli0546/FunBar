@@ -25,7 +25,7 @@ public class CommentController {
 								@RequestParam String commentContent) {
 		
 		//未來整合 Member
-
+		
 		Blog blog = commentService.findByBlogId(blogId);
 
 		Comment parentComment = null;

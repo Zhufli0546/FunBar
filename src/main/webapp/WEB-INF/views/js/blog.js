@@ -17,6 +17,19 @@ $.ajax({
 	}
 })
 
+// refresh
+function refresh() {
+	$.ajax({
+		url: "http://localhost:8080" + requestUrl + "blogJson",
+		method: "POST",
+		dataType: "JSON",
+		success: function (res) {
+			tododata = res.blogs;
+			init();
+		}
+	})
+}
+
 function init() {
 	let blogs = tododata;
 	// 每頁最多筆數 ex: 第一頁最大筆數為10
@@ -78,7 +91,6 @@ function init() {
 	// 編輯文章
     // blogMore 點擊事先綁定還未產生的 .modifyData .deleteData click
 	$(".blogMore").click(function(){
-
 		$(".modifyData").click(function() {
 	    	let modifyBlogId = $(this).data("blog");
 	    	console.log("modify = " + modifyBlogId);
@@ -108,6 +120,24 @@ function init() {
 	    		preview(this);
 	    	});
 		})
+		
+		$(".deleteData").click(function() {
+	    		let deleteBlogId = $(this).data("blog");
+	    		console.log("delete = " + deleteBlogId);
+	    		if(confirm("確定要刪除嗎?")) {
+	    			$.ajax({
+		    			url: "http://localhost:8080" + requestUrl + "admin_delete/" + deleteBlogId,
+		    			method: "POST",
+		    			dataType: "JSON",
+		    			success: function(res){
+		    				$(".fade.show").css({"opacity":0});
+		    				$(".blogs").html("");
+		    		        $("#show").html("");
+		    				refresh();
+		    			}
+		    		})
+	    		}
+	    })
 	})
 }
 
@@ -198,6 +228,9 @@ $(".searchClick").click(function() {
 			console.log(tododata);
 			$(".blogs").html("");
 	        $("#show").html("");
+	        
+	        // 回歸第一頁
+	        now = 1;
 			init();
 		}
 	})
