@@ -43,7 +43,9 @@
 <figcaption>
 <p>建議售價: $${pb.unitPrice}</p>
 <p>折扣：${pb.discount}</p>
-<form class="form-group row" action="<c:url value='' />" method="post">
+
+<form class="form-group row" action="<c:url value='/cart' />" method="post">
+
 
 <label for="selectCount" class="col-sm-6 col-xs-12">購買數量:</label>
 <div class="col-sm-6 col-xs-12">
@@ -55,19 +57,21 @@
 	<option value="5">5</option>
 </select>
 </div>
-
-<button type="submit" class="button-add">加入購物車</button>
-
+<input type="hidden" name="productId" value="${pb.productId}">
+<button type="submit" class="button-add" id="addToCart">加入購物車</button>
+</form>
 </figcaption>
 
 </div>	<!-- .prodlist -->
 </c:forEach>
+<a href="<c:url value='/showCart' />"><button id="seeMyCart" class="btn btn-info">我的購物車</button></a>
 
-</form>
+
 </div> <!-- .container -->
 
 
 <jsp:include page="footer.jsp" />
+
 
 </body>
 </html>

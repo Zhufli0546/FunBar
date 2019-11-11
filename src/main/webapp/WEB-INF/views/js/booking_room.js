@@ -125,6 +125,8 @@ function day() {
             date = my_year + "-" + (my_month + 1) + "-"
                 + this.firstChild.nodeValue;
             var txt;
+            
+            $("#date").val(date);
 //            document.getElementById("abc").value = date;
 //            document.getElementById("slc").value = 1;
     }
