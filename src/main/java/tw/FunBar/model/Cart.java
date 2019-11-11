@@ -6,24 +6,29 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Cart {
-	private Map<String, CartItem> map = new LinkedHashMap<String, CartItem>();
+	private Map<Integer, CartItem> map = new LinkedHashMap<Integer, CartItem>();
 
 	public double getTotal() {
 		BigDecimal total = new BigDecimal("0");
 		for (CartItem cartItem : map.values()) {
-			BigDecimal subtotal = new BigDecimal("" + cartItem.getSubtatal());
+			BigDecimal subtotal = new BigDecimal("" + cartItem.getSubtotal());
 			total = total.add(subtotal);
 		}
 		return total.doubleValue();
 	}
 
 	public void add(CartItem cartItem) {
-		if (map.containsKey(cartItem.getProduct().getProductId())) {// 判斷原來車中是否含有項目
-			CartItem _cartItem = map.get(cartItem.getProduct().getProductId().toString());// 返回原項目
-			_cartItem.setCount(_cartItem.getCount() + cartItem.getCount());// 設置項目新數量
-			map.put(cartItem.getProduct().getProductId().toString(), _cartItem);
+		if (map.containsKey(cartItem.getProduct().getProductId())) {
+			// 判斷原來車中是否含有項目
+			CartItem old_cartItem = map.get(cartItem.getProduct().getProductId());
+
+			// 已有的購物項目 + 新增數量
+			old_cartItem.setCount(old_cartItem.getCount() + cartItem.getCount());
+
+			// 改變成新數量
+			map.put(cartItem.getProduct().getProductId(), old_cartItem);
 		} else {
-			map.put(cartItem.getProduct().getProductId().toString(), cartItem);
+			map.put(cartItem.getProduct().getProductId(), cartItem);
 		}
 	}
 
@@ -31,7 +36,7 @@ public class Cart {
 		map.clear();
 	}
 
-	public void delete(String productId) {
+	public void delete(Integer productId) {
 		map.remove(productId);
 	}
 

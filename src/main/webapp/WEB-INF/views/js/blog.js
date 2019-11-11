@@ -1,5 +1,5 @@
 var requestUrl = "/FunBar/";
-var blogTemplate = "<div class='row blogMargin box'><div class='col-md-5'><img src='{{blogImage}}' /></div><div class='col-md-7'><div class='blog-title'>{{blogTitle}}</div><p><span>{{blogUser}}</span><span>{{blogCreatedTime}}</span><span>文章分類:{{categoryName}}</span></p><div class='blog-content'  data-id='{{data-id}}'>{{blogContent}}</div></div></div>";
+var blogTemplate = "<div class='row blogMargin box'><span class='blogMore' data-click='{{data-click}}'><i class='fas fa-align-center'></i></span><div class='col-md-5'><img src='{{blogImage}}' /></div><div class='col-md-7'><div class='blog-title'>{{blogTitle}}</div><p><span>{{blogUser}}</span><span>{{blogCreatedTime}}</span><span>文章分類:{{categoryName}}</span></p><div class='blog-content'  data-id='{{data-id}}'>{{blogContent}}</div></div></div>";
 let pageRow = 5;
 let pageRowStart = 0;
 let pageRowEnd = 5;
@@ -17,6 +17,19 @@ $.ajax({
 	}
 })
 
+// refresh
+function refresh() {
+	$.ajax({
+		url: "http://localhost:8080" + requestUrl + "blogJson",
+		method: "POST",
+		dataType: "JSON",
+		success: function (res) {
+			tododata = res.blogs;
+			init();
+		}
+	})
+}
+
 function init() {
 	let blogs = tododata;
 	// 每頁最多筆數 ex: 第一頁最大筆數為10
@@ -32,6 +45,7 @@ function init() {
 	for (let i = pageRowStart; i < pageRowEnd; i++) {
 		let blog = blogs[i];
 		var blog_html = blogTemplate
+			.replace("{{data-click}}", blog.blogId)
 			.replace("{{data-id}}", blog.blogId)
 			.replace("{{blogImage}}", blog.blogImage)
 			.replace("{{blogTitle}}", blog.blogTitle)
@@ -60,7 +74,73 @@ function init() {
         $("#show").html("");
         init(); 
     });
+    
+    // 未來整合個人文章才可以進行編輯及刪除
+    
+    $(".blogMore").each(function() {
+    	let id = $(this).data('click');
+    	$(this).popover({
+	    	html: true,
+	    	content: "Blabla",
+	    	trigger: "click",
+	    	content: "<div class='modifyData' data-toggle='modal' data-target='#modifyBlog' data-blog='"+id+"'>編輯文章</div>" +
+	    			 "<div class='deleteData' data-blog='"+id+"'>刪除文章</div>"
+	    });
+	});
+    
+	// 編輯文章
+    // blogMore 點擊事先綁定還未產生的 .modifyData .deleteData click
+	$(".blogMore").click(function(){
+		$(".modifyData").click(function() {
+	    	let modifyBlogId = $(this).data("blog");
+	    	console.log("modify = " + modifyBlogId);
+	    	$.ajax({
+	    		url: "http://localhost:8080" + requestUrl + "getmodifyBlog/" + modifyBlogId,
+	    		method: "POST",
+	    		dataType: "JSON",
+	    		success: function(res) {
+	    			let modifyData = res.modifyBlog;
+	    			console.log(modifyData.blogId);
+	    			
+	    			CKEDITOR.instances["blogContent2"].destroy(true);
+    				CKEDITOR.replace('blogContent2', {
+	    		        height: 400,
+	    		        filebrowserUploadUrl: 'http://localhost:8080' + requestUrl + 'blogInsert',
+	    		        filebrowserBrowseUrl: 'http://localhost:8080' + requestUrl + 'blogBrowse'
+	    		    });
+	    			
+	    			
+	    			$("#blogTitle2").val(modifyData.blogTitle);
+	    			$("#blogContent2").val(modifyData.blogContent);
+	    			$("#modifyBlogId").val(modifyData.blogId);
+	    		}
+	    	})
+	    	
+	    	$('#blog_img2').on('change', function () {
+	    		preview(this);
+	    	});
+		})
+		
+		$(".deleteData").click(function() {
+	    		let deleteBlogId = $(this).data("blog");
+	    		console.log("delete = " + deleteBlogId);
+	    		if(confirm("確定要刪除嗎?")) {
+	    			$.ajax({
+		    			url: "http://localhost:8080" + requestUrl + "admin_delete/" + deleteBlogId,
+		    			method: "POST",
+		    			dataType: "JSON",
+		    			success: function(res){
+		    				$(".fade.show").css({"opacity":0});
+		    				$(".blogs").html("");
+		    		        $("#show").html("");
+		    				refresh();
+		    			}
+		    		})
+	    		}
+	    })
+	})
 }
+
 
 // categoryinit()
 $(".categoryClick").click(function() {
@@ -73,6 +153,7 @@ $(".categoryClick").click(function() {
 			tododata = res.blogsByCategory;
 			$(".blogs").html("");
 	        $("#show").html("");
+	        $(".fade.show").css({"opacity":0});
 
 	        // 回歸第一頁
 	        now = 1;
@@ -147,6 +228,9 @@ $(".searchClick").click(function() {
 			console.log(tododata);
 			$(".blogs").html("");
 	        $("#show").html("");
+	        
+	        // 回歸第一頁
+	        now = 1;
 			init();
 		}
 	})

@@ -2,7 +2,7 @@ package tw.FunBar.dao;
 
 import java.util.List;
 
-import tw.FunBar.model.Like;
+import tw.FunBar.model.LikePost;
 import tw.FunBar.model.Post;
 
 public interface DiscussDAO {
@@ -10,10 +10,18 @@ public interface DiscussDAO {
 	List<Post> getAllPostDetail();
 	
 	void createPost(Post post);
+	
+	Post findByIdPost(int postId);
+	
+	void updatePostContent(Post post);
+	
+	void deletePostContent(Integer postId);
+	
 
-	Integer getLikeByPostId(int postId);
+	long getLikeByPostId(Integer postId);
 	
-	void createLike(Like like);
+	void addLike(LikePost like);
 	
-	
+	void unLike(LikePost like);
+
 }

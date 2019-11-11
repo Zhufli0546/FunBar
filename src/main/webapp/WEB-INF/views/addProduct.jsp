@@ -45,7 +45,7 @@
 .button {
 	margin: 10px 15px;
 	padding:5px 10px;
-	background-color: #0080FF;
+	background-color: #272727;
 	color: #fff;
 	outline: none;
 	border-radius: 5px;	
@@ -54,7 +54,7 @@
 
 .button:hover{
 		background-color:#fff;
-		color: #0080FF;
+		color: #272727;
 		text-decoration:none;
 }
 

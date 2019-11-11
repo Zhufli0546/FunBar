@@ -26,4 +26,6 @@ public interface BlogDAO {
 	public List<Comment> getComments();
 	
 	public List<Blog> searchBlogs(String searchKey);
+	
+	public void modifyBlog(Blog blog);
 }

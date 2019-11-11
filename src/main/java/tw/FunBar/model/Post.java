@@ -11,8 +11,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table
@@ -23,19 +28,28 @@ public class Post implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer postId;
 	private String postContent;
-	private Date postTime;
+	private String postTime;
 	private Integer memberId;
-	private Integer parentPostId;
-//	@OneToMany(mappedBy = "postId", cascade = CascadeType.ALL)
-//	private Set<Like> likes = new LinkedHashSet<Like>();
-//	
-//	public Set<Like> getLikes() {
-//		return likes;
-//	}
-//
-//	public void setLikes(Set<Like> likes) {
-//		this.likes = likes;
-//	}
+	
+	@JsonIgnoreProperties("parentPostId")
+	@OneToMany(mappedBy = "parentPostId", cascade = CascadeType.ALL)
+	@OrderBy("postTime ASC")
+	private Set<Post> replyPost = new LinkedHashSet<Post>();
+	
+	@JsonIgnoreProperties("replyPost")
+	@ManyToOne
+	@JoinColumn(name = "parentPostId")
+	private Post parentPostId; 
+
+
+	
+	public Set<Post> getReplyPost() {
+		return replyPost;
+	}
+
+	public void setReplyPost(Set<Post> replyPost) {
+		this.replyPost = replyPost;
+	}
 
 	public Integer getPostId() {
 		return postId;
@@ -53,11 +67,11 @@ public class Post implements Serializable {
 		this.postContent = postContent;
 	}
 
-	public Date getPostTime() {
+	public String getPostTime() {
 		return postTime;
 	}
 
-	public void setPostTime(Date postTime) {
+	public void setPostTime(String postTime) {
 		this.postTime = postTime;
 	}
 
@@ -69,13 +83,15 @@ public class Post implements Serializable {
 		this.memberId = memberId;
 	}
 
-	public Integer getParentPostId() {
+	public Post getParentPostId() {
 		return parentPostId;
 	}
 
-	public void setParentPostId(Integer parentPostId) {
+	public void setParentPostId(Post parentPostId) {
 		this.parentPostId = parentPostId;
 	}
+
+	
 
 
 
