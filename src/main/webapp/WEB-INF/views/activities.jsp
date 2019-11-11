@@ -13,7 +13,6 @@
 
 <body>
 	<jsp:include page="header.jsp" />
-	<!-- Page Content -->
 
 	<div class="container" style="margin-top: 150px">
 
@@ -27,12 +26,12 @@
 						<a href="${pageContext.request.contextPath}/activities/${category}"
 							class="list-group-item">${category}</a>
 					</c:forEach>
+					<a href="${pageContext.request.contextPath}/activitiesSignup"
+					class="list-group-item">我報名的活動</a>
 
 				</div>
 			</div>
 		</div>
-
-		<!-- /.col-lg-3 -->
 
 		<section>
 			<div class="row">
@@ -58,9 +57,7 @@
 				</c:forEach>
 			</div>
 		</section>
-		<!-- /.row -->
-
-		<!-- Pagination -->
+		
 		<ul class="pagination justify-content-center">
 			<li class="page-item"><a class="page-link" href="#" aria-label="Previous"> <span
 						aria-hidden="true">&laquo;</span> <span class="sr-only">Previous</span>
@@ -72,38 +69,17 @@
 						aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span>
 				</a></li>
 		</ul>
+		
+		  <a href="<spring:url value='/cancelSignup?id=1'/>">
+                <button type="button" class="btn btn-outline-secondary">取消報名</button></a>
+                
+          <a href="<spring:url value='/deleteMap?activityId=21&applicantId=3'/>">
+                <button type="button" class="btn btn-outline-secondary">取消報名測試</button></a> <a
+			href="<spring:url value='/queryMapById?at.activityId=21&al.applicantId=12'/>">
+			<button type="button" class="btn btn-outline-secondary">取消報名測試2</button>
+		</a>
 
 	</div>
-
-	<!-- /.container -->
-
-	<!-- 	<section > -->
-	<!-- 		<div > -->
-	<%-- 			<c:forEach var="activity" items="${activities }"> --%>
-	<!-- 				<div style="width: 360px; height: 360px"> -->
-	<!-- 					<div style = "width: 320px; height: 340px"> -->
-	<%-- 						  <img width="100" height="150" src="<c:url value=''/>" /> --%>
-	<!-- 						<div> -->
-	<!-- 							<p> -->
-	<%-- 								<b style='font-size: 16px;'>${activity.eventName}</b> --%>
-	<!-- 							</p> -->
-	<%-- 							<p>${activity.eventDate}</p> --%>
-	<%-- 							<p>${activity.introduction}</p> --%>
-
-	<!-- 							<p> -->
-	<!-- 													路徑前加上斜線/ 在分類查詢中即可顯示詳細資料  -->
-	<%-- 								<a href="<spring:url value='/activity?id=${activity.activityId}' />" --%>
-	<!-- 									class="btn btn-primary"> <span -->
-	<!-- 									class="glyphicon-info-sigh glyphicon"></span>活動詳細資料 -->
-	<!-- 								</a> -->
-	<!-- 							</p> -->
-
-	<!-- 						</div> -->
-	<!-- 					</div> -->
-	<!-- 				</div> -->
-	<%-- 			</c:forEach> --%>
-	<!-- 		</div> -->
-	<!-- 	</section> -->
 	<jsp:include page="footer.jsp" />
 
 </body>

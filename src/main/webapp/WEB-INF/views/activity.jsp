@@ -63,7 +63,6 @@
 		</iframe>
 
 		<div>
-<%-- 			<a href="<c:url value='activityRegistration?id=${activity.activityId}'/>" > --%>
  			<a href="<spring:url value='activityRegistration?id=${activity.activityId}' />">
 				
 				<button type="button" class="btn btn-outline-secondary">我要報名</button>

@@ -218,27 +218,6 @@ public class ActivityController {
 		return "activities";
 	}
 	
-//	@RequestMapping(value = "/activityQuery", method = RequestMethod.POST)
-//	public String updateActivity(@RequestParam(value="activityId",required=false)int activityId,
-//			@RequestParam("eventName") String eventName, Model model) {
-//		service.updateActivity(activityId, eventName);
-//		return "redirect:/activityQuery";
-//	}
-	
-//	// 顯示單筆活動資料，然後導向更新畫面
-//		@RequestMapping(value = "/activityQuery/{activityId}", method = RequestMethod.GET)
-//		public String findActivity(@PathVariable Integer activityId, Model model) {
-//			Activity activity = service.getActivity(activityId);
-//			model.addAttribute(activity);
-//			return "/activityUpdate1";
-//		}
-//		
-//	@RequestMapping(value = "/activityQuery/{activityId}" ,method = RequestMethod.PUT)
-//	public String updateActivity(@PathVariable Integer activityId,@RequestBody Activity activity,
-//			HttpServletRequest req) {
-//		service.updateActivity(activity);
-//		return "redirect:" + req.getContextPath() +"/activityQuery";
-//	}
 	
 	//---------前台使用者報名活動 查詢 取消 修改資料--------
 	
@@ -248,5 +227,5 @@ public class ActivityController {
 		model.addAttribute("activity", service.getActivity(activityId));
 		return "activityRegistration";
 	}
-
+	
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import tw.FunBar.dao.ApplicantDao;
+import tw.FunBar.model.Activity;
 import tw.FunBar.model.Applicant;
 import tw.FunBar.service.ApplicantService;
 
@@ -30,8 +31,41 @@ public class ApplicantServiceImpl implements ApplicantService {
 
 	@Transactional
 	@Override
-	public List<Applicant> getApplicantsAndActivities(int applicantId) {
-		return dao.getApplicantsAndActivities(applicantId);
+	public List<Activity> QuerySignupApplicant(int activityId) {
+		return dao.QuerySignupApplicant(activityId);
 	}
+
+	@Transactional
+	@Override
+	public Applicant deleteApplicantById(int applicantId) {
+		return dao.deleteApplicantById(applicantId);
+	}
+
+	@Transactional
+	@Override
+	public void deleteMapById(int activityId, int applicantId) {
+		dao.deleteMapById(activityId, applicantId);
+		
+	}
+	
+	@Transactional
+	@Override
+	public List<Integer> queryMapById(int activityId, int applicantId){
+		return dao.queryMapById(activityId, applicantId);
+	}
+	
+	@Transactional
+	@Override
+	public List<Applicant> getApplicants(){
+		return dao.getApplicants();
+	}
+
+	@Transactional
+	@Override
+	public List<Applicant> getSignUpApplicants(int applicantId) {
+		return dao.getSignUpApplicants(applicantId);
+	}
+	
+	
 	
 }

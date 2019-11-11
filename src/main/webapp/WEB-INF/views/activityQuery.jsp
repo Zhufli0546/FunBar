@@ -76,6 +76,8 @@
                 <button type="button" class="btn btn-outline-secondary">修改</button></a>
               <a href="<spring:url value='/deleteActivity?id=${activity.activityId}' />">
                 <button type="button" class="btn btn-outline-secondary">刪除</button></a>
+              <a href="<spring:url value='/getActivities?activityId=${activity.activityId}' />">
+                <button type="button" class="btn btn-outline-secondary">查詢報名名單</button></a>
             </td>
 
           </tr>

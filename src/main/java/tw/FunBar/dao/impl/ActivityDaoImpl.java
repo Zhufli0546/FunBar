@@ -70,7 +70,7 @@ public class ActivityDaoImpl implements ActivityDao {
 	public void updateActivity(int activityId, String eventName, String eventDate, String address, String introduction,
 			String activities, String information, String category, Blob blob ) {
 		String hql = "UPDATE Activity SET eventName =:eventName, eventDate =:eventDate, address =:address,"
-				+ " introduction =:introduction,  activities =:activities, information =:information,"
+				+ " introduction =:introduction, activities =:activities, information =:information,"
 				+ " category=:category, picture=:activityImage WHERE activityId = :activityId";
 		Session session = factory.getCurrentSession();
 		session.createQuery(hql).setParameter("activityId", activityId)
