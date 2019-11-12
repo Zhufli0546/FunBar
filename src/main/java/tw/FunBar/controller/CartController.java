@@ -43,9 +43,10 @@ public class CartController {
 	public String addCart(HttpServletRequest request, HttpSession session, HttpServletRequest response,
 			@RequestParam Integer productId, @RequestParam Integer count) throws IOException {
 		session = request.getSession(false);
+		
 
 		// 未來整合 login 才能產生購物車
-
+		
 		Cart cart = (Cart) session.getAttribute("Cart");
 		if (cart == null) {
 			cart = new Cart();
@@ -67,7 +68,7 @@ public class CartController {
 //			System.out.println("購買產品數量:" + c.getCount());
 //		}
 
-		return "redirect:/shoppingCart";
+		return "cart";
 	}
 
 	@RequestMapping(value = "/showCart")
