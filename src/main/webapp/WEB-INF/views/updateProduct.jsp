@@ -15,7 +15,8 @@
 </head>
 <style>
 .context {
- 	overflow: hidden;		
+ 	overflow: hidden;	
+ 	padding:30px 20px;	
 }  
 
 form{
@@ -24,8 +25,9 @@ form{
 
  img { 
  	display: block; 
- 	width: 50%; 
- 	height: 200px; 
+ 	float:right;
+ 	width: 100px; 
+ 	height: 120px; 
  	margin: 0 auto; 
  } 
  
@@ -55,12 +57,14 @@ form{
 
 <!-- Content 區塊 -->
 <div class="context">
+<h1>修改商品資料</h1>
+<hr>
 
-<!--  <div>  -->
-<!-- <figure> -->
-<%-- 	<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />  --%>
-<!-- </figure>  -->
-<!--  </div>	  -->
+ <div> 
+<figure>
+	<img src="<c:url value='/ProductPicture/${pb.productId}'/>" /> 
+</figure> 
+ </div>	 
 
 <form method='POST' enctype="multipart/form-data" action="updateProduct">
 
@@ -107,20 +111,21 @@ form{
 </div>
 
 <div>
-<label  for="unitPrice">商品折扣</label>
+<label  for="discount">商品折扣</label>
 <input autocomplete="off" name="discount"  id="discount" value="${pb.discount}" type='text' />
 </div>
 
 <div>
-<label  for="unitPrice">庫存數量</label>
+<label  for="stock">庫存數量</label>
 <input autocomplete="off" name="stock"  id="stock" value="${pb.stock}" type='text' />
 </div>
 
 
 <div>
 <label  for="productCover">商品圖片</label>
-<input type='file' name="image"  value="${pb.productId}"  />
-<input type="hidden" name="image" value="${pb.productId}" />
+
+<input type='file' name="image"  value="${pb.productImage}" />
+
 </div>
 
 

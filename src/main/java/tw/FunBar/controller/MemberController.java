@@ -1,9 +1,12 @@
 package tw.FunBar.controller;
 
+import java.sql.Blob;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.sql.rowset.serial.SerialBlob;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +25,7 @@ public class MemberController {
 
 	@Autowired
 	MemberService memberService;
-
+	ServletContext context;
 // @RequestMapping(value="/check",method=RequestMethod.POST)
 // public String check(@RequestParam(name="memberName") String memberName,
 //      @RequestParam(name="memberPwd") String memberPwd,
@@ -102,7 +105,6 @@ public class MemberController {
 		model.addAttribute("members", list);
 		return "showAllmember";
 	}
-
 	// 新增
 	// 這個是對照到jsp的action
 	@RequestMapping(value = "/joinus", method = RequestMethod.GET)
@@ -111,11 +113,24 @@ public class MemberController {
 		model.addAttribute("Member", mb);
 		return "joinus";
 	}
-
 	@RequestMapping(value = "/joinus", method = RequestMethod.POST)
 	public String dosavemember(@ModelAttribute("Member") Member mb) {
+		MultipartFile IMG = mb.getMemberimg();
+		String originalFilename = IMG.getOriginalFilename();
+		mb.setMemberfileName(originalFilename);
+		if (IMG != null && !IMG.isEmpty() ) {
+			try {
+				byte[] b = IMG.getBytes();
+				Blob blob = new SerialBlob(b);
+				mb.setMemberPic(blob);
+			} catch(Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
+			}
+		}
 		memberService.saveMember(mb);
 		return "redirect:/showAllmember";
+		
 	}
 
 	// 刪除

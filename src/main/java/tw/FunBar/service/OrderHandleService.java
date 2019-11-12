@@ -15,7 +15,7 @@ public interface OrderHandleService {
 		
 	ProductBean deleteProduct(Integer productId);
 
-	void updateProduct(Integer productId,String productNo, Blob productImage,String productDetail,String productName, 
+	void updateProduct(Integer productId,String productNo,Blob productCover,String productDetail,String productName, 
 			String category, Double discount,Integer stock);
 	
 

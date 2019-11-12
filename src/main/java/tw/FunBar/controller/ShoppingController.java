@@ -103,14 +103,16 @@ public class ShoppingController {
 
 	//點擊"修改"按鈕單筆查詢該資料
 	@RequestMapping("/update")
-	public String getProductsById(@RequestParam("id") Integer productId, Model model) {
+	public String getProductsById(@RequestParam("id") Integer productId, Model model) throws SerialException, SQLException, IOException {
 		model.addAttribute("pb", orderService.getProductById(productId));
+	
 		return "updateProduct";
 	}
 	
 	
 		
 	//修改單筆資料
+	@SuppressWarnings("unused")
 	@RequestMapping(value="/updateProduct", method = RequestMethod.POST)
 	public String updateProduct(@RequestParam("id") Integer productId,
 								@RequestParam("productName") String productName,
@@ -121,24 +123,18 @@ public class ShoppingController {
 								@RequestParam("stock")Integer stock,
 								@RequestParam("productNo") String productNo, Model model) throws IOException, SerialException, SQLException {
 					
-//								ProductBean pb ;
-//								MultipartFile picture = pb.getProductCover();
-//									if(picture.getSize() == 0) {
-//									ProductBean original = orderService.getProductById(productId);
-//									pb.setProductCover(original.getProductCover());
-//								}else {
-//									String originalFilename = picture.getOriginalFilename();
-//									if( originalFilename.length() > 0 && originalFilename.lastIndexOf(".") > -1 ) {
-//										pb.setFileName(originalFilename);
-//									}
-//								}
-								
-								byte[] c = productCover.getBytes();
-								Blob blob = new SerialBlob(c);
-				
-								
-					orderService.updateProduct(productId,productNo,blob,productDetail, productName,category, discount, stock);
-					return "redirect:/showAllProduct";	
+		
+		String filename = productCover.getOriginalFilename();	
+		if(filename.length()!=0) {  //如果有重新上傳圖片
+			Blob blob;
+			byte[] b = productCover.getBytes();
+			blob = new SerialBlob(b);
+			orderService.updateProduct(productId,productNo,blob,productDetail, productName,category, discount, stock);
+		} else {  //如果沒有重新上傳圖片， 呼叫service依照productId取得原本的圖片檔
+			ProductBean product = orderService.getProductById(productId);		
+			orderService.updateProduct(productId,productNo,product.getProductImage(),productDetail, productName,category, discount, stock);
+		}												
+		return "redirect:/showAllProduct";	
 	}
 	
 		
@@ -153,7 +149,7 @@ public class ShoppingController {
 	
 
 	@RequestMapping(value = "/addProduct", method = RequestMethod.POST)
-	public String addProduct(@ModelAttribute("productBean") ProductBean pb, BindingResult result, HttpSession session) {
+	public String addProduct(@ModelAttribute("productBean") ProductBean pb, BindingResult result) {
 		String[] suppressedFields = result.getSuppressedFields();
 		if (suppressedFields.length > 0) {
 			throw new RuntimeException("嘗試傳入不允許的欄位: " + StringUtils.arrayToCommaDelimitedString(suppressedFields));
@@ -189,7 +185,6 @@ public class ShoppingController {
 				imageFolder.mkdirs();
 			File file = new File(imageFolder, pb.getProductImage() + ext);
 			productCover.transferTo(file);
-		//	session.setAttribute(ext, rootDirectory);   //剛剛寫的
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
@@ -211,8 +206,8 @@ public class ShoppingController {
 		if (pb != null) {
 			Blob blob = pb.getProductImage();
 			filename = pb.getFileName();
-			System.out.println("filename"+filename);
-			System.out.println("blob"+blob);
+			System.out.println("filename:"+filename);
+			System.out.println("blob:"+blob);
 			if (blob != null) {
 				try {
 					len = (int) blob.length();
