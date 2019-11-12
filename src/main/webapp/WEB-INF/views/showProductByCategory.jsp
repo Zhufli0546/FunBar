@@ -13,55 +13,63 @@
 
 
 <body>
-<jsp:include page="header.jsp" />
+	<jsp:include page="header.jsp" />
 
-<!-- Content 區塊 -->
-<div class="row" style="float:left;margin:10px 0 0 10px">
-<div class="col-md-3"  >
-<div class="list-group" style="width:150px">
-<a href="${pageContext.request.contextPath}/shoppingCart" class="list-group-item">所有商品</a>
-<c:forEach var='category' items='${categoryList}' >
-<a href="${pageContext.request.contextPath}/shoppingCart/${category}" class="list-group-item">${category}</a>
-</c:forEach>
-</div>
-</div>
-</div>
-
-
-<div class="container page">
-
-<c:forEach var="pb" items="${category}">
-<div class="prodlist">
-<p>${pb.productNo}</p> 
-<p>${pb.productDetail}</p> 
-<p class="prodtitle">${pb.productName}</p>
-<figure>
-	<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />
-</figure>
-<figcaption>
-<p>建議售價: $${pb.unitPrice}</p>
-<form class="form-group row" action="<c:url value='' />" method="post">
-<label for="selectCount" class="col-sm-6 col-xs-12">購買數量:</label>
-<div class="col-sm-6 col-xs-12">
-<select class="form-control" id="selectCount" name="count">
-	<option value="1">1</option>
-	<option value="2">2</option>
-	<option value="3">3</option>
-	<option value="4">4</option>
-	<option value="5">5</option>
-</select>
-</div>
-
-<button type="submit" class="button-add">加入購物車</button>
-</figcaption>
-
-</div>	<!-- .prodlist -->
-</c:forEach>
-</form>
-</div> <!-- .container -->
+	<!-- Content 區塊 -->
+	<div class="container" style="margin-top: 150px">
+		<div class="row" style="float: left">
+			<div class="col-md-3">
+				<div class="list-group" style="width: 150px">
+					<a href="${pageContext.request.contextPath}/shoppingCart"
+						class="list-group-item">所有商品</a>
+					<c:forEach var='category' items='${categoryList}'>
+						<a
+							href="${pageContext.request.contextPath}/shoppingCart/${category}"
+							class="list-group-item">${category}</a>
+					</c:forEach>
+				</div>
+			</div>
+		</div>
 
 
-<jsp:include page="footer.jsp" />
+		<div class="row">
+
+			<c:forEach var="pb" items="${category}">
+				<div class="prodlist">
+					<p>${pb.productNo}</p>
+					<p>${pb.productDetail}</p>
+					<p class="prodtitle">${pb.productName}</p>
+					<figure>
+						<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />
+					</figure>
+					<figcaption>
+						<p>建議售價: $${pb.unitPrice}</p>
+						<form class="form-group row" action="<c:url value='/cart' />"
+							method="post">
+							<label for="selectCount" class="col-sm-6 col-xs-12">購買數量:</label>
+							<div class="col-sm-6 col-xs-12">
+								<select class="form-control" id="selectCount" name="count">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+								</select>
+							</div>
+							<input type="hidden" name="productId" value="${pb.productId}">
+							<button type="submit" class="button-add">加入購物車</button>
+					</figcaption>
+
+				</div>
+				<!-- .prodlist -->
+			</c:forEach>
+			</form>
+		</div>
+	</div>
+	<!-- .container -->
+
+
+	<jsp:include page="footer.jsp" />
 
 </body>
 </html>

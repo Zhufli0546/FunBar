@@ -74,8 +74,11 @@ public class BlogController {
 		String filename = String.valueOf(date.getTime() + "." + ext);
         
         InputStream in = upload.getInputStream();
-        String basePath = "C:\\Servlet_JSP\\apache-tomcat-9.0.22\\imgUpload\\";
+        String basePath = "C:\\FunBar\\imgUpload\\";
         System.out.println("basePath:" + basePath);
+		File baseFile = new File(basePath);
+		if (!baseFile.exists()) baseFile.mkdirs();
+
         File outputFilePath = new File(basePath + filename);
         OutputStream output = new FileOutputStream(outputFilePath);
         byte[] buff = new byte[1024];
@@ -95,7 +98,7 @@ public class BlogController {
 	
 	@RequestMapping("/blogBrowse")
 	public String blogBrowse(HttpServletRequest request, Model model) {
-		String basePath = "C:\\Servlet_JSP\\apache-tomcat-9.0.22\\imgUpload\\";
+		String basePath = "C:\\FunBar\\imgUpload\\";
         File folder = new File(basePath);
         model.addAttribute("files", folder.listFiles());
         model.addAttribute("CKEditorFuncNum", request.getParameter("CKEditorFuncNum"));
@@ -116,8 +119,11 @@ public class BlogController {
         
         if(filename.length()>0) {
         	InputStream in = blogImage.getInputStream();
-        	String basePath = "C:\\Servlet_JSP\\apache-tomcat-9.0.22\\imgUpload\\";
+        	String basePath = "C:\\FunBar\\imgUpload\\";
             System.out.println("basePath:" + basePath);
+			File baseFile = new File(basePath);
+			if (!baseFile.exists()) baseFile.mkdirs();
+
             File outputFilePath = new File(basePath + filename);
             OutputStream output = new FileOutputStream(outputFilePath);
             byte[] buff = new byte[1024];
@@ -184,5 +190,61 @@ public class BlogController {
 		List<Blog> blogs = blogService.searchBlogs(searchKey);
 		model.addAttribute("blogs", blogs);
 		return "searchKey";
+	}
+	
+	@RequestMapping("/getmodifyBlog/{id}")
+	public String modifyBlog(@PathVariable Integer id, Model model) {
+		Blog blog = blogService.findByIdBlog(id);
+		model.addAttribute("modifyBlog", blog);
+		return "/getmodifyBlog";
+	}
+	
+	@RequestMapping("/modifyBlog")
+	public String updateModifyBlog(@RequestParam Integer blogId,
+								   @RequestParam Integer categoryId,
+								   @RequestParam MultipartFile blogImage,
+								   @RequestParam String blogTitle,
+								   @RequestParam String blogContent,
+								   HttpServletRequest request) throws IOException {
+		String modifyFileName = blogImage.getOriginalFilename();
+		Blog blog = blogService.findByIdBlog(blogId);
+		if(modifyFileName.length()!=0) {
+			String ext = context.getMimeType(blogImage.getOriginalFilename());
+			ext = ext.substring(6);
+			Date date = new Date();
+			String filename = String.valueOf(date.getTime() + "." + ext);
+			InputStream in = blogImage.getInputStream();
+        	String basePath = "C:\\FunBar\\imgUpload\\";
+            System.out.println("basePath:" + basePath);
+			File baseFile = new File(basePath);
+			if (!baseFile.exists()) baseFile.mkdirs();
+
+            File outputFilePath = new File(basePath + filename);
+            OutputStream output = new FileOutputStream(outputFilePath);
+            byte[] buff = new byte[1024];
+            int length;
+            while ((length = in.read(buff)) != -1) {
+                output.write(buff, 0, length);
+            }
+            output.close();
+            in.close();
+			
+            // modify
+            String path = request.getContextPath() + "/imgUpload/" + filename;
+            blog.setBlogImage(path);
+		} else {
+			blog.setBlogImage(blog.getBlogImage());
+		}
+		
+		
+		blog.setBlogTitle(blogTitle);
+		blog.setBlogContent(blogContent);
+		Category category = blogService.findByIdCategory(categoryId);
+		blog.setCategory(category);
+		
+		blogService.modifyBlog(blog);
+			
+		
+		return "redirect:/blog/" + blogId;
 	}
 }

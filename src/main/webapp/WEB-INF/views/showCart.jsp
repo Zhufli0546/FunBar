@@ -4,8 +4,16 @@
 <!DOCTYPE html>
 <html>
 <style>
-a.orderBtn { text-decoration:none; padding: 5px; background: #fff; border: 1px solid black; border-radius: 1px;}
-.orderBtn:hover { background: #eee;}
+.removeBtn { 
+	text-decoration:none; 
+	padding: 5px; 
+	background: #fff; 
+	border: 1px solid black; 
+	border-radius: 1px;
+	}
+.removeBtn:hover { 
+	background: #eee;
+	}
 </style>
 <head>
 <meta charset="UTF-8">
@@ -13,78 +21,178 @@ a.orderBtn { text-decoration:none; padding: 5px; background: #fff; border: 1px s
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>	
 <script>
 $(document).ready(function(){	
+	
+	totalPrice = 0 ;
+	  for(let i = 0 ;i<$(".pd").length;i++){
+	    	unitPrice = $(".unit").eq(i).text();
+	    	var disc=$(".hallin").eq(i).text();
+	    	
+	    	number = $(".num").eq(i).val();
+	    	console.log(unitPrice);
+	    	console.log(disc);
+	    	console.log(number);
+	    	
+	    	subTotal = unitPrice*number*disc;
+	    	$(".pd").eq(i).text(subTotal);
+	    	totalPrice = totalPrice+subTotal;
+	    	//console.log(totalPrice);
+	    	console.log(1111);
+	    }
+	  	
+	  	$(".totalAmount").text(totalPrice.toFixed(0));
+	  	console.log(".totalAmount");
+	  	
+	
+	
+	var totalPrice ;
+	
 	//數量減少
 	 $(".minus").click(function(){   	
-	 	let index = $(this).data("product");
+	 	var index = $(this).data("product");
 	  	var num=$(this).siblings(".num").val();
 	  	num--;
 	  	$(this).siblings(".num").val(num<1?1:num);
-	  	let unitPrice = $(".price").eq(index).val();
-	        
-	 	 if(num<1){
-	       num = 1;
+	  	var unitPrice=$(".unit").eq(index).text(); //單價
+	  	var disc=$(".hallin").eq(index).text(); //折扣
+	  	  		  	
+	  	if(num<1){
+	  		alert('不要再按了！哪有人買零個的辣!');
+	  		num=1;
 	  	}
-	   	let total = unitPrice*num;
-	   	console.log(unitPrice);
-	   	$(".pd").eq(index).text(total);
-	   	$(".totalAmount")
+	  	//小計	  
+	  	var smallPrice = unitPrice*num*disc;  	  	
+	  	$(".pd").eq(index).text(smallPrice);
+	  	
+	    //總計  
+        totalPrice = 0;
+        for(let i = 0 ;i<$(".pd").length;i++){
+	    	unitPrice = $(".unit").eq(i).text();
+	    	var disc=$(".hallin").eq(i).text();
+	    	number = $(".num").eq(i).val();
+	    	
+	    	subTotal = unitPrice*number*disc;
+	    	totalPrice = totalPrice+subTotal;
+	    	//console.log(totalPrice);
+	    	console.log(subTotal);
+	    }
+	  	
+	  	$(".totalAmount").text(totalPrice.toFixed(0));
+	  	console.log(".totalAmount");
+	    
 	   	
 })
 
 		//數量增加
 	    $(".add").click(function(){
-	    	let index = $(this).data("product");
+	    	var index = $(this).data("product");
 	    	console.log(".add data-product 索引:" + index);
-
-	    	let num = $(this).siblings(".num").val();
+	    	var num = $(this).siblings(".num").val();
 	        num++;
 	        $(this).siblings(".num").val(num>50?50:num);
+	        var unitPrice = $(".unit").eq(index).text(); 
+	        var disc=$(".hallin").eq(index).text(); //折扣
+	        	
+	        if(num>50){
+	        	alert("數量不得超過50份！");
+	        }
+	              
+	        var smallPrice = (unitPrice*num)*disc;    
+	        $(".pd").eq(index).text(smallPrice);
 	        
-	        // 單價
-	        let unitPrice = $(".price").eq(index).val();
-	        let total = unitPrice*num;
 	        
-	        $(".pd").eq(index).text(total);
+	         //總計
+	         totalPrice = 0;
+	        	for(let i = 0 ;i<$(".pd").length;i++){
+		    	unitPrice = $(".unit").eq(i).text();
+		    	var disc=$(".hallin").eq(i).text();
+		    	
+		    	number = $(".num").eq(i).val();
+		    	
+		    	subTotal = unitPrice*number*disc;
+		    	totalPrice = totalPrice+subTotal;
+		    	//console.log(totalPrice);
+		    	console.log(subTotal);
+		    }
+		  	
+		  	$(".totalAmount").text(totalPrice.toFixed(0));
+		  	  console.log(".totalAmount");
 	    })
 	
 		//input欄位輸入數量
-	    $('input').blur(function(){
-			let index = $(this).data("product");			
-			let unitPrice = $(".price").eq(index).val();		
+	    $(".num").blur(function(){
+			var index = $(this).data("product");			
+			var unitPrice = $(".unit").eq(index).text();		
 			var num = $(this).val();
-			var total;
-			if(num>50){
+			var smallPrice;
+			if(num>50){			
 				alert("數量不得超過50份!");
-				$(this).val(50);   //當下的input
-				total = unitPrice*50;
-				$(".pd").eq(index).text(total);
-			}else if(num<1){
-				alert("數量不得小於1!");
-				$(this).val(1);
-				total = unitPrice*1;
-				$(".pd").eq(index).text(total);
-			}else{
-				$(this).val();
-	        	total = unitPrice*num;        
-	        	$(".pd").eq(index).text(total);
-	        
-			}
-	  })
-	
-	
-	
-// 	 function AllPrice(){
-// 	    var all_price=0;
-
-	   	   
-// 	    //取得總計
-// 	    var len=sp.parents("tr").find(".smallPrice").html().length;
-// 	        all_price += parseFloat(sp.parents("tr").find(".smallPrice").html().substr(1,len));
-// 	   }
-	   
-// 	    $(".totalAmount").html( all_price.toFixed(2));
-// 	} 
 			
+		         totalPrice = 0;
+			        for(let i = 0 ;i<$(".pd").length;i++){
+				    	unitPrice = $(".unit").eq(i).text();
+				    	number = $(".num").eq(i).val();
+				    	var disc=$(".hallin").eq(i).text();
+				    	$(this).val(50);   //當下的input
+						smallPrice = unitPrice*50*disc;
+						$(".pd").eq(index).text(smallPrice);
+				    	
+				    	
+				    	subTotal = unitPrice*number*disc;
+				    	totalPrice = totalPrice+subTotal;
+				    	//console.log(totalPrice);
+				    	console.log(subTotal);
+				    }
+				  	
+				  	$(".totalAmount").text(totalPrice.toFixed(0));
+				  	console.log(".totalAmount");
+			}else if(num<1){
+				
+				alert("數量不得小於1!");
+			
+				
+		         totalPrice = 0;
+			        for(let i = 0 ;i<$(".pd").length;i++){
+				    	unitPrice = $(".unit").eq(i).text();
+				    	number = $(".num").eq(i).val();
+				    	var disc=$(".hallin").eq(i).text();
+				    	$(this).val(1);
+						smallPrice = unitPrice*1*disc;
+						$(".pd").eq(index).text(smallPrice);
+				    	
+				    	
+				    	subTotal = unitPrice*number*disc;
+				    	totalPrice = totalPrice+subTotal;
+				    	//console.log(totalPrice);
+				    	console.log(subTotal);
+				    }
+				  	
+				  	$(".totalAmount").text(totalPrice.toFixed(0));
+				  	console.log(".totalAmount");
+		}else{
+		
+		         totalPrice = 0;
+			        for(let i = 0 ;i<$(".pd").length;i++){
+				    	unitPrice = $(".unit").eq(i).text();
+				    	number = $(".num").eq(i).val();
+				    	var disc=$(".hallin").eq(i).text()
+				    	$(this).val();
+	        	smallPrice = unitPrice*num*disc;        
+	        	$(".pd").eq(index).text(smallPrice);
+				    	
+				    	
+				    	subTotal = unitPrice*number*disc;
+				    	totalPrice = totalPrice+subTotal;
+				    	//console.log(totalPrice);
+				    	console.log(subTotal);
+				    }
+				  	
+				  	$(".totalAmount").text(totalPrice.toFixed(0));
+				  	console(".totalAmount");
+			}
+			
+			
+})
+				
 	
 })
 
@@ -97,19 +205,8 @@ $(document).ready(function(){
 
 <!-- Content 區塊 -->
 <div class="container page">
-
-
-<c:if test="${cart.cartItems ==null}">
-<div>
-<h1>沒東西</h1>
-</div>
-</c:if>
-
-
-
-<c:if test="${cart.cartItems !=null }">
 	<div class="row">
-		<div class="col-sm-offset-10 col-sm-2">
+		<div class="col-sm-offset-10 col-sm-3">
 			<a class="orderBtn" href="<c:url value='/deleteCartItem' />">清空購物車</a>
 		</div>
 	</div>
@@ -121,6 +218,7 @@ $(document).ready(function(){
 					<th>產品名稱</th>
 					<th>單價</th>
 					<th>數量</th>
+					<th>折扣</th>
 					<th>小計</th>
 					<th></th>
 				</tr>
@@ -129,28 +227,30 @@ $(document).ready(function(){
 				<c:forEach var="ci" items="${cart.cartItems}" begin="0" step="1" varStatus="i">
 				<tr>
 					<td>
-						<img src="<c:url value='/ProductPictures/${ci.product.productId}' />" width="50px" height="100px">
+						<img src="<c:url value='/ProductPictures/${ci.product.productId}' />" width="80px" height="120px">
 					</td>
 					<td>${ci.product.productName}</td>
-					<td>${ci.product.unitPrice}</td>
+					<td class="unit" data-product="${i.index}">${ci.product.unitPrice}</td>
 					<td><button type="button"  class="minus" data-product="${i.index}">⬇</button>
-						<input id="n" type="text" value="${ci.count}" size="2" class="num" data-product="${i.index}"  /> 
-						<button type="button" class="add" data-product="${i.index}"> ⬆</button>
+						<input id="count" type="text" maxlength="2" value="${ci.count}" size="2" class="num" data-product="${i.index}"  /> 
+						<button type="button" class="add" data-product="${i.index}">⬆</button>
 					</td>
+					<td class="hallin" data-product="${i.index}">${ci.product.discount}</td>
 					<td class="smallPrice pd">${ci.subtotal}</td>
- 						
+											
 					<td>
+						<input type="hidden" id="all">
 						<input type="hidden" class="price" value="${ci.subtotal}"> 
 						<a class="removeBtn"  href=" <c:url value='/removeCartItem?productId=${ci.product.productId}' />">刪除</a>
 					</td>
 
 				</tr>
 				</c:forEach>
-				<tr>
-					<td align="right" colspan="6" class="totalAmount">總計:${cart.total}</td>
+				<tr style="text-align:right">
+					<td align="right" colspan="8" >總計:<span class="totalAmount" style="padding:0 10px;color:#FF0088;font-size:18px" >${cart.total}</span></td>
 				</tr>
 				<tr>
-					<td align="right" colspan="6">
+					<td align="right" colspan="8">
 						<form action="<c:url value='/shoppingcart/InsertOrderServlet' />" method="post">
 							<label for="address" class="col-sm-4 col-xs-12">地址:</label>
 							<div class="col-sm-4 col-xs-12">
@@ -158,7 +258,7 @@ $(document).ready(function(){
 							</div>
 							<div class="col-sm-4 col-xs-12">
 								
-								<button type="submit" class="btn btn-success">結帳去</button>
+								<button type="submit" class="btn btn-success" style="margin:10px 0">結帳去</button>
 							</div>
 						</form>
 					</td>
@@ -166,7 +266,6 @@ $(document).ready(function(){
 			</tbody>
 		</table>
 	</div>
-	</c:if>
 </div>
 
 <jsp:include page="footer.jsp" />

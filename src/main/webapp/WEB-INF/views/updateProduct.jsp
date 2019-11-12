@@ -95,13 +95,13 @@ form{
 <label  for="category">商品分類</label>
 <select name="category">
 <option>${pb.category}</option>
-<option value="無酒精">無酒精</option>
-<option value="啤酒與低酒精">啤酒與低酒精</option>
-<option value="葡萄酒">葡萄酒</option>
-<option value="威士忌">威士忌</option>
-<option value="酒器與酒杯">酒器與酒杯</option>
-<option value="調酒器具">調酒器具</option>
-<option value="下酒菜">下酒菜</option>	
+<option value="vodka">vodka</option>
+<option value="gin">gin>
+<option value="rum">rum</option>
+<option value="tequila">tequila</option>
+<option value="whisky">whisky</option>
+<option value="brandy">brandy</option>
+<option value="beer">beer</option>	
 </select>
 </div>
 

@@ -70,4 +70,9 @@ public class BlogServiceImpl implements BlogService {
 		return blogDao.searchBlogs(searchKey);
 	}
 
+	@Override
+	public void modifyBlog(Blog blog) {
+		blogDao.modifyBlog(blog);
+	}
+
 }

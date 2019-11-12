@@ -24,8 +24,9 @@ function submit() {
 		},
 		dataType: "JSON",
 		success: function (res) {
-			window.location.reload();
-
+			$("#commentBlock").html("");
+			$("#commentContent").val("");
+			generateTemplate();
 		}
 	});
 }
@@ -42,11 +43,13 @@ function replySubmit() {
 		},
 		dataType: "JSON",
 		success: function (res) {
-			window.location.reload();
+			$("#commentBlock").html("");
+			$("#replyComment").val("");
+			generateTemplate();
 		}
 	});
 }
-var commentData;
+//var commentData;
 var firstComment = [];
 function generateTemplate() {
 	$.ajax({
@@ -55,9 +58,10 @@ function generateTemplate() {
 		dataType: "JSON",
 		success: function(res) {
 			console.log(res);
-			commentData = res.comments;
+			let commentData = res.comments;
 
 			// 取得第一層評論
+			firstComment = [];
 			for(let i=0;i<commentData.length;i++) {
 				if(commentData[i].parentComment == null) {
 					firstComment.push(commentData[i]);
@@ -75,8 +79,8 @@ function generateTemplate() {
 		}
 	})
 
-	var firstTemplate = "<p style='color:red'>{{comment.commentIds}}</p><h5 class='media mt-4'><img class='d-flex mr-3 rounded-circle' src='http://placehold.it/50x50'>{{comment.commentName}}</h5>{{comment.commentContent}}<label for='replyComment' class='col-md-2 replyClick' data-comment='{{comment.commentId}}' data-name='allen'><a href='javascript:;'>回覆</a></label>";
-	var secondTemplate = "<div style='padding-left: 100px'><p style='color:red'>{{comment.commentIds}}</p><div class='media mt-4'><img class='d-flex mr-3 rounded-circle' src='http://placehold.it/50x50'><div class='media-body'><h5 class='mt-0'>{{comment.commentName}}</h5>{{comment.commentContent}}</div><label for='replyComment' class='col-md-2 replyClick' data-comment='{{comment.commentId}}' data-name='allen'><a href='javascript:;'>回覆</a></label></div></div>";
+	var firstTemplate = "<p style='color:red'>{{comment.commentIds}}</p><h5 class='media mt-4 animated fadeIn'><img class='d-flex mr-3 rounded-circle' src='http://placehold.it/50x50'>{{comment.commentName}}</h5>{{comment.commentContent}}<label for='replyComment' class='col-md-2 replyClick' data-comment='{{comment.commentId}}' data-name='allen'><a href='javascript:;'>回覆</a></label>";
+	var secondTemplate = "<div style='padding-left: 100px'><p style='color:red'>{{comment.commentIds}}</p><div class='media mt-4 animated fadeIn'><img class='d-flex mr-3 rounded-circle' src='http://placehold.it/50x50'><h5 class='mt-0'>{{comment.commentName}}</h5>{{comment.commentContent}}<label for='replyComment' class='col-md-2 replyClick' data-comment='{{comment.commentId}}' data-name='allen'><a href='javascript:;'>回覆</a></label></div></div>";
 	var tmp;
 	function generateComment() {
 		for(let i=0;i<firstComment.length;i++) {
