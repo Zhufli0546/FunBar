@@ -19,6 +19,7 @@ input[type=text] {
 <title>signin</title>
 </head>
 <body>
+<c:set var="go" value="" scope="session"></c:set>
 	<jsp:include page="header.jsp" />
 	<div class="container" style="margin-top: 150px">
 

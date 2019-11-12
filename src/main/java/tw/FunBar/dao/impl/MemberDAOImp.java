@@ -2,6 +2,8 @@ package tw.FunBar.dao.impl;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,45 +53,52 @@ public class MemberDAOImp implements MemberDAO {
 		session.delete(mb);
 
 	}
-	//修改
+
+	// 修改
 	@Override
 	public void updateMember(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
-			String memberPwd, String memberId, String memberEmail) {
+			String memberPwd, String memberId, String memberEmail, String memberPic, int memberLevel) {
 		Session session = factory.getCurrentSession();
 		String hql = "UPDATE Member SET memberName =:memberName," + "memberAddress =:memberAddress,"
 				+ "memberBirth =:memberBirth," + "memberPhone =:memberPhone," + "memberPwd =:memberPwd,"
-				+ "memberId =:memberId," + "memberEmail =:memberEmail WHERE id =:id";
+				+ "memberId =:memberId," + "memberEmail =:memberEmail" + "memberPic =:memberPic,"
+				+ "memberLevel =:memberLevel WHERE id =:id";
 
 		session.createQuery(hql).setParameter("id", id).setParameter("memberName", memberName)
 				.setParameter("memberAddress", memberAddress).setParameter("memberBirth", memberBirth)
 				.setParameter("memberPhone", memberPhone).setParameter("memberPwd", memberPwd)
-				.setParameter("memberId", memberId).setParameter("memberEmail", memberEmail).executeUpdate();
+				.setParameter("memberId", memberId).setParameter("memberEmail", memberEmail)
+				.setParameter("memberPic", memberPic).setParameter(memberLevel, "memberLevel").executeUpdate();
 
 	}
-	
-	
-	
-	
-	//打完登入資料，進入這個方法
+
+//	一般會員打完登入資料，進入這個方法
 	@Override
-	public Boolean signin(String memberId, String memberPwd) {
-		Member mb;
+	public Member signin(String memberId, String memberPwd) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM Member WHERE memberId = :memberId and memberPwd = :memberPwd";
-		
-			mb =(Member)session.createQuery(hql)
-					.setParameter("memberId",memberId)
-					.setParameter("memberPwd",memberPwd)
-					.getSingleResult();
-			if(mb!=null) {
-				return true;
-			}else {
-				return false;
-			}
-			
-		
+
+		Member member = (Member)session.createQuery(hql)
+							.setParameter("memberId", memberId)
+							.setParameter("memberPwd", memberPwd).getSingleResult();
+		return member;
 	}
 
 	
-
+	
+	
+	//沒屁用
+	@Override
+	public Member checkuser(String memberId, String memberPwd) {
+		Member mb = null;
+		Session session = factory.getCurrentSession();
+		String hql = "FROM Member WHERE memberId = :memberId and memberPwd = :memberPwd";
+		try {
+			mb = (Member) session.createQuery(hql).setParameter("memberId", memberId)
+					.setParameter("memberPwd", memberPwd).uniqueResult();
+		} catch (NoResultException ex) {
+			mb = null;
+		}
+		return mb;
+	}
 }

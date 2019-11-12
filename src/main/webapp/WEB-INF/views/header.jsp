@@ -56,49 +56,50 @@
 				<div class="wrap_header trans-0-3">
 					<!-- Logo -->
 					<div class="logo">
-						
 
 						<a href="${pageContext.request.contextPath}"> <img
 							src="<c:url value='/images/icons/logo.png' />" alt="IMG-LOGO"
 							data-logofixed="<c:url value='/images/icons/logo2.png' />">
 						</a>
 					</div>
-
 					<!-- Menu -->
 					<div class="wrap_menu p-l-45 p-l-0-xl">
 						<nav class="menu">
 							<ul class="main_menu">
 
-
 								<li><a href="/FunBar">Home</a></li>
 
-
 								<li><a href="${pageContext.request.contextPath}/activities">熱門活動</a></li>
-								
-								<li><a href="${pageContext.request.contextPath}/shoppingCart">購物區</a></li>
+
+								<li><a
+									href="${pageContext.request.contextPath}/shoppingCart">購物區</a></li>
 
 								<li><a href="${pageContext.request.contextPath}/blogs">部落格</a></li>
 
 								<li><a href="${pageContext.request.contextPath}/discuss">討論區</a></li>
 
 								<li><a href="${pageContext.request.contextPath}/booking">線上訂位</a></li>
-								
-								<li><a href="${pageContext.request.contextPath}/booking_room">線上訂房</a></li>
-								
 
+								<li><a
+									href="${pageContext.request.contextPath}/booking_room">線上訂房</a></li>
 								
-								<li><a href="joinus">註冊</a></li>
-							
+								<c:choose>
+									<c:when test="${sessionScope.member.memberName==null}">
+										<li><a href="joinus">註冊</a></li>
+										<li><a href="${pageContext.request.contextPath}/signin">登入</a></li>
+									</c:when>
+									<c:otherwise>
+										<a>${sessionScope.member.memberName}, 你好</a>
+										<td><a href="${pageContext.request.contextPath} 
+										<%session.removeAttribute("member");%>">
+						<button type="button" class="btn btn-outline-secondary">回首頁</button>
+						</a></td>
+						
+									</c:otherwise>
+								</c:choose>
 							</ul>
-
-								<li><a href="${pageContext.request.contextPath}/signin">登入</a></li>
-
-
-								</ul>
-
 						</nav>
 					</div>
-
 					<!-- Social -->
 					<div class="social flex-w flex-l-m p-r-20">
 						<a href="#"><i class="fa fa-tripadvisor" aria-hidden="true"></i></a>
@@ -120,31 +121,30 @@
 		<!-- - -->
 		<ul class="menu-sidebar p-t-95 p-b-70">
 
-		<li class="t-center m-b-13"><a href="/FunBar" class="txt19">Home</a>
+			<li class="t-center m-b-13"><a href="/FunBar" class="txt19">Home</a>
 			</li>
 
 
 
-		<li class="t-center m-b-13"><a href="activities" class="txt19">熱門活動</a>
+			<li class="t-center m-b-13"><a href="activities" class="txt19">熱門活動</a>
 			</li>
-			
+
 			<li class="t-center m-b-13"><a href="shoppingCart">購物區</a></li>
 
 			<li class="t-center m-b-13"><a
 				href="${pageContext.request.contextPath}/blogs" class="txt19">部落格</a>
 			</li>
-			
+
 			<li class="t-center m-b-13"><a href="discuss" class="txt19">討論區</a>
 			</li>
-			
+
 			<li class="t-center m-b-13"><a href="booking">線上訂位</a></li>
-								
+
 			<li class="t-center m-b-13"><a href="booking_room">線上訂房</a></li>
-								
+
 			<li class="t-center m-b-13"><a href="signin">登入</a></li>
 
 			<li class="t-center m-b-13"><a href="admin">後台管理</a></li>
-
 
 
 			<li class="t-center">

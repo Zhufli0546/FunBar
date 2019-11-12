@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>新增商品資料</title>
+<title>商品上架</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -102,13 +102,13 @@
 <div class="form-group">
 <label class='control-label col-lg-2 col-lg-2' for="category">商品分類</label>
 <form:select path="category">
-<form:option value="無酒精">無酒精</form:option>
-<form:option value="啤酒與低酒精">啤酒與低酒精</form:option>
-<form:option value="葡萄酒">葡萄酒</form:option>
-<form:option value="威士忌">威士忌</form:option>
-<form:option value="酒器與酒杯">酒器與酒杯</form:option>
-<form:option value="調酒器具">調酒器具</form:option>
-<form:option value="下酒菜">下酒菜</form:option>	
+<form:option value="vodka">vodka</form:option>
+<form:option value="gin">gin</form:option>
+<form:option value="rum">rum</form:option>
+<form:option value="tequila">tequila</form:option>
+<form:option value="whisky">whisky</form:option>
+<form:option value="brandy">brandy</form:option>
+<form:option value="beer">beer</form:option>	
 </form:select>
 </div>
 

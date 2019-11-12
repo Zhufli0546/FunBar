@@ -45,16 +45,23 @@ public class MemberServiceImp implements MemberService {
 
 	@Override
 	public void updateMember(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
-			String memberPwd, String memberId, String memberEmail) {
-		dao.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberPwd, memberId, memberEmail);
-		
+			String memberPwd, String memberId, String memberEmail,String memberPic,int memberLevel) {
+		dao.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberPwd, memberId, memberEmail, memberPic,memberLevel);
 	}
 
 	@Override
-	public Boolean signin(String memberId, String memberPwd) {
+	public Member signin(String memberId, String memberPwd) {
 		
 		return dao.signin(memberId, memberPwd);
 	}
+
+	@Override
+	public Member checkuser(String memberId, String memberPwd) {
+		
+		return dao.checkuser(memberId, memberPwd);
+	}
+
+
 
 	
 
