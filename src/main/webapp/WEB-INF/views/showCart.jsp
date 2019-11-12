@@ -25,26 +25,22 @@ $(document).ready(function(){
 	totalPrice = 0 ;
 	  for(let i = 0 ;i<$(".pd").length;i++){
 	    	unitPrice = $(".unit").eq(i).text();
-	    	var disc=$(".hallin").eq(i).text();
+	    	var disc=$(".hallin").eq(i).text(); //折扣
+	    	var dec = disc/10;
 	    	
 	    	number = $(".num").eq(i).val();
-	    	console.log(unitPrice);
-	    	console.log(disc);
-	    	console.log(number);
 	    	
-	    	subTotal = unitPrice*number*disc;
+	    	subTotal = unitPrice*number*dec;
 	    	$(".pd").eq(i).text(subTotal);
 	    	totalPrice = totalPrice+subTotal;
-	    	//console.log(totalPrice);
-	    	console.log(1111);
 	    }
 	  	
-	  	$(".totalAmount").text(totalPrice.toFixed(0));
-	  	console.log(".totalAmount");
+	  	 $(".totalAmount").text(totalPrice.toFixed(0));
+	  	
 	  	
 	
 	
-	var totalPrice ;
+		var totalPrice ;
 	
 	//數量減少
 	 $(".minus").click(function(){   	
@@ -54,13 +50,14 @@ $(document).ready(function(){
 	  	$(this).siblings(".num").val(num<1?1:num);
 	  	var unitPrice=$(".unit").eq(index).text(); //單價
 	  	var disc=$(".hallin").eq(index).text(); //折扣
+	  	var dec = disc/10;
 	  	  		  	
 	  	if(num<1){
 	  		alert('不要再按了！哪有人買零個的辣!');
 	  		num=1;
 	  	}
 	  	//小計	  
-	  	var smallPrice = unitPrice*num*disc;  	  	
+	  	var smallPrice = unitPrice*num*dec;  	  	
 	  	$(".pd").eq(index).text(smallPrice);
 	  	
 	    //總計  
@@ -68,16 +65,15 @@ $(document).ready(function(){
         for(let i = 0 ;i<$(".pd").length;i++){
 	    	unitPrice = $(".unit").eq(i).text();
 	    	var disc=$(".hallin").eq(i).text();
+	    	var dec = disc/10;
 	    	number = $(".num").eq(i).val();
 	    	
-	    	subTotal = unitPrice*number*disc;
+	    	subTotal = unitPrice*number*dec;
 	    	totalPrice = totalPrice+subTotal;
-	    	//console.log(totalPrice);
-	    	console.log(subTotal);
 	    	
 	    	var url="/FunBar/"
 	   		$.ajax({
-	   			url:"http://localhost:8080" + url + "cart",
+	   			url:"http://localhost:8080" + url + "changecart",
 	   			data:{
 	   				count:number,
 	   				productId:$(".pdid").eq(i).val()
@@ -85,15 +81,11 @@ $(document).ready(function(){
 	   			type:"POST",
 	   			dataType:"JSON",
 	   			success:function(){
-	   				console.log("success");
 	   			}
 	   		})
-	    }
-	  	
-	  	$(".totalAmount").text(totalPrice.toFixed(0));
-	  	console.log(".totalAmount");
-	    
-	   	
+	    }  	
+	  	 $(".totalAmount").text(totalPrice.toFixed(0));
+	  	   	
 })
 
 		//數量增加
@@ -105,12 +97,13 @@ $(document).ready(function(){
 	        $(this).siblings(".num").val(num>50?50:num);
 	        var unitPrice = $(".unit").eq(index).text(); 
 	        var disc=$(".hallin").eq(index).text(); //折扣
+	        var dec = disc/10;
 	        	
 	        if(num>50){
 	        	alert("數量不得超過50份！");
 	        }
 	              
-	        var smallPrice = (unitPrice*num)*disc;    
+	        var smallPrice = (unitPrice*num)*dec;    
 	        $(".pd").eq(index).text(smallPrice);
 	        
 	        
@@ -119,17 +112,17 @@ $(document).ready(function(){
 	        	for(let i = 0 ;i<$(".pd").length;i++){
 		    	unitPrice = $(".unit").eq(i).text();
 		    	var disc=$(".hallin").eq(i).text();
+		    	var dec = disc/10;
 		    	
 		    	number = $(".num").eq(i).val();
 		    	
-		    	subTotal = unitPrice*number*disc;
+		    	subTotal = unitPrice*number*dec;
 		    	totalPrice = totalPrice+subTotal;
-		    	//console.log(totalPrice);
-		    	console.log(subTotal);
+		  
 		    	
 		    	var url="/FunBar/";
 			   		$.ajax({
-			   			url:"http://localhost:8080" + url + "cart",
+			   			url:"http://localhost:8080" + url + "changecart",
 			   			data:{
 			   				count:number,
 			   				productId:$(".pdid").eq(i).val(),
@@ -140,10 +133,9 @@ $(document).ready(function(){
 			   				console.log("success");
 			   			}
 			   		})
-		    }
-		  	
-		  	$(".totalAmount").text(totalPrice.toFixed(0));
-		  	  console.log(".totalAmount");
+		    }	  	
+	        	$(".totalAmount").text(totalPrice.toFixed(0));
+	    	
 	    })
 	
 		//input欄位輸入數量
@@ -160,58 +152,98 @@ $(document).ready(function(){
 				    	unitPrice = $(".unit").eq(i).text();
 				    	number = $(".num").eq(i).val();
 				    	var disc=$(".hallin").eq(i).text();
-				    	$(this).val(50);   //當下的input
-						smallPrice = unitPrice*50*disc;
+				    	var dec = disc/10;
+				    	$(this).val(50);   //輸入的數字大於50，當下的input設為50
+				    	
+						smallPrice = unitPrice*50*dec;
 						$(".pd").eq(index).text(smallPrice);
 				    	
 				    	
-				    	subTotal = unitPrice*number*disc;
+				    	subTotal = unitPrice*number*dec;
 				    	totalPrice = totalPrice+subTotal;
-				    	//console.log(totalPrice);
-				    	console.log(subTotal);
-				    }
-				  	
-				  	$(".totalAmount").text(totalPrice.toFixed(0));
-				  	console.log(".totalAmount");
+				    	
+				    	var url="/FunBar/"
+					   		$.ajax({
+					   			url:"http://localhost:8080" + url + "changecart",
+					   			data:{
+					   				count:number,
+					   				productId:$(".pdid").eq(i).val()
+					   			},
+					   			type:"POST",
+					   			dataType:"JSON",
+					   			success:function(){
+					   				console.log(number);
+					   				console.log("success");
+					   			}
+					   		})
+				    }		  	
+			        $(".totalAmount").text(totalPrice.toFixed(0));
 			}else if(num<1){
 				
 				alert("數量不得小於1!");
-			
 				
 		         totalPrice = 0;
 			        for(let i = 0 ;i<$(".pd").length;i++){
 				    	unitPrice = $(".unit").eq(i).text();
 				    	number = $(".num").eq(i).val();
 				    	var disc=$(".hallin").eq(i).text();
+				    	var dec = disc/10;
 				    	$(this).val(1);
-						smallPrice = unitPrice*1*disc;
+						smallPrice = unitPrice*1*dec;
 						$(".pd").eq(index).text(smallPrice);
 				    	
 				    	
-				    	subTotal = unitPrice*number*disc;
+				    	subTotal = unitPrice*number*dec;
 				    	totalPrice = totalPrice+subTotal;
-				    	//console.log(totalPrice);
-				    	console.log(subTotal);
+				    	
+				    	var url="/FunBar/"
+					   		$.ajax({
+					   			url:"http://localhost:8080" + url + "changecart",
+					   			data:{
+					   				count:number,
+					   				productId:$(".pdid").eq(i).val()
+					   			},
+					   			type:"POST",
+					   			dataType:"JSON",
+					   			success:function(){
+					   				console.log(number);
+					   				console.log("success");
+					   			}
+					   		})
 				    }
 				  	
 				  	$(".totalAmount").text(totalPrice.toFixed(0));
-				  	console.log(".totalAmount");
 		}else{
 		
 		         totalPrice = 0;
 			        for(let i = 0 ;i<$(".pd").length;i++){
 				    	unitPrice = $(".unit").eq(i).text();
 				    	number = $(".num").eq(i).val();
-				    	var disc=$(".hallin").eq(i).text()
+				    	var disc=$(".hallin").eq(i).text();
+				    	var dec = disc/10;
 				    	$(this).val();
-	        	smallPrice = unitPrice*num*disc;        
+	        	smallPrice = unitPrice*num*dec;        
 	        	$(".pd").eq(index).text(smallPrice);
-				    	
-				    	
-				    	subTotal = unitPrice*number*disc;
+				    				    	
+				    	subTotal = unitPrice*number*dec;
 				    	totalPrice = totalPrice+subTotal;
 				    	//console.log(totalPrice);
 				    	console.log(subTotal);
+				    	
+				    	var url="/FunBar/"
+					   		$.ajax({
+					   			url:"http://localhost:8080" + url + "changecart",
+					   			data:{
+					   				count:number,
+					   				productId:$(".pdid").eq(i).val()
+					   			},
+					   			type:"POST",
+					   			dataType:"JSON",
+					   			success:function(){
+					   				console.log(number);
+					   				console.log("success");
+					   			}
+					   		})
 				    }
 				  	
 				  	$(".totalAmount").text(totalPrice.toFixed(0));

@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import tw.FunBar.model.Member;
 import tw.FunBar.model.ProductBean;
 import tw.FunBar.service.OrderHandleService;
 import tw.FunBar.service.ShoppingService;
@@ -53,7 +54,7 @@ public class ShoppingController {
 	//---------前台功能-------	
 	
 	@RequestMapping("/shoppingCart")
-	public String shoppingCart(Model model) {
+	public String shoppingCart(Model model) {		
 		List<ProductBean> show = shoppingService.getAllProducts();
 		model.addAttribute("all", show);
 		return "shoppingCart";
@@ -64,6 +65,7 @@ public class ShoppingController {
 //	依分類查詢商品(點擊分類連結進入分類商品頁面）
 	@RequestMapping("/shoppingCart/{category}")
 	public String getProductByCategory(@PathVariable("category")String category, Model model ) {
+			
 		List <ProductBean> products = shoppingService.getProductByCategory(category);
 		model.addAttribute("category", products);
 		 return "showProductByCategory";		
@@ -88,7 +90,11 @@ public class ShoppingController {
 		
 	//後臺顯示所有商品
 	@RequestMapping("/showAllProduct")
-	public String showAllProduct(Model model) {
+	public String showAllProduct(HttpSession session,HttpServletRequest request,HttpServletResponse response,Model model) {
+		session = request.getSession(false);
+		Member member = (Member)session.getAttribute("member");
+		if(member==null) return "redirect:/signin";
+		
 		List<ProductBean> show = shoppingService.getAllProducts();
 		model.addAttribute("all", show);
 		return "showAllProduct";
@@ -141,7 +147,11 @@ public class ShoppingController {
 	
 	//新增商品資料
 	@RequestMapping(value = "/addProduct", method = RequestMethod.GET)
-	public String getAddNewProductForm(Model model) {
+	public String getAddNewProductForm(HttpSession session,HttpServletRequest request,HttpServletResponse response,Model model) {
+		session = request.getSession(false);
+		Member member = (Member)session.getAttribute("member");
+		if(member==null) return "redirect:/signin";
+		
 		ProductBean pb = new ProductBean();
 		model.addAttribute("productBean", pb);
 		return "addProduct";

@@ -79,7 +79,7 @@
 
 <!-- Content 區塊 -->
 
-<div class="container page" style="margin:tt6u">
+<div class="container page" style="margin:10px">
 <h1>新增商品</h1>
 <hr>
 <form:form method='POST' modelAttribute="productBean" class='form-horizontal' enctype="multipart/form-data">		
