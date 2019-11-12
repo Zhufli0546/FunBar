@@ -6,7 +6,11 @@
 }
 
 @media (min-width: 576px) {
-	.modal-dialog {
+	#createBlog .modal-dialog {
+		max-width: 1600px;
+	}
+
+	#modifyBlog .modal-dialog {
 		max-width: 1600px;
 	}
 }

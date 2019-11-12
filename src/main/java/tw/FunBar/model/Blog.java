@@ -25,11 +25,11 @@ public class Blog {
 	private String blogImage;
 	private String blogTitle;
 	private String blogContent;
-	
+
 	@Transient
 	private Integer blogIsHot;
 	private String blogCreatedTime;
-	
+
 	@JsonIgnoreProperties("blogs")
 	@ManyToOne
 	@JoinColumn(name = "CATEGORYID")
@@ -39,15 +39,8 @@ public class Blog {
 	@OneToMany(mappedBy = "blog", cascade = CascadeType.ALL)
 	private Set<Comment> comments = new LinkedHashSet<Comment>();
 
-//	private int memberId;
-//
-//	public int getMemberId() {
-//		return memberId;
-//	}
-//
-//	public void setMemberId(int memberId) {
-//		this.memberId = memberId;
-//	}
+	private Integer memberId;
+	private String memberName;
 
 	public Integer getBlogId() {
 		return blogId;
@@ -111,6 +104,22 @@ public class Blog {
 
 	public void setComments(Set<Comment> comments) {
 		this.comments = comments;
+	}
+
+	public String getMemberName() {
+		return memberName;
+	}
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+
+	public Integer getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
 	}
 
 }
