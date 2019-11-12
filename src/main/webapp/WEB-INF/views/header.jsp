@@ -90,11 +90,7 @@
 									</c:when>
 									<c:otherwise>
 										<a>${sessionScope.member.memberName}, 你好</a>
-										<td><a href="${pageContext.request.contextPath} 
-										<%session.removeAttribute("member");%>">
-						<button type="button" class="btn btn-outline-secondary">回首頁</button>
-						</a></td>
-						
+										<td><a href="${pageContext.request.contextPath}/logout">登出</a></td>
 									</c:otherwise>
 								</c:choose>
 							</ul>
