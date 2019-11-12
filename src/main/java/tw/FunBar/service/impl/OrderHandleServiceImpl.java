@@ -50,9 +50,9 @@ public class OrderHandleServiceImpl implements OrderHandleService{
 
 	@Transactional
 	@Override
-	public void updateProduct(Integer productId, String productNo, Blob productCover,String productDetail, String productName,
+	public void updateProduct(Integer productId, String productNo,Blob productCover,String productDetail, String productName,
 			 String category, Double discount, Integer stock) {
-		 dao.updateProduct(productId, productNo, productCover,productDetail, productName, category, discount, stock);
+		 dao.updateProduct(productId, productNo,productCover,productDetail, productName, category, discount, stock);
 		
 	}
 	

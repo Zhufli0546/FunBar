@@ -29,7 +29,7 @@
 <td><p> 密碼 : </p> <form:input type="text" path="memberPwd" size="20" value=""/></td>
 <td><p> 帳號 : </p> <form:input type="text" path="memberId" size="20" value=""/></td>
 <td><p> Email : </p> <form:input type="text" path="memberEmail" size="20" value=""/></td>
-<td><p> 大頭貼 : </p> <input path = "memberPic" type ="file" class ="text1" size ="40" maxlength="40"> </td>
+<td><p> 大頭貼 : </p> <form:input path = "memberimg" type ="file"  size ="40" maxlength="40"/> </td>
  
     <div class="button">
         <input type="submit" value="送出">
