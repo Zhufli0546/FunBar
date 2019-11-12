@@ -90,9 +90,11 @@
 									</c:when>
 									<c:otherwise>
 										<a>${sessionScope.member.memberName}, 你好</a>
-										<td><a href="<spring:url value='logout?=${sessionScope.member}' />">
-								<button type="button" >登出</button>
+										<td><a href="${pageContext.request.contextPath} 
+										<%session.removeAttribute("member");%>">
+						<button type="button" class="btn btn-outline-secondary">回首頁</button>
 						</a></td>
+						
 									</c:otherwise>
 								</c:choose>
 							</ul>

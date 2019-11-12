@@ -59,22 +59,27 @@ public class MemberController {
 		if(member!=null && a==1) {
 			HttpSession session = request.getSession(false);
 			session.setAttribute("member", member);
+			System.out.println("aa:"+ member);
 			return "redirect:/";
 		}if(member!=null && a>1) {
 			return "redirect:/admin";
 		}
 		else {		
+			
 			return "signin";
 		}		
 	}
 	// 登出
-		@RequestMapping(value="/",method=RequestMethod.POST)
-		public String logout(HttpServletRequest request, String member) {
-			HttpSession session = request.getSession();
-			
-			session.removeAttribute(member);
-			return "redirect:/index";// 結束妳要去的頁面
-		}
+//		@RequestMapping("/logout")
+//		public String logout(HttpServletRequest request,@RequestParam("id") Integer id,Model model) {
+//			model.addAttribute("member",memberService.getONEmember(id));
+//			HttpSession session = request.getSession();
+//			
+//			
+//			session.removeAttribute("member");
+//			System.out.println("a:"+session);
+//			return "redirect:/index";// 結束妳要去的頁面
+//		}
 	
 	// 管理員登入
 //		@RequestMapping(value = "/signin", method = RequestMethod.GET)
@@ -83,10 +88,6 @@ public class MemberController {
 //			return "signin";
 //		}
 //	
-	
-	
-	
-
 
 // 查詢單筆
 	@RequestMapping("/getONE1")
