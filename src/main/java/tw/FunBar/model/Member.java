@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.web.multipart.MultipartFile;
+
 @Entity
 @Table(name="MEMBER")
 public class Member {
@@ -19,7 +21,7 @@ public class Member {
 	private String memberPwd;
 	private String memberId;
 	private String memberEmail;
-	private String memberPic;
+	private String  memberPic;
 	private int memberLevel;
 	public int getId() {
 		return id;
@@ -69,15 +71,17 @@ public class Member {
 	public void setMemberEmail(String memberEmail) {
 		this.memberEmail = memberEmail;
 	}
+	
+	public int getMemberLevel() {
+		return memberLevel;
+	}
 	public String getMemberPic() {
 		return memberPic;
 	}
 	public void setMemberPic(String memberPic) {
 		this.memberPic = memberPic;
 	}
-	public int getMemberLevel() {
-		return memberLevel;
-	}
+	
 	
 	
 }

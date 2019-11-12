@@ -24,7 +24,8 @@
 	<!-- Content 區塊 -->
 	<div id="emptyCart">
 		<a href="/FunBar/shoppingCart"><img src="images/emptyCart.png" style="height: 367px" alt="emptyCart" title="back to shop"></a>
-		<h2>There is no any product in your cart.</h2>
+		<h3 style="margin-bottom:10px">There is no any product in your cart.</h3>
+		<a href="<c:url value='/shoppingCart' />"><button class="btn btn-dark">Back to mall</button></a>
 	</div>
 	<jsp:include page="footer.jsp" />
 </body>

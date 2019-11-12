@@ -2,6 +2,8 @@ package tw.FunBar.dao;
 
 import java.util.List;
 
+
+
 import tw.FunBar.model.Member;
 
 public interface MemberDAO {
@@ -17,8 +19,6 @@ public interface MemberDAO {
 			String memberPwd, String memberId, String memberEmail,String memberPic,int memberLevel);
 
 	Member signin (String memberId,String memberPwd);
-	
-	
 	
 	
 	//沒屁用

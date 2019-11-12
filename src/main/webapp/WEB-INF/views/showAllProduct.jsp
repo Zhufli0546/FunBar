@@ -12,30 +12,29 @@
 </head>
 <style>
 .page {
-	overflow:hidden;
+	overflow: hidden;
 }
 
-.product-list table{
+.product-list table {
 	padding: 20px;
-	background-color:#272727;
+	background-color: #272727;
 }
 
-.product-list th{
+.product-list th {
 	padding: 10px 0;
 	text-align: center;
-	color:#fff;
-	border-top:1px solid #272727;
-    border-bottom: 1px solid #272727;
+	color: #fff;
+	border-top: 1px solid #272727;
+	border-bottom: 1px solid #272727;
 }
 
-.product-list td{
+.product-list td {
 	padding: 10px 0;
 	text-align: center;
-	color:#000;
-
+	color: #000;
 }
 
-.product-list th{
+.product-list th {
 	background-color: #272727;
 	padding: 0 20px;
 }
@@ -49,62 +48,79 @@
 
 .button {
 	margin: 0 auto;
-	padding:5px 10px;
+	padding: 5px 10px;
 	background-color: #272727;
 	color: #fff;
 	outline: none;
-	border-radius: 5px;	
-	
+	border-radius: 5px;
 }
 
-.button:hover{
-		background-color:#fff;
-		color:#272727;
-		text-decoration:none;
+.button:hover {
+	background-color: #fff;
+	color: #272727;
+	text-decoration: none;
 }
-
 </style>
 
 <body>
 
-<jsp:include page="admin_header.jsp" />
+	<jsp:include page="admin_header.jsp" />
 
-<!-- Content 區塊 -->
+	<!-- Content 區塊 -->
 
-<div class="container page" style="margin:50px auto; width:100%">
-<h1>所有商品管理</h1>
-<hr>
-<table class="product-list">
-<tr>
-<th>照片<th>ID<th>編號<th>名稱<th>說明<th>分類<th>單價<th>折扣<th>庫存<th>編輯
-<c:forEach var="pb" items="${all}">
-<tr>
-<td> <img src="<c:url value='/ProductPicture/${pb.productId}'/>"  /> 
-<td>${pb.productId}
-<td>${pb.productNo}
-<td>${pb.productName}
-<td>${pb.productDetail}
-<td>${pb.category}
-<td>$${pb.unitPrice}
-<td>${pb.discount}
-<td>${pb.stock}
-<td>
-<form method="post" class="form-group row" action="<c:url value='/deleteProduct?id=${pb.productId}'/>" >
-<input type="hidden" name="id" value="${pb.productId}"   />
-<input type="submit" value="刪除" class="button" onclick="return confirm('確定刪除？')"/>
-</form>
+	<div class="container page" style="margin: 50px auto; width: 100%">
+		<h1>所有商品管理</h1>
+		<hr>
+		<table class="table">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">照片</th>
+					<th scope="col">ID</th>
+					<th scope="col">編號</th>
+					<th scope="col">名稱</th>
+					<th scope="col">說明</th>
+					<th scope="col">分類</th>
+					<th scope="col">單價</th>
+					<th scope="col">折扣</th>
+					<th scope="col">庫存</th>
+					<th scope="col">編輯</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="pb" items="${all}">
+					<tr>
+						<th scope="row"><img
+							src="<c:url value='/ProductPicture/${pb.productId}'/>"
+							width="100px" height="120px" /></th>
+						<td>${pb.productId}</td>
+						<td>${pb.productNo}</td>
+						<td>${pb.productName}</td>
+						<td>${pb.productDetail}</td>
+						<td>${pb.category}</td>
+						<td>$${pb.unitPrice}</td>
+						<td>${pb.discount}</td>
+						<td>${pb.stock}</td>
+						<td>
+							<form method="post" class="form-group row"
+								action="<c:url value='/deleteProduct?id=${pb.productId}'/>">
+								<input type="hidden" name="id" value="${pb.productId}" /> <input
+									type="submit" value="刪除" class="button"
+									onclick="return confirm('確定刪除？')" />
+							</form>
 
-<form method="get" class="form-group row" action="<c:url value='update?id=${pb.productId}'/>" >
-<input type="hidden" name="id" value="${pb.productId}" >
-<input type="submit" value="修改" class="button" />
+							<form method="get" class="form-group row"
+								action="<c:url value='update?id=${pb.productId}'/>">
+								<input type="hidden" name="id" value="${pb.productId}">
+								<input type="submit" value="修改" class="button" />
+							</form>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
 
-</form>
-
-</c:forEach>
-</table>
-</div>
-
-<jsp:include page="admin_footer.jsp" />
+	<jsp:include page="admin_footer.jsp" />
 
 </body>
 </html>
