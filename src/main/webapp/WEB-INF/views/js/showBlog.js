@@ -1,6 +1,6 @@
 var parentCommentId = -1;
 var parentCommentName = "";
-var requestUrl = "/FunBar/";
+var requestUrl = $('.requestUrl').val();
 var id = $("#blogId").val();
 
 $(".commentClick").click(function () {
@@ -14,7 +14,7 @@ $("#replySubmit").click(function () {
 
 function submit() {
 	$.ajax({
-		url: "http://localhost:8080" + requestUrl + "commentInsert",
+		url: requestUrl + "commentInsert",
 		method: "POST",
 		data: {
 			memberId: $("#memberId").val(),
@@ -24,6 +24,7 @@ function submit() {
 		},
 		dataType: "JSON",
 		success: function (res) {
+            if(JSON.stringify(res)=="{}") window.location.href="http://localhost:8080" + requestUrl + "signin";
 			$("#commentBlock").html("");
 			$("#commentContent").val("");
 			generateTemplate();
@@ -33,7 +34,7 @@ function submit() {
 
 function replySubmit() {
 	$.ajax({
-		url: "http://localhost:8080" + requestUrl + "commentInsert",
+		url: requestUrl + "commentInsert",
 		method: "POST",
 		data: {
 			memberId: $("#memberId").val(),
@@ -43,17 +44,34 @@ function replySubmit() {
 		},
 		dataType: "JSON",
 		success: function (res) {
+			if(JSON.stringify(res)=="{}") window.location.href="http://localhost:8080" + requestUrl + "signin";
 			$("#commentBlock").html("");
 			$("#replyComment").val("");
 			generateTemplate();
 		}
 	});
 }
-//var commentData;
+
+function reportSubmit() {
+	$.ajax({
+		url: requestUrl + "reportInsert",
+		method: "POST",
+		data: {
+			commentId: $(this).data("reportcommentid"),
+			reportContent: $("#reportContent").val(),
+			reportMemberId: $("#memberId").val()
+		},
+		success: function() {
+			if(JSON.stringify(res)=="{}") window.location.href="http://localhost:8080" + requestUrl + "signin";
+			console.log("success");
+		}
+	})
+}
+
 var firstComment = [];
 function generateTemplate() {
 	$.ajax({
-		url: "http://localhost:8080" + requestUrl + "blog/" + id,
+		url: requestUrl + "blog/" + id,
 		method: "POST",
 		dataType: "JSON",
 		success: function(res) {
@@ -71,7 +89,7 @@ function generateTemplate() {
 			
 			$(".replyClick").click(function () {
 				parentCommentId = $(this).data("comment");
-				parentCommentName = $(this).data("name");
+				parentCommentName = $(this).data("commentname");
 				console.log("parentCommentId:" + parentCommentId);
 				console.log("parentCommentName:" + parentCommentName);
 				$("#replyComment").attr("placeholder", "@" + parentCommentName).focus();
@@ -79,8 +97,17 @@ function generateTemplate() {
 		}
 	})
 
-	var firstTemplate = "<p style='color:red'>{{comment.commentIds}}</p><h5 class='media mt-4 animated fadeIn'><img class='d-flex mr-3 rounded-circle' src='http://placehold.it/50x50'>{{comment.commentName}}</h5>{{comment.commentContent}}<label for='replyComment' class='col-md-2 replyClick' data-comment='{{comment.commentId}}' data-name='allen'><a href='javascript:;'>回覆</a></label>";
-	var secondTemplate = "<div style='padding-left: 100px'><p style='color:red'>{{comment.commentIds}}</p><div class='media mt-4 animated fadeIn'><img class='d-flex mr-3 rounded-circle' src='http://placehold.it/50x50'><h5 class='mt-0'>{{comment.commentName}}</h5>{{comment.commentContent}}<label for='replyComment' class='col-md-2 replyClick' data-comment='{{comment.commentId}}' data-name='allen'><a href='javascript:;'>回覆</a></label></div></div>";
+	var firstTemplate = "<p style='color:red'>{{comment.commentIds}}</p>" +
+						"<h5 class='media mt-4 animated fadeIn'><img class='d-flex mr-3 rounded-circle' src='http://placehold.it/50x50'>{{comment.commentName}}</h5>{{comment.commentContent}}" +
+						"<div><label for='replyComment' class='replyClick' data-comment='{{comment.commentId}}' data-commentname='{{comment.name}}'><a class='mgl5' href='javascript:;'>回覆</a></label>" +
+						"<a class='mgl5' data-toggle='modal' data-target='#reportModal' data-comment='{{comment.reportcommentid}}' href='javascript:;'>檢舉</a></div>";
+	var secondTemplate = "<div style='padding-left: 100px'>" +
+					     "<p style='color:red'>{{comment.commentIds}}</p>" +
+					     "<div class='media mt-4 animated fadeIn'><img class='d-flex mr-3 rounded-circle' src='http://placehold.it/50x50'>" +
+					     "<h5 class='mt-0'>{{comment.commentName}}</h5></div>" +
+					     "<div>{{comment.commentContent}}</div>" +
+					     "<div><label for='replyComment' class='replyClick' data-comment='{{comment.commentId}}' data-commentname='{{comment.name}}'><a class='mgl5' href='javascript:;'>回覆</a></label>" +
+					     "<a id='reportComment' class='mgl5' data-toggle='modal' data-target='#reportModal' data-comment='{{comment.reportcommentid}}' href='javascript:;'>檢舉</a></div>";
 	var tmp;
 	function generateComment() {
 		for(let i=0;i<firstComment.length;i++) {
@@ -90,7 +117,9 @@ function generateTemplate() {
 				.replace("{{comment.commentIds}}", firstComment[i].commentId)
 				.replace("{{comment.commentName}}", firstComment[i].commentName)
 				.replace("{{comment.commentContent}}", firstComment[i].commentContent)
-				.replace("{{comment.commentId}}", firstComment[i].commentId);
+				.replace("{{comment.commentId}}", firstComment[i].commentId)
+				.replace("{{comment.name}}", firstComment[i].commentName)
+				.replace("{{comment.reportcommentid}}", firstComment[i].commentId);
 			}
 
 			$("#commentBlock").append(first_html);
@@ -110,6 +139,8 @@ function generateTemplate() {
 				.replace("{{comment.commentName}}", tmp[j].commentName)
 				.replace("{{comment.commentContent}}", tmp[j].commentContent)
 				.replace("{{comment.commentId}}", tmp[j].commentId)
+				.replace("{{comment.name}}", tmp[j].commentName)
+				.replace("{{comment.reportcommentid}}", tmp[j].commentId);;
 			$("#commentBlock").append(second_html);
 			replys = tmp[j].replyComment;
 			recursively(replys);
