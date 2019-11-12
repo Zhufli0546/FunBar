@@ -67,7 +67,7 @@ public class CartController {
 //			System.out.println("購買產品數量:" + c.getCount());
 //		}
 
-		return "redirect:/shoppingCart";
+		return "Cart";
 	}
 
 	@RequestMapping(value = "/showCart")

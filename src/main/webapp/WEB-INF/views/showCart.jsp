@@ -74,6 +74,20 @@ $(document).ready(function(){
 	    	totalPrice = totalPrice+subTotal;
 	    	//console.log(totalPrice);
 	    	console.log(subTotal);
+	    	
+	    	var url="/FunBar/"
+	   		$.ajax({
+	   			url:"http://localhost:8080" + url + "cart",
+	   			data:{
+	   				count:number,
+	   				productId:$(".pdid").eq(i).val()
+	   			},
+	   			type:"POST",
+	   			dataType:"JSON",
+	   			success:function(){
+	   				console.log("success");
+	   			}
+	   		})
 	    }
 	  	
 	  	$(".totalAmount").text(totalPrice.toFixed(0));
@@ -112,6 +126,20 @@ $(document).ready(function(){
 		    	totalPrice = totalPrice+subTotal;
 		    	//console.log(totalPrice);
 		    	console.log(subTotal);
+		    	
+		    	var url="/FunBar/";
+			   		$.ajax({
+			   			url:"http://localhost:8080" + url + "cart",
+			   			data:{
+			   				count:number,
+			   				productId:$(".pdid").eq(i).val(),
+			   			},
+			   			type:"POST",
+			   			dataType:"JSON",
+			   			success:function(){
+			   				console.log("success");
+			   			}
+			   		})
 		    }
 		  	
 		  	$(".totalAmount").text(totalPrice.toFixed(0));
@@ -233,6 +261,7 @@ $(document).ready(function(){
 					<td class="unit" data-product="${i.index}">${ci.product.unitPrice}</td>
 					<td><button type="button"  class="minus" data-product="${i.index}">⬇</button>
 						<input id="count" type="text" maxlength="2" value="${ci.count}" size="2" class="num" data-product="${i.index}"  /> 
+						<input class="pdid" type="hidden" value="${ci.product.productId}" data-product="${i.index}">
 						<button type="button" class="add" data-product="${i.index}">⬆</button>
 					</td>
 					<td class="hallin" data-product="${i.index}">${ci.product.discount}</td>
