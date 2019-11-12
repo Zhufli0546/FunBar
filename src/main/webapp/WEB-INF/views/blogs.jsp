@@ -35,6 +35,7 @@
 	.blogMore { position: absolute; top: 5px; right: 5px; display: block; width: 25px; height:25px; z-index:999;}
 	
 	#closeLeftModal { padding: 5px; border-radius: 2px;}
+
 </style>
 <body>
 <!-- Header -->
@@ -202,6 +203,8 @@
 </div><!-- modal -->
 
 <!-- Footer -->
+<input type="hidden" class="requestUrl" value="<c:url value='/' />" />
+<input type="hidden" class="sessionScopeMemberId" value="${sessionScope.member.id}" />
 <jsp:include page="footer.jsp" />
 <script src="<c:url value='/vendor/ckeditor/ckeditor.js'/>"></script>
 <script>

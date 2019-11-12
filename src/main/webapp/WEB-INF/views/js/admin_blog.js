@@ -1,4 +1,4 @@
-let requestUrl = "/FunBar/";
+var requestUrl = $('.requestUrl').val();
 let clickArray = new Array();
 let pageRow = 5;
 let pageRowStart = 0;
@@ -32,12 +32,6 @@ function init() {
     hiddenContent();
     $("td").css({"width":"200px", "height":"110px"});
 
-//    $(".modifyData, .deleteData").fancybox({
-//        type:'ajax'
-//        ,overlayColor:'#000'
-//        ,overlayOpacity:0.8
-//    });
-
     // 取得頁數
     let pageNum = Math.ceil(blogs.length / pageRow);
     for (var i = 0; i < pageNum; i++) {
@@ -57,7 +51,7 @@ function init() {
 }
 
 $.ajax({
-    url: "http://localhost:8080" + requestUrl + "admin_blog",
+    url: requestUrl + "admin_blog",
     method: "post",
     dataType: "JSON",
     success: function (data) {
@@ -86,17 +80,3 @@ function hiddenContent() {
 	  $(this).html(txt+" ......");
   });
 }
-
-//let intervalId = setInterval(function() {
-//	$.ajax({
-//	    url: "http://localhost:8080/" + requestUrl + "/admin/query_member.jsp",
-//	    method: "post",
-//	    dataType: "JSON",
-//	    success: function (res) {
-//	    	tododata = res;
-//	    	$("#demo").html("");
-//            $("#show").html("");
-//            init();
-//	    }
-//	});
-//}, 3000);

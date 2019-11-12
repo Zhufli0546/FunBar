@@ -13,22 +13,23 @@
 </head>
 
 <body> 
-<jsp:include page="admin_header.jsp" />
+
 
 <div>   
 <fieldset> 
-    <form:form modelAttribute="Member" action="joinus" method="POST" >
+    <form:form modelAttribute="Member" action="joinus" method="POST"
+    enctype="multipart/form-data" >
     
         <legend>會員註冊</legend>
       
-<td><b> 姓名 : </b> <form:input type="text" path="memberName" size="20" value=""/></td>
-<td><b> 地址: </b> <form:input type="text" path="memberAddress" size="20" value=""/></td>
-<td><b> 生日 : </b> <form:input type="text" path="memberBirth" size="20" value=""/> </td>
-<td><b> 電話 : </b> <form:input type="text" path="memberPhone" size="20" value=""/></td>
-<td><b> 密碼 : </b> <form:input type="text" path="memberPwd" size="20" value=""/></td>
-<td><b> 帳號 : </b> <form:input type="text" path="memberId" size="20" value=""/></td>
-<td><b> Email : </b> <form:input type="text" path="memberEmail" size="20" value=""/></td>
-
+<td><p> 姓名 : </p> <form:input type="text" path="memberName" size="20" value=""/></td>
+<td><p> 地址: </p> <form:input type="text" path="memberAddress" size="20" value=""/></td>
+<td><p> 生日 : </p> <form:input type="text" path="memberBirth" size="20" value=""/> </td>
+<td><p> 電話 : </p> <form:input type="text" path="memberPhone" size="20" value=""/></td>
+<td><p> 密碼 : </p> <form:input type="text" path="memberPwd" size="20" value=""/></td>
+<td><p> 帳號 : </p> <form:input type="text" path="memberId" size="20" value=""/></td>
+<td><p> Email : </p> <form:input type="text" path="memberEmail" size="20" value=""/></td>
+<td><p> 大頭貼 : </p> <form:input path = "memberimg" type ="file"  size ="40" maxlength="40"/> </td>
  
     <div class="button">
         <input type="submit" value="送出">

@@ -1,14 +1,15 @@
-var requestUrl = "/FunBar/";
-var blogTemplate = "<div class='row blogMargin box'><span class='blogMore' data-click='{{data-click}}'><i class='fas fa-align-center'></i></span><div class='col-md-5'><img src='{{blogImage}}' /></div><div class='col-md-7'><div class='blog-title'>{{blogTitle}}</div><p><span>{{blogUser}}</span><span>{{blogCreatedTime}}</span><span>文章分類:{{categoryName}}</span></p><div class='blog-content'  data-id='{{data-id}}'>{{blogContent}}</div></div></div>";
+var requestUrl = $('.requestUrl').val();
+var blogTemplate = "<div class='row blogMargin box'><span class='blogMore' data-memberid='{{blog.memberId}}' data-click='{{data-click}}'><i class='fas fa-align-center'></i></span><div class='col-md-5'><img src='{{blogImage}}' /></div><div class='col-md-7'><div class='blog-title'>{{blogTitle}}</div><p><span>{{blogUser}}</span><span>{{blogCreatedTime}}</span><span>文章分類:{{categoryName}}</span></p><div class='blog-content'  data-id='{{data-id}}'>{{blogContent}}</div></div></div>";
 let pageRow = 5;
 let pageRowStart = 0;
 let pageRowEnd = 5;
 let tododata;
 let now = 1;
+let sessionScopeMemberId = 0;
 
 // init()
 $.ajax({
-	url: "http://localhost:8080" + requestUrl + "blogJson",
+	url: requestUrl + "blogJson",
 	method: "POST",
 	dataType: "JSON",
 	success: function (res) {
@@ -20,7 +21,7 @@ $.ajax({
 // refresh
 function refresh() {
 	$.ajax({
-		url: "http://localhost:8080" + requestUrl + "blogJson",
+		url: requestUrl + "blogJson",
 		method: "POST",
 		dataType: "JSON",
 		success: function (res) {
@@ -45,11 +46,12 @@ function init() {
 	for (let i = pageRowStart; i < pageRowEnd; i++) {
 		let blog = blogs[i];
 		var blog_html = blogTemplate
+			.replace("{{blog.memberId}}", blog.memberId)
 			.replace("{{data-click}}", blog.blogId)
 			.replace("{{data-id}}", blog.blogId)
 			.replace("{{blogImage}}", blog.blogImage)
 			.replace("{{blogTitle}}", blog.blogTitle)
-			.replace("{{blogUser}}", "allen")
+			.replace("{{blogUser}}", blog.memberName)
 			.replace("{{blogCreatedTime}}", blog.blogCreatedTime)
 			.replace("{{categoryName}}", blog.category.categoryName)
 			.replace("{{blogContent}}", blog.blogContent);
@@ -79,13 +81,19 @@ function init() {
     
     $(".blogMore").each(function() {
     	let id = $(this).data('click');
-    	$(this).popover({
-	    	html: true,
-	    	content: "Blabla",
-	    	trigger: "click",
-	    	content: "<div class='modifyData' data-toggle='modal' data-target='#modifyBlog' data-blog='"+id+"'>編輯文章</div>" +
-	    			 "<div class='deleteData' data-blog='"+id+"'>刪除文章</div>"
-	    });
+    	sessionScopeMemberId = $('.sessionScopeMemberId').val();
+    	let userBlogMemberId = $(this).data("memberid");
+    	if(userBlogMemberId == sessionScopeMemberId) {
+    		$(this).popover({
+    	    	html: true,
+    	    	content: "Blabla",
+    	    	trigger: "click",
+    	    	content: "<div class='modifyData' data-toggle='modal' data-target='#modifyBlog' data-blog='"+id+"'>編輯文章</div>" +
+    	    			 "<div class='deleteData' data-blog='"+id+"'>刪除文章</div>"
+    	    });
+    	} else {
+    		$(this).css({"display":"none"});
+    	}
 	});
     
 	// 編輯文章
@@ -95,7 +103,7 @@ function init() {
 	    	let modifyBlogId = $(this).data("blog");
 	    	console.log("modify = " + modifyBlogId);
 	    	$.ajax({
-	    		url: "http://localhost:8080" + requestUrl + "getmodifyBlog/" + modifyBlogId,
+	    		url: requestUrl + "getmodifyBlog/" + modifyBlogId,
 	    		method: "POST",
 	    		dataType: "JSON",
 	    		success: function(res) {
@@ -126,7 +134,7 @@ function init() {
 	    		console.log("delete = " + deleteBlogId);
 	    		if(confirm("確定要刪除嗎?")) {
 	    			$.ajax({
-		    			url: "http://localhost:8080" + requestUrl + "admin_delete/" + deleteBlogId,
+		    			url: requestUrl + "admin_delete/" + deleteBlogId,
 		    			method: "POST",
 		    			dataType: "JSON",
 		    			success: function(res){
@@ -146,7 +154,7 @@ function init() {
 $(".categoryClick").click(function() {
 	let categoryId = $(this).data("category");
 	$.ajax({
-		url: "http://localhost:8080" + requestUrl + "blogsByCategoryId/" + categoryId,
+		url: requestUrl + "blogsByCategoryId/" + categoryId,
 		method: "POST",
 		dataType: "JSON",
 		success: function(res) {
@@ -204,7 +212,7 @@ $(".allBlogs").click(function() {
 	$(".blogs").html("");
     $("#show").html("");
     $.ajax({
-    	url: "http://localhost:8080" + requestUrl + "blogJson",
+    	url: requestUrl + "blogJson",
     	method: "POST",
     	dataType: "JSON",
     	success: function (res) {
@@ -217,7 +225,7 @@ $(".allBlogs").click(function() {
 // Like
 $(".searchClick").click(function() {
 	$.ajax({
-		url: "http://localhost:8080" + requestUrl + "search",
+		url: requestUrl + "search",
 		method: "POST",
 		data:{
 			searchKey: $(".searchValue").val()

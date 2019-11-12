@@ -14,6 +14,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,7 @@ import com.google.gson.Gson;
 import tw.FunBar.model.Blog;
 import tw.FunBar.model.Category;
 import tw.FunBar.model.Comment;
+import tw.FunBar.model.Member;
 import tw.FunBar.service.BlogService;
 import tw.FunBar.service.CommentService;
 import tw.FunBar.util.JSONFileUpload;
@@ -110,7 +112,7 @@ public class BlogController {
 	public String blogPost(@RequestParam MultipartFile blogImage,
 						   @RequestParam String blogTitle,
 						   @RequestParam String blogContent,
-						   @RequestParam Integer categoryId, HttpServletRequest request) throws IOException {
+						   @RequestParam Integer categoryId, HttpServletRequest request, HttpSession session) throws IOException {
 		
 		String ext = context.getMimeType(blogImage.getOriginalFilename());
 		ext = ext.substring(6);
@@ -149,8 +151,13 @@ public class BlogController {
 		Category category = blogService.findByIdCategory(categoryId);
 		blog.setCategory(category);
 		
-		// 未來需要整合 Member Table fk
-		//blog.setMemberId(1);
+		// 登入才可以新增文章
+		session = request.getSession(false);
+		Member member = (Member)session.getAttribute("member");
+		if(member==null) return "redirect:/signin";
+		
+		blog.setMemberId(member.getId());
+		blog.setMemberName(member.getMemberName());
 		
 		blogService.insertBlog(blog);
 

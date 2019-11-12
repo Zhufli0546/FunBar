@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import tw.FunBar.dao.MemberDAO;
 import tw.FunBar.model.Member;
@@ -45,16 +46,23 @@ public class MemberServiceImp implements MemberService {
 
 	@Override
 	public void updateMember(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
-			String memberPwd, String memberId, String memberEmail) {
-		dao.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberPwd, memberId, memberEmail);
-		
+			String memberPwd, String memberId, String memberEmail,String memberPic,int memberLevel) {
+		dao.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberPwd, memberId, memberEmail, memberPic,memberLevel);
 	}
 
 	@Override
-	public Boolean signin(String memberId, String memberPwd) {
+	public Member signin(String memberId, String memberPwd) {
 		
 		return dao.signin(memberId, memberPwd);
 	}
+
+	@Override
+	public Member checkuser(String memberId, String memberPwd) {
+		
+		return dao.checkuser(memberId, memberPwd);
+	}
+
+
 
 	
 

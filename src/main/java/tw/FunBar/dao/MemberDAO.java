@@ -2,6 +2,8 @@ package tw.FunBar.dao;
 
 import java.util.List;
 
+
+
 import tw.FunBar.model.Member;
 
 public interface MemberDAO {
@@ -14,7 +16,13 @@ public interface MemberDAO {
 	void delete(int id);
 
 	void updateMember(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
-			String memberPwd, String memberId, String memberEmail);
+			String memberPwd, String memberId, String memberEmail,String memberPic,int memberLevel);
 
-	Boolean  signin (String memberId,String memberPwd);
+	Member signin (String memberId,String memberPwd);
+	
+	
+	//沒屁用
+	Member  checkuser (String memberId,String memberPwd);
+	
+	
 }

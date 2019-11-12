@@ -38,17 +38,16 @@
 						<td><a href="<spring:url value='getONE?id=${member.id}' />">
 								<button type="button" class="btn btn-outline-secondary">修改</button>
 						</a></td>
-					</tr>
-				
-
-
-			</c:forEach>
-		</div>
-	</th>
-	</tr>
-	</table>
-	</div>
-	</section>
-	
+						<td><a href="${pageContext.request.contextPath}">
+						<button type="button" class="btn btn-outline-secondary">回首頁</button>
+						</a></td>
+</tr>
+</c:forEach>
+</th>
+</tr>
+</table>
+</div>
+</section>
 </body>
 </html>
+
