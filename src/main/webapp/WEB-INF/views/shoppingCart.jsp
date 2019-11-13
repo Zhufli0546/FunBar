@@ -39,8 +39,9 @@
 						<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />
 					</figure>
 					<figcaption>
-						<p>建議售價:<span style="color:	#FF44AA;font-weight:bold">$ ${pb.unitPrice}</span></p>
+						<p>建議售價:<span style="color:#FF44AA;font-weight:bold">$ ${pb.unitPrice}</span></p>
 						<p>折扣：<span style="font-weight:bold;color:	#CE0000;">${pb.discount}</span></p>
+						<p style="color:#000000">庫存：${pb.stock}</p>
 							<label for="selectCount" class="">購買數量:</label>
 <!-- 						 <div class="col-sm-6 col-xs-12">  -->
 								<select class="selectCount" name="count">

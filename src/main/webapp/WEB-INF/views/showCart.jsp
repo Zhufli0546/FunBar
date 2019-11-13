@@ -301,7 +301,8 @@
 						<th>產品示意圖</th>
 						<th>產品名稱</th>
 						<th>單價</th>
-						<th>數量</th>
+						<th>庫存</th>
+						<th>數量</th>	
 						<th>折扣</th>
 						<th>小計</th>
 						<th></th>
@@ -316,6 +317,7 @@
 								width="80px" height="120px"></td>
 							<td>${ci.product.productName}</td>
 							<td class="unit" data-product="${i.index}">${ci.product.unitPrice}</td>
+							<td align="left">${ci.product.stock}</td>
 							<td><button type="button" class="minus"
 									data-product="${i.index}">-</button> <input id="count"
 								type="text" maxlength="2" value="${ci.count}" size="2"

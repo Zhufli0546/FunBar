@@ -6,7 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.util.Collection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +32,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import tw.FunBar.model.Cart;
 import tw.FunBar.model.CartItem;
 import tw.FunBar.model.Member;
+import tw.FunBar.model.OrderBean;
+import tw.FunBar.model.OrderItemBean;
 import tw.FunBar.model.ProductBean;
 import tw.FunBar.service.OrderHandleService;
 
@@ -209,5 +214,55 @@ public class CartController {
 			e.printStackTrace();
 		}
 		return b;
+	}
+	
+	// 新增訂單
+	@RequestMapping("/orderSetUp")
+	public String orderSetUp(HttpServletRequest request,
+						     HttpSession session,
+						     @RequestParam String address) {
+		
+		session = request.getSession(false);
+		Member member = (Member)session.getAttribute("Member");
+		if(member.getMemberName() == null) {
+            return "redirect:/signin";
+		}
+		
+		// 取得購物車
+		Cart cart = (Cart)session.getAttribute("cart");
+		if(cart == null) {
+            System.out.println("cart is null");
+            return "redirect:/signin";
+        }
+		
+		// 於購物車建立訂單
+		OrderBean order = new OrderBean();
+		
+		// 產生當下時間
+		Date d = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String createdTime = sdf.format(d);
+		order.setOrderTime(createdTime);
+		order.setTotalAmount(cart.getTotal());
+		
+		System.out.println("memberID:" + member.getId());
+		order.setMemberId(member.getId());
+		order.setShippingAddress(address);
+		
+		// 訂單項目
+		Set<OrderItemBean> orderItemList = new LinkedHashSet<OrderItemBean>();
+		
+		for(CartItem cartItem:cart.getCartItems()) {
+			OrderItemBean orderItem = new OrderItemBean();
+		    orderItem.setProductId(cartItem.getProduct().getProductId());
+		    orderItem.setQuantity(cartItem.getCount());
+		    //候畫面產生，需再測試
+		    orderItem.setSubTotal(cartItem.getSubtotal()*cartItem.getProduct().getDiscount());
+		    orderItemList.add(orderItem);
+		}
+		
+		order.setOrderItem(orderItemList);
+		
+		return "";
 	}
 }
