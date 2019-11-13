@@ -7,6 +7,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Report {
 
@@ -22,9 +25,13 @@ public class Report {
 	private Integer reportMemberId;
 
 	// 檢舉評論 fk
+	//@JsonIgnoreProperties("reports")
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "COMMENTID")
 	private Comment comment;
+	
+	private Integer commentId;
 	
 	// 被檢舉人
 	private String commentReportName;
@@ -91,5 +98,13 @@ public class Report {
 
 	public void setCommentReportName(String commentReportName) {
 		this.commentReportName = commentReportName;
+	}
+
+	public Integer getCommentId() {
+		return commentId;
+	}
+
+	public void setCommentId(Integer commentId) {
+		this.commentId = commentId;
 	}
 }
