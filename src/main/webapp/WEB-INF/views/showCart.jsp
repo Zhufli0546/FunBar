@@ -47,22 +47,22 @@
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
  $(document).ready(function() {
-
-  totalPrice = 0;
-  for (let i = 0; i < $(".pd").length; i++) {
-   unitPrice = $(".unit").eq(i).text();
-   var disc = $(".hallin").eq(i).text(); //折扣
-   var dec = disc / 10;
-
-   number = $(".num").eq(i).val();
-
-   subTotal = unitPrice * number * dec;
-   $(".pd").eq(i).text(subTotal);
-   totalPrice = totalPrice + subTotal;
-  }
+	  
+  	totalPrice = 0;
+  	for (let i = 0; i < $(".pd").length; i++) {
+   	unitPrice = $(".unit").eq(i).text();
+   	var disc = $(".hallin").eq(i).text(); //折扣
+   	var dec = disc / 10;
+   	number = $(".num").eq(i).val();
+ 
+ 	
+   	subTotal = unitPrice * number * dec;
+   	$(".pd").eq(i).text(subTotal);
+   	totalPrice = totalPrice + subTotal;
+ }
 
   $(".totalAmount").text(totalPrice.toFixed(0));
-
+  
   var totalPrice;
 
   //數量減少
@@ -80,7 +80,7 @@
     num = 1;
    }
    //小計   
-   var smallPrice = (unitPrice * num * dec).toFixed(1);
+   var smallPrice = (unitPrice * num * dec).toFixed(0);
    $(".pd").eq(index).text(smallPrice);
 
    //總計  
@@ -126,7 +126,7 @@
     alert("數量不得超過50份！");
    }
 
-   var smallPrice = (unitPrice * num * dec).toFixed(1);
+   var smallPrice = (unitPrice * num * dec).toFixed(0);
    $(".pd").eq(index).text(smallPrice);
 
    //總計
@@ -176,7 +176,7 @@
      var dec = disc / 10;
      $(this).val(50); //輸入的數字大於50，當下的input設為50
 
-     smallPrice = unitPrice * 50 * dec;
+     smallPrice = (unitPrice * 50 * dec).toFixed(0);
      $(".pd").eq(index).text(smallPrice);
 
      subTotal = unitPrice * number * dec;
@@ -209,7 +209,7 @@
      var disc = $(".hallin").eq(i).text();
      var dec = disc / 10;
      $(this).val(1);
-     smallPrice = unitPrice * 1 * dec;
+     smallPrice = (unitPrice * 1 * dec).toFixed(0);
      $(".pd").eq(index).text(smallPrice);
 
      subTotal = unitPrice * number * dec;
@@ -241,7 +241,7 @@
      var disc = $(".hallin").eq(i).text();
      var dec = disc / 10;
      $(this).val();
-     smallPrice = unitPrice * num * dec;
+     smallPrice = (unitPrice * num * dec).toFixed(0);
      $(".pd").eq(index).text(smallPrice);
 
      subTotal = unitPrice * number * dec;
@@ -285,7 +285,9 @@
     <a class="orderBtn" href="<c:url value='/deleteCartItem' />">清空購物車</a>
    </div>
   </div>
-  <div class="table-responsive">
+  
+<!--   table-responsive -->
+  <div class="">  
    <table class="table" style="margin:20px 0">
     <thead>
      <tr>
@@ -316,12 +318,11 @@
         <button type="button" class="add" data-product="${i.index}">+</button>
        </td>
        <td class="hallin" data-product="${i.index}">${ci.product.discount}</td>
-       <td class="smallPrice pd">${ci.subtotal}</td>
+       <td class="smallPrice pd" style="width:20px;">${ci.subtotal}</td>
 
-       <td><input type="hidden" id="all"> <input
-        type="hidden" class="price" value="${ci.subtotal}"> <a
-        class="removeBtn"
-        href=" <c:url value='/removeCartItem?productId=${ci.product.productId}' />">刪除</a>
+       <td> 
+       <input type="hidden" class="price" value="${ci.subtotal}" /> 
+       <a class="removeBtn" href=" <c:url value='/removeCartItem?productId=${ci.product.productId}' />">刪除</a>
        </td>
 
       </tr>
