@@ -36,7 +36,7 @@
 			<h1 style="word-break: break-all;" class="mt-4">${blog.blogTitle}</h1>
 			<!-- Author -->
 			<p class="lead">
-				by<a href="#">allen</a>
+				by<a href="#">${blog.memberName}</a>
 			</p>
 			<hr>
 			<!-- Date/Time -->
@@ -103,7 +103,7 @@
         <div class="modal-footer">
         	<input type="hidden" id="replyMemberId" name="memberId" value="${sessionScope.member.memberId}" />
             <button id="reportSubmit" class="btn btn-primary">送出</button>
-          	<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          	<button id="reportModalClick" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         </div>
         
       </div>
@@ -111,7 +111,8 @@
   </div>
 
 <!-- Footer -->
-<input type="hidden" class="requestUrl" value="<c:url value='/' />" />
+<div style="display:none; " class="requestUrl">${pageContext.request.contextPath}</div>
+<input type="hidden" class="sessionScopeMemberId" value="${sessionScope.member.id}" />
 <jsp:include page="footer.jsp" />
 <script src="<c:url value='/js/showBlog.js'/>"></script>
 </body>

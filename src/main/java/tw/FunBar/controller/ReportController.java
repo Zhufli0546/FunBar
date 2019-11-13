@@ -2,9 +2,14 @@ package tw.FunBar.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -26,11 +31,17 @@ public class ReportController {
 	@RequestMapping("/reportInsert")
 	public String reportInsert(@RequestParam Integer commentId,
 							   @RequestParam String reportContent,
-							   @RequestParam Integer reportMemberId) {
+							   @RequestParam Integer reportMemberId,
+							   HttpServletRequest request, HttpSession session) {
 		
 		Report report = new Report();
 		
-		// 未來判斷是否有 Session 於 Session 取得檢舉人的 reportMemberId
+		// 判斷是否有 Session 於 Session 取得檢舉人的 reportMemberId
+		// 登入才可以進行檢舉
+		session = request.getSession(false);
+		Member sessionMember = (Member)session.getAttribute("member");
+		if(sessionMember==null) return null;
+
 		Member member = memberService.getONEmember(reportMemberId);
 		report.setReportName(member.getMemberName());
 		report.setReportContent(reportContent);
@@ -48,6 +59,21 @@ public class ReportController {
 		report.setComment(comment);
 		report.setCommentReportName(comment.getCommentName());
 		
+		reportService.insertReport(report);
+		
 		return "reportInsert";
+	}
+	
+	@RequestMapping("/admin_report")
+	public String adminReport() {
+		return "admin_report";
+	}
+	
+	@RequestMapping("/reportProcess")
+	public String reportProcess(Model model) {
+		List<Report> reports = reportService.queryReportProcess();
+
+		model.addAttribute("reports", reports);
+		return "reportProcess";
 	}
 }
