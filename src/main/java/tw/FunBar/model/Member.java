@@ -1,10 +1,13 @@
 package tw.FunBar.model;
 
+import java.sql.Blob;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,8 +24,11 @@ public class Member {
 	private String memberPwd;
 	private String memberId;
 	private String memberEmail;
-	private String  memberPic;
+	private Blob  memberPic;
 	private int memberLevel;
+	private String memberfileName;
+	@Transient
+	private MultipartFile memberimg;
 	public int getId() {
 		return id;
 	}
@@ -75,12 +81,25 @@ public class Member {
 	public int getMemberLevel() {
 		return memberLevel;
 	}
-	public String getMemberPic() {
+	public Blob getMemberPic() {
 		return memberPic;
 	}
-	public void setMemberPic(String memberPic) {
+	public void setMemberPic(Blob memberPic) {
 		this.memberPic = memberPic;
 	}
+	public MultipartFile getMemberimg() {
+		return memberimg;
+	}
+	public void setMemberimg(MultipartFile memberimg) {
+		this.memberimg = memberimg;
+	}
+	public String getMemberfileName() {
+		return memberfileName;
+	}
+	public void setMemberfileName(String memberfileName) {
+		this.memberfileName = memberfileName;
+	}
+
 	
 	
 	

@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import tw.FunBar.model.Cart;
 import tw.FunBar.model.CartItem;
+import tw.FunBar.model.Member;
 import tw.FunBar.model.ProductBean;
 import tw.FunBar.service.OrderHandleService;
 
@@ -43,9 +44,11 @@ public class CartController {
 	public String addCart(HttpServletRequest request, HttpSession session, HttpServletRequest response,
 			@RequestParam Integer productId, @RequestParam Integer count) throws IOException {
 		session = request.getSession(false);
+		
+		
 
 		// 未來整合 login 才能產生購物車
-
+		
 		Cart cart = (Cart) session.getAttribute("Cart");
 		if (cart == null) {
 			cart = new Cart();
@@ -67,7 +70,45 @@ public class CartController {
 //			System.out.println("購買產品數量:" + c.getCount());
 //		}
 
-		return "redirect:/shoppingCart";
+
+
+		return "cart";
+
+	}
+	
+	@RequestMapping(value = "/changecart", method = RequestMethod.POST)
+	public String changecart(HttpServletRequest request, HttpSession session, HttpServletRequest response,
+			@RequestParam Integer productId, @RequestParam Integer count) throws IOException {
+		session = request.getSession(false);
+	
+
+		// 未來整合 login 才能產生購物車
+		
+		Cart cart = (Cart) session.getAttribute("Cart");
+		if (cart == null) {
+			cart = new Cart();
+			session.setAttribute("Cart", cart);
+		}
+
+		ProductBean product = orderHandleService.getProductById(productId);
+
+		CartItem cartItem = new CartItem();
+		cartItem.setProduct(product);
+		cartItem.setCount(count);
+		cart.add1(cartItem);
+		session.setAttribute("Cart", cart);
+
+//		Collection<CartItem> item = cart.getCartItems();
+//		for (CartItem c : item) {
+//			System.out.println("購買產品id:" + c.getProduct().getProductId());
+//			System.out.println("購買產品名稱:" + c.getProduct().getProductName());
+//			System.out.println("購買產品數量:" + c.getCount());
+//		}
+
+
+
+		return "cart";
+
 	}
 
 	@RequestMapping(value = "/showCart")
@@ -104,6 +145,7 @@ public class CartController {
 		}
 
 	}
+	
 
 	@RequestMapping(value = "/deleteCartItem")
 	public String deleteCartItem(HttpServletRequest request, HttpSession session) {

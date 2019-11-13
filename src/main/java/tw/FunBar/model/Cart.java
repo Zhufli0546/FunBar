@@ -31,6 +31,21 @@ public class Cart {
 			map.put(cartItem.getProduct().getProductId(), cartItem);
 		}
 	}
+	
+	public void add1(CartItem cartItem) {
+		//if (map.containsKey(cartItem.getProduct().getProductId())) {
+			// 判斷原來車中是否含有項目
+			//CartItem old_cartItem = map.get(cartItem.getProduct().getProductId());
+
+			// 已有的購物項目 + 新增數量
+			//old_cartItem.setCount(old_cartItem.getCount() + cartItem.getCount());
+
+			// 改變成新數量
+			//map.put(cartItem.getProduct().getProductId(), old_cartItem);
+		//} else {
+			map.put(cartItem.getProduct().getProductId(), cartItem);
+		}
+//	}
 
 	public void clear() {
 		map.clear();
