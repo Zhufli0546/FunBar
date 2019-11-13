@@ -43,19 +43,18 @@
 						<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />
 					</figure>
 					<figcaption>
-						<p>建議售價: $${pb.unitPrice}</p>
-						<form class="form-group row" action="<c:url value='/cart' />"
-							method="post">
-							<label for="selectCount" class="col-sm-6 col-xs-12">購買數量:</label>
-							<div class="col-sm-6 col-xs-12">
-								<select class="form-control" id="selectCount" name="count">
+						<p>建議售價:<span style="color:#FF44AA;font-weight:bold">$ ${pb.unitPrice}</span></p>
+						<p>折扣:<span style="color:#CE0000;font-weight:bold;">${pb.discount}</span></p>
+						
+						<form class="form-group row" action="<c:url value='/cart' />" method="post">
+							<label for="selectCount" class="">購買數量:</label>
+								<select class="" id="selectCount" name="count">
 									<option value="1">1</option>
 									<option value="2">2</option>
 									<option value="3">3</option>
 									<option value="4">4</option>
 									<option value="5">5</option>
 								</select>
-							</div>
 							<input type="hidden" name="productId" value="${pb.productId}">
 							<button type="submit" class="button-add">加入購物車</button>
 					</figcaption>
