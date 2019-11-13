@@ -33,43 +33,80 @@
 
 
 		<div class="row">
-
 			<c:forEach var="pb" items="${category}">
 				<div class="prodlist">
-					<p>${pb.productNo}</p>
 					<p>${pb.productDetail}</p>
 					<p class="prodtitle">${pb.productName}</p>
 					<figure>
 						<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />
 					</figure>
 					<figcaption>
-						<p>建議售價: $${pb.unitPrice}</p>
-						<form class="form-group row" action="<c:url value='/cart' />"
-							method="post">
-							<label for="selectCount" class="col-sm-6 col-xs-12">購買數量:</label>
-							<div class="col-sm-6 col-xs-12">
-								<select class="form-control" id="selectCount" name="count">
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-								</select>
-							</div>
-							<input type="hidden" name="productId" value="${pb.productId}">
-							<button type="submit" class="button-add">加入購物車</button>
+						<p>
+							建議售價:<span style="color: #FF44AA; font-weight: bold">$
+								${pb.unitPrice}</span>
+						</p>
+						<p>
+							折扣：<span style="color: #CE0000; font-weight: bold;">${pb.discount}</span>
+						</p>
+						<label for="selectCount" class="">購買數量:</label>
+						<!-- 							<div class="col-sm-6 col-xs-12"> -->
+						<select class="selectCount" name="count">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+						<!-- 							</div> -->
+						<input class="pdid" type="hidden" name="productId"
+							value="${pb.productId}">
+						<button type="button" class="button-add" data-product="${i.index}">加入購物車</button>
+						<div id="snackbar">已加入購物車</div>
+
 					</figcaption>
 
 				</div>
 				<!-- .prodlist -->
 			</c:forEach>
-			</form>
+			<a href="<c:url value='/showCart' />"><button
+					class="btn btn-info">我的購物車</button></a>
 		</div>
 	</div>
 	<!-- .container -->
 
 
 	<jsp:include page="footer.jsp" />
+
+	<script>
+		function myFunction() {
+			var x = document.getElementById("snackbar");
+			x.className = "show";
+			setTimeout(function() {
+				x.className = x.className.replace("show", "");
+			}, 1000);
+		}
+
+		// Test For Click Event
+		$(".button-add").click(function() {
+			let index = $(this).data("product");
+			console.log("btn index:" + index);
+			myFunction();
+
+			var url = "/FunBar/";
+			$.ajax({
+				url : "http://localhost:8080" + url + "cart",
+				data : {
+					count : $(".selectCount").eq(index).val(),
+					productId : $(".pdid").eq(index).val()
+				},
+				type : "POST",
+				dataType : "JSON",
+				success : function(data) {
+					console.log("success");
+				}
+			})
+		})
+	</script>
 
 </body>
 </html>
