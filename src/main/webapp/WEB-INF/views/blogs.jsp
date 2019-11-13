@@ -47,8 +47,10 @@
         <div class="row col-md-9 blogs">
         </div>
         <div class="col-md-3">
+        	<c:if test="${sessionScope.member.memberName!=null}">
             <button type="button" class="btn btn-info page-btn" data-toggle="modal"
                 data-target="#createBlog">新增文章</button>
+			</c:if>
             <button type="button" class="btn btn-light page-btn allBlogs">全部文章</button>
             
             <!-- Sidebar Widgets Column -->
@@ -203,7 +205,7 @@
 </div><!-- modal -->
 
 <!-- Footer -->
-<input type="hidden" class="requestUrl" value="<c:url value='/' />" />
+<div style="display:none; " class="requestUrl">${pageContext.request.contextPath}</div>
 <input type="hidden" class="sessionScopeMemberId" value="${sessionScope.member.id}" />
 <jsp:include page="footer.jsp" />
 <script src="<c:url value='/vendor/ckeditor/ckeditor.js'/>"></script>

@@ -1,7 +1,9 @@
 var parentCommentId = -1;
 var parentCommentName = "";
-var requestUrl = $('.requestUrl').val();
+var requestUrl = $('.requestUrl').text();
 var id = $("#blogId").val();
+let sessionScopeMemberId = $(".sessionScopeMemberId").val();
+if(sessionScopeMemberId == "") sessionScopeMemberId = 0;
 
 $(".commentClick").click(function () {
 	submit();
@@ -14,7 +16,7 @@ $("#replySubmit").click(function () {
 
 function submit() {
 	$.ajax({
-		url: requestUrl + "commentInsert",
+		url: requestUrl + "/commentInsert",
 		method: "POST",
 		data: {
 			memberId: $("#memberId").val(),
@@ -24,7 +26,6 @@ function submit() {
 		},
 		dataType: "JSON",
 		success: function (res) {
-            if(JSON.stringify(res)=="{}") window.location.href="http://localhost:8080" + requestUrl + "signin";
 			$("#commentBlock").html("");
 			$("#commentContent").val("");
 			generateTemplate();
@@ -34,7 +35,7 @@ function submit() {
 
 function replySubmit() {
 	$.ajax({
-		url: requestUrl + "commentInsert",
+		url: requestUrl + "/commentInsert",
 		method: "POST",
 		data: {
 			memberId: $("#memberId").val(),
@@ -44,7 +45,7 @@ function replySubmit() {
 		},
 		dataType: "JSON",
 		success: function (res) {
-			if(JSON.stringify(res)=="{}") window.location.href="http://localhost:8080" + requestUrl + "signin";
+			if(JSON.stringify(res)=="{}") window.location.href= requestUrl + "/signin";
 			$("#commentBlock").html("");
 			$("#replyComment").val("");
 			generateTemplate();
@@ -52,26 +53,29 @@ function replySubmit() {
 	});
 }
 
-function reportSubmit() {
-	$.ajax({
-		url: requestUrl + "reportInsert",
-		method: "POST",
-		data: {
-			commentId: $(this).data("reportcommentid"),
-			reportContent: $("#reportContent").val(),
-			reportMemberId: $("#memberId").val()
-		},
-		success: function() {
-			if(JSON.stringify(res)=="{}") window.location.href="http://localhost:8080" + requestUrl + "signin";
-			console.log("success");
-		}
+function reportSubmit(reportcommentid) {
+	
+	$("#reportSubmit").click(function() {
+		$.ajax({
+			url: requestUrl + "/reportInsert",
+			method: "POST",
+			data: {
+				commentId: reportcommentid,
+				reportContent: $("#reportContent").val(),
+				reportMemberId: $("#memberId").val()
+			},
+			success: function() {
+				$("#reportModalClick").click();
+				$("#reportContent").val("");
+			}
+		})
 	})
 }
 
 var firstComment = [];
 function generateTemplate() {
 	$.ajax({
-		url: requestUrl + "blog/" + id,
+		url: requestUrl + "/blog/" + id,
 		method: "POST",
 		dataType: "JSON",
 		success: function(res) {
@@ -100,14 +104,14 @@ function generateTemplate() {
 	var firstTemplate = "<p style='color:red'>{{comment.commentIds}}</p>" +
 						"<h5 class='media mt-4 animated fadeIn'><img class='d-flex mr-3 rounded-circle' src='http://placehold.it/50x50'>{{comment.commentName}}</h5>{{comment.commentContent}}" +
 						"<div><label for='replyComment' class='replyClick' data-comment='{{comment.commentId}}' data-commentname='{{comment.name}}'><a class='mgl5' href='javascript:;'>回覆</a></label>" +
-						"<a class='mgl5' data-toggle='modal' data-target='#reportModal' data-comment='{{comment.reportcommentid}}' href='javascript:;'>檢舉</a></div>";
+						"<a class='mgl5 reportComment' data-toggle='modal' data-target='#reportModal' data-reportcommentid='{{comment.reportcommentid}}' href='javascript:;'>檢舉</a></div>";
 	var secondTemplate = "<div style='padding-left: 100px'>" +
 					     "<p style='color:red'>{{comment.commentIds}}</p>" +
 					     "<div class='media mt-4 animated fadeIn'><img class='d-flex mr-3 rounded-circle' src='http://placehold.it/50x50'>" +
 					     "<h5 class='mt-0'>{{comment.commentName}}</h5></div>" +
 					     "<div>{{comment.commentContent}}</div>" +
 					     "<div><label for='replyComment' class='replyClick' data-comment='{{comment.commentId}}' data-commentname='{{comment.name}}'><a class='mgl5' href='javascript:;'>回覆</a></label>" +
-					     "<a id='reportComment' class='mgl5' data-toggle='modal' data-target='#reportModal' data-comment='{{comment.reportcommentid}}' href='javascript:;'>檢舉</a></div>";
+					     "<a class='reportComment' class='mgl5' data-toggle='modal' data-target='#reportModal' data-reportcommentid='{{comment.reportcommentid}}' href='javascript:;'>檢舉</a></div>";
 	var tmp;
 	function generateComment() {
 		for(let i=0;i<firstComment.length;i++) {
@@ -130,6 +134,12 @@ function generateTemplate() {
 				recursively(tmp);
 			}
 		}
+		
+		$(".reportComment").click(function() {
+			if(sessionScopeMemberId==0) window.location.href = requestUrl + "/signin";
+			let reportcommentid = $(this).data("reportcommentid");
+			reportSubmit(reportcommentid);
+		})
 	}
 	var replys
 	function recursively(tmp) {
