@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import tw.FunBar.model.Member;
 import tw.FunBar.model.ProductBean;
 import tw.FunBar.service.OrderHandleService;
 import tw.FunBar.service.ShoppingService;
@@ -53,7 +54,7 @@ public class ShoppingController {
 	//---------前台功能-------	
 	
 	@RequestMapping("/shoppingCart")
-	public String shoppingCart(Model model) {
+	public String shoppingCart(Model model) {		
 		List<ProductBean> show = shoppingService.getAllProducts();
 		model.addAttribute("all", show);
 		return "shoppingCart";
@@ -64,6 +65,7 @@ public class ShoppingController {
 //	依分類查詢商品(點擊分類連結進入分類商品頁面）
 	@RequestMapping("/shoppingCart/{category}")
 	public String getProductByCategory(@PathVariable("category")String category, Model model ) {
+			
 		List <ProductBean> products = shoppingService.getProductByCategory(category);
 		model.addAttribute("category", products);
 		 return "showProductByCategory";		
@@ -88,7 +90,11 @@ public class ShoppingController {
 		
 	//後臺顯示所有商品
 	@RequestMapping("/showAllProduct")
-	public String showAllProduct(Model model) {
+	public String showAllProduct(HttpSession session,HttpServletRequest request,HttpServletResponse response,Model model) {
+		session = request.getSession(false);
+		Member member = (Member)session.getAttribute("member");
+		if(member==null) return "redirect:/signin";
+		
 		List<ProductBean> show = shoppingService.getAllProducts();
 		model.addAttribute("all", show);
 		return "showAllProduct";
@@ -103,14 +109,16 @@ public class ShoppingController {
 
 	//點擊"修改"按鈕單筆查詢該資料
 	@RequestMapping("/update")
-	public String getProductsById(@RequestParam("id") Integer productId, Model model) {
+	public String getProductsById(@RequestParam("id") Integer productId, Model model) throws SerialException, SQLException, IOException {
 		model.addAttribute("pb", orderService.getProductById(productId));
+	
 		return "updateProduct";
 	}
 	
 	
 		
 	//修改單筆資料
+	@SuppressWarnings("unused")
 	@RequestMapping(value="/updateProduct", method = RequestMethod.POST)
 	public String updateProduct(@RequestParam("id") Integer productId,
 								@RequestParam("productName") String productName,
@@ -121,31 +129,29 @@ public class ShoppingController {
 								@RequestParam("stock")Integer stock,
 								@RequestParam("productNo") String productNo, Model model) throws IOException, SerialException, SQLException {
 					
-//								ProductBean pb ;
-//								MultipartFile picture = pb.getProductCover();
-//									if(picture.getSize() == 0) {
-//									ProductBean original = orderService.getProductById(productId);
-//									pb.setProductCover(original.getProductCover());
-//								}else {
-//									String originalFilename = picture.getOriginalFilename();
-//									if( originalFilename.length() > 0 && originalFilename.lastIndexOf(".") > -1 ) {
-//										pb.setFileName(originalFilename);
-//									}
-//								}
-								
-								byte[] c = productCover.getBytes();
-								Blob blob = new SerialBlob(c);
-				
-								
-					orderService.updateProduct(productId,productNo,blob,productDetail, productName,category, discount, stock);
-					return "redirect:/showAllProduct";	
+		
+		String filename = productCover.getOriginalFilename();	
+		if(filename.length()!=0) {  //如果有重新上傳圖片
+			Blob blob;
+			byte[] b = productCover.getBytes();
+			blob = new SerialBlob(b);
+			orderService.updateProduct(productId,productNo,blob,productDetail, productName,category, discount, stock);
+		} else {  //如果沒有重新上傳圖片， 呼叫service依照productId取得原本的圖片檔
+			ProductBean product = orderService.getProductById(productId);		
+			orderService.updateProduct(productId,productNo,product.getProductImage(),productDetail, productName,category, discount, stock);
+		}												
+		return "redirect:/showAllProduct";	
 	}
 	
 		
 	
 	//新增商品資料
 	@RequestMapping(value = "/addProduct", method = RequestMethod.GET)
-	public String getAddNewProductForm(Model model) {
+	public String getAddNewProductForm(HttpSession session,HttpServletRequest request,HttpServletResponse response,Model model) {
+		session = request.getSession(false);
+		Member member = (Member)session.getAttribute("member");
+		if(member==null) return "redirect:/signin";
+		
 		ProductBean pb = new ProductBean();
 		model.addAttribute("productBean", pb);
 		return "addProduct";
@@ -153,7 +159,7 @@ public class ShoppingController {
 	
 
 	@RequestMapping(value = "/addProduct", method = RequestMethod.POST)
-	public String addProduct(@ModelAttribute("productBean") ProductBean pb, BindingResult result, HttpSession session) {
+	public String addProduct(@ModelAttribute("productBean") ProductBean pb, BindingResult result) {
 		String[] suppressedFields = result.getSuppressedFields();
 		if (suppressedFields.length > 0) {
 			throw new RuntimeException("嘗試傳入不允許的欄位: " + StringUtils.arrayToCommaDelimitedString(suppressedFields));
@@ -164,6 +170,7 @@ public class ShoppingController {
 		MultipartFile productCover = pb.getProductCover();
 		
 		String originalFilename = productCover.getOriginalFilename();
+		pb.setFileName(originalFilename);
 		System.out.println("originalFilename:" + originalFilename);
 		
 		
@@ -188,7 +195,6 @@ public class ShoppingController {
 				imageFolder.mkdirs();
 			File file = new File(imageFolder, pb.getProductImage() + ext);
 			productCover.transferTo(file);
-		//	session.setAttribute(ext, rootDirectory);   //剛剛寫的
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
@@ -210,8 +216,8 @@ public class ShoppingController {
 		if (pb != null) {
 			Blob blob = pb.getProductImage();
 			filename = pb.getFileName();
-			System.out.println("filename"+filename);
-			System.out.println("blob"+blob);
+			System.out.println("filename:"+filename);
+			System.out.println("blob:"+blob);
 			if (blob != null) {
 				try {
 					len = (int) blob.length();

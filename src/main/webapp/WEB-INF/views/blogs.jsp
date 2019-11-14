@@ -8,12 +8,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <script src="https://kit.fontawesome.com/c523dff261.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/blog.css"/>">
 </head>
 <style>
 	.box {
 		width: 90%;
 		padding: 5px 15px;
+		position: relative;
 	    box-shadow: 0 0 5px rgba(0,0,0,0.2);
 	    transition: 1s;
 	}
@@ -27,6 +29,13 @@
 	}
 
 	.categoryBlock:hover { background-color: #eee;}
+	
+	.fa-align-center { font-size: 1.1em;}
+
+	.blogMore { position: absolute; top: 5px; right: 5px; display: block; width: 25px; height:25px; z-index:999;}
+	
+	#closeLeftModal { padding: 5px; border-radius: 2px;}
+
 </style>
 <body>
 <!-- Header -->
@@ -38,8 +47,10 @@
         <div class="row col-md-9 blogs">
         </div>
         <div class="col-md-3">
+        	<c:if test="${sessionScope.member.memberName!=null}">
             <button type="button" class="btn btn-info page-btn" data-toggle="modal"
                 data-target="#createBlog">新增文章</button>
+			</c:if>
             <button type="button" class="btn btn-light page-btn allBlogs">全部文章</button>
             
             <!-- Sidebar Widgets Column -->
@@ -80,8 +91,8 @@
     <ul id="show" class="pagination"></ul>
 </div>
 
-<!-- Modal -->
-<div class="modal right fade" id="createBlog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+<!-- Insert Modal -->
+<div class="modal right fade" id="createBlog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
@@ -137,18 +148,90 @@
 </div><!-- modal -->
 
 
+<!-- Update Modal -->
+<div class="modal right fade" id="modifyBlog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span 
+                        aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+                <form enctype="multipart/form-data" method="post" action="modifyBlog">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <!-- 圖片區域 -->
+                            <label style="cursor: pointer; background-color: #eee; padding: 2px; border-radius: 2px;">
+                                <input type="file" name="blogImage" id="blog_img2" style="display: none;">
+                                <i class="fa fa-photo"></i>上傳圖片
+                            </label>
+                            <!-- 圖片顯示區塊 -->
+                            <div id="imgArea" title="" style="padding: 20px;">
+                                <img class="imgArea" style="width: 100px; height: auto">
+                            </div>
+                        </div>
+
+                        <div class="col-md-10">
+                            <div class="form-group row">
+                                <label for="categoryId" class="col-md-2">文章分類:</label> <select
+                                    class="form-control col-md-5" id="categoryId" name="categoryId">
+                                    <c:forEach var="category" items="${categoryList}">
+                                        <option value="${category.categoryId}">${category.categoryName}</option>
+                                    </c:forEach>
+
+                                </select>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="blogTitle" class="col-md-2">文章標題:</label>
+                                <input type="text" id="blogTitle2" name="blogTitle" class="form-control col-md-5">
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="blogContent2" class="col-md-2">文章內容:</label>
+                                <textarea id="blogContent2" name="blogContent"></textarea>
+                            </div>
+                            <input id="modifyBlogId" type="hidden" name="blogId" value="" />
+                            <input type="submit" id="closeLeftModal" class="bth btn-success" value="修改" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+</div><!-- modal -->
+
 <!-- Footer -->
+<div style="display:none; " class="requestUrl">${pageContext.request.contextPath}</div>
+<input type="hidden" class="sessionScopeMemberId" value="${sessionScope.member.id}" />
 <jsp:include page="footer.jsp" />
 <script src="<c:url value='/vendor/ckeditor/ckeditor.js'/>"></script>
-<script src="<c:url value='/js/blog.js'/>"></script>
 <script>
 $(document).ready(function () {
+	$('#createBlog').on('shown.bs.modal', function() {
+        $(document).off('focusin.modal');
+    });
+	
+	$('#modifyBlog').on('shown.bs.modal', function() {
+        $(document).off('focusin.modal');
+    });
+
     CKEDITOR.replace('blogContent', {
+        height: 400,
+        filebrowserUploadUrl: '${pageContext.request.contextPath}/blogInsert',
+        filebrowserBrowseUrl: '${pageContext.request.contextPath}/blogBrowse'
+    });
+    
+    CKEDITOR.replace('blogContent2', {
         height: 400,
         filebrowserUploadUrl: '${pageContext.request.contextPath}/blogInsert',
         filebrowserBrowseUrl: '${pageContext.request.contextPath}/blogBrowse'
     });
 })
 </script>
+<script src="<c:url value='/js/blog.js'/>"></script>
 </body>
 </html>

@@ -6,8 +6,11 @@
 <head>
 	<meta charset="UTF-8">
 	<title>showBlog</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
 </head>
 <style>
+	.mgl5 { margin-left: 5px;}
+
 	.blogContent img {
 		max-width: 650px !important;
 		max-height: auto !important;
@@ -33,7 +36,7 @@
 			<h1 style="word-break: break-all;" class="mt-4">${blog.blogTitle}</h1>
 			<!-- Author -->
 			<p class="lead">
-				by<a href="#">allen</a>
+				by<a href="#">${blog.memberName}</a>
 			</p>
 			<hr>
 			<!-- Date/Time -->
@@ -53,7 +56,7 @@
 					<div class="form-group">
 						<textarea id="commentContent" name="commentContent" class="form-control" rows="3"></textarea>
 					</div>
-					<input type="hidden" id="memberId" name="memberId" value="${sessionScope.member.memberId}" />
+					<input type="hidden" id="memberId" name="memberId" value="${sessionScope.member.id}" />
 					<input type="hidden" id="blogId" name="blogId" value="${blog.blogId}" />
 					<input type="hidden" id="parentCommentId" name="parentCommentId" value="-1" />
 					<button class="btn btn-primary commentClick">Submit</button>
@@ -67,13 +70,49 @@
 				</div>
 			</div>
 			<div class="media mt-4 row">
-				<input type="text" id="replyComment" class="col-md-8 form-control" placeholder="請輸入評論訊息..." />
+				<textarea id="replyComment" class="col-md-8 form-control" placeholder="請輸入評論訊息..."></textarea>
+				<input type="hidden" id="replyMemberId" name="memberId" value="${sessionScope.member.memberId}" />
 				<button id="replySubmit" class="btn btn-primary">送出</button>
 			</div>
 		</div>
 	</div>
 
+
+  <!-- Report Modal -->
+  <div  class="modal fade" id="reportModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">檢舉評論</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+        	<form>
+        		<div class="form-group row">
+                    <label for="reportContent" class="col-md-3">檢舉內容:</label>
+                    <textarea id="reportContent" name="reportContent" class="form-control col-md-8"></textarea>
+                </div>
+        	</form>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+        	<input type="hidden" id="replyMemberId" name="memberId" value="${sessionScope.member.memberId}" />
+            <button id="reportSubmit" class="btn btn-primary">送出</button>
+          	<button id="reportModalClick" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
 <!-- Footer -->
+<div style="display:none; " class="requestUrl">${pageContext.request.contextPath}</div>
+<input type="hidden" class="sessionScopeMemberId" value="${sessionScope.member.id}" />
 <jsp:include page="footer.jsp" />
 <script src="<c:url value='/js/showBlog.js'/>"></script>
 </body>

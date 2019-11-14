@@ -99,4 +99,10 @@ public class BlogDAOImpl implements BlogDAO {
 		return blogs;
 	}
 
+	@Override
+	public void modifyBlog(Blog blog) {
+		Session session = sessionFactory.getCurrentSession();
+		session.update(blog);
+	}
+
 }

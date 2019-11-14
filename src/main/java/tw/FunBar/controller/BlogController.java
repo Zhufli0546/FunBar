@@ -14,6 +14,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,7 @@ import com.google.gson.Gson;
 import tw.FunBar.model.Blog;
 import tw.FunBar.model.Category;
 import tw.FunBar.model.Comment;
+import tw.FunBar.model.Member;
 import tw.FunBar.service.BlogService;
 import tw.FunBar.service.CommentService;
 import tw.FunBar.util.JSONFileUpload;
@@ -74,8 +76,11 @@ public class BlogController {
 		String filename = String.valueOf(date.getTime() + "." + ext);
         
         InputStream in = upload.getInputStream();
-        String basePath = "C:\\Servlet_JSP\\apache-tomcat-9.0.22\\imgUpload\\";
+        String basePath = "C:\\FunBar\\imgUpload\\";
         System.out.println("basePath:" + basePath);
+		File baseFile = new File(basePath);
+		if (!baseFile.exists()) baseFile.mkdirs();
+
         File outputFilePath = new File(basePath + filename);
         OutputStream output = new FileOutputStream(outputFilePath);
         byte[] buff = new byte[1024];
@@ -95,7 +100,7 @@ public class BlogController {
 	
 	@RequestMapping("/blogBrowse")
 	public String blogBrowse(HttpServletRequest request, Model model) {
-		String basePath = "C:\\Servlet_JSP\\apache-tomcat-9.0.22\\imgUpload\\";
+		String basePath = "C:\\FunBar\\imgUpload\\";
         File folder = new File(basePath);
         model.addAttribute("files", folder.listFiles());
         model.addAttribute("CKEditorFuncNum", request.getParameter("CKEditorFuncNum"));
@@ -107,7 +112,7 @@ public class BlogController {
 	public String blogPost(@RequestParam MultipartFile blogImage,
 						   @RequestParam String blogTitle,
 						   @RequestParam String blogContent,
-						   @RequestParam Integer categoryId, HttpServletRequest request) throws IOException {
+						   @RequestParam Integer categoryId, HttpServletRequest request, HttpSession session) throws IOException {
 		
 		String ext = context.getMimeType(blogImage.getOriginalFilename());
 		ext = ext.substring(6);
@@ -116,8 +121,11 @@ public class BlogController {
         
         if(filename.length()>0) {
         	InputStream in = blogImage.getInputStream();
-        	String basePath = "C:\\Servlet_JSP\\apache-tomcat-9.0.22\\imgUpload\\";
+        	String basePath = "C:\\FunBar\\imgUpload\\";
             System.out.println("basePath:" + basePath);
+			File baseFile = new File(basePath);
+			if (!baseFile.exists()) baseFile.mkdirs();
+
             File outputFilePath = new File(basePath + filename);
             OutputStream output = new FileOutputStream(outputFilePath);
             byte[] buff = new byte[1024];
@@ -143,8 +151,13 @@ public class BlogController {
 		Category category = blogService.findByIdCategory(categoryId);
 		blog.setCategory(category);
 		
-		// 未來需要整合 Member Table fk
-		//blog.setMemberId(1);
+		// 登入才可以新增文章
+		session = request.getSession(false);
+		Member member = (Member)session.getAttribute("member");
+		if(member==null) return "redirect:/signin";
+		
+		blog.setMemberId(member.getId());
+		blog.setMemberName(member.getMemberName());
 		
 		blogService.insertBlog(blog);
 
@@ -184,5 +197,61 @@ public class BlogController {
 		List<Blog> blogs = blogService.searchBlogs(searchKey);
 		model.addAttribute("blogs", blogs);
 		return "searchKey";
+	}
+	
+	@RequestMapping("/getmodifyBlog/{id}")
+	public String modifyBlog(@PathVariable Integer id, Model model) {
+		Blog blog = blogService.findByIdBlog(id);
+		model.addAttribute("modifyBlog", blog);
+		return "/getmodifyBlog";
+	}
+	
+	@RequestMapping("/modifyBlog")
+	public String updateModifyBlog(@RequestParam Integer blogId,
+								   @RequestParam Integer categoryId,
+								   @RequestParam MultipartFile blogImage,
+								   @RequestParam String blogTitle,
+								   @RequestParam String blogContent,
+								   HttpServletRequest request) throws IOException {
+		String modifyFileName = blogImage.getOriginalFilename();
+		Blog blog = blogService.findByIdBlog(blogId);
+		if(modifyFileName.length()!=0) {
+			String ext = context.getMimeType(blogImage.getOriginalFilename());
+			ext = ext.substring(6);
+			Date date = new Date();
+			String filename = String.valueOf(date.getTime() + "." + ext);
+			InputStream in = blogImage.getInputStream();
+        	String basePath = "C:\\FunBar\\imgUpload\\";
+            System.out.println("basePath:" + basePath);
+			File baseFile = new File(basePath);
+			if (!baseFile.exists()) baseFile.mkdirs();
+
+            File outputFilePath = new File(basePath + filename);
+            OutputStream output = new FileOutputStream(outputFilePath);
+            byte[] buff = new byte[1024];
+            int length;
+            while ((length = in.read(buff)) != -1) {
+                output.write(buff, 0, length);
+            }
+            output.close();
+            in.close();
+			
+            // modify
+            String path = request.getContextPath() + "/imgUpload/" + filename;
+            blog.setBlogImage(path);
+		} else {
+			blog.setBlogImage(blog.getBlogImage());
+		}
+		
+		
+		blog.setBlogTitle(blogTitle);
+		blog.setBlogContent(blogContent);
+		Category category = blogService.findByIdCategory(categoryId);
+		blog.setCategory(category);
+		
+		blogService.modifyBlog(blog);
+			
+		
+		return "redirect:/blog/" + blogId;
 	}
 }

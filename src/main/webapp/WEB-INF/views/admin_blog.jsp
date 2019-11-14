@@ -30,6 +30,7 @@ td	{
 </div>
 
 <!-- Footer -->
+<div style="display:none; " class="requestUrl">${pageContext.request.contextPath}</div>
 <jsp:include page="admin_footer.jsp" />
 <script src="<c:url value='/js/admin_blog.js' />"></script>
 </body>

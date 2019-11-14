@@ -53,16 +53,16 @@
 		<!-- Sidebar -->
 		<ul class="sidebar navbar-nav">
 			<li class="nav-item active"><a class="nav-link" href="#"> <i
-					class="fas fa-fw fa-tachometer-alt"></i> <span>##########</span>
+					class="fas fa-fw fa-tachometer-alt"></i> <span>管理員您好</span>
 			</a></li>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="pagesDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
-				aria-expanded="false"> <i class="fas fa-fw fa-folder"></i> <span>abc</span>
+				aria-expanded="false"> <i class="fas fa-fw fa-folder"></i> <span>會員管理</span>
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">Login Screens:</h6>
-					<a class="dropdown-item" href="#">Login</a> <a
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/showAllmember">查詢所有會員</a> <a
 						class="dropdown-item" href="#">Register</a> <a
 						class="dropdown-item" href="#">Forgot Password</a>
 				</div></li>
@@ -130,6 +130,19 @@
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">######</h6>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin_blog">部落格管理</a> 
+				</div></li>
+
+				<!-- 討論區後台 -->
+				<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" href="#" id="pagesDropdown"
+				role="button" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="false"> <i class="fas fa-fw fa-folder"></i> <span>討論區</span>
+			</a>
+				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
+					<h6 class="dropdown-header">Discuss</h6>
+					<a class="dropdown-item" href="#">好友系統</a> <a
+						class="dropdown-item" href="#">貼文管理</a> <a
+						class="dropdown-item" href="#"></a>
 				</div></li>
 		</ul>
 </body>

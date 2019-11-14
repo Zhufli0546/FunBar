@@ -59,6 +59,7 @@
 				<option value="4">4天</option>
 				<option value="5">5天</option>
 				<option value="6">6天</option>
+				<option value="7">7天</option>
 				</select><br>
 				客房數 :
 				<select name="rooms" id="rooms" class="text" style="text-align:center">
@@ -67,7 +68,6 @@
 				<option value="3">3間</option>
 				<option value="4">4間</option>
 				<option value="5">5間</option>
-				<option value="6">6間</option>
 				</select>
 				<hr style="border:none;margin-bottom:110px">
 				<br>

@@ -1,5 +1,6 @@
 package tw.FunBar.model;
 
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -21,12 +22,12 @@ public class Comment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int commentId;
+	private Integer commentId;
 	private String commentName;
 	private String commentEmail;
 	private String commentContent;
 	private String commentCreatedTime;
-	
+
 	@Transient
 	private Integer commentStatus;
 
@@ -40,7 +41,6 @@ public class Comment {
 	@OrderBy("commentCreatedTime ASC")
 	private Set<Comment> replyComment = new LinkedHashSet<Comment>();
 
-
 	@JsonIgnoreProperties("replyComment")
 	@ManyToOne
 	@JoinColumn(name = "PARENTCOMMENTID")
@@ -48,14 +48,17 @@ public class Comment {
 
 	@Transient
 	private Integer blogId;
-	
-//	private Member memberId;
 
-	public int getCommentId() {
+	private Integer memberId;
+
+	@OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
+	private Set<Report> reports = new HashSet<Report>();
+
+	public Integer getCommentId() {
 		return commentId;
 	}
 
-	public void setCommentId(int commentId) {
+	public void setCommentId(Integer commentId) {
 		this.commentId = commentId;
 	}
 
@@ -130,5 +133,20 @@ public class Comment {
 	public void setBlogId(Integer blogId) {
 		this.blogId = blogId;
 	}
-	
+
+	public Set<Report> getReports() {
+		return reports;
+	}
+
+	public void setReports(Set<Report> reports) {
+		this.reports = reports;
+	}
+
+	public Integer getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
+	}
 }
