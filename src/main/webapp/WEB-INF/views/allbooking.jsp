@@ -72,7 +72,7 @@ function del() {var msg ="是否刪除";if (confirm(msg)==true){return true;}els
 <script>
 
 var url = "/FunBar/";
-var txt ="";
+
 $("#D").click(function(){
 	$.ajax({
 
@@ -91,6 +91,7 @@ $("#D").click(function(){
 							
 					}else{
 
+						let txt = "";
 						console.log(data);
 						txt +="<thead><tr><th>訂單編號<th>訂位人<th>性別<th>訂位日期<th>訂位時間<th>訂位人數<th>手機<th>取消訂位<th>更改訂位</tr></thead><tbody>";
 						for(let i=0;i<data.length;i++){
@@ -133,6 +134,7 @@ $("#P").click(function(){
 					console.log(data);
 					}else{
 
+						let txt = "";
 						console.log(data);
 						txt +="<thead><tr><th>訂單編號<th>訂位人<th>性別<th>訂位日期<th>訂位時間<th>訂位人數<th>手機<th>取消訂位<th>更改訂位</tr></thead><tbody>";
 						for(let i=0;i<data.length;i++){

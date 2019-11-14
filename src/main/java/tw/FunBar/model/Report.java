@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -21,16 +22,17 @@ public class Report {
 	private String reportName;
 	private String reportContent;
 	private String reportCreatedTime;
-	private boolean reportStatus;
+	private Integer reportStatus;
 	private Integer reportMemberId;
 
 	// 檢舉評論 fk
-	//@JsonIgnoreProperties("reports")
-	@JsonIgnore
+	//@JsonIgnore
+	@JsonIgnoreProperties("reports")
 	@ManyToOne
 	@JoinColumn(name = "COMMENTID")
 	private Comment comment;
-	
+
+	@Transient
 	private Integer commentId;
 	
 	// 被檢舉人
@@ -68,11 +70,11 @@ public class Report {
 		this.reportCreatedTime = reportCreatedTime;
 	}
 
-	public boolean isReportStatus() {
+	public Integer getReportStatus() {
 		return reportStatus;
 	}
 
-	public void setReportStatus(boolean reportStatus) {
+	public void setReportStatus(Integer reportStatus) {
 		this.reportStatus = reportStatus;
 	}
 

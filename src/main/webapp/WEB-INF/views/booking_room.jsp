@@ -20,7 +20,7 @@
 	<jsp:include page="header.jsp" />
 	
 
-	<section class="page animsition" style="background-color: black;height:500px;">
+	<section class="page animsition" style="background-color:#E0E0E0;height:500px;">
 		<div class="calendar"
 			style="border: 1px solid #66B3FF; border-radius: 5px">
 
@@ -49,15 +49,17 @@
 			</div>
 		</div>
 
-		<div class="calendar1">
+		<div class="calendar1" style="background-color:#E0E0E0;color:black">
 					<form method="POST" action="chooseRoom">
-			入住天數: <select name="stay" id="slc" class="text" style="text-align:center">
+				入住天數: 
+				<select name="stay" id="slc" class="text" style="text-align:center">
 				<option value="1" selected = "selected">1天</option>
 				<option value="2">2天</option>
 				<option value="3">3天</option>
 				<option value="4">4天</option>
 				<option value="5">5天</option>
 				<option value="6">6天</option>
+				<option value="7">7天</option>
 				</select><br>
 				客房數 :
 				<select name="rooms" id="rooms" class="text" style="text-align:center">
@@ -66,12 +68,11 @@
 				<option value="3">3間</option>
 				<option value="4">4間</option>
 				<option value="5">5間</option>
-				<option value="6">6間</option>
 				</select>
-				<hr>
+				<hr style="border:none;margin-bottom:110px">
 				<br>
 				<input id="date" type="hidden" name="date"> <input type="submit" style="height:50px;background-color:white;border-radius:15px;color:black;width:100%;font-size:22px;border:2px solid #66B3FF; "
-					value="選擇房型 >>">
+					value="選擇房型      >>">
 			</form>
 		</div>
 		<div>
