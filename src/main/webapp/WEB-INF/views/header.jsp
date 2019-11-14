@@ -43,7 +43,7 @@
 	href="<c:url value="/css/main.css"/>">
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/css/own.css"/>">
-
+<link href="https://fonts.googleapis.com/css?family=Poller+One|Sarina|Sonsie+One&display=swap" rel="stylesheet">
 
 
 </head>
@@ -56,20 +56,16 @@
 				<div class="wrap_header trans-0-3">
 					<!-- Logo -->
 					<div class="logo">
-
-						<a href="${pageContext.request.contextPath}"> <img
-							src="<c:url value='/images/icons/logo.png' />" alt="IMG-LOGO"
-							data-logofixed="<c:url value='/images/icons/logo2.png' />">
+						<a href="${pageContext.request.contextPath}"> 
+						<img src="<c:url value='/images/icons/logo4nb.png' />" 
+							data-logofixed="<c:url value='/images/icons/logo4nb.png' />">
 						</a>
 					</div>
 					<!-- Menu -->
-					<div class="wrap_menu p-l-45 p-l-0-xl">
+					<div class="wrap_menu p-l-20 p-l-0">
 						<nav class="menu">
 							<ul class="main_menu">
-
-								<li><a href="/FunBar">Home</a></li>
-
-								<li><a href="${pageContext.request.contextPath}/activities">熱門活動</a></li>
+						<li><a href="${pageContext.request.contextPath}/activities">熱門活動</a></li>
 
 								<li><a
 									href="${pageContext.request.contextPath}/shoppingCart">購物區</a></li>
@@ -78,10 +74,23 @@
 
 								<li><a href="${pageContext.request.contextPath}/discuss">討論區</a></li>
 
-								<li><a href="${pageContext.request.contextPath}/booking">線上訂位</a></li>
+								<li class="nav-item dropdown">
+								
+								         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">線上預約</a>
+								         
+								           <div class="dropdown-menu">
+								           		 <a class="dropdown-item" href="${pageContext.request.contextPath}/booking">線上訂位</a>
+               									 <a class="dropdown-item" href="${pageContext.request.contextPath}/booking_room">線上訂房</a>
+               								</div>	 
+               									  
+								
+								
+								
+								</li>
+								
+								<li><a href="${pageContext.request.contextPath}/signin">登入</a></li>
 
-								<li><a
-									href="${pageContext.request.contextPath}/booking_room">線上訂房</a></li>
+								</ul>
 								
 								<c:choose>
 									<c:when test="${sessionScope.member.memberName==null}">
@@ -99,7 +108,7 @@
 										<td><a href="${pageContext.request.contextPath}/logout">登出</a></td>
 									</c:otherwise>
 								</c:choose>
-							</ul>
+						
 						</nav>
 					</div>
 					<!-- Social -->
@@ -123,10 +132,8 @@
 		<!-- - -->
 		<ul class="menu-sidebar p-t-95 p-b-70">
 
-			<li class="t-center m-b-13"><a href="/FunBar" class="txt19">Home</a>
-			</li>
 
-
+			<li class="t-center m-b-13"><a href="booking_query">訂位、訂房查詢</a></li>
 
 			<li class="t-center m-b-13"><a href="activities" class="txt19">熱門活動</a>
 			</li>
@@ -139,10 +146,9 @@
 
 			<li class="t-center m-b-13"><a href="discuss" class="txt19">討論區</a>
 			</li>
+			
 
-			<li class="t-center m-b-13"><a href="booking">線上訂位</a></li>
 
-			<li class="t-center m-b-13"><a href="booking_room">線上訂房</a></li>
 
 			<li class="t-center m-b-13"><a href="signin">登入</a></li>
 

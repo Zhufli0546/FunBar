@@ -23,7 +23,7 @@
 
 	go();
 	function go() {
-		setTimeout("location.href='http://localhost:8080/FunBar/'", 3000);
+		setTimeout("location.href='http://localhost:8080/FunBar/'", 5000);
 	}
 </script>
 
@@ -69,8 +69,9 @@
 					</div>
 
 					<div class="modal-body" style="text-align: center">
-						<h4 class="modal-title" style="color:blue;font-size:28px;font-family:bold">訂位完成</h4>
-						<span style="font-size:25px">感謝您的訂位,我們 <span style="color: red;font-family:bold"> ${date} </span>見 !</span>
+						<h4 class="modal-title" style="font-size:28px;font-family:bold">訂位完成</h4>
+						<span style="font-size:28px;font-family:bold">訂位編號 : ${number}</span><br>
+						<span style="font-size:25px">感謝您的訂位,我們 <span style="color: blue;font-family:bold"> ${date} </span>見 !</span>
 
 					</div>
 

@@ -305,10 +305,90 @@
 		})
 
 	})
+>>>>>>> 9d8ced566861edf9562a3d19af5d805fe22f450f
 </script>
 </head>
 
 <body>
+<<<<<<< HEAD
+ <jsp:include page="header.jsp" />
+
+ <!-- Content 區塊 -->
+ <div class="container page">
+  <div class="row">
+   <div class="col-sm-offset-10 col-sm-3">
+    <a class="orderBtn" href="<c:url value='/deleteCartItem' />">清空購物車</a>
+   </div>
+  </div>
+  
+<!--   table-responsive -->
+  <div class="">  
+   <table class="table" style="margin:20px 0">
+    <thead>
+     <tr>
+      <th>產品示意圖</th>
+      <th>產品名稱</th>
+      <th>單價</th>
+      <th>數量</th>
+      <th>折扣</th>
+      <th>小計</th>
+     </tr>
+    </thead>
+    <tbody>
+     <c:forEach var="ci" items="${cart.cartItems}" begin="0" step="1"
+      varStatus="i">
+      <tr>
+       <td><img
+        src="<c:url value='/ProductPictures/${ci.product.productId}' />"
+        width="80px" height="120px"></td>
+       <td>${ci.product.productName}</td>
+       <td class="unit" data-product="${i.index}">${ci.product.unitPrice}</td>
+       <td><button type="button" class="minus" data-product="${i.index}">-</button> 
+       <input id="count"
+        type="text" maxlength="2" value="${ci.count}" size="2"
+        class="num" data-product="${i.index}" /> <input class="pdid"
+        type="hidden" value="${ci.product.productId}"
+        data-product="${i.index}">
+        <button type="button" class="add" data-product="${i.index}">+</button>
+       </td>
+       <td class="hallin" data-product="${i.index}">${ci.product.discount}</td>
+       <td class="smallPrice pd" style="width:20px;">${ci.subtotal}</td>
+
+       <td> 
+       <input type="hidden" class="price" value="${ci.subtotal}" /> 
+       <a class="removeBtn" href=" <c:url value='/removeCartItem?productId=${ci.product.productId}' />">刪除</a>
+       </td>
+
+      </tr>
+     </c:forEach>
+     <tr style="text-align: right">
+      <td align="right" colspan="8">總計:<span class="totalAmount"
+       style="padding: 0 10px; color: #FF0088; font-size: 18px">${cart.total}</span></td>
+     </tr>
+     <tr>
+      <td align="right" colspan="8">
+       <form action="<c:url value='/shoppingcart/InsertOrderServlet' />"
+        method="post">
+        <label for="address" class="col-sm-4 col-xs-12">地址:</label>
+        <div class="col-sm-4 col-xs-12">
+         <input type="text" class="form-control" id="address"
+          name="address" placeholder="請輸入地址" required>
+        </div>
+        <div class="col-sm-4 col-xs-12">
+
+         <button type="submit" class="btn btn-success"
+          style="margin: 10px 0">結帳去</button>
+        </div>
+       </form>
+      </td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+ </div>
+
+ <jsp:include page="footer.jsp" />
+=======
 	<jsp:include page="header.jsp" />
 
 	<!-- Content 區塊 -->
@@ -389,6 +469,7 @@
 	</div>
 
 	<jsp:include page="footer.jsp" />
+>>>>>>> 9d8ced566861edf9562a3d19af5d805fe22f450f
 
 
 </body>

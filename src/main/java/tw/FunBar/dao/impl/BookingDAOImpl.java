@@ -28,6 +28,7 @@ public class BookingDAOImpl implements BookingDAO {
 	@Autowired
 	SessionFactory sessionFactory;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Alltime> pullTime() {
 
@@ -45,6 +46,7 @@ public class BookingDAOImpl implements BookingDAO {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Alltime> okTime(String date, Integer people) {
 		ArrayList<Alltime> alltime = pullTime();
@@ -104,6 +106,7 @@ public class BookingDAOImpl implements BookingDAO {
 		session.save(d);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<BookingData> queryAllBooking() {
 
@@ -115,6 +118,7 @@ public class BookingDAOImpl implements BookingDAO {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Alltime> pullTodayStatus(String date) {
 		Integer peo = 0;
@@ -228,6 +232,7 @@ public class BookingDAOImpl implements BookingDAO {
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Alltime> dateQuery(String date) {
 		
@@ -239,6 +244,7 @@ public class BookingDAOImpl implements BookingDAO {
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Alltime> phoneQuery(String phone) {
 		String hql = "From BookingData where phone = :phone";
@@ -246,6 +252,32 @@ public class BookingDAOImpl implements BookingDAO {
 		ArrayList<Alltime> pq = (ArrayList<Alltime>)session.createQuery(hql).setParameter("phone",phone).getResultList();
 		
 		return pq;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public BookingData getBookingByphone(String phone) {
+		
+		String hql = "From BookingData where phone = :phone order by create_time DESC";
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		ArrayList<BookingData> data = (ArrayList<BookingData>)session.createQuery(hql).setParameter("phone",phone).getResultList();
+		
+		BookingData dataF = data.get(0);
+		
+		return dataF;
+	}
+
+	@Override
+	public BookingData bookingNumQuery(Integer number) {
+		
+		String hql = "From BookingData where booking_id = :booking_id";
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		BookingData data = (BookingData) session.createQuery(hql).setParameter("booking_id",number).getSingleResult();
+		return data;
 	}
 
 }

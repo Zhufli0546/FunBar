@@ -26,6 +26,7 @@ function submit() {
 		},
 		dataType: "JSON",
 		success: function (res) {
+			if(JSON.stringify(res)=="{}") window.location.href= requestUrl + "/signin";
 			$("#commentBlock").html("");
 			$("#commentContent").val("");
 			generateTemplate();

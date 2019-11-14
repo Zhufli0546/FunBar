@@ -1,11 +1,8 @@
 package tw.FunBar.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
+
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,28 +29,6 @@ public class BookingController {
 
 	@RequestMapping("/booking")
 	public String booking() {
-			
-		String Odate = "2019-11-05";
-		
-		SimpleDateFormat fm =   new SimpleDateFormat("yyyy-MM-dd" );
-		
-		
-		
-		
-		
-		try {
-			Date date = fm.parse(Odate);
-			Calendar calendar   =   new GregorianCalendar();
-			calendar.setTime(date);
-			calendar.add(Calendar.DATE,1);
-			date = calendar.getTime();
-			
-			String str = fm.format(date);
-			System.out.print(str);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		return "booking";
 	}
@@ -77,14 +52,14 @@ public class BookingController {
 		return "confirm";
 	}
 	
-	@RequestMapping("/ad_confirm")
+	@RequestMapping("/adConfirm")
 	public String adConfirm(@RequestParam(name = "date") String date, @RequestParam(name = "people") Integer people,
 			@RequestParam(name = "time") String time, Model model) {
 
 		model.addAttribute("date", date);
 		model.addAttribute("people", people);
 		model.addAttribute("time", time);
-		return "ad_confirm";
+		return "adConfirm";
 	}
 	
 
@@ -97,10 +72,16 @@ public class BookingController {
 		
 
 		bookingService.addReservations(date,people,time,sex,name,phone,email,remark);
-		//emailService.sendEmail(email);
+		
+		BookingData data = bookingService.getBookingByphone(phone);
+		
+		emailService.sendBookingEmail(data);
 		model.addAttribute("date", date);
+		model.addAttribute("number",data.getBooking_id());
 		return "completeOk";
 	}
+	
+
 	
 	@RequestMapping("/ad_addReservations")
 	public String adAddrReservations(@RequestParam(name = "date") String date,
@@ -110,6 +91,7 @@ public class BookingController {
 		
 
 		bookingService.addReservations(date,people,time,sex,name,phone,email,remark);
+		
 		model.addAttribute("date", date);
 		return "admin_booking";
 	}
@@ -191,6 +173,15 @@ public class BookingController {
 		ArrayList<Alltime> pq = bookingService.phoneQuery(phone);
 		
 		return pq ;
+	}
+	
+	
+	@RequestMapping(value="/bookingNumQuery",method = RequestMethod.POST)
+	@ResponseBody
+	public BookingData bookingNumQuery(@RequestParam Integer number,Model model) {
+		BookingData data = bookingService.bookingNumQuery(number);
+		
+		return data ;
 	}
 	
 
