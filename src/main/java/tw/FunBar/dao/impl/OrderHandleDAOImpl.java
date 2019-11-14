@@ -8,7 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import tw.FunBar.dao.OrderHandleDAO;
-import tw.FunBar.model.OrderBean;
+import tw.FunBar.model.OrderItemBean;
 import tw.FunBar.model.ProductBean;
 
 
@@ -17,12 +17,6 @@ public class OrderHandleDAOImpl implements OrderHandleDAO{
 		@Autowired
 		SessionFactory sessionFactory;
 
-		
-	@Override
-	public List<OrderBean> orderSetup() {
-		return null;
-	}
-	
 	
 	@Override
 	public void addProduct(ProductBean pb) {
@@ -74,9 +68,11 @@ public class OrderHandleDAOImpl implements OrderHandleDAO{
 		
 	}
 
+	@Override
+	public int addOrder(OrderItemBean ob) {
+		// 綠介成功回傳後, 在新增此筆訂單編號(Order)與訂單項目(OrderItems)
+		return 0;
+	}
 
-	
-
-	
 
 }

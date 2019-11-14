@@ -14,7 +14,6 @@
 	href='${pageContext.request.contextPath}/css/styles.css'
 	type="text/css" />
 </head>
-
 <body>
 	<section>
 		<div>
@@ -35,7 +34,6 @@
 					<th>email
 					<th>大頭貼 <c:forEach var="member" items="${members}">
 							<!--  隨便取                      對應Controller-->
-
 							<tr>
 								<td>${member.id}</td>
 								<td>${member.memberName}</td>
@@ -46,9 +44,6 @@
 								<td>${member.memberId}</td>
 								<td>${member.memberEmail}</td>
 								<td>${member.memberPic}</td>
-
-
-
 								<td><a
 									href="<spring:url value='deletemb?id=${member.id}' />">
 										<button type="button" class="btn btn-outline-secondary">刪除</button>
@@ -60,7 +55,6 @@
 						</c:forEach>
 					</th>
 				</tr>
-
 				<div>
 					<td><a href="${pageContext.request.contextPath}">
 							<button type="button" class="btn btn-outline-secondary">回首頁</button>

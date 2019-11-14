@@ -88,6 +88,12 @@
 										<li><a href="${pageContext.request.contextPath}/signin">登入</a></li>
 									</c:when>
 									<c:otherwise>
+
+										<a href="<c:url value='getONE?id=${member.id}' />">
+								<img class="card-img-top rounded-circle"
+								style="height:50px;width:50px "
+									src="<c:url value='/membergetPicture/${member.id}'/>">
+							</a>
 										<a>${sessionScope.member.memberName}, 你好</a>
 										<td><a href="${pageContext.request.contextPath}/logout">登出</a></td>
 									</c:otherwise>

@@ -96,12 +96,6 @@ public class ProductBean implements Serializable{
  public void setProductDetail(String productDetail) {
   this.productDetail = productDetail;
  }
-// public String getProductImage() {
-//  return productImage;
-// }
-// public void setProductImage(String productImage) {
-//  this.productImage = productImage;
-// }
  
  public String getFileName() {
   return fileName;
@@ -129,45 +123,16 @@ public class ProductBean implements Serializable{
  
  public void setUnitPrice(Double unitPrice) {
   this.unitPrice = unitPrice;
-//  if (priceStr == null) {
-//   priceStr = String.valueOf(unitPrice);
-//  }
  }
-// public String getPriceStr() {
-//  return priceStr;
-// }
-// public void setPriceStr(String priceStr) {
-//  this.priceStr = priceStr;
-// }
+
  public Double getDiscount() {
   return discount;
  }
  public void setDiscount(Double discount) {
   this.discount = discount;
-//  if (discount == null) {
-//   this.discount = 1.0;
-//   discountStr = "";
-//   return;
-//  }
-//  this.discount = discount;
-//  if(discount == 1) {
-//   discountStr = "";
-//  }else {
-//   int dsc = (int)(discount * 100);
-//   if(dsc % 10 ==0) {
-//    discountStr = (dsc /10) + "折";   
-//   }else {
-//    discountStr = "" + dsc + "折";
-//   }
-//  }
   
  }
-// public String getDiscountStr() {
-//  return discountStr;
-// }
-// public void setDiscountStr(String discountStr) {
-//  this.discountStr = discountStr;
-// }
+
  public Integer getStock() {
   return stock;
  }
