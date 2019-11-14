@@ -276,7 +276,6 @@
 </head>
 
 <body>
- <jsp:include page="header.jsp" />
 
  <!-- Content 區塊 -->
  <div class="container page">
