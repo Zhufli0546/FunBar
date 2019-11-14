@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import tw.FunBar.dao.OrderHandleDAO;
-import tw.FunBar.model.OrderBean;
+import tw.FunBar.model.OrderItemBean;
 import tw.FunBar.model.ProductBean;
 import tw.FunBar.service.OrderHandleService;
 
@@ -17,12 +17,6 @@ import tw.FunBar.service.OrderHandleService;
 public class OrderHandleServiceImpl implements OrderHandleService{
 	@Autowired
 	OrderHandleDAO dao;
-
-	@Transactional
-	@Override
-	public List<OrderBean> orderSetup() {
-		return dao.orderSetup() ;
-	}
 
 
 	@Transactional
@@ -53,6 +47,20 @@ public class OrderHandleServiceImpl implements OrderHandleService{
 	public void updateProduct(Integer productId, String productNo,Blob productCover,String productDetail, String productName,
 			 String category, Double discount, Integer stock) {
 		 dao.updateProduct(productId, productNo,productCover,productDetail, productName, category, discount, stock);
+		
+	}
+
+	@Transactional
+	@Override
+	public int addOrder(OrderItemBean ob) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Transactional
+	@Override
+	public void addOrderItemList(List<OrderItemBean> orderItemList) {
+		// TODO Auto-generated method stub
 		
 	}
 	
