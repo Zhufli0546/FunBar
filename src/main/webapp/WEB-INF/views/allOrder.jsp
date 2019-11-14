@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>查詢訂單</title>
+<title>查詢訂房</title>
 <style>
 
 .qb{
@@ -33,24 +33,25 @@ function del() {var msg ="是否刪除";if (confirm(msg)==true){return true;}els
 </head>
 <body id="page-top">
 	<jsp:include page="admin_header.jsp" />
-	<div style="padding: 10px ;border:1px solid black;float:left">
+	<div style="padding: 10px ;border:1px solid black;float:left;width:900px">
 	<table id="ch" class="table table-striped" style="text-align: center" >
 <thead><tr>
-<th>訂單編號<th>訂位人<th>性別<th>訂位日期<th>訂位時間<th>訂位人數<th>手機<th>取消訂位<th>更改訂位
+<th>訂單編號<th>訂位人<th>入住日期<th>退房日期<th>手機<th>付款狀態<th>取消訂位
 </tr></thead>
 <tbody>
-<c:forEach var="b" items="${All}">
+<c:forEach var="o" items="${orders}">
 <tr>
-<td>${b.booking_id}</td>
-<td>${b.name}</td>
-<td>${b.sex}</td>
-<td>${b.date}</td>
-<td>${b.time}</td>
-<td>${b.people}</td>
-<td>${b.phone}</td>
-<td><a href="cancelBooking?id=${b.booking_id}&date=${b.date}&phone=${b.phone}"><button class="button" type="button" onclick="return confirm('是否刪除');">取消訂位</button></a></td>
-<td><a href="pullSingle?id=${b.booking_id}&date=${b.date}&phone=${b.phone}"><button class="button" type="button">更改訂位</button></a></td>
+<td>${o.order_id}</td>
+<td>${o.order_name}</td>
+<td>${o.check_in_time}</td>
+<td>${o.check_out_time}</td>
+<td>${o.order_phone}</td>
+<td>${o.status}</td>
+<td><a href="cancelOrder?id=${o.order_id}"><button class="button" type="button" onclick="return confirm('是否刪除');">取消訂位</button></a></td>
 </tr>
+
+ 
+
 </c:forEach>
 </tbody>
 </table>
@@ -76,7 +77,7 @@ var url = "/FunBar/";
 $("#D").click(function(){
 	$.ajax({
 
-			url:"http://localhost:8080" +url +"dateQuery",
+			url:"http://localhost:8080" +url +"dateSearch",
 			type:"POST",
 			dataType:"JSON",
 			data:{
@@ -87,25 +88,24 @@ $("#D").click(function(){
 
 				if(data.length == 0){
 
-					console.log(data);
+					console.log(11111);
 							
 					}else{
 
-						let txt = "";
 						console.log(data);
-						txt +="<thead><tr><th>訂單編號<th>訂位人<th>性別<th>訂位日期<th>訂位時間<th>訂位人數<th>手機<th>取消訂位<th>更改訂位</tr></thead><tbody>";
+						let txt ="";
+						txt +="<thead><tr><th>訂單編號<th>訂位人<th>入住日期<th>退房日期<th>手機<th>付款狀態<th>取消訂位</tr></thead><tbody>";
 						for(let i=0;i<data.length;i++){
-								txt += "<tr><td>"+data[i].booking_id+"</td><td>"
-								+data[i].name+"</td><td>"+data[i].sex+"</td><td>"
-								+data[i].date+"</td><td>"+data[i].time+"</td><td>"
-								+data[i].people+"</td><td>"+data[i].phone+"</td><td>"
+								txt += "<tr><td>"+data[i].order_id+"</td><td>"
+								+data[i].order_name+"</td><td>"+data[i].check_in_time+"</td><td>"
+								+data[i].check_out_time+"</td><td>"+data[i].order_phone+"</td><td>"
+								+data[i].status+"</td><td>"
 								+"<a href='cancelBooking?id="+data[i].booking_id+"'><button class='button' type='button'"+"onclick='return del()'"+">取消訂位</button></a></td>"
-								+"<td><a href='pullSingle?id="+data[i].booking_id+"'><button class='button' type='button'>更改訂位</button></a></td>"
 								+"</tr>";
 							}
 						txt += "</tbody></table>";
 						
-						
+						$("#ch").html("");
 						$("#ch").html(txt);
 						}
 					
@@ -121,7 +121,7 @@ $("#D").click(function(){
 $("#P").click(function(){
 	$.ajax({
 
-			url:"http://localhost:8080" +url +"phoneQuery",
+			url:"http://localhost:8080" +url +"phoneSearch",
 			type:"POST",
 			dataType:"JSON",
 			data:{
@@ -133,21 +133,19 @@ $("#P").click(function(){
 				if(data.length == 0){
 					console.log(data);
 					}else{
-
-						let txt = "";
+						let txt ="";
 						console.log(data);
-						txt +="<thead><tr><th>訂單編號<th>訂位人<th>性別<th>訂位日期<th>訂位時間<th>訂位人數<th>手機<th>取消訂位<th>更改訂位</tr></thead><tbody>";
+						txt +="<thead><tr><th>訂單編號<th>訂位人<th>入住日期<th>退房日期<th>手機<th>付款狀態<th>取消訂位</tr></thead><tbody>";
 						for(let i=0;i<data.length;i++){
-								txt += "<tr><td>"+data[i].booking_id+"</td><td>"
-								+data[i].name+"</td><td>"+data[i].sex+"</td><td>"
-								+data[i].date+"</td><td>"+data[i].time+"</td><td>"
-								+data[i].people+"</td><td>"+data[i].phone+"</td><td>"
+								txt += "<tr><td>"+data[i].order_id+"</td><td>"
+								+data[i].order_name+"</td><td>"+data[i].check_in_time+"</td><td>"
+								+data[i].check_out_time+"</td><td>"+data[i].order_phone+"</td><td>"
+								+data[i].status+"</td><td>"
 								+"<a href='cancelBooking?id="+data[i].booking_id+"'><button class='button' type='button'"+"onclick='return del()'"+">取消訂位</button></a></td>"
-								+"<td><a href='pullSingle?id="+data[i].booking_id+"'><button class='button' type='button'>更改訂位</button></a></td>"
 								+"</tr>";
 							}
 						txt += "</tbody></table>";
-
+						
 						
 						$("#ch").html(txt);
 

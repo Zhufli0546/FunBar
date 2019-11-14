@@ -33,4 +33,8 @@ public interface BookingService {
 	ArrayList<Alltime> dateQuery(String date);
 
 	ArrayList<Alltime> phoneQuery(String phone);
+
+	BookingData getBookingByphone(String phone);
+
+	BookingData bookingNumQuery(Integer number);
 }

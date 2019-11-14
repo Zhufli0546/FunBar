@@ -51,7 +51,7 @@
             <h4 class="card-title">${room.room_type}</h4>
           </div>
           <div class="card-footer">
-          <form method="post" action="confirm_order">
+          <form method="post" action="admin_confirm_order">
           
           <input type="hidden" name="room_id" value="${room.room_id}">
           <input type="hidden" name="date" value="${date}">

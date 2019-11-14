@@ -150,7 +150,7 @@ button{
 
 	<!-- Blog -->
 	<section class="page animsition" style="background-color:#D0D0D0">
-		<form id="signup" method="post" action="addReservations" style="background-color:white;border:2px solid black">
+		<form id="signup" method="post" action="ad_addReservations" style="background-color:white;border:2px solid black">
     <h1>填寫訂位人資料</h1>
     <input name="date" type="text" value="${date}"  readonly="readonly">
     <input name="time" type="text" value="${time}"  readonly="readonly">
@@ -163,7 +163,7 @@ button{
     <input name="remark" type="text" placeholder="備註" required="required">
     <div style="text-align:center">
     <button type="button"
-					onclick="location.href='booking'">返回</button>               
+					onclick="location.href='ad_booking'">返回</button>               
     <button type="submit">預約</button>
     </div>
 </form>

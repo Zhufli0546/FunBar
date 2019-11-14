@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix='form' uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>後台管理</title>
+<title>更改房型</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic);
 * {
@@ -165,37 +164,38 @@ fieldset {
 	<jsp:include page="admin_header.jsp" />
 	
 	<div class="container" style="margin:10px auto;height:700px">  
-  <form:form modelAttribute="room" id="contact" action="add_room" method="post" enctype="multipart/form-data">
-    <h3>增加房型</h3>
+  <form id="contact" action="update_room" method="post" enctype="multipart/form-data">
+    <h3>更改房型</h3>
     <h4>房型資訊</h4>
     <fieldset>
-      <form:input path="room_type" placeholder="房型名稱" type="text" required="required"/>
+      <input type="hidden" name="room_id" value="${room_info.room_id}">
+      <input name="room_type" placeholder="房型名稱" type="text" value="${room_info.room_type}" required="required"/>
     </fieldset>
     <fieldset>
-      <form:input path="room_quantity" placeholder="房型數量" type="text" required="required"/>
+      <input name="room_quantity" placeholder="房型數量" type="text" value="${room_info.room_quantity}" required="required"/>
     </fieldset>
     <fieldset>
-      <form:input path="room_price" placeholder="房型價位" type="text" required="required"/>
+      <input name="room_price" placeholder="房型價位" type="text" value="${room_info.room_price}" required="required"/>
     </fieldset>
        <fieldset>
-      <form:input path="room_people" placeholder="容納人數" type="text" required="required"/>
+      <input name="room_people" placeholder="容納人數" type="text" value="${room_info.room_people}" required="required"/>
     </fieldset>
            <fieldset>
-      <form:input path="room_bed" placeholder="床數" type="text" required="required"/>
+      <input name="room_bed" placeholder="床數" type="text" value="${room_info.room_bed}" required="required"/>
     </fieldset>
            <fieldset>
-      <form:input path="room_pings" placeholder="坪數" type="text" required="required"/>
+      <input name="room_pings" placeholder="坪數" type="text" value="${room_info.room_pings}" required="required"/>
     </fieldset>
     <fieldset>
-      <form:textarea path="room_description" placeholder="此房型詳細資料" required="required"/>
+      <textarea name="room_description" placeholder="此房型詳細資料" >${room_info.room_description}</textarea>
     </fieldset>
     <fieldset>
-      <form:input path="imageCover" placeholder="房型圖片" type="file" required="required"/>
+      <input name="imageCover" placeholder="房型圖片" type="file">
     </fieldset>
     <fieldset>
-      <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">新增 +</button>
+      <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">確認修改</button>
     </fieldset>
-  </form:form>
+  </form>
 </div>
 	
 	<jsp:include page="admin_footer.jsp" />

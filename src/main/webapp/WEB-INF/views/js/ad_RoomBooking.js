@@ -118,82 +118,51 @@ function day() {
     for (var i = 0; i < lis.length; i++) {
     	
         lis[i].onclick = function () {
-        	$("#slc")[0].selectedIndex = 0;
+        	//$("#slc")[0].selectedIndex = 0;
             $("#days li").removeClass("add");
             $(this).addClass("add");
 
             date = my_year + "-" + (my_month + 1) + "-"
                 + this.firstChild.nodeValue;
             var txt;
+            $("#date").val(date);
 //            document.getElementById("abc").value = date;
 //            document.getElementById("slc").value = 1;
+            
             $.ajax({
-                url: "http://localhost:8080" + url + "pulltime",
+                url: "http://localhost:8080" + url + "admin/pullTodayRoomStatus",
+                type:"POST",
                 data: {
-                    date: date,
-                    people: 1
+                    date:date,
                 },
-                type: "POST",
                 dataType: "JSON",
                 success: function (data) {
-                   txt = "";
-                	console.log(data);
-                   for (let i = 0; i < data.length; i++) {
-                    	
-                        txt += "<form method='POST' action='confirm'>";
-                        txt += "<input type='hidden' name='date' value="+date+">";
-                        txt += "<input type='hidden' name='people' value="+1+">";
-                        txt += "<button class='button'  id='button' type='submit' name='time' value="+data[i].time+"><span>"+data[i].time+"</span></button>";
-                        txt += "</form>";
-                    }
-                    
-                   
-                    $("#time").html(txt);
-                    
+                	txt = "";
+                	console.log(data)
+                	console.log(data)
+                	
+            		txt += "<span style='color:#003C9D'>今日訂房狀況:</span>";
+            		txt += "<table class='table table-striped' style='text-align:center'>";
+            		txt += "<thead><tr><th>房型<th>客房數<th>尚可預約間數</tr></thead>";
+            		txt += "<tbody>";
+                	for(let i =0;i<data.pullTodayRoomStatus.length;i++){
+                		if(data.pullTodayRoomStatus[i].room_quantity<5){
+                			txt += "<tr><td>"+data.pullTodayRoomStatus[i].room_type+"</td><td>"+data.allroom[i].room_quantity+"</td><td class='tension'>"+data.pullTodayRoomStatus[i].room_quantity+"</td></tr>";
+                		}else{
+                			txt += "<tr><td>"+data.pullTodayRoomStatus[i].room_type+"</td><td>"+data.allroom[i].room_quantity+"</td><td class='Ample'>"+data.pullTodayRoomStatus[i].room_quantity+"</td></tr>";
+                		}
+                	}
+                	txt += "</tbody></table>";
+                    $("#today_status").html(txt);
                 }
 
-            });
+            })
+           
+
     }
       
     }
 }
 
-
-
-
-var p;
-$("#slc").change(function () {
-	
-
-	 p =$(this).children('option:selected').val()
-	
-	
-    $.ajax({
-
-        url: "http://localhost:8080" + url + "pulltime",
-        data: {
-            date: date,
-            people: p
-        },
-        type: "POST",
-        dataType: "JSON",
-        success: function (data) {
-            txt = "";
-    		
-            for (let i = 0; i < data.length; i++) {
-             	
-                 txt += "<form method='POST' action='confirm'>";
-                 txt += "<input type='hidden' name='date' value="+date+">";
-                 txt += "<input type='hidden' name='people' value="+p+">";
-                 txt += "<button class='button'  id='button' type='submit' name='time' value="+data[i].time+"><span>"+data[i].time+"</span></button>";
-                 txt += "</form>";
-             }
-             
-            
-             $("#time").html(txt);
-        }
-    })
-
-});
 console.log(today);
 $("#days li").get(today).click();

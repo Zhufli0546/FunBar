@@ -15,6 +15,9 @@ import javax.persistence.Transient;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="ROOM")
 public class Room {
@@ -25,6 +28,7 @@ public class Room {
 	
 	private String room_image_filename;
 	
+	@JsonIgnore
 	private Blob room_image;
 	
 	private String room_type;
@@ -45,7 +49,7 @@ public class Room {
 	@Transient
 	private MultipartFile imageCover;
 	
-	
+	@JsonIgnoreProperties("room")
 	@OneToMany(mappedBy = "room",cascade = CascadeType.ALL)
 	private Set<RoomOrder> roomOrder = new LinkedHashSet<>();
 

@@ -43,11 +43,9 @@
 
 		<div class="col-md-5" style="margin-top: 20px;">
 		
-			<form:form modelAttribute="room_order" method="POST" action="pay">
+			<form:form modelAttribute="room_order" method="POST" action="adpay">
 			
 			<form:input type="hidden" path="room_id" value="${room.room_id}" />
-			<form:input type="hidden" path="total"  value="${total}" />
-			<input type="hidden" name="stay" value="${stay}">
 				<div class="form-group">
 					<label style="float:left" for="inputname">姓名 <span style="color: red">* </span></label>
 					<form:input type="text" class="form-control col-md-6" style="float:left" id="inputname" path="order_name"
@@ -74,7 +72,8 @@
 				<form:input type="hidden" path="check_in_time" value="${date}" />
 				<form:input type="hidden" path="check_out_time" value="${stay}" />
 				<form:input type="hidden" path="rooms" value="${rooms}" />
-				<span>繳款方式 : 信用卡</span>
+				<form:input type="hidden" path="status" value="未付款" />
+				<span>繳款方式 : 當日現場付款</span>
 				<button type="submit" class="btn btn-primary"
 					style="background-color: #66B3FF; border: 2px solid black;width:100%;height:50px">前往預訂</button>
 			</form:form>
