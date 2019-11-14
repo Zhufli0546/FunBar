@@ -9,79 +9,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="<c:url value="/css/shoppingCart.css" />" rel="stylesheet">
 </head>
-<style>
-#snackbar {
-	visibility: hidden;
-	min-width: 250px;
-	margin-left: -125px;
-	background-color: #333;
-	color: #fff;
-	text-align: center;
-	border-radius: 2px;
-	padding: 16px;
-	position: fixed;
-	z-index: 1;
-	left: 50%;
-	bottom: 30px;
-	font-size: 17px;
-}
-
-#snackbar.show {
-	visibility: visible;
-	-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-	animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
-
-@
--webkit-keyframes fadein {
-	from {bottom: 0;
-	opacity: 0;
-}
-
-to {
-	bottom: 30px;
-	opacity: 1;
-}
-
-}
-@
-keyframes fadein {
-	from {bottom: 0;
-	opacity: 0;
-}
-
-to {
-	bottom: 30px;
-	opacity: 1;
-}
-
-}
-@
--webkit-keyframes fadeout {
-	from {bottom: 30px;
-	opacity: 1;
-}
-
-to {
-	bottom: 0;
-	opacity: 0;
-}
-
-}
-@
-keyframes fadeout {
-	from {bottom: 30px;
-	opacity: 1;
-}
-
-to {
-	bottom: 0;
-	opacity: 0;
-}
-}
-</style>
-
-
 
 <body>
 	<jsp:include page="header.jsp" />
@@ -106,31 +33,29 @@ to {
 		<div class="row">
 			<c:forEach var="pb" items="${all}" begin="0" step="1" varStatus="i">
 				<div class="prodlist">
-					<p>${pb.productNo}</p>
 					<p>${pb.productDetail}</p>
 					<p class="prodtitle">${pb.productName}</p>
 					<figure>
 						<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />
 					</figure>
 					<figcaption>
-						<p>建議售價: $${pb.unitPrice}</p>
-						
-
-							<label for="selectCount" class="col-sm-6 col-xs-12">購買數量:</label>
-							<div class="col-sm-6 col-xs-12">
-								<select class="form-control selectCount" name="count">
+						<p>建議售價:<span style="color:#FF44AA;font-weight:bold">$ ${pb.unitPrice}</span></p>
+						<p>折扣：<span style="font-weight:bold;color:	#CE0000;">${pb.discount}</span></p>
+						<p style="color:#000000">庫存：${pb.stock}</p>
+							<label for="selectCount" class="">購買數量:</label>
+<!-- 						 <div class="col-sm-6 col-xs-12">  -->
+								<select class="selectCount" name="count">
 									<option value="1">1</option>
 									<option value="2">2</option>
 									<option value="3">3</option>
 									<option value="4">4</option>
 									<option value="5">5</option>
 								</select>
-							</div>
+<!--  							 </div>  -->
 							<input class="pdid" type="hidden" name="productId"
 								value="${pb.productId}">
 							<button type="button" class="button-add" data-product="${i.index}" >加入購物車</button>
 							<div id="snackbar">已加入購物車</div>
-
 
 					
 					</figcaption>

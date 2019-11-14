@@ -1,5 +1,7 @@
 package tw.FunBar.service.impl;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,4 +29,8 @@ public class ReportServiceImpl implements ReportService {
 		return reportDao.findCommentById(id);
 	}
 
+	@Override
+	public List<Report> queryReportProcess() {
+		return reportDao.queryReportProcess();
+	}
 }

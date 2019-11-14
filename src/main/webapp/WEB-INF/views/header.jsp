@@ -43,7 +43,7 @@
 	href="<c:url value="/css/main.css"/>">
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/css/own.css"/>">
-
+<link href="https://fonts.googleapis.com/css?family=Poller+One|Sarina|Sonsie+One&display=swap" rel="stylesheet">
 
 
 </head>
@@ -56,14 +56,13 @@
 				<div class="wrap_header trans-0-3">
 					<!-- Logo -->
 					<div class="logo">
-
-						<a href="${pageContext.request.contextPath}"> <img
-							src="<c:url value='/images/icons/logo.png' />" alt="IMG-LOGO"
-							data-logofixed="<c:url value='/images/icons/logo2.png' />">
+						<a href="${pageContext.request.contextPath}"> 
+						<img src="<c:url value='/images/icons/logo4nb.png' />" 
+							data-logofixed="<c:url value='/images/icons/logo4nb.png' />">
 						</a>
 					</div>
 					<!-- Menu -->
-					<div class="wrap_menu p-l-45 p-l-0-xl">
+					<div class="wrap_menu p-l-20 p-l-0">
 						<nav class="menu">
 							<ul class="main_menu">
 
@@ -89,6 +88,12 @@
 										<li><a href="${pageContext.request.contextPath}/signin">登入</a></li>
 									</c:when>
 									<c:otherwise>
+
+										<a href="<c:url value='getONE?id=${member.id}' />">
+								<img class="card-img-top rounded-circle"
+								style="height:50px;width:50px "
+									src="<c:url value='/membergetPicture/${member.id}'/>">
+							</a>
 										<a>${sessionScope.member.memberName}, 你好</a>
 										<td><a href="${pageContext.request.contextPath}/logout">登出</a></td>
 									</c:otherwise>

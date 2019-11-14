@@ -1,14 +1,19 @@
-var requestUrl = $('.requestUrl').val();
+var requestUrl = $(".requestUrl").text();
+console.log(requestUrl);
 let clickArray = new Array();
-let pageRow = 5;
+let pageRow = 10;
 let pageRowStart = 0;
-let pageRowEnd = 5;
+let pageRowEnd = 10;
 let tododata;
 let now = 1;
 
+$(".nav-tabs a").click(function(){
+	$(this).tab('show');
+});
+
 function init() {
-	let txt = "<thead><tr><th>部落格編號<th>部落格縮圖<th>部落格標題<th>部落格內容<th>建立時間<th>刪除部落格</tr></thead>";
-	blogs = tododata;
+	let txt = "<thead><tr><th>檢舉編號<th>檢舉人<th>檢舉原因<th>檢舉時間<th>被檢舉人</tr></thead>";
+	reports = tododata;
 
 	// 每頁最多筆數 ex: 第一頁最大筆數為10
 	let maxRow = now * pageRow;
@@ -17,52 +22,51 @@ function init() {
 	pageRowStart = (now - 1) * pageRow;
 
 	// 計算每頁結束的筆數
-	pageRowEnd = (blogs.length < maxRow) ? blogs.length : maxRow;
+	pageRowEnd = (reports.length < maxRow) ? reports.length : maxRow;
 	console.log("Start:" + pageRowStart + " End:" + pageRowEnd);
 
 	for (let i = pageRowStart; i < pageRowEnd; i++) {
-		txt += "<tr><td>" + blogs[i].blogId;
-		txt += "<td><img class='card-img-top' src='" + blogs[i].blogImage
-				+ "'>";
-		txt += "<td class='blog-title'>" + blogs[i].blogTitle;
-		txt += "<td class='blog-content overflowH'>" + blogs[i].blogContent;
-		txt += "<td>" + blogs[i].blogCreatedTime;
-		txt += "<td><a class='deleteData' href='" + requestUrl
-				+ "admin_delete/" + blogs[i].blogId + "'>刪除</a>";
+		txt += "<tr><td>" + reports[i].reportId;
+		txt += "<td>" + reports[i].reportName;
+		txt += "<td>" + reports[i].reportContent;
+		txt += "<td>" + reports[i].reportCreatedTime;
+		txt += "<td>" + reports[i].commentReportName;
+		txt += "<td><a class='lockData' href='" + requestUrl
+				+ "admin_delete/" + reports[i].blogId + "'>封鎖</a>";
 	}
-	$("#demo").html(txt);
+	$("#reportProcess").html(txt);
 	hiddenContent();
 	$("td").css({
 		"width" : "200px",
-		"height" : "110px"
+		"height" : "80px"
 	});
 
 	// 取得頁數
-	let pageNum = Math.ceil(blogs.length / pageRow);
+	let pageNum = Math.ceil(reports.length / pageRow);
 	for (var i = 0; i < pageNum; i++) {
-		let ulElement = $("#show");
+		let ulElement = $("#showProcess");
 		ulElement
 				.append("<li class='page-item'><a class='page-link' href='javascript:;'>"
 						+ (i + 1) + "</a></li>");
 	}
 
-	$("#show li").click(function() {
+	$("#showProcess li").click(function() {
 		// 頁數起始筆數 結束筆數
 		console.log($(this).index());
 		now = $(this).index() + 1;
 		console.log("目前頁數:" + now);
-		$("#demo").html("");
-		$("#show").html("");
+		$("#reportProcess").html("");
+		$("#showProcess").html("");
 		init();
 	});
 }
 
 $.ajax({
-	url : requestUrl + "admin_blog",
+	url : requestUrl + "/reportProcess",
 	method : "post",
 	dataType : "JSON",
 	success : function(data) {
-		tododata = data.blogs;
+		tododata = data.reports;
 		init();
 	}
 });
