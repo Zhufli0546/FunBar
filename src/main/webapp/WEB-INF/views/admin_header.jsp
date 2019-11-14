@@ -88,8 +88,8 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">######</h6>
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/allbooking">查詢所有訂房</a> <a
-						class="dropdown-item" href="${pageContext.request.contextPath}/ad_booking">來電訂房</a> <a
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/allOrder">查詢所有訂房</a> <a
+						class="dropdown-item" href="${pageContext.request.contextPath}/admin_RoomBooking">來電訂房</a> <a
 						class="dropdown-item" href="${pageContext.request.contextPath}/room_type">房型</a>
 				</div></li>
 

@@ -6,7 +6,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
-
 <head>
 <title>Discuss</title>
 <meta charset="UTF-8">
@@ -16,22 +15,24 @@
 	href="<c:url value='/css/discuss.css'/>">
 </head>
 
-<body class="animsition">
+<body class="animsition bg-dark">
 	<br>
-	<br>
+	<!-- Member detail block -->
+	<div class="col-md-2 fixed-top" style="margin:192px 120px; width:200px">
+				<div class="list-group">
+					<p class="list-group-item list-group-item-action active">${title}</p>
+					<a href="" class="list-group-item list-group-item-action" id="loginMemberName">${sessionScope.member.memberName}</a>
+					<a href="" class="list-group-item list-group-item-action" id="loginMemberid" style="display:none">${sessionScope.member.id}</a>
+					<a href="" class="list-group-item list-group-item-action" id="requestUrl" style="display:none"><c:url value='/'/></a>
+					<a href="${pageContext.request.contextPath}/friend" class="list-group-item list-group-item-action list-group-item d-flex justify-content-between align-items-center">好友
+					<button class='badge badge-primary badge-pill btn btn-primary btn-sm' id='friendRequest{{member.memberId}}'>2</button></a>
+				</div>
+			</div>
 	<!-- Body -->
 	<section class="container page">
-		<div class="row">
+		<div class="row mt-5">
 
-			<!-- Member detail block -->
 			<div class="col-md-2">
-				<div class="list-group">
-					<a href="#" class="list-group-item list-group-item-action active">${title}</a>
-					<a href="" class="list-group-item list-group-item-action">會員大頭貼</a>
-					<a href="" class="list-group-item list-group-item-action">會員帳號</a>
-					<a href="" class="list-group-item list-group-item-action">儲存留言</a>
-					<a href="" class="list-group-item list-group-item-action">好友</a>
-				</div>
 			</div>
 
 			<!-- Post area -->
@@ -45,21 +46,18 @@
 				</div>
 			</div>
 
-
 			<!-- friend request block -->
 			<div class="col-md-3" style="background-color: white;">
-				<br>
-				<div class="col-md-12 font-weight-bold">Friend request</div>
-				<div class="col-md-12" style="margin-top: 50px;">
+				<div class="col-md-12 font-weight-bold mt-4">Add Friend</div>
+				<div class="col-md-12 mt-5">
 					<div class="input-group mb-3">
-						<input type="text" class="form-control" id="search_screen_name"
-							placeholder="search friends" aria-describedby="button-addon2">
+						<input type="text" class="form-control" id="searchMemberName"
+							placeholder="search" aria-describedby="button-addon2">
 						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="button"
-								onclick="searchFriend()">search</button>
+							<button class="btn btn-outline-secondary" id='searchMember' type="button">search</button>
 						</div>
 					</div>
-					<div id="search_result" class="list-group"></div>
+					<div id="searchResult" class="list-group"></div>
 				</div>
 			</div>
 		</div>
@@ -68,8 +66,6 @@
 	<!-- Footer -->
 	<jsp:include page="footer.jsp" />
 	<script type="text/javascript" src="<c:url value='/js/discuss.js'/>">
-		
 	</script>
 </body>
-
 </html>

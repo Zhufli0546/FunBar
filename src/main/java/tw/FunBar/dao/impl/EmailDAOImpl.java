@@ -14,11 +14,15 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.sound.sampled.AudioFormat.Encoding;
 
 import org.springframework.stereotype.Repository;
 
 
 import tw.FunBar.dao.EmailDAO;
+import tw.FunBar.model.BookingData;
+import tw.FunBar.model.Room;
+import tw.FunBar.model.RoomOrder;
 
 
 
@@ -26,7 +30,7 @@ import tw.FunBar.dao.EmailDAO;
 public class EmailDAOImpl implements EmailDAO {
 
 	@Override
-	public void sendEmail(String email) {
+	public void sendEmail(RoomOrder room_order,Room room) {
 		String host = "smtp.gmail.com";
 		  int port = 587;
 		  final String username = "funbar109@gmail.com";
@@ -47,19 +51,30 @@ public class EmailDAOImpl implements EmailDAO {
 
 		   Message message = new MimeMessage(session);
 		   message.setFrom(new InternetAddress("funbar109@gmail.com"));
-		   message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-		   message.setSubject("­q¦ì¸ê°T.");
-		   message.setText("Dear Levin, ·PÁÂ±zªº­q¦ì !          FunBar .");
+		   message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(room_order.getOrder_email()));
+		   message.setSubject("FunBar. è¨‚æˆ¿é€šçŸ¥");
+		   
+		   String htmlCode = "";
+		   htmlCode += "<div style='margin:0 auto;border:2px solid #02DF82;width:500px;text-align:center;font-size:22px;border-radius:10px'>";
+		   htmlCode += "<h1>æ‚¨çš„è¨‚æˆ¿è³‡è¨Š :</h1>";
+		   htmlCode += "<table style='border:none;text-align:ceneter;margin:0 auto'>";
+		   htmlCode += "<tr><td>è¨‚æˆ¿ç·¨è™Ÿ:</td><td>"+room_order.getOrder_id()+"</td></tr>";
+		   htmlCode += "<tr><td>è¨‚æˆ¿äººå§“å:</td><td>"+room_order.getOrder_name()+"</td></tr>";
+		   htmlCode += "<tr><td>æ‚¨çš„æˆ¿å‹:</td><td>"+room.getRoom_type()+"</td></tr>";
+		   htmlCode += "<tr><td>å…¥ä½æ—¥æœŸ:</td><td>"+room_order.getCheck_in_time()+"</td></tr>";
+		   htmlCode += "<tr><td>é€€æˆ¿æ—¥æœŸ:</td><td>"+room_order.getCheck_out_time()+"</td></tr>";
+		   htmlCode += "</table><h2 style='color:blue'>FunBar æ„Ÿè¬æ‚¨çš„é è¨‚</h2></div>";
+		   message.setContent(htmlCode,"text/html;charset=UTF-8");
 		   
 		   
 //           MimeBodyPart textPart = new MimeBodyPart();
 //           StringBuffer html = new StringBuffer();
-//           html.append("<h2>³o¬O²Ä¤@¦æ</h2><br>");
-//           html.append("<h3>³o¬O²Ä¤G¦æ¡A¤U­±·|¬O¹Ï</h3><br>");
+//           html.append("<h2>ï¿½oï¿½Oï¿½Ä¤@ï¿½ï¿½</h2><br>");
+//           html.append("<h3>ï¿½oï¿½Oï¿½Ä¤Gï¿½ï¿½Aï¿½Uï¿½ï¿½ï¿½|ï¿½Oï¿½ï¿½</h3><br>");
 //           html.append("<img style='width:100px;height:100px' src='cid:image'/><br>");
 //           textPart.setContent(html.toString(), "text/html; charset=UTF-8");
 //
-//           // ¹ÏÀÉ³¡¥÷¡Aª`·N html ¥Î cid:image¡A«hheader­n³]<image>
+//           // ï¿½ï¿½ï¿½É³ï¿½ï¿½ï¿½ï¿½Aï¿½`ï¿½N html ï¿½ï¿½ cid:imageï¿½Aï¿½hheaderï¿½nï¿½]<image>
 //           MimeBodyPart picturePart = new MimeBodyPart();
 //           FileDataSource fds = new FileDataSource("C:\\FinalProject\\FunBar\\src\\main\\webapp\\WEB-INF\\views\\images\\two-cups.jpg");
 //           picturePart.setDataHandler(new DataHandler(fds));
@@ -77,12 +92,83 @@ public class EmailDAOImpl implements EmailDAO {
 
 		   Transport.send(message);
 
-		   System.out.println("±H°eemailµ²§ô.");
+		   
 
 		  } catch (MessagingException e) {
 		   throw new RuntimeException(e);
 		  }
 
+	}
+
+	@Override
+	public void sendBookingEmail(BookingData data) {
+		String host = "smtp.gmail.com";
+		  int port = 587;
+		  final String username = "funbar109@gmail.com";
+		  final String password = "ftnnxuqoxaywfrtt";
+
+		  Properties props = new Properties();
+		  props.put("mail.smtp.host", host);
+		  props.put("mail.smtp.auth", "true");
+		  props.put("mail.smtp.starttls.enable", "true");
+		  props.put("mail.smtp.port", port);
+		  Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+		   protected PasswordAuthentication getPasswordAuthentication() {
+		    return new PasswordAuthentication(username, password);
+		   }
+		  });
+
+		  try {
+
+		   Message message = new MimeMessage(session);
+		   message.setFrom(new InternetAddress("funbar109@gmail.com"));
+		   message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(data.getEmail()));
+		   message.setSubject("FunBar. è¨‚æˆ¿é€šçŸ¥");
+		   
+		   String htmlCode = "";
+		   htmlCode += "<div style='margin:0 auto;border:2px solid #02DF82;width:500px;text-align:center;font-size:22px;border-radius:10px'>";
+		   htmlCode += "<h1>æ‚¨çš„è¨‚ä½è³‡è¨Š :</h1>";
+		   htmlCode += "<table style='border:none;text-align:ceneter;margin:0 auto'>";
+		   htmlCode += "<tr><td>è¨‚ä½ç·¨è™Ÿ:</td><td>"+data.getBooking_id()+"</td></tr>";
+		   htmlCode += "<tr><td>è¨‚ä½äººå§“å:</td><td>"+data.getName()+"</td></tr>";
+		   htmlCode += "<tr><td>è¨‚ä½æ—¥æœŸ:</td><td>"+data.getDate()+"</td></tr>";
+		   htmlCode += "<tr><td>è¨‚ä½æ™‚æ®µ:</td><td>"+data.getTime()+"</td></tr>";
+		   htmlCode += "<tr><td>è¨‚ä½äººæ•¸:</td><td>"+data.getPeople()+"äºº</td></tr>";
+		   htmlCode += "</table><h2 style='color:blue'>FunBar æ„Ÿè¬æ‚¨çš„é è¨‚</h2></div>";
+		   message.setContent(htmlCode,"text/html;charset=UTF-8");
+		   
+		   
+//         MimeBodyPart textPart = new MimeBodyPart();
+//         StringBuffer html = new StringBuffer();
+//         html.append("<h2>ï¿½oï¿½Oï¿½Ä¤@ï¿½ï¿½</h2><br>");
+//         html.append("<h3>ï¿½oï¿½Oï¿½Ä¤Gï¿½ï¿½Aï¿½Uï¿½ï¿½ï¿½|ï¿½Oï¿½ï¿½</h3><br>");
+//         html.append("<img style='width:100px;height:100px' src='cid:image'/><br>");
+//         textPart.setContent(html.toString(), "text/html; charset=UTF-8");
+//
+//         // ï¿½ï¿½ï¿½É³ï¿½ï¿½ï¿½ï¿½Aï¿½`ï¿½N html ï¿½ï¿½ cid:imageï¿½Aï¿½hheaderï¿½nï¿½]<image>
+//         MimeBodyPart picturePart = new MimeBodyPart();
+//         FileDataSource fds = new FileDataSource("C:\\FinalProject\\FunBar\\src\\main\\webapp\\WEB-INF\\views\\images\\two-cups.jpg");
+//         picturePart.setDataHandler(new DataHandler(fds));
+//         picturePart.setFileName(fds.getName());
+//         picturePart.setHeader("Content-ID", "<image>");
+//
+//         Multipart email = new MimeMultipart();
+//         email.addBodyPart(textPart);
+//         email.addBodyPart(picturePart);
+//
+//         message.setContent(email);
+
+		   Transport transport = session.getTransport("smtp");
+		   transport.connect(host, port, username, password);
+
+		   Transport.send(message);
+
+		   
+
+		  } catch (MessagingException e) {
+		   throw new RuntimeException(e);
+		  }
+		
 	}
 
 }

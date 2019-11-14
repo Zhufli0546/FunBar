@@ -13,8 +13,10 @@
 	
 <style>
 
+
+
 #signup {
-    width: 550px;
+    width: 350px;
     margin: 50px auto 50px auto;
     padding: 20px;
     position: relative;
@@ -134,12 +136,12 @@ input{
 
 button{
 	height:50px;
-	width:220px;
+	width:150px;
 }
 </style>	
 </head>
 
-<body>
+<body onload="go()">
 
 	<!-- Header -->
 	<jsp:include page="header.jsp" />
@@ -147,8 +149,8 @@ button{
 
 
 	<!-- Blog -->
-	<section class="page animsition">
-		<form id="signup" method="post" action="addReservations">
+	<section class="page animsition" style="background-color:#D0D0D0">
+		<form id="signup" method="post" action="addReservations" style="background-color:white;border:2px solid black">
     <h1>填寫訂位人資料</h1>
     <input name="date" type="text" value="${date}"  readonly="readonly">
     <input name="time" type="text" value="${time}"  readonly="readonly">
@@ -161,7 +163,7 @@ button{
     <input name="remark" type="text" placeholder="備註" required="required">
     <div style="text-align:center">
     <button type="button"
-					onclick="location.href='booking'">重新選擇日期及時段</button>               
+					onclick="location.href='booking'">返回</button>               
     <button type="submit">預約</button>
     </div>
 </form>
@@ -170,6 +172,12 @@ button{
 	<!-- Footer -->
 	<jsp:include page="footer.jsp" />
 
+	<script>
+
+function go() {
+	$('html,body').animate({scrollTop:200},2000);
+	}
+</script>
 	
 
 </body>
