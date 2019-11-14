@@ -51,6 +51,7 @@ public class Comment {
 
 	private Integer memberId;
 
+	@JsonIgnoreProperties("comment")
 	@OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
 	private Set<Report> reports = new HashSet<Report>();
 
