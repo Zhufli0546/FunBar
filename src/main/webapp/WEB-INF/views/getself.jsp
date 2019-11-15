@@ -70,92 +70,24 @@
                         <label for="memberId">姓名:</label>
                         <input type="text" class="form-control" name="memberName" value="${one.memberName}">
 						<label for="memberAddress">地址:</label>
-                     <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix='form' uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-<title>showAllmember</title>
-<link rel='stylesheet'
-	href='${pageContext.request.contextPath}/css/styles.css'
-	type="text/css" />
-</head>
-
-<body>
-	<section>
-		<div>
-			<div class="container" style="text-align: center">
-				<h1>會員管理</h1>
-			</div>
-			<table align="center"
-				style="border: 3px #FFAC55 double; padding: 5px;" rules="all";>
-				<tr bgcolor="#8fefa">
-				<tr>
-					<th>會員編號
-					<th>姓名
-					<th>身分證
-					<th>出生
-					<th>住址
-					<th>電話
-					<th>性別
-					<th>email
-					<th>大頭貼 <c:forEach var="member" items="${members}">
-							<!--  隨便取                      對應Controller-->
-
-							<tr>
-								<td>${member.id}</td>
-								<td>${member.memberName}</td>
-								<td>${member.memberAddress}</td>
-								<td>${member.memberBirth}</td>
-								<td>${member.memberPhone}</td>
-								<td>${member.memberPwd}</td>
-								<td>${member.memberId}</td>
-								<td>${member.memberEmail}</td>
-								<td>${member.memberPic}</td>
-
-
-
-								<td><a
-									href="<spring:url value='deletemb?id=${member.id}' />">
-										<button type="button" class="btn btn-outline-secondary">刪除</button>
-								</a></td>
-								<td><a href="<spring:url value='getONE?id=${member.id}' />">
-										<button type="button" class="btn btn-outline-secondary">修改</button>
-								</a></td>
-							</tr>
-						</c:forEach>
-					</th>
-				</tr>
-
-				<div>
-					<td><a href="${pageContext.request.contextPath}">
-							<button type="button" class="btn btn-outline-secondary">回首頁</button>
-					</a></td>
-				</div>
-		</div>
-		</table>
-	</section>
-</body>
-</html>
-
                         <input type="text" class="form-control" name="memberAddress" value="${one.memberAddress}">
 						<label for="memberAddress">生日:</label>
                         <input type="text" class="form-control" name="memberBirth" value="${one.memberBirth}">
 						<label for="memberAddress">電話:</label>
                         <input type="text" class="form-control" name="memberPhone" value="${one.memberPhone}">
 						<label for="memberAddress">密碼:</label>
-                        <input type="text" class="form-control" name="memberPwd" disable value="${one.memberPwd}">
+                        <input type="password" class="form-control" name="memberPwd" disabled value="${one.memberPwd}">
                         <label for="memberAddress">帳號:</label>
-                        <input type="text" class="form-control" name="memberId" disable value="${one.memberId}">
+                        <input type="text" class="form-control" name="memberId" disabled value="${one.memberId}">
                         <label for="memberAddress">信箱:</label>
+                       </div>
+                        <div>
                         <input type="text" class="form-control" name="memberEmail" value="${one.memberEmail}">
                         <label for="memberAddress">大頭貼:</label>
+                        <img
+											class="card-img-top rounded-circle"
+											style="height: 100px; width: 100px"
+											src="<c:url value='/membergetPicture/${member.id}'/>">
                         <input type="file" class="form-control" name="memberimg" value="${one.memberimg}">
 				</div>
 

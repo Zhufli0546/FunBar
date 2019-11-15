@@ -14,11 +14,17 @@ public interface MemberService {
 	void saveMember(Member mb);
 
 	Member getONEmember(int id);
+	
+	Member showMan(int id);
 
 	void delete(int id);
 
 	void updateMember(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
 			String memberPwd, String memberId, String memberEmail,Blob blob);
+	
+	void updateself(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
+			String memberPwd, String memberId, String memberEmail,Blob blob);
+	
 	
 	Member signin (String memberId,String memberPwd);
 

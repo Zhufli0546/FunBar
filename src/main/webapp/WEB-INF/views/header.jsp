@@ -82,16 +82,13 @@
 								           		 <a class="dropdown-item" href="${pageContext.request.contextPath}/booking">線上訂位</a>
                									 <a class="dropdown-item" href="${pageContext.request.contextPath}/booking_room">線上訂房</a>
                								</div>	 
-               									  
-								
-								
-								
+
 								</li>
 								
 								<li><a href="${pageContext.request.contextPath}/signin">登入</a></li>
-
+								<li><a
+									href="${pageContext.request.contextPath}/booking_room">線上訂房</a></li>
 								</ul>
-								
 								<c:choose>
 									<c:when test="${sessionScope.member.memberName==null}">
 										<li><a href="joinus">註冊</a></li>
@@ -99,12 +96,31 @@
 									</c:when>
 									<c:otherwise>
 
-										<a href="<c:url value='getONE?id=${member.id}' />">
-								<img class="card-img-top rounded-circle"
-								style="height:50px;width:50px "
-									src="<c:url value='/membergetPicture/${member.id}'/>">
-							</a>
-										<a>${sessionScope.member.memberName}, 你好</a>
+										<a href="<c:url value='getself?id=${member.id}' />"> <img
+											class="card-img-top rounded-circle"
+											style="height: 50px; width: 50px"
+											src="<c:url value='/membergetPicture/${member.id}'/>">
+										</a>
+										<div class="dropdown">
+											<button  type="button" class="btn dropdown-toggle" 
+												id="dropdownMenu1" data-toggle="dropdown">
+												${sessionScope.member.memberName}, 你好 <span class="caret"></span>
+											</button>
+											<ul 
+											class="dropdown-menu" role="menu"
+												aria-labelledby="dropdownMenu1">
+												<li role="presentan"><a role="menuitem" tabindex="-1"
+													href="<c:url value='getself?id=${member.id}' />">修改會員資料</a>
+												</li>
+												<div class="dropdown-divider"></div>
+													<li role="presentan"><a role="menuitem" tabindex="-1"
+													href="<c:url value='getONE?id=${member.id}' />">修改訂單資料</a>
+												</li>
+													
+											</ul>
+										</div>
+
+										<!-- 	<a>${sessionScope.member.memberName}, 你好</a> -->
 										<td><a href="${pageContext.request.contextPath}/logout">登出</a></td>
 									</c:otherwise>
 								</c:choose>
