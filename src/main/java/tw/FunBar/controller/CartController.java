@@ -220,7 +220,7 @@ public class CartController {
 	@RequestMapping("/orderSetUp")
 	public String orderSetUp(HttpServletRequest request,
 						     HttpSession session,
-						     @RequestParam String address) {
+						     @RequestParam String address,Model model) {
 		
 		session = request.getSession(false);
 		Member member = (Member)session.getAttribute("Member");
@@ -262,6 +262,7 @@ public class CartController {
 		}
 		
 		order.setOrderItem(orderItemList);
+		model.addAttribute("orderItemList", orderItemList);
 		
 		return "";
 	}
