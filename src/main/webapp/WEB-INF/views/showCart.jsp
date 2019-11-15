@@ -38,6 +38,10 @@
 	background-color: #019858;
 }
 
+input{
+outline:none;
+}
+
 </style>
 <head>
 <meta charset="UTF-8">
@@ -307,11 +311,9 @@
 
 	<!-- Content 區塊 -->
 	<div class="container page">
-		<div class="row">
-			<div class="col-sm-offset-10 col-sm-3">
-				<a class="orderBtn" href="<c:url value='/deleteCartItem' />">清空購物車</a>
-			</div>
-		</div>
+		<div align="right" colspan="8" style="margin:1px 60px 0 0">
+  		<a class="orderBtn" href="<c:url value='/deleteCartItem' />">清空購物車</a>
+  		</div>
 		<div class="table-responsive">
 			<table class="table" style="margin: 20px 0">
 				<thead>
@@ -373,7 +375,7 @@
 
 	<!-- model -->
 	<div class="modal fade" id="createForm"
-		role="dialog" aria-labelledby="myModalLabel1">
+		role="dialog" aria-labelledby="myModalLabel1" style="background:rgba(0,0,0,0.8)">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 
@@ -398,8 +400,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="ci" items="${sessionScope.Cart.cartItems}"
-										begin="0" step="1" varStatus="i">
+									<c:forEach var="ci" items="${sessionScope.Cart.cartItems}" begin="0" step="1" varStatus="i">
 										<tr>
 											<td class="pn"></td>
 											<td class="pp"></td>
@@ -413,24 +414,32 @@
 									<td class="ta" align="right" colspan="8" style="color:#FF60AF;"></td>
 								</tr>
 							</table>
-<!-- 							<div class="ta" style="color:red;float:right"></div> -->
+						  
 						</div>
 					</div>
-						<form>
+
+						<form >
+				
+							<div><p>請填寫以下聯絡資料</p></div>
 							<div>
 								<label>姓名</label> 
-								<input type="text" name="memberName" /> 
+								<input type="text" name="memberName" value="${sessionScope.member.memberName}"  class="orderN"/> 
 							</div>
 							<div>
 								<label>手機</label>
-								<input type="text" name="memberPhone" /> 
+								<input type="text" name="memberPhone" value="${sessionScope.member.memberPhone}" /> 
 							</div>
 							<div>
 								<label>地址</label> 
-								<input type="text" name="shippingAddress" />
+								<input type="text" name="shippingAddress" value="${sessionScope.member.memberAddress}" />
+							</div>
+							<div>
+								<label>備註</label>
+								<input type="text" name="remark" placeholder="請填寫注意事項" />
 							</div>
 							<input type="submit" value="確認結帳"  class="btn btn-success" style="float:right"/>
-						</form>
+							
+						</form> 						
 				</div>
 				
 			</div>
