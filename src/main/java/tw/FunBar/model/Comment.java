@@ -53,7 +53,7 @@ public class Comment {
 
 	@JsonIgnoreProperties("comment")
 	@OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
-	private Set<Report> reports = new HashSet<Report>();
+	private Set<Report> reports = new LinkedHashSet<Report>();
 
 	public Integer getCommentId() {
 		return commentId;

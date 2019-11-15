@@ -22,13 +22,24 @@ public class ReportDAOImpl implements ReportDAO {
 		Session session = sessionFactory.getCurrentSession();
 		session.save(report);
 	}
-
+	
 	@Override
 	public Comment findCommentById(int id) {
 		Session session = sessionFactory.getCurrentSession();
 		Comment comment = session.get(Comment.class, id);
 
 		return comment;
+	}
+
+	@Override
+	public Report findCommentReportById(int commentId, int reportId) {
+		String hql = "From Report Where commentId = :commentId And reportId = :reportId";
+		Session session = sessionFactory.getCurrentSession();
+		Report report = (Report)session.createQuery(hql)
+							.setParameter("commentId", commentId)
+							.setParameter("reportId", reportId).getSingleResult();
+
+		return report;
 	}
 
 	@Override

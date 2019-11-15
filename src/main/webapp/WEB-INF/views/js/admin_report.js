@@ -1,5 +1,4 @@
 var requestUrl = $(".requestUrl").text();
-console.log(requestUrl);
 let clickArray = new Array();
 let pageRow = 10;
 let pageRowStart = 0;
@@ -12,7 +11,7 @@ $(".nav-tabs a").click(function(){
 });
 
 function init() {
-	let txt = "<thead><tr><th>檢舉編號<th>檢舉人<th>檢舉原因<th>檢舉時間<th>被檢舉人</tr></thead>";
+	let txt = "<thead><tr><th>留言編號<th>留言內容<th>檢舉人<th>檢舉原因<th>檢舉時間<th>被檢舉人</tr></thead>";
 	reports = tododata;
 
 	// 每頁最多筆數 ex: 第一頁最大筆數為10
@@ -26,9 +25,10 @@ function init() {
 	console.log("Start:" + pageRowStart + " End:" + pageRowEnd);
 
 	for (let i = pageRowStart; i < pageRowEnd; i++) {
-		txt += "<tr><td>" + reports[i].reportId;
+		txt += "<tr><td>" + reports[i].comment.commentId;
+		txt += "<td class='tdcommentContent'>" + reports[i].comment.commentContent;
 		txt += "<td>" + reports[i].reportName;
-		txt += "<td><a class='showComment' data-toggle='modal' data-target='#showComment' data-showcomment='" + requestUrl 
+		txt += "<td><a class='tdshowComment' data-toggle='modal' data-target='#showComment' data-showcomment='" + requestUrl 
 				+ "/admin_showComment/" + reports[i].reportId + "/" + reports[i].comment.commentId + "'>" + reports[i].reportContent;
 		txt += "<td>" + reports[i].reportCreatedTime;
 		txt += "<td>" + reports[i].commentReportName;
@@ -61,21 +61,22 @@ function init() {
 		init();
 	});
 	
-	$(".showComment").click(function() {
+	$(".tdshowComment").click(function() {
 		let showCommentUrl = $(this).data("showcomment");
 		$.ajax({
 			url: showCommentUrl,
 			method: "POST",
-			dataType: "JSON",
 			success: function(res) {
-				let comment = res.comment;
-				$(".blogTitle").html("<h4 class='modal-title blogTitle'>" + comment.blog.blogTitle + "</h4>");
-				$(".commentName").html("留言者: <p class='commentName'>" + comment.commentName + "</p>");
-				$(".commentCreatedTime").html("留言時間: <p class='commentCreatedTime'>" + comment.commentCreatedTime + "</p>");
-				$(".commentContent").html("留言內容: <p class='commentContent'>" + comment.commentContent + "</p>");
-				$(".reportName").html("檢舉人: <p class='reportName'>" + comment.reports[0].reportName + "</p>");
-				$(".reportContent").html("檢舉原因: <p class='reportContent'>" + comment.reports[0].reportContent + "</p>");
-
+				let report = res.report;
+				console.log("====== 有沒有替換掉阿 =======");
+				console.log("文章標題:" + report.comment.blog.blogTitle);
+				$(".blogTitle").text(report.comment.blog.blogTitle);
+				$(".commentId").text(report.comment.commentId);
+				$(".commentName").text(report.comment.commentName);
+				$(".commentCreatedTime").text(report.comment.commentCreatedTime);
+				$(".commentContent").text(report.comment.commentContent);
+				$(".reportName").text(report.reportName);
+				$(".reportContent").text(report.reportContent);
 			}
 		})
 	})
@@ -87,7 +88,6 @@ function init() {
 			method: "POST",
 			dataType: "JSON",
 			success: function() {
-				console.log("success");
 				$("#reportProcess").html("");
 				$("#showProcess").html("");
 				generateReport();
@@ -109,19 +109,18 @@ function generateReport() {
 }
 
 generateReport();
-
 function hiddenContent() {
-	$(".blog-title").each(function() {
+	$(".tdcommentContent").each(function() {
 		let len = 10;
 		let txt = $(this).text().trim();
 		if (txt.length > len) {
 			txt = txt.substr(0, len);
 		}
+
 		$(this).html(txt);
 	});
 
-	$(".blog-content").each(function() {
-		let id = $(this).attr('data-id');
+	$(".tdshowComment").each(function() {
 		let len = 20;
 		let txt = $(this).text().trim();
 		if (txt.length > len) {

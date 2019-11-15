@@ -60,7 +60,7 @@ public class ReportController {
 		report.setComment(comment);
 		report.setCommentReportName(comment.getCommentName());
 		report.setReportStatus(0);
-		
+
 		reportService.insertReport(report);
 		
 		return "reportInsert";
@@ -102,8 +102,8 @@ public class ReportController {
 						   @PathVariable Integer commentId,
 						   Model model) {
 
-		Comment comment = reportService.findCommentById(commentId);
-		model.addAttribute("comment", comment);
+		Report report = reportService.findCommentReportById(commentId, reportId);
+		model.addAttribute("report", report);
 
 		return "lockData";
 	}

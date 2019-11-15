@@ -10,6 +10,8 @@ public interface ReportDAO {
 	
 	public Comment findCommentById(int id);
 	
+	public Report findCommentReportById(int commentId, int reportId);
+	
 	public Report findReportById(int id);
 	
 	public List<Report> queryReportProcess();
