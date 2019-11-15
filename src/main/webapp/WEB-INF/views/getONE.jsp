@@ -76,7 +76,7 @@
 						<label for="memberAddress">電話:</label>
                         <input type="text" class="form-control" name="memberPhone" value="${one.memberPhone}">
 						<label for="memberAddress">密碼:</label>
-                        <input type="text" class="form-control" name="memberPwd" value="${one.memberPwd}">
+                        <input type="password" class="form-control" name="memberPwd" value="${one.memberPwd}">
                         <label for="memberAddress">帳號:</label>
                         <input type="text" class="form-control" name="memberId" value="${one.memberId}">
                         <label for="memberAddress">信箱:</label>

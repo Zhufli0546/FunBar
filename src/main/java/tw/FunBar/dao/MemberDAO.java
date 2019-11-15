@@ -12,6 +12,8 @@ public interface MemberDAO {
 	List<Member> getAllmembers();
 
 	Member getONEmember(int id);
+	
+	Member showMan(int id);
 
 	void saveMember(Member mb);
 
@@ -20,6 +22,9 @@ public interface MemberDAO {
 	void updateMember(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
 			String memberPwd, String memberId, String memberEmail,Blob blob);
 
+	void updateself(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
+			String memberPwd, String memberId, String memberEmail,Blob blob);
+	
 	Member signin (String memberId,String memberPwd);
 	
 	
