@@ -137,7 +137,7 @@ function day() {
                 dataType: "JSON",
                 success: function (data) {
                    txt = "";
-                		
+                	console.log(data);
                    for (let i = 0; i < data.length; i++) {
                     	
                         txt += "<form method='POST' action='confirm'>";

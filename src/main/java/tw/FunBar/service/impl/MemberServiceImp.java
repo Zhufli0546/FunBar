@@ -26,11 +26,6 @@ public class MemberServiceImp implements MemberService {
 		return dao.getAllmembers();
 	}	
 	
-	@Override
-	public Member getONEmember(int id) {
-		
-		return dao.getONEmember(id);
-	}
 
 	@Override
 	public void saveMember(Member mb) {
@@ -50,6 +45,13 @@ public class MemberServiceImp implements MemberService {
 	}
 
 	@Override
+	public void updateself(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
+			String memberPwd, String memberId, String memberEmail,Blob blob) {
+		dao.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberPwd, memberId, memberEmail, blob);
+	}
+	
+	
+	@Override
 	public Member signin(String memberId, String memberPwd) {
 		
 		return dao.signin(memberId, memberPwd);
@@ -61,6 +63,16 @@ public class MemberServiceImp implements MemberService {
 		return dao.checkuser(memberId, memberPwd);
 	}
 
+	@Override
+	public Member showMan(int id) {
+		
+		return dao.showMan(id);
+	}
+	@Override
+	public Member getONEmember(int id) {
+		
+		return dao.getONEmember(id);
+	}
 
 
 	

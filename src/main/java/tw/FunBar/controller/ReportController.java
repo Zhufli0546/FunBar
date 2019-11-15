@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -58,6 +59,7 @@ public class ReportController {
 		Comment comment = reportService.findCommentById(commentId);
 		report.setComment(comment);
 		report.setCommentReportName(comment.getCommentName());
+		report.setReportStatus(0);
 		
 		reportService.insertReport(report);
 		
@@ -75,5 +77,34 @@ public class ReportController {
 
 		model.addAttribute("reports", reports);
 		return "reportProcess";
+	}
+	
+	@RequestMapping("/reportResult")
+	public String reportResult(Model model) {
+		List<Report> reportsResult = reportService.queryReportResult();
+
+		model.addAttribute("reportsResult", reportsResult);
+		return "reportResult";
+	}
+	
+	@RequestMapping("/admin_lock/{commentId}")
+	public String lockData(@PathVariable Integer commentId) {
+
+		Comment comment = reportService.findCommentById(commentId);
+		reportService.deleteComment(comment);
+
+		return "lockData";
+	}
+	
+	@RequestMapping("/admin_showComment/{reportId}/{commentId}")
+	public String adminShowComment(
+						   @PathVariable Integer reportId,
+						   @PathVariable Integer commentId,
+						   Model model) {
+
+		Comment comment = reportService.findCommentById(commentId);
+		model.addAttribute("comment", comment);
+
+		return "lockData";
 	}
 }

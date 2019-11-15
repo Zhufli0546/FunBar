@@ -36,6 +36,7 @@ body {
   width: 100%;
   margin: 0 auto;
   position: relative;
+  margin-top:5px;
 }
 
 #contact input[type="text"],
@@ -50,9 +51,11 @@ body {
 #contact {
   background: #F9F9F9;
   padding: 25px;
-  margin: 150px auto;
+  margin: 35px auto;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
   width:450px;
+  border:2px solid black;
+  border-radius:10px;
 }
 
 #contact h3 {
@@ -161,7 +164,7 @@ fieldset {
 <body id="page-top">
 	<jsp:include page="admin_header.jsp" />
 	
-	<div class="container">  
+	<div class="container" style="margin:10px auto;height:700px">  
   <form:form modelAttribute="room" id="contact" action="add_room" method="post" enctype="multipart/form-data">
     <h3>增加房型</h3>
     <h4>房型資訊</h4>

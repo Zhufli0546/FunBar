@@ -10,5 +10,13 @@ public interface ReportDAO {
 	
 	public Comment findCommentById(int id);
 	
+	public Report findReportById(int id);
+	
 	public List<Report> queryReportProcess();
+	
+	public List<Report> queryReportResult();
+	
+	public void deleteComment(Comment comment);
+	
+	public void resolveReport(Report report);
 }
