@@ -37,6 +37,7 @@
 .minus:hover {
 	background-color: #019858;
 }
+
 </style>
 <head>
 <meta charset="UTF-8">
@@ -377,11 +378,9 @@
 		</div>
 	</div>
 
-	<jsp:include page="footer.jsp" />
-
 
 	<!-- model -->
-	<div class="modal right fade" id="createForm" tabindex="-1"
+	<div class="modal right fade" id="createForm"
 		role="dialog" aria-labelledby="myModalLabel1">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -393,10 +392,10 @@
 					</button>
 				</div>
 
-				<div class="modal-body">
+				<div class="modal-body" id="createForm">
 					<div class="container page">
 						<div class="table-responsive">
-							<table class="table" style="margin: 20px 0">
+							<table class="table" style="margin: 5px 0;">
 								<thead>
 									<tr>
 										<th>產品名稱</th>
@@ -410,20 +409,35 @@
 									<c:forEach var="ci" items="${sessionScope.Cart.cartItems}"
 										begin="0" step="1" varStatus="i">
 										<tr>
-											<td class="pn">${ci.product.productName}</td>
-											<td class="pp">${ci.product.unitPrice}</td>
-											<td class="pc">${ci.count}</td>
-											<td class="pddd">${ci.product.discount}</td>
-											<td></td>
+											<td class="pn"></td>
+											<td class="pp"></td>
+											<td class="pc"></td>
+											<td class="pddd"></td>
+											<td class="st"></td>
 										</tr>
 									</c:forEach>
-
 								</tbody>
 							</table>
+							<div class="ta"></div>
 						</div>
 					</div>
+						<form>
+							<div>
+								<label>姓名</label> 
+								<input type="text" name="memberName" /> 
+							</div>
+							<div>
+								<label>手機</label>
+								<input type="text" name="memberPhone" /> 
+							</div>
+							<div>
+								<label>地址</label> 
+								<input type="text" name="shippingAddress" />
+							</div>
+							<input type="submit" value="確認結帳"  class="btn btn-success"/>
+						</form>
 				</div>
-
+				
 			</div>
 			<!-- modal-content -->
 		</div>
@@ -433,32 +447,76 @@
 
 	<jsp:include page="footer.jsp" />
 	<script>
-		$(document).ready(function() {
-			$('#createForm').on('shown.bs.modal', function() {
-				$(document).off('focusin.modal');
-			});
-			
-			let todata;
-			$("#buy").click(function() {
-				$.ajax({
-					url: "http://localhost:8080/FunBar/buyCartJson",
-					method: "POST",
-					dataType: "JSON",
-					success: function(res) {
-						let data = res;
-						for(let i=0;i<data.length;i++) {
+		$(document)
+				.ready(
+						function() {
+							$('#createForm').on('shown.bs.modal', function() {
+								$(document).off('focusin.modal');
+							});
 
+							let todata;
+							$("#buy")
+									.click(
+											function() {
+												$
+														.ajax({
+															url : "http://localhost:8080/FunBar/buyCartJson",
+															method : "POST",
+															dataType : "JSON",
+															success : function(
+																	res) {
+																let data = res;
+																let totalAmount = 0;
+																for (let i = 0; i < data.length; i++) {
 
-							$(".pn").eq(i).text(data[i].product.productName);
-							$(".pp").eq(i).text(data[i].product.unitPrice);
-							$(".pc").eq(i).text(data[i].count);
-							$(".pddd").eq(i).text(data[i].product.discount);
-						}
-						
-					}
-				})
-			})
-		})
+																	$(".pn")
+																			.eq(
+																					i)
+																			.text(
+																					data[i].product.productName);
+
+																	let unitPrice = data[i].product.unitPrice;
+																	let count = data[i].count;
+																	let discount = data[i].product.discount;
+
+																	$(".pp")
+																			.eq(
+																					i)
+																			.text(
+																					unitPrice);
+																	$(".pc")
+																			.eq(
+																					i)
+																			.text(
+																					count);
+																	$(".pddd")
+																			.eq(
+																					i)
+																			.text(
+																					discount);
+
+																	let subTotal = parseInt(unitPrice
+																			* count
+																			* discount
+																			/ 10);
+																	$(".st")
+																			.eq(
+																					i)
+																			.text(
+																					subTotal);
+																	console
+																			.log(subTotal);
+																	totalAmount += subTotal;
+																}
+																$(".ta")
+																		.text(
+																				"$"
+																						+ totalAmount);
+
+															}
+														})
+											})
+						})
 	</script>
 
 </body>
