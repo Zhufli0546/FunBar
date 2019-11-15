@@ -76,3 +76,25 @@ function confirmFriendRequest() {
 	})
 }
 
+
+
+
+
+
+//Open the web socket connection to the server
+var socketConn = new WebSocket(requestUrl+'socketHandler');
+
+//Send Message
+function send() {
+	var clientMsg = document.getElementById('clientMsg');
+	if (clientMsg.value) {
+		socketConn.send(clientMsg.value);
+		clientMsg.value = '';
+	}
+}
+
+// Recive Message
+socketConn.onmessage = function(event) {
+	var serverMsg = document.getElementById('serverMsg');
+	serverMsg.value = event.data;
+}
