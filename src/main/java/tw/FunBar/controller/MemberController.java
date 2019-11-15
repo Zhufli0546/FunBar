@@ -5,6 +5,8 @@ package tw.FunBar.controller;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
+
+import javax.persistence.NoResultException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,11 +43,18 @@ public class MemberController {
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
 	public String signinto(@RequestParam("memberId") String memberId, @RequestParam("memberPwd") String memberPwd,
 			Model model, HttpServletRequest request, HttpSession session) {
-
-		Member member = memberService.signin(memberId, memberPwd);
+		
+		Member member = null;
+		try {
+			member = memberService.signin(memberId, memberPwd);
+		} catch(NoResultException e) {
+			return "redirect:/signin";
+		}
+		
 
 		int level = member.getMemberLevel();
 		System.out.println("level:"+level);
+		
 		if (member != null && level == 0) {
 			session = request.getSession(false);
 			session.setAttribute("member", member);
@@ -94,7 +103,12 @@ public class MemberController {
 		return "joinus";
 	}
 	@RequestMapping(value = "/joinus", method = RequestMethod.POST)
-	public String dosavemember(@ModelAttribute("Member") Member mb) {
+	public String dosavemember(@ModelAttribute("Member") Member mb, HttpServletRequest request, HttpSession session) {
+		
+		Member member = null;
+		
+		
+		
 		MultipartFile IMG = mb.getMemberimg();
 		String originalFilename = IMG.getOriginalFilename();
 		mb.setMemberfileName(originalFilename);
@@ -109,6 +123,11 @@ public class MemberController {
 			}
 		}
 		memberService.saveMember(mb);
+		session =request.getSession(false);
+		session.setAttribute("member", mb);
+		
+		
+		
 		return "redirect:/showAllmember";
 		
 	}
@@ -164,4 +183,27 @@ public class MemberController {
 	  ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media,HttpStatus.OK);
 	  return responseEntity;
 	}
+	
+	
+	// 修改自己
+		@RequestMapping(value = "/getself", method = RequestMethod.GET)
+		public String getself(@RequestParam("id") Integer id, Model model) {
+			model.addAttribute("one", memberService.getONEmember(id));
+			return "getself";
+		}
+		@RequestMapping(value = "/updatemb1", method = RequestMethod.POST)
+		public String updatemb1(@RequestParam Integer id, @RequestParam("memberName") String memberName,
+				@RequestParam("memberAddress") String memberAddress, @RequestParam("memberBirth") String memberBirth,
+				@RequestParam("memberPhone") String memberPhone, @RequestParam("memberPwd") String memberPwd,
+				@RequestParam("memberId") String memberId, @RequestParam("memberEmail") String memberEmail,
+				@RequestParam("memberimg") MultipartFile memberimg,Model model) throws Exception {
+			System.out.println("Id=" + id);
+			byte[] b1 = memberimg.getBytes();
+			Blob blob = new SerialBlob(b1);
+			memberService.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberPwd, memberId,
+					memberEmail, blob);
+			return "redirect:/showMAN";
+		}
+	
+	
 }
