@@ -11,6 +11,9 @@ import javax.persistence.Transient;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 
 @Entity
@@ -26,6 +29,7 @@ public class Member {
 	private String memberPwd;
 	private String memberId;
 	private String memberEmail;
+	@JsonIgnore
 	private Blob  memberPic;
 	private int memberLevel;
 	private String memberfileName;
