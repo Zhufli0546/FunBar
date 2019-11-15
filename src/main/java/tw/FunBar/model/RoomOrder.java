@@ -1,12 +1,16 @@
 package tw.FunBar.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="RoomOrder")
@@ -17,7 +21,7 @@ public class RoomOrder {
 	private Integer order_id;
 	
 	//private Integer member_id;
-	
+	@Transient
 	private Integer room_id;
 	
 	private String check_in_time;
@@ -26,13 +30,19 @@ public class RoomOrder {
 	
 	private Integer rooms;
 	
-	private Integer people;
+	private String order_name;
 	
-	private String driving;
+	private String order_email;
 	
 	private String remark;
 	
+	private String order_phone;
 	
+	private Integer total;
+	
+	private String status;
+	
+	@JsonIgnoreProperties("roomOrder")
 	@ManyToOne
 	@JoinColumn(name="ROOM_ID")
 	private Room room;
@@ -45,6 +55,29 @@ public class RoomOrder {
 
 	public void setOrder_id(Integer order_id) {
 		this.order_id = order_id;
+	}
+	
+	
+
+	
+
+	public String getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
+	public Integer getTotal() {
+		return total;
+	}
+
+
+	public void setTotal(Integer total) {
+		this.total = total;
 	}
 
 
@@ -78,6 +111,14 @@ public class RoomOrder {
 	}
 	
 	
+	public String getOrder_phone() {
+		return order_phone;
+	}
+
+
+	public void setOrder_phone(String order_phone) {
+		this.order_phone = order_phone;
+	}
 
 
 	public Integer getRooms() {
@@ -90,26 +131,23 @@ public class RoomOrder {
 	}
 
 
-	public Integer getPeople() {
-		return people;
+	public String getOrder_name() {
+		return order_name;
 	}
 
 
-	public void setPeople(Integer people) {
-		this.people = people;
+	public void setOrder_name(String order_name) {
+		this.order_name = order_name;
 	}
 
 
-
-
-
-	public String getDriving() {
-		return driving;
+	public String getOrder_email() {
+		return order_email;
 	}
 
 
-	public void setDriving(String driving) {
-		this.driving = driving;
+	public void setOrder_email(String order_email) {
+		this.order_email = order_email;
 	}
 
 

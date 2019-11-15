@@ -99,6 +99,20 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 
+	@Override
+	public BookingData getBookingByphone(String phone) {
+		
+		return bookingDAO.getBookingByphone(phone);
+	}
+
+
+	@Override
+	public BookingData bookingNumQuery(Integer number) {
+		
+		return bookingDAO.bookingNumQuery(number);
+	}
+
+
 
 
 

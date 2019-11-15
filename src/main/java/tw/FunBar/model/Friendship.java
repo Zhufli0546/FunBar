@@ -3,41 +3,60 @@ package tw.FunBar.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "Friendship")
 public class Friendship implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Integer memberId;
-	private Integer memberIdf;
-	private String startDate;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer friendshipId;
+	private Integer sender_memberId;
+	private Integer receiver_memberId;
+	private String requestTime;
+	private Integer friendStatus;
 
-	public Integer getMemberId() {
-		return memberId;
+	public Integer getFriendshipId() {
+		return friendshipId;
 	}
 
-	public void setMemberId(Integer memberId) {
-		this.memberId = memberId;
+	public void setFriendshipId(Integer friendshipId) {
+		this.friendshipId = friendshipId;
 	}
 
-	public Integer getMemberIdf() {
-		return memberIdf;
+	public Integer getSender_memberId() {
+		return sender_memberId;
 	}
 
-	public void setMemberIdf(Integer memberIdf) {
-		this.memberIdf = memberIdf;
+	public void setSender_memberId(Integer sender_memberId) {
+		this.sender_memberId = sender_memberId;
 	}
 
-	public String getStartDate() {
-		return startDate;
+	public Integer getReceiver_memberId() {
+		return receiver_memberId;
 	}
 
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	public void setReceiver_memberId(Integer receiver_memberId) {
+		this.receiver_memberId = receiver_memberId;
+	}
+
+	public String getRequestTime() {
+		return requestTime;
+	}
+
+	public void setRequestTime(String requestTime) {
+		this.requestTime = requestTime;
+	}
+
+	public Integer getFriendStatus() {
+		return friendStatus;
+	}
+
+	public void setFriendStatus(Integer friendStatus) {
+		this.friendStatus = friendStatus;
 	}
 
 }

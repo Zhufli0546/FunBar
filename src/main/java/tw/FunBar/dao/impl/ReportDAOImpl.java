@@ -40,4 +40,36 @@ public class ReportDAOImpl implements ReportDAO {
 		return reports;
 	}
 
+	@Override
+	public List<Report> queryReportResult() {
+		String hql = "From Report Where reportStatus = 1";
+		Session session = sessionFactory.getCurrentSession();
+		List<Report> reports = (List<Report>)session.createQuery(hql).getResultList();
+		
+		return reports;
+	}
+
+	@Override
+	public void deleteComment(Comment comment) {
+		Session session = sessionFactory.getCurrentSession();
+		session.delete(comment);
+	}
+
+	@Override
+	public void resolveReport(Report report) {
+		String hql = "Update Report Set reportStatus = 1 Where reportId = :reportId";
+		Session session = sessionFactory.getCurrentSession();
+		session.createSQLQuery(hql).setParameter("reportId", report.getReportId()).executeUpdate();
+	}
+
+	@Override
+	public Report findReportById(int id) {
+		String hql = "From Report Where reportId = :reportId";
+		Session session = sessionFactory.getCurrentSession();
+		Report report = (Report)session.createQuery(hql)
+							.setParameter("reportId", id).getSingleResult();
+
+		return report;
+	}
+
 }

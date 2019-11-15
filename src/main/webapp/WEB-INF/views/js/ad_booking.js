@@ -141,7 +141,7 @@ function day() {
                 		
                    for (let i = 0; i < data.length; i++) {
                     	
-                        txt += "<form method='POST' action='ad_confirm'>";
+                        txt += "<form method='POST' action='adConfirm'>";
                         txt += "<input type='hidden' name='date' value="+date+">";
                         txt += "<input type='hidden' name='people' value="+1+">";
                         txt += "<button class='button'  id='button' type='submit' name='time' value="+data[i].time+"><span>"+data[i].time+"</span></button>";

@@ -10,9 +10,10 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import antlr.collections.impl.IntRange;
 import tw.FunBar.dao.DiscussDAO;
+import tw.FunBar.model.Friendship;
 import tw.FunBar.model.LikePost;
+import tw.FunBar.model.Member;
 import tw.FunBar.model.Post;
 
 @Repository
@@ -45,11 +46,10 @@ public class DiscussDAOImpl implements DiscussDAO {
 	@Override
 	public void createPost(Post post) {
 		Session session = factory.getCurrentSession();
-		int id = (int) (Math.floor(Math.random() * 99999999) + 10000000);
-		post.setMemberId(id);
 		Date dateTime = new Date();
 		SimpleDateFormat formDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String date = formDate.format(dateTime);
+		post.setPostStatus(0);
 		post.setPostTime(date);
 		session.save(post);
 	}
@@ -70,7 +70,15 @@ public class DiscussDAOImpl implements DiscussDAO {
 		session.delete(post);
 	}
 
-	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<LikePost> getLikesById(Integer memberId){
+		String hql = "FROM LikePost WHERE memberId = :memberId";
+		List<LikePost> list = new ArrayList<>();
+		Session session = factory.getCurrentSession();
+		list = session.createQuery(hql).setParameter("memberId", memberId).getResultList();
+		return list;
+	}
 	
 
 	@SuppressWarnings("unchecked")
@@ -80,7 +88,6 @@ public class DiscussDAOImpl implements DiscussDAO {
 		String hql = "SELECT COUNT(DISTINCT memberId) FROM LikePost WHERE postId = :postId";
 		Session session = factory.getCurrentSession();
 		List<Long> list = session.createQuery(hql).setParameter("postId", postId).getResultList();
-		System.out.println(list.get(0));
 		count = list.get(0);
 		return count;
 	}
@@ -100,5 +107,51 @@ public class DiscussDAOImpl implements DiscussDAO {
 
 	}
 
+	
+	@Override
+	public void sendFriendRequest(Friendship friendship) {
+		Session session = factory.getCurrentSession();
+		Date dateTime = new Date();
+		SimpleDateFormat formDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String date = formDate.format(dateTime);
+		friendship.setRequestTime(date);
+		System.out.println(friendship.getFriendStatus());
+		if(friendship.getFriendStatus() == null) {
+			friendship.setFriendStatus(1);}
+		session.save(friendship);
+	}
+	
+	@Override
+	public void confirmFriendRequest(Friendship friendship) {
+		Session session = factory.getCurrentSession();
+		String hql = "UPDATE Friendship friendship SET friendship.friendStatus = :friendStatus "
+				   + "WHERE friendship.sender_memberId = :sender_memberId AND friendship.receiver_memberId = :receiver_memberId";
+		session.createQuery(hql).setParameter("friendStatus", friendship.getFriendStatus())
+								.setParameter("sender_memberId", friendship.getSender_memberId())
+								.setParameter("receiver_memberId", friendship.getReceiver_memberId()).executeUpdate();
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Friendship> getAllFriendRequest() {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM Friendship";
+		List<Friendship> list = new ArrayList<>();
+		list = session.createQuery(hql).getResultList();
+		return list;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Member> searchMember(String memberName) {
+		String hql = "FROM Member WHERE memberName Like :memberName";
+		List<Member> list = new ArrayList<Member>();
+		Session session = factory.getCurrentSession();
+		list = session.createQuery(hql).setParameter("memberName", "%" + memberName + "%").getResultList();
+		return list;
+	}
+	
 	
 }

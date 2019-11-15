@@ -20,7 +20,6 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table
 public class Post implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -30,19 +29,18 @@ public class Post implements Serializable {
 	private String postContent;
 	private String postTime;
 	private Integer memberId;
-	
+	private Integer postStatus;
+
 	@JsonIgnoreProperties("parentPostId")
 	@OneToMany(mappedBy = "parentPostId", cascade = CascadeType.ALL)
 	@OrderBy("postTime ASC")
 	private Set<Post> replyPost = new LinkedHashSet<Post>();
-	
+
 	@JsonIgnoreProperties("replyPost")
 	@ManyToOne
 	@JoinColumn(name = "parentPostId")
-	private Post parentPostId; 
+	private Post parentPostId;
 
-
-	
 	public Set<Post> getReplyPost() {
 		return replyPost;
 	}
@@ -91,8 +89,12 @@ public class Post implements Serializable {
 		this.parentPostId = parentPostId;
 	}
 
-	
+	public Integer getPostStatus() {
+		return postStatus;
+	}
 
-
+	public void setPostStatus(Integer postStatus) {
+		this.postStatus = postStatus;
+	}
 
 }
