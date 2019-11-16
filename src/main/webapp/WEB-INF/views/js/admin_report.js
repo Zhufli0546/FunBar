@@ -28,11 +28,12 @@ function init() {
 	for (let i = pageRowStart; i < pageRowEnd; i++) {
 		txt += "<tr><td>" + reports[i].reportId;
 		txt += "<td>" + reports[i].reportName;
-		txt += "<td>" + reports[i].reportContent;
+		txt += "<td><a class='showComment' data-toggle='modal' data-target='#showComment' data-showcomment='" + requestUrl 
+				+ "/admin_showComment/" + reports[i].reportId + "/" + reports[i].comment.commentId + "'>" + reports[i].reportContent;
 		txt += "<td>" + reports[i].reportCreatedTime;
 		txt += "<td>" + reports[i].commentReportName;
-		txt += "<td><a class='lockData' href='" + requestUrl
-				+ "admin_delete/" + reports[i].blogId + "'>封鎖</a>";
+		txt += "<td><a class='lockData btn btn-info' data-lock='" + requestUrl
+				+ "/admin_lock/" + reports[i].comment.commentId + "'>刪除評論</a>";
 	}
 	$("#reportProcess").html(txt);
 	hiddenContent();
@@ -59,17 +60,55 @@ function init() {
 		$("#showProcess").html("");
 		init();
 	});
+	
+	$(".showComment").click(function() {
+		let showCommentUrl = $(this).data("showcomment");
+		$.ajax({
+			url: showCommentUrl,
+			method: "POST",
+			dataType: "JSON",
+			success: function(res) {
+				let comment = res.comment;
+				$(".blogTitle").html("<h4 class='modal-title blogTitle'>" + comment.blog.blogTitle + "</h4>");
+				$(".commentName").html("留言者: <p class='commentName'>" + comment.commentName + "</p>");
+				$(".commentCreatedTime").html("留言時間: <p class='commentCreatedTime'>" + comment.commentCreatedTime + "</p>");
+				$(".commentContent").html("留言內容: <p class='commentContent'>" + comment.commentContent + "</p>");
+				$(".reportName").html("檢舉人: <p class='reportName'>" + comment.reports[0].reportName + "</p>");
+				$(".reportContent").html("檢舉原因: <p class='reportContent'>" + comment.reports[0].reportContent + "</p>");
+
+			}
+		})
+	})
+	
+	$(".lockData").click(function() {
+		let lockUrl = $(this).data("lock");
+		$.ajax({
+			url: lockUrl,
+			method: "POST",
+			dataType: "JSON",
+			success: function() {
+				console.log("success");
+				$("#reportProcess").html("");
+				$("#showProcess").html("");
+				generateReport();
+			}
+		})
+	})
 }
 
-$.ajax({
-	url : requestUrl + "/reportProcess",
-	method : "post",
-	dataType : "JSON",
-	success : function(data) {
-		tododata = data.reports;
-		init();
-	}
-});
+function generateReport() {
+	$.ajax({
+		url : requestUrl + "/reportProcess",
+		method : "post",
+		dataType : "JSON",
+		success : function(data) {
+			tododata = data.reports;
+			init();
+		}
+	});
+}
+
+generateReport();
 
 function hiddenContent() {
 	$(".blog-title").each(function() {

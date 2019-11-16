@@ -33,4 +33,24 @@ public class ReportServiceImpl implements ReportService {
 	public List<Report> queryReportProcess() {
 		return reportDao.queryReportProcess();
 	}
+
+	@Override
+	public List<Report> queryReportResult() {
+		return reportDao.queryReportResult();
+	}
+
+	@Override
+	public void deleteComment(Comment comment) {
+		reportDao.deleteComment(comment);
+	}
+
+	@Override
+	public void resolveReport(Report report) {
+		reportDao.resolveReport(report);
+	}
+
+	@Override
+	public Report findReportById(int id) {
+		return reportDao.findReportById(id);
+	}
 }
