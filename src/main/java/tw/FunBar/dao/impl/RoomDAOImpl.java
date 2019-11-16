@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -26,6 +27,7 @@ import tw.FunBar.model.BookingData;
 import tw.FunBar.model.Room;
 import tw.FunBar.model.RoomOrder;
 import tw.FunBar.model.RoomOrderInDays;
+import tw.FunBar.model.RoomStatus;
 
 @Repository
 public class RoomDAOImpl implements RoomDAO {
@@ -91,6 +93,10 @@ public class RoomDAOImpl implements RoomDAO {
 			D = calendar.getTime();
 
 			check_in_time = fm.format(D);
+		}
+		
+		if(allroom.size()==0) {
+			return null ;
 		}
 
 		return allroom;
@@ -377,6 +383,92 @@ public class RoomDAOImpl implements RoomDAO {
 				.getResultList();
 
 		return ro;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<RoomOrder> getTodayOrder(String date) {
+		
+		String hql = "From RoomOrder where check_in_time = :date";
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		ArrayList<RoomOrder> orders = (ArrayList<RoomOrder>)session.createQuery(hql).setParameter("date", date).getResultList(); 
+		
+		return orders;
+	}
+
+	@Override
+	public void createOrderList() {
+		
+		
+		String hql =  "From RoomStatus where status = 1";
+		
+		Session session2 = sessionFactory.getCurrentSession();
+		
+		List Y = session2.createQuery(hql).getResultList();
+		
+		
+		if(Y.size() == 0) {
+		String sql = "truncate table RoomStatus";
+		Session session1 = sessionFactory.getCurrentSession();
+		session1.createSQLQuery(sql).executeUpdate();
+		
+		
+		ArrayList<Room> allroom = allRoom();
+		
+		Session session = sessionFactory.getCurrentSession();
+		int number  = 1001;
+		for(Room r :allroom) {
+			for(int i = 1;i<=r.getRoom_quantity();i++) {
+				
+				RoomStatus room = new RoomStatus();
+				room.setRoom(r.getRoom_type() + i);
+				room.setStatus(0);
+				room.setRoom_number(number);
+				session.save(room);
+				
+				number ++ ;
+			}
+		}
+		
+	}
+		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<RoomStatus> getAllRoomStatus() {
+		
+		
+		String hql = "From RoomStatus";
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		
+		ArrayList<RoomStatus> allroom =(ArrayList<RoomStatus>) session.createQuery(hql).getResultList();
+		
+		
+		
+		
+		return allroom;
+	}
+
+	@Override
+	public void updateRoomStatus(Integer room_number, Integer order_id) {
+		
+		String hql = "From RoomStatus where room_number = :room_number";
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		RoomStatus room = (RoomStatus) session.createQuery(hql).setParameter("room_number", room_number).getSingleResult();
+		
+		room.setOrder_id(order_id);
+		
+		room.setStatus(1);
+		
+		session.update(room);
+		
 	}
 
 }

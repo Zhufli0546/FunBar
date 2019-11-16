@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>查詢訂單</title>
+<title>所有訂位</title>
 <style>
 
 .qb{

@@ -57,8 +57,8 @@
 					<!-- Logo -->
 					<div class="logo">
 						<a href="${pageContext.request.contextPath}"> 
-						<img src="<c:url value='/images/icons/logo4nb.png' />" 
-							data-logofixed="<c:url value='/images/icons/logo4nb.png' />">
+						<img src="<c:url value='/images/icons/logo5.png' />" 
+							data-logofixed="<c:url value='/images/icons/logo5.png' />">
 						</a>
 					</div>
 					<!-- Menu -->

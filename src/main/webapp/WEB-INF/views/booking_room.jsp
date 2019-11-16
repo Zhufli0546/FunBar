@@ -12,6 +12,22 @@
 <link href="<c:url value="/css/booking_room.css" />" rel="stylesheet">
 
 
+<style>
+
+
+.shortselect{  
+    background:#fafdfe;  
+    height:28px;  
+    width:180px;  
+    line-height:28px;  
+    border:1px solid #9bc0dd;  
+    -moz-border-radius:2px;  
+    -webkit-border-radius:2px;  
+    border-radius:2px;  
+}  
+
+
+</style>
 
 </head>
 

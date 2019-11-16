@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -42,6 +44,8 @@ public class RoomOrder {
 	
 	private String status;
 	
+	private Integer check_in;
+	
 	@JsonIgnoreProperties("roomOrder")
 	@ManyToOne
 	@JoinColumn(name="ROOM_ID")
@@ -58,8 +62,20 @@ public class RoomOrder {
 	}
 	
 	
+	
+	
 
 	
+
+	public Integer getCheck_in() {
+		return check_in;
+	}
+
+
+	public void setCheck_in(Integer check_in) {
+		this.check_in = check_in;
+	}
+
 
 	public String getStatus() {
 		return status;

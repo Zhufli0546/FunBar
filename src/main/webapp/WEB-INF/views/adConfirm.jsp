@@ -5,7 +5,7 @@
 <html>
 
 <head>
-	<title>Home</title>
+	<title>確認訂房</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
