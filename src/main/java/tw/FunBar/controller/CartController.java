@@ -222,13 +222,13 @@ public class CartController {
  public String orderSetUp(HttpServletRequest request, HttpSession session, @RequestParam String address,Model model,Cart c) {
 
   session = request.getSession(false);
-  Member member = (Member) session.getAttribute("Member");
+  Member member = (Member) session.getAttribute("member");
   if (member.getMemberName() == null) {
    return "redirect:/signin";
   }
 
   // 取得購物車
-  Cart cart = (Cart) session.getAttribute("cart");
+  Cart cart = (Cart) session.getAttribute("Cart");
   if (cart == null) {
    System.out.println("cart is null");
    return "redirect:/signin";
