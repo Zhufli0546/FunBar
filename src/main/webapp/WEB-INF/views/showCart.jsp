@@ -38,6 +38,10 @@
 	background-color: #019858;
 }
 
+input{
+outline:none;
+}
+
 </style>
 <head>
 <meta charset="UTF-8">
@@ -116,7 +120,7 @@
 		//數量增加
 		$(".add").click(function() {
 			var index = $(this).data("product");
-			console.log(".add data-product 索引:" + index);
+// 			console.log(".add data-product 索引:" + index);
 			var num = $(this).siblings(".num").val();
 			num++;
 			$(this).siblings(".num").val(num > 50 ? 50 : num);
@@ -155,7 +159,6 @@
 					type : "POST",
 					dataType : "JSON",
 					success : function() {
-						console.log("success");
 					}
 				})
 			}
@@ -208,8 +211,6 @@
 						type : "POST",
 						dataType : "JSON",
 						success : function() {
-							console.log(number);
-							console.log("success");
 						}
 					})
 				}
@@ -251,8 +252,7 @@
 						type : "POST",
 						dataType : "JSON",
 						success : function() {
-							console.log(number);
-							console.log("success");
+						
 						}
 					})
 				}
@@ -278,7 +278,6 @@
 					subTotal = unitPrice * number * dec;
 					var int_subTotal = parseInt(subTotal);
 					totalPrice = totalPrice + int_subTotal;
-					//console.log(totalPrice);
 					console.log(subTotal);
 
 					var url = "/FunBar/"
@@ -312,23 +311,20 @@
 
 	<!-- Content 區塊 -->
 	<div class="container page">
-		<div class="row">
-			<div class="col-sm-offset-10 col-sm-3">
-				<a class="orderBtn" href="<c:url value='/deleteCartItem' />">清空購物車</a>
-			</div>
-		</div>
+		<div align="right" colspan="8" style="margin:1px 60px 0 0">
+  		<a class="orderBtn" href="<c:url value='/deleteCartItem' />">清空購物車</a>
+  		</div>
 		<div class="table-responsive">
 			<table class="table" style="margin: 20px 0">
 				<thead>
 					<tr>
-						<th>產品示意圖</th>
-						<th>產品名稱</th>
+						<th>商品示意圖</th>
+						<th>商品名稱</th>
 						<th>單價</th>
 						<th>庫存</th>
 						<th>數量</th>
 						<th>折扣</th>
 						<th>小計</th>
-						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -365,8 +361,6 @@
 					</tr>
 					<tr>
 						<td align="right" colspan="8">
-
-
 							<div class="col-sm-4 col-xs-12">
 								<button id="buy" type="button" class="btn btn-info page-btn"
 									data-toggle="modal" data-target="#createForm">結帳去</button>
@@ -380,8 +374,8 @@
 
 
 	<!-- model -->
-	<div class="modal right fade" id="createForm"
-		role="dialog" aria-labelledby="myModalLabel1">
+	<div class="modal fade" id="createForm"
+		role="dialog" aria-labelledby="myModalLabel1" style="background:rgba(0,0,0,0.8)">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 
@@ -393,12 +387,12 @@
 				</div>
 
 				<div class="modal-body" id="createForm">
-					<div class="container page">
+					<div class="container page" style="margin-top:20px">
 						<div class="table-responsive">
 							<table class="table" style="margin: 5px 0;">
 								<thead>
 									<tr>
-										<th>產品名稱</th>
+										<th>商品名稱</th>
 										<th>單價</th>
 										<th>數量</th>
 										<th>折扣</th>
@@ -406,36 +400,46 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="ci" items="${sessionScope.Cart.cartItems}"
-										begin="0" step="1" varStatus="i">
+									<c:forEach var="ci" items="${sessionScope.Cart.cartItems}" begin="0" step="1" varStatus="i">
 										<tr>
 											<td class="pn"></td>
 											<td class="pp"></td>
-											<td class="pc"></td>
+											<td class="pc" style="text-align:center;"></td>
 											<td class="pddd"></td>
 											<td class="st"></td>
 										</tr>
 									</c:forEach>
 								</tbody>
+								<tr>
+									<td class="ta" align="right" colspan="8" style="color:#FF60AF;"></td>
+								</tr>
 							</table>
-							<div class="ta"></div>
+						  
 						</div>
 					</div>
-						<form>
+
+						<form >
+				
+							<div><p>請填寫以下聯絡資料</p></div>
 							<div>
 								<label>姓名</label> 
-								<input type="text" name="memberName" /> 
+								<input type="text" name="memberName" value="${sessionScope.member.memberName}"  class="orderN"/> 
 							</div>
 							<div>
 								<label>手機</label>
-								<input type="text" name="memberPhone" /> 
+								<input type="text" name="memberPhone" value="${sessionScope.member.memberPhone}" /> 
 							</div>
 							<div>
 								<label>地址</label> 
-								<input type="text" name="shippingAddress" />
+								<input type="text" name="shippingAddress" value="${sessionScope.member.memberAddress}" />
 							</div>
-							<input type="submit" value="確認結帳"  class="btn btn-success"/>
-						</form>
+							<div>
+								<label>備註</label>
+								<input type="text" name="remark" placeholder="請填寫注意事項" />
+							</div>
+							<input type="submit" value="確認結帳"  class="btn btn-success" style="float:right"/>
+							
+						</form> 						
 				</div>
 				
 			</div>
@@ -445,78 +449,46 @@
 	</div>
 	<!-- modal -->
 
-	<jsp:include page="footer.jsp" />
-	<script>
-		$(document)
-				.ready(
-						function() {
-							$('#createForm').on('shown.bs.modal', function() {
-								$(document).off('focusin.modal');
-							});
+<jsp:include page="footer.jsp" />
+<script>
+	$(document).ready(function() {
+			$('#createForm').on('shown.bs.modal', function() {
+				$(document).off('focusin.modal');
+		});
 
-							let todata;
-							$("#buy")
-									.click(
-											function() {
-												$
-														.ajax({
-															url : "http://localhost:8080/FunBar/buyCartJson",
-															method : "POST",
-															dataType : "JSON",
-															success : function(
-																	res) {
-																let data = res;
-																let totalAmount = 0;
-																for (let i = 0; i < data.length; i++) {
+		let todata;
+		$("#buy").click(function() {
+		  $.ajax({
+			    url : "http://localhost:8080/FunBar/buyCartJson",
+				method : "POST",
+				dataType : "JSON",
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+				success : function(res) {
+				let data = res;
+				let totalAmount = 0;
+				for (let i = 0; i < data.length; i++) {
 
-																	$(".pn")
-																			.eq(
-																					i)
-																			.text(
-																					data[i].product.productName);
+				let productName = data[i].product.productName;
+				$(".pn").eq(i).text(productName);
+				console.log(productName);
+				
+				let unitPrice = data[i].product.unitPrice;
+				let count = data[i].count;
+				let discount = data[i].product.discount;
+				$(".pp").eq(i).text(unitPrice);
+				$(".pc").eq(i).text(count);
+				$(".pddd").eq(i).text(discount);
+				let subTotal = parseInt(unitPrice* count* discount/ 10);
+				$(".st").eq(i).text(subTotal);
+				console.log(subTotal);
+				totalAmount += subTotal;
+		}
+				$(".ta").text("$"+ totalAmount);
 
-																	let unitPrice = data[i].product.unitPrice;
-																	let count = data[i].count;
-																	let discount = data[i].product.discount;
-
-																	$(".pp")
-																			.eq(
-																					i)
-																			.text(
-																					unitPrice);
-																	$(".pc")
-																			.eq(
-																					i)
-																			.text(
-																					count);
-																	$(".pddd")
-																			.eq(
-																					i)
-																			.text(
-																					discount);
-
-																	let subTotal = parseInt(unitPrice
-																			* count
-																			* discount
-																			/ 10);
-																	$(".st")
-																			.eq(
-																					i)
-																			.text(
-																					subTotal);
-																	console
-																			.log(subTotal);
-																	totalAmount += subTotal;
-																}
-																$(".ta")
-																		.text(
-																				"$"
-																						+ totalAmount);
-
-															}
-														})
-											})
-						})
+		}
+	})
+		})
+})
 	</script>
 
 </body>

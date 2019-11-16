@@ -67,9 +67,6 @@
 							<ul class="main_menu">
 						<li><a href="${pageContext.request.contextPath}/activities">熱門活動</a></li>
 
-								<li><a
-									href="${pageContext.request.contextPath}/shoppingCart">購物區</a></li>
-
 								<li><a href="${pageContext.request.contextPath}/blogs">部落格</a></li>
 
 								<li><a href="${pageContext.request.contextPath}/discuss">討論區</a></li>
@@ -85,10 +82,14 @@
 
 								</li>
 								
-								<li><a href="${pageContext.request.contextPath}/signin">登入</a></li>
-								<li><a
-									href="${pageContext.request.contextPath}/booking_room">線上訂房</a></li>
-								</ul>
+								<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">購物區</a>
+									<div class="dropdown-menu">
+						           		 <a class="dropdown-item" href="${pageContext.request.contextPath}/shoppingCart">購物商城</a>
+       									 <a class="dropdown-item" href="${pageContext.request.contextPath}/showCart">我的購物車</a>
+               						</div>
+								</li>
+								
 								<c:choose>
 									<c:when test="${sessionScope.member.memberName==null}">
 										<li><a href="joinus">註冊</a></li>
