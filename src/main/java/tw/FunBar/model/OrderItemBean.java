@@ -20,7 +20,7 @@ public class OrderItemBean implements Serializable {
 	private Integer orderItemId;
 	private Integer productId;
 	private Integer quantity;
-	private Double subTotal;
+	private Integer subTotal;
 
 	@ManyToOne
 	@JoinColumn(name = "ORDERID")
@@ -61,11 +61,11 @@ public class OrderItemBean implements Serializable {
 		this.ob = ob;
 	}
 
-	public Double getSubTotal() {
+	public Integer getSubTotal() {
 		return subTotal;
 	}
 
-	public void setSubTotal(Double subTotal) {
+	public void setSubTotal(Integer subTotal) {
 		this.subTotal = subTotal;
 	}
 
