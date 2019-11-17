@@ -7,41 +7,50 @@
 <head>
 <meta charset="UTF-8">
 <title>活動報名</title>
+
 </head>
 <body>
 	<jsp:include page="header.jsp" />
-	<div class="container" style="margin: 150px 10% 150px 60%; width: 30% ">
-		<h5>填寫報名者資訊</h5>
-		<hr>
-
-		<form action="applicantSignup" method='POST'
-			enctype="multipart/form-data">
+	
+<div class="container" style="margin-top: 150px">
+	<div class="row" style="margin: 150px 10% 150px 60%; width: 30% ;font-family:微軟正黑體">
+		
+		<fieldset style="border:2px;">
+			<legend>填寫報名者資訊</legend>
+		
+		
+		<form action="applicantSignup" method='POST'>
 
 			<div class="form-group">
 				<label for="name">姓名:</label> <input name="applicantName"
-					type="text" class="form-control" value="" id="name" required
+					type="text" class="form-control" value="${member.memberName}" id="name" required
 					autofocus />
 			</div>
 
-
 			<div class="form-group">
-				<label for="gender">性別:</label> <input name="gender" type="text"
-					class="form-control" value="" id="gender" />
+				<label for="gender">性別:</label> <br>
+				<input type="radio" name="gender"  value="女" id="gender" />女
+				<input type="radio" name="gender"  value="男" id="gender" />男
 			</div>
 
 			<div class="form-group">
 				<label for="phone">手機號碼:</label> <input name="applicantPhone"
-					type="text" class="form-control" value="" id="phone" required />
+					type="text" class="form-control" value="${member.memberPhone}" id="phone" required />
 			</div>
 
 			<div class="form-group">
 				<label for="email">e-mail:</label> <input name="applicantEmail"
-					type="text" class="form-control" value="" id="email" required />
+					type="text" class="form-control" value="${member.memberEmail}" id="email" required />
 			</div>
 
 			<div class="form-group">
 				<label for="id"></label> <input name="activityId" type="hidden"
 					class="form-control" value="${activity.activityId}" id="id" />
+			</div>
+			
+			<div class="form-group">
+				<label for="mid"></label> <input name="memberId"
+					class="form-control" value="${member.memberId}" id="mid" type="hidden" />
 			</div>
 
 			<button
@@ -51,9 +60,10 @@
 				<a class="small" href="#">活動資訊</a>
 			</div>
 		</form>
-		
-		<section>
-			<div class="row">
+		</fieldset>
+	</div>
+</div>
+			
 				
 					<div class="col-lg-4 col-sm-6 mb-4">
 						<div class="card h-100">
@@ -70,10 +80,9 @@
 							</div>
 						</div>
 					</div>
-			</div>
-		</section>
-
-	</div>
+			
+	
+	
 	<jsp:include page="footer.jsp" />
 </body>
 </html>

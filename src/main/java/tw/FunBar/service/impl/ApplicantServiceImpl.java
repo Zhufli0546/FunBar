@@ -1,6 +1,7 @@
 package tw.FunBar.service.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tw.FunBar.dao.ApplicantDao;
 import tw.FunBar.model.Activity;
 import tw.FunBar.model.Applicant;
+import tw.FunBar.model.Suggestion;
 import tw.FunBar.service.ApplicantService;
 
 @Service
@@ -24,34 +26,32 @@ public class ApplicantServiceImpl implements ApplicantService {
 	@Transactional
 	@Override
 	public void addApplicant(String applicantName,String gender, String applicantPhone,
-			String applicantEmail, int activityId) {
-		dao.addApplicant(applicantName, gender, applicantPhone, applicantEmail, activityId);
+			String applicantEmail, int activityId,String memberId) {
+		dao.addApplicant(applicantName, gender, applicantPhone, applicantEmail, activityId,memberId);
 	}
-		
 
 	@Transactional
 	@Override
-	public List<Activity> QuerySignupApplicant(int activityId) {
+	public Set<Applicant> QuerySignupApplicant(int activityId) {
 		return dao.QuerySignupApplicant(activityId);
 	}
 
 	@Transactional
 	@Override
-	public Applicant deleteApplicantById(int applicantId) {
-		return dao.deleteApplicantById(applicantId);
-	}
-
-	@Transactional
-	@Override
-	public void deleteMapById(int activityId, int applicantId) {
-		dao.deleteMapById(activityId, applicantId);
-		
+	public Set<Activity> QuerySignActivity(String memberId) {
+		return dao.QuerySignActivity(memberId);
 	}
 	
 	@Transactional
 	@Override
-	public List<Integer> queryMapById(int activityId, int applicantId){
-		return dao.queryMapById(activityId, applicantId);
+	public Applicant deleteApplicantById(int applicantId) {
+		return dao.deleteApplicantById(applicantId);
+	}
+	
+	@Transactional
+	@Override
+	public void deleteMap(String memberId,int activityId){
+		dao.deleteMap(memberId, activityId);
 	}
 	
 	@Transactional
@@ -60,12 +60,20 @@ public class ApplicantServiceImpl implements ApplicantService {
 		return dao.getApplicants();
 	}
 
+	//-----------------------------------------------------------
+	
 	@Transactional
 	@Override
-	public List<Applicant> getSignUpApplicants(int applicantId) {
-		return dao.getSignUpApplicants(applicantId);
+	public void addSuggestion(Suggestion suggestion) {
+		dao.addSuggestion(suggestion);
+	}
+
+	@Transactional
+	@Override
+	public List<Suggestion> getAllSuggestion() {
+		return dao.getAllSuggestion();
 	}
 	
-	
+
 	
 }

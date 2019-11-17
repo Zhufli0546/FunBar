@@ -47,8 +47,7 @@
 		<p class="lead">活動介紹</p>
 		<hr>
 		<p>${activity.activities}</p>
-		<br>
-		<br>
+		<br> <br>
 
 		<p class="lead">活動資訊</p>
 		<hr>
@@ -63,8 +62,9 @@
 		</iframe>
 
 		<div>
- 			<a href="<spring:url value='activityRegistration?id=${activity.activityId}' />">
-				
+			<a
+				href="<spring:url value='activityRegistration?id=${activity.activityId}' />">
+
 				<button type="button" class="btn btn-outline-secondary">我要報名</button>
 			</a>
 		</div>
