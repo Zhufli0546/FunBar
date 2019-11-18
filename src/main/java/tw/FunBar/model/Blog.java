@@ -25,8 +25,6 @@ public class Blog {
 	private String blogImage;
 	private String blogTitle;
 	private String blogContent;
-
-	@Transient
 	private Integer blogIsHot;
 	private String blogCreatedTime;
 
