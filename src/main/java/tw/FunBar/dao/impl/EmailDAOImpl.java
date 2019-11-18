@@ -1,22 +1,25 @@
 package tw.FunBar.dao.impl;
 
-<<<<<<< HEAD
 
-=======
-import java.util.List;
->>>>>>> 391ec280c7a55b7e66a96b6f5fd3aa74bbd8d0cb
 import java.util.Properties;
 import java.util.Random;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.sound.sampled.AudioFormat.Encoding;
 
 import org.springframework.stereotype.Repository;
+
 
 import tw.FunBar.dao.EmailDAO;
 import tw.FunBar.model.Activity;
@@ -175,14 +178,9 @@ public class EmailDAOImpl implements EmailDAO {
 		
 	}
 	
-<<<<<<< HEAD
 	//會員驗證
 	@Override
 	public void sendmembercheck(Member mail) {
-=======
-	@Override
-	public void sendActivityEmail(Applicant email, Activity activity) {
->>>>>>> 391ec280c7a55b7e66a96b6f5fd3aa74bbd8d0cb
 		String host = "smtp.gmail.com";
 		  int port = 587;
 		  final String username = "funbar109@gmail.com";
@@ -198,7 +196,6 @@ public class EmailDAOImpl implements EmailDAO {
 		    return new PasswordAuthentication(username, password);
 		   }
 		  });
-<<<<<<< HEAD
 	
 		  try {
 		   Message message = new MimeMessage(session);
@@ -210,7 +207,7 @@ public class EmailDAOImpl implements EmailDAO {
 		   htmlCode += "<div style='margin:0 auto;border:2px solid #02DF82;width:500px;text-align:center;font-size:22px;border-radius:10px'>";
 		   htmlCode += "<h1>您的會員資料 :</h1>";
 		   htmlCode += "<table style='border:none;text-align:ceneter;margin:0 auto'>";
-		   htmlCode += "<tr><td>會員編號:</td><td>."+mail.getId()+"</td></tr>";
+		   htmlCode += "<tr><td>會員編號:</td><td>NO."+mail.getId()+"</td></tr>";
 		   htmlCode += "<tr><td>姓名:</td><td>"+mail.getMemberName()+"</td></tr>";
 		   htmlCode += "<tr><td>信箱:</td><td>"+mail.getMemberEmail()+"</td></tr>";
 		   htmlCode += "<tr><td>電話:</td><td>"+mail.getMemberPhone()+"</td></tr>";
@@ -218,35 +215,15 @@ public class EmailDAOImpl implements EmailDAO {
 		   htmlCode += "<tr><td>帳號:</td><td>"+mail.getMemberId()+"</td></tr>";
 		   htmlCode += "<tr><td>密碼:</td><td>"+mail.getMemberPwd()+"</td></tr>";
 		   htmlCode += "<tr><td>大頭貼:</td><td>"+mail.getMemberfileName()+"</td></tr>";
-		   htmlCode += "<tr><td>認證:</td><td>"+ "http://localhost:8080/FunBar/" + "</td></tr>";
+		   htmlCode += "<tr><td>認證:</td><td>"+ "<a href =http://localhost:8080/FunBar/check?id="+mail.getId() +">點及認證</a>"+ "</td></tr>";
+		  
 		  
 		   message.setContent(htmlCode,"text/html;charset=UTF-8");
 		
 		   
 		   
 
-=======
 
-		  try {
-
-		   Message message = new MimeMessage(session);
-		   message.setFrom(new InternetAddress("funbar109@gmail.com"));
-		   message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email.getApplicantEmail()));
-		   message.setSubject("FunBar. 活動倒數通知");
-		   
-		   String htmlCode = "";
-		   
-		   htmlCode += "<div style='width: 40%; height: 600px; margin: 10px auto'>";
-		   htmlCode += "<fieldset style='background-color: rgb(248, 243, 232)'>";
-		   htmlCode += "<legend>活動倒數通知</legend>";
-		   htmlCode += "<p>"+email.getApplicantName()+"先生，小姐 你好，</p>";
-		   htmlCode += "<p>你所報名的活動 </p>";
-		   htmlCode += "<p>將於明天舉行 </p>";
-		   htmlCode += "<p>以此郵件通知您，</p>";
-		   htmlCode += "<p>期待您蒞臨參加。</p>";
-		   message.setContent(htmlCode,"text/html;charset=UTF-8");
-		   
-		   
 		   Transport transport = session.getTransport("smtp");
 		   transport.connect(host, port, username, password);
 
@@ -257,19 +234,12 @@ public class EmailDAOImpl implements EmailDAO {
 		  } catch (MessagingException e) {
 		   throw new RuntimeException(e);
 		  }
+		
 	}
->>>>>>> 391ec280c7a55b7e66a96b6f5fd3aa74bbd8d0cb
 
-		   Transport transport = session.getTransport("smtp");
-		   transport.connect(host, port, username, password);
-
-		   Transport.send(message);
-
-		   
-
-		  } catch (MessagingException e) {
-		   throw new RuntimeException(e);
-		  }
+	@Override
+	public void sendActivityEmail(Applicant email, Activity activity) {
+		// TODO Auto-generated method stub
 		
 	}
 }

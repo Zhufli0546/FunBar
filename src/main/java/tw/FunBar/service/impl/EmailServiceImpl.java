@@ -39,15 +39,15 @@ public class EmailServiceImpl implements EmailService {
 	}
 
 	@Override
-<<<<<<< HEAD
+
 	public void sendmembercheck(Member mail) {
 		
 	
 		emailDAO.sendmembercheck(mail);
-=======
+	}
 	public void sendActivityEmail(Applicant email,Activity activity) {
 		emailDAO.sendActivityEmail(email,activity);
->>>>>>> 391ec280c7a55b7e66a96b6f5fd3aa74bbd8d0cb
+
 		
 	}
 	

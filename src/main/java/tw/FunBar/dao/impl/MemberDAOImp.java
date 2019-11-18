@@ -142,6 +142,15 @@ public class MemberDAOImp implements MemberDAO {
 
 
 
+	@Override
+	public void stateup(int memberLevel) {
+		Session session = factory.getCurrentSession();
+		
+		
+	}
+
+
+
 
 
 	
