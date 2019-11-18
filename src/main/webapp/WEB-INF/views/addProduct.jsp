@@ -146,7 +146,6 @@
 	</div>
 
 	<jsp:include page="admin_footer.jsp" />
->>>>>>> eb0a350f25a6aea5495682217277f67ccf8f8564
 
 </body>
 </html>

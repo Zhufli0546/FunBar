@@ -12,6 +12,12 @@
  <link rel="stylesheet" href="<c:url value='/css/bootstrap.min.css' />">
  <script src="<c:url value='/js/jquery-1.12.4.js' />"></script>
  <script src="<c:url value='/js/bootstrap.min.js' />"></script>
+ <script type="text/javascript">
+ function enterSomething(){
+	 document.getElementById("user").value='zuo';
+	 document.getElementById("memberPwd").value='password';
+ }
+ </script>
 </head>
 <style>
     * {
@@ -61,7 +67,7 @@
                 <fieldset>
                     <div class="form-group">
                         <label for="memberId">帳號:</label>
-                        <input type="text" class="form-control" name="memberId" placeholder="請輸入帳號">
+                        <input id="user" type="text" class="form-control" name="memberId" placeholder="請輸入帳號">
                         <span class="error">${errorMsg.errUserName}</span>
                     </div>
                     <div class="form-group">
@@ -75,7 +81,7 @@
         </div>
 
         <div class="registerBox col-sm-12">
-            <span>沒有帳號嗎?</span><a href="<spring:url value='/joinus.jsp' />"> 註冊</a>
+            <span>沒有帳號嗎?</span><a href="<spring:url value='/joinus.jsp' />"> 註冊</a><input style="float:right" type="button" value="一鍵輸入" onclick="enterSomething()"/>
         </div>
     </div>
 </body>
