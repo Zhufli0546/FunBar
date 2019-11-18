@@ -1,10 +1,14 @@
 package tw.FunBar.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import tw.FunBar.dao.EmailDAO;
+import tw.FunBar.model.Activity;
+import tw.FunBar.model.Applicant;
 import tw.FunBar.model.BookingData;
 import tw.FunBar.model.Member;
 import tw.FunBar.model.Room;
@@ -35,10 +39,15 @@ public class EmailServiceImpl implements EmailService {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public void sendmembercheck(Member mail) {
 		
 	
 		emailDAO.sendmembercheck(mail);
+=======
+	public void sendActivityEmail(Applicant email,Activity activity) {
+		emailDAO.sendActivityEmail(email,activity);
+>>>>>>> 391ec280c7a55b7e66a96b6f5fd3aa74bbd8d0cb
 		
 	}
 	

@@ -22,13 +22,16 @@
 				style="margin: 192px 120px; width: 200px">
 				<div class="list-group">
 					<p class="list-group-item list-group-item-action active">${title}</p>
-					<a href="" class="list-group-item list-group-item-action" id="loginMemberName">${sessionScope.member.memberName}</a> 
 					<a href="" class="list-group-item list-group-item-action"
+						id="loginMemberName">${sessionScope.member.memberName}</a> <a
+						href="" class="list-group-item list-group-item-action"
 						id="loginMemberid" style="display: none">${sessionScope.member.id}</a>
 					<a href="" class="list-group-item list-group-item-action"
-						id="requestUrl" style="display: none">${pageContext.request.contextPath}/</a> 
+						id="requestUrl" style="display: none">${pageContext.request.contextPath}/</a>
 					<a href="${pageContext.request.contextPath}/discuss"
 						class="list-group-item list-group-item-action ">討論區</a>
+						<a href="${pageContext.request.contextPath}/chat"
+						class="list-group-item list-group-item-action ">聊天</a>
 				</div>
 			</div>
 			<div class="col-md-2"></div>
@@ -48,7 +51,16 @@
 				<div class="tab-content" id="nav-tabContent">
 					<div class="tab-pane fade show active" id="FriendList"
 						role="tabpanel" aria-labelledby="nav-home-tab">
-						
+
+
+						<br>
+						<textarea rows="8" cols="50" id="clientMsg"></textarea>
+						<br>
+						<button onclick="send()">Send</button>
+						<br> <label>Response from Server</label> <br>
+						<textarea rows="8" cols="50" id="serverMsg" readonly="readonly"></textarea>
+
+
 					</div>
 					<div class="tab-pane fade" id="Receiver" role="tabpanel"
 						aria-labelledby="nav-profile-tab">
@@ -64,9 +76,9 @@
 							<tbody id='friendshipTable'>
 							</tbody>
 						</table>
-						
-						
-						</div>
+
+
+					</div>
 					<!-- <div class="tab-pane fade" id="nav-contact" role="tabpanel"
 						aria-labelledby="nav-contact-tab">...</div> -->
 				</div>

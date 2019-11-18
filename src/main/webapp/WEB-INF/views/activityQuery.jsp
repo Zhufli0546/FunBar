@@ -49,6 +49,11 @@
   <div class="container">
     <h2>活動管理</h2>
     <hr>
+    <a href="<spring:url value='/allSuggestion' />">
+                <button type="button" class="btn btn-outline-secondary">查看活動建議</button></a>
+     <a href="<spring:url value='/getTimeAndSend' />">
+    <button type="button" class="btn btn-outline-secondary">發送通知email</button></a>
+                <hr>
     <table class="table table-dark table-hover">
       <thead>
         <tr>
@@ -76,8 +81,10 @@
                 <button type="button" class="btn btn-outline-secondary">修改</button></a>
               <a href="<spring:url value='/deleteActivity?id=${activity.activityId}' />">
                 <button type="button" class="btn btn-outline-secondary">刪除</button></a>
+              <a href="<spring:url value='/getActivities?activityId=${activity.activityId}' />">
+                <button type="button" class="btn btn-outline-secondary">查詢報名名單</button></a>
             </td>
-
+			
           </tr>
         </tbody>
       </c:forEach>

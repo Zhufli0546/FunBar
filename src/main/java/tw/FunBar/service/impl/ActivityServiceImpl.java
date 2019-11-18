@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tw.FunBar.dao.ActivityDao;
 import tw.FunBar.model.Activity;
+import tw.FunBar.model.Applicant;
 import tw.FunBar.service.ActivityService;
 
 @Service
@@ -20,7 +21,12 @@ public class ActivityServiceImpl implements ActivityService {
 	public void setDao(ActivityDao dao) {
 		this.dao = dao;
 	}
-
+	
+	@Override
+	public List<Activity> getPageActivities(int index) {
+		return dao.getPageActivities(index);
+	}
+	
 	@Transactional
 	@Override
 	public List<Activity> getAllActivities() {
@@ -51,18 +57,6 @@ public class ActivityServiceImpl implements ActivityService {
 		return dao.getActivityByCategory(category);
 	}
 
-//	@Transactional
-//	@Override
-//	public void updateActivity(Activity activity) {
-//		dao.updateActivity(activity);
-//	}
-	
-//	@Transactional
-//	@Override
-//	public void updateActivity(int activityId, String eventName) {
-//		dao.updateActivity(activityId, eventName);
-//	}
-
 	@Transactional
 	@Override
 	public void updateActivity(int activityId, String eventName, String eventDate, String address, String introduction,
@@ -76,6 +70,10 @@ public class ActivityServiceImpl implements ActivityService {
 		return dao.deleteActivityById(activityId);
 	}
 	
-
+	@Transactional
+	@Override
+	public Applicant getTime(){
+		return dao.getTime();
+	}
 
 }

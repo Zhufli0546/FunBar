@@ -24,6 +24,8 @@ public class OrderBean implements Serializable {
 	private String orderTime;
 	private Double totalAmount;
 	private Integer memberId;
+	private String memberName;
+	private String memberPhone;
 	
 	@Transient
 	private String payment;
@@ -89,6 +91,22 @@ public class OrderBean implements Serializable {
 
 	public void setOrderItem(Set<OrderItemBean> orderItem) {
 		this.orderItem = orderItem;
+	}
+
+	public String getMemberName() {
+		return memberName;
+	}
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+
+	public String getMemberPhone() {
+		return memberPhone;
+	}
+
+	public void setMemberPhone(String memberPhone) {
+		this.memberPhone = memberPhone;
 	}
 	
 	
