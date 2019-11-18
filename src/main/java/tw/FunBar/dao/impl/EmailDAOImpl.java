@@ -165,86 +165,6 @@ public class EmailDAOImpl implements EmailDAO {
 //
 //         message.setContent(email);
 
-<<<<<<< HEAD
-		   Transport transport = session.getTransport("smtp");
-		   transport.connect(host, port, username, password);
-
-		   Transport.send(message);
-
-		   
-
-		  } catch (MessagingException e) {
-		   throw new RuntimeException(e);
-		  }
-		
-	}
-	
-	//會員驗證
-	@Override
-	public void sendmembercheck(Member mail) {
-		String host = "smtp.gmail.com";
-		  int port = 587;
-		  final String username = "funbar109@gmail.com";
-		  final String password = "ftnnxuqoxaywfrtt";
-
-		  Properties props = new Properties();
-		  props.put("mail.smtp.host", host);
-		  props.put("mail.smtp.auth", "true");
-		  props.put("mail.smtp.starttls.enable", "true");
-		  props.put("mail.smtp.port", port);
-		  Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-		   protected PasswordAuthentication getPasswordAuthentication() {
-		    return new PasswordAuthentication(username, password);
-		   }
-		  });
-	
-		  try {
-		   Message message = new MimeMessage(session);
-		   message.setFrom(new InternetAddress("funbar109@gmail.com"));
-		   message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mail.getMemberEmail()));
-		   message.setSubject("FunBar.會員通知");
-		   
-		   String htmlCode = "";
-		   htmlCode += "<div style='margin:0 auto;border:2px solid #02DF82;width:500px;text-align:center;font-size:22px;border-radius:10px'>";
-		   htmlCode += "<h1>您的會員資料 :</h1>";
-		   htmlCode += "<table style='border:none;text-align:ceneter;margin:0 auto'>";
-		   htmlCode += "<tr><td>會員編號:</td><td>NO."+mail.getId()+"</td></tr>";
-		   htmlCode += "<tr><td>姓名:</td><td>"+mail.getMemberName()+"</td></tr>";
-		   htmlCode += "<tr><td>信箱:</td><td>"+mail.getMemberEmail()+"</td></tr>";
-		   htmlCode += "<tr><td>電話:</td><td>"+mail.getMemberPhone()+"</td></tr>";
-		   htmlCode += "<tr><td>日期:</td><td>"+mail.getMemberBirth()+"</td></tr>";
-		   htmlCode += "<tr><td>帳號:</td><td>"+mail.getMemberId()+"</td></tr>";
-		   htmlCode += "<tr><td>密碼:</td><td>"+mail.getMemberPwd()+"</td></tr>";
-		   htmlCode += "<tr><td>大頭貼:</td><td>"+mail.getMemberfileName()+"</td></tr>";
-		   htmlCode += "<tr><td>認證:</td><td>"+ "<a href =http://localhost:8080/FunBar/check?id="+mail.getId() +">點及認證</a>"+ "</td></tr>";
-		  
-		  
-		   message.setContent(htmlCode,"text/html;charset=UTF-8");
-		
-		   
-		   
-
-
-		   Transport transport = session.getTransport("smtp");
-		   transport.connect(host, port, username, password);
-
-		   Transport.send(message);
-
-		   
-
-		  } catch (MessagingException e) {
-		   throw new RuntimeException(e);
-		  }
-		
-	}
-
-	@Override
-	public void sendActivityEmail(Applicant email, Activity activity) {
-		// TODO Auto-generated method stub
-		
-	}
-}
-=======
      Transport transport = session.getTransport("smtp");
      transport.connect(host, port, username, password);
 
@@ -295,7 +215,7 @@ public class EmailDAOImpl implements EmailDAO {
      htmlCode += "<tr><td>帳號:</td><td>"+mail.getMemberId()+"</td></tr>";
      htmlCode += "<tr><td>密碼:</td><td>"+mail.getMemberPwd()+"</td></tr>";
      htmlCode += "<tr><td>大頭貼:</td><td>"+mail.getMemberfileName()+"</td></tr>";
-     htmlCode += "<tr><td>認證:</td><td>"+ "http://localhost:8080/check" + "</td></tr>";
+     htmlCode += "<tr><td>認證:</td><td>"+ "<a href =http://localhost:8080/FunBar/check?id="+mail.getId() +">點及認證</a>"+ "</td></tr>";
     
      message.setContent(htmlCode,"text/html;charset=UTF-8");
   
@@ -322,4 +242,3 @@ public class EmailDAOImpl implements EmailDAO {
   
  }
 }
->>>>>>> 4ab830ef33a649f9ab8ba73de3bbadb1c006dae8
