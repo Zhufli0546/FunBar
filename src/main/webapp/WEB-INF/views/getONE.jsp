@@ -87,7 +87,7 @@
 
 					<div class="button">
 						<input type="hidden" name="id" value="${one.id}" />
-						<input button type="button" class="btn btn-outline-secondary" value="送出"> 
+						<input type="submit" class="btn btn-outline-secondary" value="送出">
 						<td><a href="${pageContext.request.contextPath}">
 							<button type="button" class="btn btn-outline-secondary">回首頁</button>
 					</a></td>

@@ -27,15 +27,17 @@
 				<tr>
 					<th>會員編號
 					<th>姓名
-					<th>身分證
-					<th>出生
-					<th>住址
+					<th>地址
+					<th>生日
 					<th>電話
-					<th>性別
+					<th>密碼
+					<th>帳號
 					<th>email
-					<th>大頭貼 <c:forEach var="member" items="${members}">
+					<th>大頭貼 
+					<th>等級
+					<th>功能
+					<c:forEach var="member" items="${members}">
 							<!--  隨便取                      對應Controller-->
-
 							<tr>
 								<td>${member.id}</td>
 								<td>${member.memberName}</td>
@@ -46,7 +48,10 @@
 								<td>${member.memberId}</td>
 								<td>${member.memberEmail}</td>
 								<td>${member.memberPic}</td>
-
+								<td>${member.memberLevel}</td>	
+								
+								
+								
 
 
 								<td><a

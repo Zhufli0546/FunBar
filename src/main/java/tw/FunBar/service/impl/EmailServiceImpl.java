@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tw.FunBar.dao.EmailDAO;
 import tw.FunBar.model.BookingData;
+import tw.FunBar.model.Member;
 import tw.FunBar.model.Room;
 import tw.FunBar.model.RoomOrder;
 import tw.FunBar.service.EmailService;
@@ -30,6 +31,14 @@ public class EmailServiceImpl implements EmailService {
 	public void sendBookingEmail(BookingData data) {
 		
 		emailDAO.sendBookingEmail(data);
+		
+	}
+
+	@Override
+	public void sendmembercheck(Member mail) {
+		
+	
+		emailDAO.sendmembercheck(mail);
 		
 	}
 	

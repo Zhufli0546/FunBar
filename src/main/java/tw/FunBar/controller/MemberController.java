@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
 import tw.FunBar.model.Member;
+import tw.FunBar.service.EmailService;
 import tw.FunBar.service.MemberService;
 
 @Controller
@@ -32,6 +35,8 @@ public class MemberController {
 
 	@Autowired
 	MemberService memberService;
+	@Autowired
+	EmailService emailService;
 	ServletContext context;
 	// 一般登入
 	@RequestMapping(value = "/signin", method = RequestMethod.GET)
@@ -51,20 +56,17 @@ public class MemberController {
 			return "redirect:/signin";
 		}
 		
-
 		int level = member.getMemberLevel();
 		System.out.println("level:"+level);
 		
-		if (member != null && level == 0) {
+		if (member != null && level == 1) {
 			session = request.getSession(false);
 			session.setAttribute("member", member);
 			return "redirect:/";
 		}
-
 		if (member != null && level > 1) {
 			return "redirect:/admin";
-		} else {
-			
+		} else {	
 			return "signin";
 		}
 	}
@@ -99,13 +101,13 @@ public class MemberController {
 	@RequestMapping(value = "/joinus", method = RequestMethod.GET)
 	public String savemember(Model model) {
 		Member mb = new Member();
+		
 		model.addAttribute("Member", mb);
 		return "joinus";
 	}
 	@RequestMapping(value = "/joinus", method = RequestMethod.POST)
-	public String dosavemember(@ModelAttribute("Member") Member mb, HttpServletRequest request, HttpSession session) {
-		
-		Member member = null;
+	public String dosavemember(@ModelAttribute("Member") Member mb) {
+		//驗證每個註冊欄位
 		
 		
 		
@@ -123,12 +125,8 @@ public class MemberController {
 			}
 		}
 		memberService.saveMember(mb);
-		session =request.getSession(false);
-		session.setAttribute("member", mb);
-		
-		
-		
-		return "redirect:/showAllmember";
+		emailService.sendmembercheck(mb);
+		return "redirect:/";
 		
 	}
 	// 刪除
@@ -141,6 +139,25 @@ public class MemberController {
 
 	}
 
+	//認證
+	@RequestMapping(value = "/check", method = RequestMethod.GET)
+	public String check(@RequestParam("id") Integer id, Model model) {
+		model.addAttribute("one", memberService.getONEmember(id));
+		return "check";
+	}
+	@RequestMapping(value = "/levelup", method = RequestMethod.POST)
+	public String levelup(@RequestParam Integer id, @RequestParam("memberlevel") Integer memberlevel,
+			Model model ) {
+				
+//		memberService
+		
+		
+		return null;
+		
+	}
+	
+	
+	
 	// 修改
 	@RequestMapping(value = "/getONE", method = RequestMethod.GET)
 	public String getONE(@RequestParam("id") Integer id, Model model) {
@@ -194,15 +211,14 @@ public class MemberController {
 		@RequestMapping(value = "/updatemb1", method = RequestMethod.POST)
 		public String updatemb1(@RequestParam Integer id, @RequestParam("memberName") String memberName,
 				@RequestParam("memberAddress") String memberAddress, @RequestParam("memberBirth") String memberBirth,
-				@RequestParam("memberPhone") String memberPhone, @RequestParam("memberPwd") String memberPwd,
-				@RequestParam("memberId") String memberId, @RequestParam("memberEmail") String memberEmail,
+				@RequestParam("memberPhone") String memberPhone,
+				@RequestParam("memberEmail") String memberEmail,
 				@RequestParam("memberimg") MultipartFile memberimg,Model model) throws Exception {
 			System.out.println("Id=" + id);
 			byte[] b1 = memberimg.getBytes();
 			Blob blob = new SerialBlob(b1);
-			memberService.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberPwd, memberId,
-					memberEmail, blob);
-			return "redirect:/showMAN";
+			memberService.updateself(id, memberName, memberAddress, memberBirth, memberPhone, memberEmail, blob);
+			return "showMAN";
 		}
 	
 	

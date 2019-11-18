@@ -1,6 +1,8 @@
 package tw.FunBar.dao.impl;
 
+
 import java.util.Properties;
+import java.util.Random;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Repository;
 
 import tw.FunBar.dao.EmailDAO;
 import tw.FunBar.model.BookingData;
+import tw.FunBar.model.Member;
 import tw.FunBar.model.Room;
 import tw.FunBar.model.RoomOrder;
 
@@ -28,6 +31,8 @@ import tw.FunBar.model.RoomOrder;
 
 @Repository
 public class EmailDAOImpl implements EmailDAO {
+
+	
 
 	@Override
 	public void sendEmail(RoomOrder room_order,Room room) {
@@ -170,5 +175,62 @@ public class EmailDAOImpl implements EmailDAO {
 		  }
 		
 	}
+	
+	//會員驗證
+	@Override
+	public void sendmembercheck(Member mail) {
+		String host = "smtp.gmail.com";
+		  int port = 587;
+		  final String username = "funbar109@gmail.com";
+		  final String password = "ftnnxuqoxaywfrtt";
 
+		  Properties props = new Properties();
+		  props.put("mail.smtp.host", host);
+		  props.put("mail.smtp.auth", "true");
+		  props.put("mail.smtp.starttls.enable", "true");
+		  props.put("mail.smtp.port", port);
+		  Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+		   protected PasswordAuthentication getPasswordAuthentication() {
+		    return new PasswordAuthentication(username, password);
+		   }
+		  });
+	
+		  try {
+		   Message message = new MimeMessage(session);
+		   message.setFrom(new InternetAddress("funbar109@gmail.com"));
+		   message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mail.getMemberEmail()));
+		   message.setSubject("FunBar.會員通知");
+		   
+		   String htmlCode = "";
+		   htmlCode += "<div style='margin:0 auto;border:2px solid #02DF82;width:500px;text-align:center;font-size:22px;border-radius:10px'>";
+		   htmlCode += "<h1>您的會員資料 :</h1>";
+		   htmlCode += "<table style='border:none;text-align:ceneter;margin:0 auto'>";
+		   htmlCode += "<tr><td>會員編號:</td><td>."+mail.getId()+"</td></tr>";
+		   htmlCode += "<tr><td>姓名:</td><td>"+mail.getMemberName()+"</td></tr>";
+		   htmlCode += "<tr><td>信箱:</td><td>"+mail.getMemberEmail()+"</td></tr>";
+		   htmlCode += "<tr><td>電話:</td><td>"+mail.getMemberPhone()+"</td></tr>";
+		   htmlCode += "<tr><td>日期:</td><td>"+mail.getMemberBirth()+"</td></tr>";
+		   htmlCode += "<tr><td>帳號:</td><td>"+mail.getMemberId()+"</td></tr>";
+		   htmlCode += "<tr><td>密碼:</td><td>"+mail.getMemberPwd()+"</td></tr>";
+		   htmlCode += "<tr><td>大頭貼:</td><td>"+mail.getMemberfileName()+"</td></tr>";
+		   htmlCode += "<tr><td>認證:</td><td>"+ "http://localhost:8080/FunBar/" + "</td></tr>";
+		  
+		   message.setContent(htmlCode,"text/html;charset=UTF-8");
+		
+		   
+		   
+
+
+		   Transport transport = session.getTransport("smtp");
+		   transport.connect(host, port, username, password);
+
+		   Transport.send(message);
+
+		   
+
+		  } catch (MessagingException e) {
+		   throw new RuntimeException(e);
+		  }
+		
+	}
 }
