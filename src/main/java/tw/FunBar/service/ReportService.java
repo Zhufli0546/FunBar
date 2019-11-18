@@ -21,4 +21,6 @@ public interface ReportService {
 	public void deleteComment(Comment comment);
 	
 	public void resolveReport(Report report);
+	
+	public List<Report> searchReports(String searchKey, Integer searchOption);
 }

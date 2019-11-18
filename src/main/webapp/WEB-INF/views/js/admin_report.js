@@ -68,7 +68,6 @@ function init() {
 			method: "POST",
 			success: function(res) {
 				let report = res.report;
-				console.log("====== 有沒有替換掉阿 =======");
 				console.log("文章標題:" + report.comment.blog.blogTitle);
 				$(".blogTitle").text(report.comment.blog.blogTitle);
 				$(".commentId").text(report.comment.commentId);
@@ -129,3 +128,24 @@ function hiddenContent() {
 		$(this).html(txt + " ......");
 	});
 }
+
+$("#searchKeyUp").bind("keyup", function(event) {
+	if (event.keyCode == 13){
+		$.ajax({
+			url: requestUrl + "/admin_reportSearch",
+			method: "POST",
+			data: {
+				searchKey: $(".searchValue").val(),
+				searchOption: $(".custom-select").val()
+			},
+			dataType: "JSON",
+			success: function(data) {
+				tododata = data.reports;
+				$("#reportProcess").html("");
+				$("#showProcess").html("");
+				$(".searchValue").val("");
+				init();
+			}
+		})
+    }
+})

@@ -105,6 +105,16 @@ public class ReportController {
 		Report report = reportService.findCommentReportById(commentId, reportId);
 		model.addAttribute("report", report);
 
-		return "lockData";
+		return "adminShowComment";
+	}
+	
+	@RequestMapping("/admin_reportSearch")
+	public String adminReportSearch(@RequestParam String searchKey,
+									@RequestParam Integer searchOption, Model model) {
+		
+		List<Report> reports = reportService.searchReports(searchKey, searchOption);
+		model.addAttribute("reports", reports);
+
+		return "adminReportSearch";
 	}
 }

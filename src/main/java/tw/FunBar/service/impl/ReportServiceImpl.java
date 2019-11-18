@@ -58,4 +58,9 @@ public class ReportServiceImpl implements ReportService {
 	public Report findReportById(int id) {
 		return reportDao.findReportById(id);
 	}
+
+	@Override
+	public List<Report> searchReports(String searchKey, Integer searchOption) {
+		return reportDao.searchReports(searchKey, searchOption);
+	}
 }
