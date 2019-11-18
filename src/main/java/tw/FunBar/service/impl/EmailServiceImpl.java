@@ -15,42 +15,34 @@ import tw.FunBar.model.Room;
 import tw.FunBar.model.RoomOrder;
 import tw.FunBar.service.EmailService;
 
-
 @Service
 @Transactional
 public class EmailServiceImpl implements EmailService {
-	
-	
+
 	@Autowired
 	EmailDAO emailDAO;
 
 	@Override
-	public void sendEmail(RoomOrder room_order,Room room) {
-		
-		emailDAO.sendEmail(room_order,room);
-		
+	public void sendEmail(RoomOrder room_order, Room room) {
+
+		emailDAO.sendEmail(room_order, room);
+
 	}
 
 	@Override
 	public void sendBookingEmail(BookingData data) {
-		
+
 		emailDAO.sendBookingEmail(data);
-		
+
 	}
 
 	@Override
-<<<<<<< HEAD
 	public void sendmembercheck(Member mail) {
-		
-	
 		emailDAO.sendmembercheck(mail);
-=======
-	public void sendActivityEmail(Applicant email,Activity activity) {
-		emailDAO.sendActivityEmail(email,activity);
->>>>>>> 391ec280c7a55b7e66a96b6f5fd3aa74bbd8d0cb
-		
 	}
-	
 
+	public void sendActivityEmail(Applicant email, Activity activity) {
+		emailDAO.sendActivityEmail(email, activity);
+	}
 
 }
