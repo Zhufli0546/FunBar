@@ -12,7 +12,10 @@ import javax.persistence.Transient;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+<<<<<<< HEAD
+=======
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+>>>>>>> 391ec280c7a55b7e66a96b6f5fd3aa74bbd8d0cb
 
 
 
@@ -29,9 +32,17 @@ public class Member {
 	private String memberPwd;
 	private String memberId;
 	private String memberEmail;
+<<<<<<< HEAD
+	private int memberLevel;//0代表未激活 1代表激活
+//	private String code;	//激活碼
+=======
+>>>>>>> 391ec280c7a55b7e66a96b6f5fd3aa74bbd8d0cb
 	@JsonIgnore
 	private Blob  memberPic;
-	private int memberLevel;
+	
+	public void setMemberLevel(int memberLevel) {
+		this.memberLevel = memberLevel;
+	}
 	private String memberfileName;
 	@Transient
 	private MultipartFile memberimg;
@@ -105,8 +116,6 @@ public class Member {
 	public void setMemberfileName(String memberfileName) {
 		this.memberfileName = memberfileName;
 	}
-
-	
 	
 	
 }

@@ -8,17 +8,23 @@ import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import tw.FunBar.dao.ActivityDao;
 import tw.FunBar.model.Activity;
+import tw.FunBar.model.ActivityMap;
 import tw.FunBar.model.Applicant;
+import tw.FunBar.model.BookingData;
 
 
 @Repository
 @SuppressWarnings("unchecked")
 public class ActivityDaoImpl implements ActivityDao {
+	
+	final int num = 6;
+	
 	SessionFactory factory;
 	
 	@Autowired
@@ -26,6 +32,18 @@ public class ActivityDaoImpl implements ActivityDao {
 		this.factory = sessionFactory;
 	}
 	
+	//分頁
+	@Override
+	public List<Activity> getPageActivities(int index) {
+		String hql = "FROM Activity";
+		Session session = factory.getCurrentSession();
+		Query query = session.createQuery(hql);
+		query.setFirstResult((index-1)*num);
+		query.setMaxResults(num);
+		return query.list();
+	}
+	
+	//取得全部活動
 	@Override
 	public List<Activity> getAllActivities() {
 		String hql = "FROM Activity";
@@ -35,6 +53,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		return list;
 	}
 
+	//取單筆活動
 	@Override
 	public Activity getActivity(int activityId) {
 		Session session = factory.getCurrentSession();
@@ -42,12 +61,14 @@ public class ActivityDaoImpl implements ActivityDao {
 		return ac;
 	}
 	
+	//新增活動
 	@Override
 	public void addActivity(Activity activity) {
 		Session session = factory.getCurrentSession();
 		session.save(activity);
 	}
 	
+	//取得所有分類
 	@Override
 	public List<String> getAllActivityCategories() {
 		String hql = "SELECT DISTINCT a.category FROM Activity a";
@@ -57,6 +78,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		return list;
 	}
 	
+	//從分類中取得所有活動
 	@Override
 	public List<Activity> getActivityByCategory(String category) {
 		String hql = "FROM Activity ac WHERE ac.category = :category";
@@ -66,11 +88,12 @@ public class ActivityDaoImpl implements ActivityDao {
 		return list;
 	}
 
+	//更新
 	@Override
 	public void updateActivity(int activityId, String eventName, String eventDate, String address, String introduction,
 			String activities, String information, String category, Blob blob ) {
 		String hql = "UPDATE Activity SET eventName =:eventName, eventDate =:eventDate, address =:address,"
-				+ " introduction =:introduction,  activities =:activities, information =:information,"
+				+ " introduction =:introduction, activities =:activities, information =:information,"
 				+ " category=:category, picture=:activityImage WHERE activityId = :activityId";
 		Session session = factory.getCurrentSession();
 		session.createQuery(hql).setParameter("activityId", activityId)
@@ -81,6 +104,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		.executeUpdate();
 	}
 	
+	//刪除活動
 	@Override
 	public Activity deleteActivityById(int activityId) {
 		Session session = factory.getCurrentSession();	
@@ -92,23 +116,38 @@ public class ActivityDaoImpl implements ActivityDao {
 		session.delete(ac);
 		return ac;
 		
-//	@Override
-//	public void updateActivity(int activityId, String eventName) {
-//		String hql = "UPDATE Activity SET eventName =:eventName WHERE activityId = :activityId";
-//		Session session = factory.getCurrentSession();
-//		session.createQuery(hql).setParameter("eventName", eventName)
-//		.setParameter("activityId", activityId).executeUpdate();
-//	}
-	
-//	@Override
-//	public void updateActivity(Activity activity) {
-//		Session session = factory.getCurrentSession();
-//		session.update(activity);
-//	}
-	
 	}
 
+	//取得日期時間 在活動前一天
 
+	@Override
+	public Applicant getTime() {
+		String hql = "From Activity where DATEDIFF(day,GETDATE(),eventDate) = 1";
+		Session session = factory.getCurrentSession();
+		List<Activity> acs = session.createQuery(hql).getResultList();
+		
+		ArrayList<ActivityMap> ams = new ArrayList<>();
+		for (Activity a :acs ) {
+			String hql2 = "From ActivityMap where activityId = :activityId";
+			System.out.println("activityId" + a.getActivityId());
+			
 
+			ams = (ArrayList<ActivityMap>) session.createQuery(hql2).setParameter("activityId", a.getActivityId())
+					.getResultList();
+			
+		}
+		
+		Applicant al = new Applicant();
+		List<Applicant> als = new ArrayList<>();
+		for(ActivityMap aa: ams) {
+			String hql3 = "FROM Applicant where applicantId = :applicantId";
+			System.out.println("applikcantId =>" + aa.getApplicantId());
+			als = (List<Applicant>) session.createQuery(hql3)
+					.setParameter("applicantId",aa.getApplicantId()).getResultList();
+			al = als.get(0);
+		}
+		
+		return al;
+	}
 
 }

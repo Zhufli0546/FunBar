@@ -65,7 +65,7 @@
 					<div class="wrap_menu p-l-20 p-l-0">
 						<nav class="menu">
 							<ul class="main_menu">
-						<li><a href="${pageContext.request.contextPath}/activities">熱門活動</a></li>
+						<li><a href="${pageContext.request.contextPath}/activities?index=1">熱門活動</a></li>
 
 								<li><a href="${pageContext.request.contextPath}/blogs">部落格</a></li>
 
