@@ -26,7 +26,6 @@ form{
  img { 
  	display: block; 
  	float:right;
- 	width: 100px; 
  	height: 120px; 
  	margin: 0 auto; 
  } 
@@ -96,7 +95,7 @@ form{
 <select name="category">
 <option>${pb.category}</option>
 <option value="vodka">vodka</option>
-<option value="gin">gin>
+<option value="gin">gin</option>
 <option value="rum">rum</option>
 <option value="tequila">tequila</option>
 <option value="whisky">whisky</option>

@@ -26,11 +26,11 @@ p{
 	margin: 0 auto 5px;
 	font-weight: bold;
 	color: #000;
+	height:120px;
 }
 
 .prodlist img {
 	display: block;
-	width: 100px;
 	height: 120px;
 	margin: 0 auto;
 }

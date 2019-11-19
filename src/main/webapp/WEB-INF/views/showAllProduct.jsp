@@ -41,7 +41,6 @@
 
 .product-list img {
 	display: block;
-	width: 100px;
 	height: 120px;
 	margin: 0 auto;
 }
@@ -91,7 +90,7 @@
 					<tr>
 						<th scope="row"><img
 							src="<c:url value='/ProductPicture/${pb.productId}'/>"
-							width="100px" height="120px" /></th>
+							height="120px" /></th>
 						<td>${pb.productId}</td>
 						<td>${pb.productNo}</td>
 						<td>${pb.productName}</td>
