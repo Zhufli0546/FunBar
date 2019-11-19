@@ -139,6 +139,7 @@ public class CartController {
 //  }
 
 //  model.addAttribute("cart", cart);
+
 		if (cart == null || cart.getCartItems().size() == 0) {
 			return "showEmptyCart";
 		} else {
@@ -245,6 +246,7 @@ public class CartController {
 
 		// 於購物車建立訂單
 		OrderBean order = new OrderBean();
+		model.addAttribute("orderbean",order);
 
 		// 產生當下時間
 		Date d = new Date();
@@ -279,10 +281,18 @@ public class CartController {
 	public String payByEcPay(HttpServletRequest req,
 						     HttpSession session, Model model) {
 		
+		Member member = (Member) session.getAttribute("member");
+		
 		// session 取得 order 訂單
 		session = req.getSession(false);
 		OrderBean order = (OrderBean)session.getAttribute("order");
 		
+		order.setMemberId(member.getId());
+		System.out.println("==========================>"+order.getMemberId());
+		order.setMemberName(member.getMemberName());
+		order.setMemberPhone(member.getMemberPhone());
+		
+				
 		// http://localhost:XXXX/FunBar
 		String base = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort()
 				+ req.getContextPath();
@@ -309,6 +319,7 @@ public class CartController {
 		order.setOrderTime(sdf.format(ts));
 		obj.setMerchantTradeDate(order.getOrderTime()); // 設定交易日期
 		
+		orderHandleService.addOrder(order);
 		int totalAmount = 0;
 		for(OrderItemBean orderItemBean:order.getOrderItem()) {
 			System.out.println("小計" + orderItemBean.getSubTotal());
@@ -325,9 +336,9 @@ public class CartController {
 
 			if(order.getOrderItem().size()>1) {
 				
-				orderItemListName += product.getProductName() + " " + product.getUnitPrice() + " " + orderItem.getQuantity() + " " + orderItem.getSubTotal() + "#";
+				orderItemListName += product.getProductName() + "              " + product.getUnitPrice() + "            "+  + orderItem.getQuantity() + "             "  + orderItem.getSubTotal() + "#";
 			} else {
-				orderItemListName = product.getProductName() + " " + product.getUnitPrice() + " " + orderItem.getQuantity() + " " + orderItem.getSubTotal();
+				orderItemListName = product.getProductName() + "               "  + product.getUnitPrice() + "            "  + orderItem.getQuantity() + "               " + orderItem.getSubTotal();
 			}
 		}
 		System.out.println("orderItemListName =>" + orderItemListName);
@@ -345,7 +356,7 @@ public class CartController {
 		// 裡面的各種input都已經設定好了，並且會自動submit，
 		// 只要將這個字串加為attribute並且顯示在回傳頁面上，便會自動執行，並跳轉到EcPay付款頁面。
 		// EcPay End
-
+		
 		System.out.println("form =\n" + form);
 		model.addAttribute("ecpayForm", form);
 		return "ecpay";
@@ -365,4 +376,5 @@ public class CartController {
 		// model.addAttribute("cartItemList", cartItemListJson);
 		return cartItemListJson;
 	}
+
 }

@@ -1,5 +1,6 @@
 package tw.FunBar.dao;
 
+
 import java.util.List;
 
 import tw.FunBar.model.Activity;
@@ -14,9 +15,16 @@ public interface EmailDAO {
 
 		void sendBookingEmail(BookingData data);
 
+
+
 		void sendmembercheck(Member mail);
 
-		
+
+
 		void sendActivityEmail(Applicant email,Activity activity);
 		
+
+
+
+
 }

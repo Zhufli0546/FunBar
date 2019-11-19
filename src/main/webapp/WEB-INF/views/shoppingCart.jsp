@@ -5,6 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>購物區</title>
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="<c:url value="/css/shoppingCart.css" />" rel="stylesheet">

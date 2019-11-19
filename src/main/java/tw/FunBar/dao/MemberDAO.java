@@ -33,6 +33,6 @@ public interface MemberDAO {
 	
 	void levelup(int memberLevel,int id);
 	
-
+	void stateup(int memberLevel);
 	
 }

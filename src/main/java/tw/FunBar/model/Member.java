@@ -12,14 +12,22 @@ import javax.persistence.Transient;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
+
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 @Entity
 @Table(name = "MEMBER")
 public class Member {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	private String memberName;
 	private String memberAddress;
 	private String memberBirth;
@@ -27,8 +35,11 @@ public class Member {
 	private String memberPwd;
 	private String memberId;
 	private String memberEmail;
-	private int memberLevel;// 0代表未激活 1代表激活
+
+
+	private int memberLevel;//0代表未激活 1代表激活
 //	private String code;	//激活碼
+
 	@JsonIgnore
 	private Blob memberPic;
 

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.persistence.NoResultException;
+import javax.persistence.metamodel.SetAttribute;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +39,16 @@ public class MemberController {
 	@Autowired
 	EmailService emailService;
 	ServletContext context;
+	//認證
+		@RequestMapping(value = "/check", method = RequestMethod.GET)
+		public String check(@RequestParam("id") Integer id) {
+			System.out.println("idDDDDDDDDDD"+ id);
+			int memberLevel = 0;
+			memberService.levelup(memberLevel, id);
+		return "index";
+			
+		}
+
 	// 一般登入
 	@RequestMapping(value = "/signin", method = RequestMethod.GET)
 	public String signIn() {
@@ -139,22 +150,7 @@ public class MemberController {
 
 	}
 
-	//認證
-	@RequestMapping(value = "/check", method = RequestMethod.GET)
-	public String check(@RequestParam("id") Integer id, Model model) {
-		model.addAttribute("one", memberService.getONEmember(id));
-		return "check";
-	}
-	@RequestMapping(value = "/levelup", method = RequestMethod.POST)
-	public String levelup(@RequestParam Integer id, @RequestParam("memberlevel") Integer memberlevel,
-			Model model ) {
-				
-//		memberService
-		
-		
-		return null;
-		
-	}
+	
 	
 	
 	

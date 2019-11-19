@@ -2,12 +2,16 @@ package tw.FunBar.dao.impl;
 
 import java.sql.Blob;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import tw.FunBar.dao.OrderHandleDAO;
+import tw.FunBar.model.OrderBean;
 import tw.FunBar.model.OrderItemBean;
 import tw.FunBar.model.ProductBean;
 
@@ -46,8 +50,6 @@ public class OrderHandleDAOImpl implements OrderHandleDAO{
 	}
 
 
-
-
 	@Override
 	public void updateProduct(Integer productId, String productNo,Blob productCover, String productDetail,String productName,
 			 String category, Double discount, Integer stock) {
@@ -68,11 +70,32 @@ public class OrderHandleDAOImpl implements OrderHandleDAO{
 		
 	}
 
+
 	@Override
-	public int addOrder(OrderItemBean ob) {
-		// 綠介成功回傳後, 在新增此筆訂單編號(Order)與訂單項目(OrderItems)
-		return 0;
-	}
+	public void addOrder(OrderBean order) {		
+		Session session = sessionFactory.getCurrentSession();
+			
+		Double total = 0.0 ;
+		for(OrderItemBean orderItem:order.getOrderItem()) {
+			
+			Integer id = orderItem.getProductId(); //取得賣出的商品id		
+			Integer num = orderItem.getQuantity(); //取得數量		
+			ProductBean product = session.get(ProductBean.class, id); //		
+			Integer stock = product.getStock();	
+			product.setStock(stock-num); // 		
+			session.update(product);
+			
+			
+			total += orderItem.getSubTotal();
+			
+			orderItem.setOb(order);
+			
+		}
+			
+		   order.setTotalAmount(total);		
+		   session.save(order);
+				
+}
 
 
 }
