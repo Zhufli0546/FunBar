@@ -27,8 +27,7 @@
 <td><p> 生日 : </p> <form:input type="text" path="memberBirth" size="20" value=""/> </td>
 <td><p> 電話 : </p> <form:input type="text" path="memberPhone" size="20" value=""/></td>
 <td><p> 密碼 : </p> <form:input type="text" path="memberPwd" size="20" value=""/></td>
-<c:if test="${sessionScope.member.memberName==null}">
-<td><p> 帳號 : </p> <form:input type="text" path="memberId" size="20" value=""/></td></c:if>
+<td><p> 帳號 : </p> <form:input type="text" path="memberId" size="20" value=""/></td>
 <td><p> Email : </p> <form:input type="text" path="memberEmail" size="20" value=""/></td>
 <td><p> 大頭貼 : </p> <form:input path = "memberimg" type ="file"  size ="40" maxlength="40"/> </td>
  

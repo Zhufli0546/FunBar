@@ -55,7 +55,6 @@ function replySubmit() {
 }
 
 function reportSubmit(reportcommentid) {
-	
 	$("#reportSubmit").click(function() {
 		$.ajax({
 			url: requestUrl + "/reportInsert",
@@ -139,6 +138,7 @@ function generateTemplate() {
 		$(".reportComment").click(function() {
 			if(sessionScopeMemberId==0) window.location.href = requestUrl + "/signin";
 			let reportcommentid = $(this).data("reportcommentid");
+			$("#reportSubmit").unbind("click");
 			reportSubmit(reportcommentid);
 		})
 	}

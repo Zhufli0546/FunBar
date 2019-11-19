@@ -35,8 +35,8 @@
 
 
 			<div class="form-group">
-				<label for="date">活動時間:</label>
-				<form:input path="eventDate" type="text" class="form-control"
+				<label for="date">活動日期:</label>
+				<form:input path="eventDate" type="date" class="form-control"
 					id="date" />
 			</div>
 

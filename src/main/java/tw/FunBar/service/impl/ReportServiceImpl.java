@@ -23,10 +23,15 @@ public class ReportServiceImpl implements ReportService {
 	public void insertReport(Report report) {
 		reportDao.insertReport(report);
 	}
-
+	
 	@Override
 	public Comment findCommentById(int id) {
 		return reportDao.findCommentById(id);
+	}
+
+	@Override
+	public Report findCommentReportById(int commentId, int reportId) {
+		return reportDao.findCommentReportById(commentId, reportId);
 	}
 
 	@Override
@@ -52,5 +57,10 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public Report findReportById(int id) {
 		return reportDao.findReportById(id);
+	}
+
+	@Override
+	public List<Report> searchReports(String searchKey, Integer searchOption) {
+		return reportDao.searchReports(searchKey, searchOption);
 	}
 }

@@ -25,6 +25,7 @@ public class Applicant {
 	private String gender;
 	private String applicantPhone;
 	private String applicantEmail;
+	private String memberId;
 	@Transient
 	private String applicantCreateTime;
 
@@ -87,5 +88,13 @@ public class Applicant {
 
 	public void setApplicantCreateTime(String applicantCreateTime) {
 		this.applicantCreateTime = applicantCreateTime;
+	}
+
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 }

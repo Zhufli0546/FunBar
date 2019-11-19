@@ -23,12 +23,12 @@ public interface MemberService {
 			String memberPwd, String memberId, String memberEmail,Blob blob);
 	
 	void updateself(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
-			String memberPwd, String memberId, String memberEmail,Blob blob);
+			 String memberEmail,Blob blob);
 	
 	
 	Member signin (String memberId,String memberPwd);
 
 	Member checkuser (String memberId,String memberPwd);
 
-	
+	void levelup(int memberLevel,int id);
 }

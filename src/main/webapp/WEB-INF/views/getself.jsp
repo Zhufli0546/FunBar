@@ -63,7 +63,7 @@
 			
 			<h2>會員資料</h2>
 			
-				<form action="updatemb" method="POST" enctype="multipart/form-data">
+				<form action="updatemb1" method="POST" enctype="multipart/form-data">
 
 					<fieldset>
 					<div class="form-group">
@@ -80,8 +80,7 @@
                         <label for="memberAddress">帳號:</label>
                         <input type="text" class="form-control" name="memberId" disabled value="${one.memberId}">
                         <label for="memberAddress">信箱:</label>
-                       </div>
-                        <div>
+                       
                         <input type="text" class="form-control" name="memberEmail" value="${one.memberEmail}">
                         <label for="memberAddress">大頭貼:</label>
                         <img
@@ -93,7 +92,7 @@
 
 					<div class="button">
 						<input type="hidden" name="id" value="${one.id}" />
-						<input button type="button" class="btn btn-outline-secondary" value="送出"> 
+						<input type="submit" class="btn btn-outline-secondary" value="送出"> 
 						<td><a href="${pageContext.request.contextPath}">
 							<button type="button" class="btn btn-outline-secondary">回首頁</button>
 					</a></td>

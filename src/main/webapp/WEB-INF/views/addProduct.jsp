@@ -150,6 +150,5 @@
 
 	<jsp:include page="admin_footer.jsp" />
 
-
 </body>
 </html>

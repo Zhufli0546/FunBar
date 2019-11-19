@@ -142,6 +142,7 @@ public class BlogController {
 		blog.setBlogImage(path);
 		blog.setBlogTitle(blogTitle);
 		blog.setBlogContent(blogContent);
+		blog.setBlogIsHot(0);
 		
 		Date d = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -182,6 +183,14 @@ public class BlogController {
 
 		model.addAttribute("blogs", blogs);
 		return "admin_blog";
+	}
+	
+	@RequestMapping("/admin_blog/{id}")
+	public String adminBlogById(@PathVariable Integer id, Model model) {
+		Blog blog = blogService.findByIdBlog(id);
+
+		model.addAttribute("blog", blog);
+		return "adminBlogById";
 	}
 	
 	@RequestMapping("/admin_delete/{id}")
@@ -253,5 +262,14 @@ public class BlogController {
 			
 		
 		return "redirect:/blog/" + blogId;
+	}
+	
+	@RequestMapping("/admin_switch/{id}")
+	public String adminSwitch(@PathVariable Integer id, @RequestParam Integer blogIsHot) {
+		Blog blog = blogService.findByIdBlog(id);
+		blog.setBlogIsHot(blogIsHot);
+		blogService.modifyBlog(blog);
+
+		return "adminSwitch";
 	}
 }

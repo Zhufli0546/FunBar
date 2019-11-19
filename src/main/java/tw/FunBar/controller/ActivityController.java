@@ -9,10 +9,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
@@ -29,17 +32,35 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import tw.FunBar.model.Activity;
+import tw.FunBar.model.Applicant;
+import tw.FunBar.model.Member;
 import tw.FunBar.service.ActivityService;
+import tw.FunBar.service.ApplicantService;
+import tw.FunBar.service.EmailService;
 
 @Controller
 public class ActivityController {
 
 	ActivityService service;
 
+	ApplicantService applicantservice;
+
+	EmailService emailService;
+
+	@Autowired
+	public void setEmailService(EmailService emailService) {
+		this.emailService = emailService;
+	}
+
+	@Autowired
+	public void setApplicantservice(ApplicantService applicantservice) {
+		this.applicantservice = applicantservice;
+	}
+
 	@Autowired
 	public void setService(ActivityService service) {
 		this.service = service;
-	}	
+	}
 
 	ServletContext context;
 
@@ -48,82 +69,87 @@ public class ActivityController {
 		this.context = context;
 	}
 
-	//------後臺資料新增、修改、刪除、查詢--------
-	//查詢多筆
-	@RequestMapping(value= {"activities"})
-	public String list(Model model) {
+	// ------後臺資料新增、修改、刪除、查詢--------
+
+	// 查詢多筆
+	@RequestMapping(value = { "activities" })
+	public String list(Model model, @RequestParam("index") Integer index) {
 		List<String> list = service.getAllActivityCategories();
 		model.addAttribute("categoryList", list);
-		List<Activity> activity = service.getAllActivities();
+		List<Activity> activity = service.getPageActivities(index);
 		model.addAttribute("activities", activity);
-		
+
 		return "activities";
 	}
-	
-	//活動管理查詢
-	@RequestMapping(value= { "activityQuery"})
-	public String Management(Model model) {
+
+	// 活動管理查詢
+	@RequestMapping(value = { "activityQuery" })
+	public String Management(Model model, Integer index) {
 		List<Activity> activity = service.getAllActivities();
 		model.addAttribute("activities", activity);
-		
+
 		return "activityQuery";
 	}
 
-	//查詢單筆
-	@RequestMapping(value= {"/activity"})
+	// 查詢單筆
+	@RequestMapping(value = { "/activity" })
 	public String getActivity(@RequestParam("id") Integer id, Model model) {
 		model.addAttribute("activity", service.getActivity(id));
 		return "activity";
 	}
-	
-	//送出更新表單
-	@RequestMapping(value= {"/activityUpdate"})
+
+	// 送出更新表單
+	@RequestMapping(value = { "/activityUpdate" })
 	public String getActivity1(@RequestParam("id") Integer id, Model model) {
 		model.addAttribute("activity", service.getActivity(id));
 		return "activityUpdate";
 	}
-	
-	//更新
+
+	// 更新
 	@RequestMapping(value = "/activityQuery", method = RequestMethod.POST)
-	public String updateActivity(@RequestParam(value="activityId",required=false)int activityId,
-			@RequestParam("eventName") String eventName,
-			@RequestParam("eventDate") String eventDate,
-			@RequestParam("address") String address,
-			@RequestParam("introduction") String introduction,
-			@RequestParam("activities") String activities,
-			@RequestParam("information") String information,
-			@RequestParam("category") String category,
-			@RequestParam("activityImage") MultipartFile activityImage,Model model) throws IOException, SerialException, SQLException {
-		
-		
-		byte[] b1 = activityImage.getBytes();
-		Blob blob = new SerialBlob(b1);
-		
-		service.updateActivity(activityId, eventName, eventDate, address, introduction, activities, information, category, blob);
-		
+	public String updateActivity(@RequestParam(value = "activityId", required = false) int activityId,
+			@RequestParam("eventName") String eventName, @RequestParam("eventDate") String eventDate,
+			@RequestParam("address") String address, @RequestParam("introduction") String introduction,
+			@RequestParam("activities") String activities, @RequestParam("information") String information,
+			@RequestParam("category") String category, @RequestParam("activityImage") MultipartFile activityImage,
+			Model model) throws IOException, SerialException, SQLException {
+
+		String filename = activityImage.getOriginalFilename();
+		if (filename.length() != 0) {
+			byte[] b1 = activityImage.getBytes();
+			Blob blob = new SerialBlob(b1);
+
+			service.updateActivity(activityId, eventName, eventDate, address, introduction, activities, information,
+					category, blob);
+		} else {
+			Activity activity = service.getActivity(activityId);
+			service.updateActivity(activityId, eventName, eventDate, address, introduction, activities, information,
+					category, activity.getPicture());
+
+		}
 		return "redirect:/activityQuery";
 	}
 
-	//刪除
+	// 刪除
 	@RequestMapping("/deleteActivity")
 	public String deleteActivity(@RequestParam("id") Integer activityId, Model model) {
 		model.addAttribute("ac", service.deleteActivityById(activityId));
 		return "redirect:/activityQuery";
 	}
-	
-	//新增資料 送回新增資料的表單
+
+	// 新增資料 送回新增資料的表單
 	@RequestMapping(value = "/addActivity", method = RequestMethod.GET)
 	public String input(Model model) {
 		model.addAttribute("activity", new Activity());
 		return "addActivity";
 	}
-	
-	//新增資料、圖片
+
+	// 新增資料、圖片
 	@RequestMapping(value = "activities", method = RequestMethod.POST)
-	public String addActivity(@ModelAttribute("activity") Activity activity) {		
+	public String addActivity(@ModelAttribute("activity") Activity activity) {
 		MultipartFile activityImage = activity.getActivityImage();
 		String originalFilename = activityImage.getOriginalFilename();
-		System.out.println("originalFilename:" +originalFilename);
+		System.out.println("originalFilename:" + originalFilename);
 		activity.setFileName(originalFilename);
 		if (activityImage != null && !activityImage.isEmpty()) {
 			try {
@@ -148,10 +174,10 @@ public class ActivityController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/activities";
+		return "redirect:/activities?index=1";
 	}
 
-	//讀取資料庫圖片
+	// 讀取資料庫圖片
 	@RequestMapping(value = "/ActivitygetPicture/{activityId}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPitcure(HttpServletResponse resp, @PathVariable Integer activityId) {
 		String filePath = "/WEB-INF/views/activityimages/wine.jpg";
@@ -174,7 +200,7 @@ public class ActivityController {
 				media = toByArray(filePath);
 				filename = filePath;
 			}
-		}else {
+		} else {
 			media = toByArray(filePath);
 			filename = filePath;
 		}
@@ -183,70 +209,66 @@ public class ActivityController {
 		String mimeType = context.getMimeType(filename);
 		MediaType mediaType = MediaType.valueOf(mimeType);
 		headers.setContentType(mediaType);
-		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media,HttpStatus.OK);
+		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media, HttpStatus.OK);
 		return responseEntity;
 	}
 
 	private byte[] toByArray(String filepath) {
 		byte[] b = null;
 		String realPath = context.getRealPath(filepath);
-		
+
 		try {
 			File file = new File(realPath);
 			long size = file.length();
-			b = new byte[(int)size];
+			b = new byte[(int) size];
 			InputStream fis = context.getResourceAsStream(filepath);
 			fis.read(b);
-		}catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return b;
 	}
-	
-	//分類查詢
+
+	// 分類查詢
 	@ModelAttribute("categoryList")
-	public List<String> getCategoryList(){
+	public List<String> getCategoryList() {
 		return service.getAllActivityCategories();
 	}
-	
+
 	@RequestMapping("/activities/{category}")
 	public String getActivityByCategory(@PathVariable("category") String category, Model model) {
 		List<Activity> activities = service.getActivityByCategory(category);
 		model.addAttribute("activities", activities);
 		return "activities";
 	}
+
+	// 查詢活動前一天並寄送郵件
 	
-//	@RequestMapping(value = "/activityQuery", method = RequestMethod.POST)
-//	public String updateActivity(@RequestParam(value="activityId",required=false)int activityId,
-//			@RequestParam("eventName") String eventName, Model model) {
-//		service.updateActivity(activityId, eventName);
-//		return "redirect:/activityQuery";
-//	}
+	@RequestMapping(value="/getTimeAndSend")
+	public String getTimeAndSend(Activity activity) {
+		Applicant email = service.getTime();
+		emailService.sendActivityEmail(email, activity);
+		
+		return "activityQuery";
+		
+	}
 	
-//	// 顯示單筆活動資料，然後導向更新畫面
-//		@RequestMapping(value = "/activityQuery/{activityId}", method = RequestMethod.GET)
-//		public String findActivity(@PathVariable Integer activityId, Model model) {
-//			Activity activity = service.getActivity(activityId);
-//			model.addAttribute(activity);
-//			return "/activityUpdate1";
-//		}
-//		
-//	@RequestMapping(value = "/activityQuery/{activityId}" ,method = RequestMethod.PUT)
-//	public String updateActivity(@PathVariable Integer activityId,@RequestBody Activity activity,
-//			HttpServletRequest req) {
-//		service.updateActivity(activity);
-//		return "redirect:" + req.getContextPath() +"/activityQuery";
-//	}
-	
-	//---------前台使用者報名活動 查詢 取消 修改資料--------
-	
-	//新增使用者報名表單
-	@RequestMapping(value= {"activityRegistration"})
-	public String getActivity2(@RequestParam("id") Integer activityId, Model model) {
+
+	// ---------前台使用者--------
+
+	// 新增使用者報名表單
+	@RequestMapping(value = { "activityRegistration" })
+	public String getActivity2(@RequestParam("id") Integer activityId, Model model, HttpServletRequest request,
+			HttpSession session) {
 		model.addAttribute("activity", service.getActivity(activityId));
-		return "activityRegistration";
+		session = request.getSession(false);
+		Member member = (Member) session.getAttribute("member");
+		if (member == null) {
+			return "redirect:/signin";
+		} else
+			return "activityRegistration";
 	}
 
 }
