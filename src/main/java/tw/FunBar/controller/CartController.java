@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
@@ -27,83 +29,56 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 
+import ecpay.payment.integration.AllInOne;
+import ecpay.payment.integration.domain.AioCheckOutOneTime;
 import tw.FunBar.model.Cart;
 import tw.FunBar.model.CartItem;
 import tw.FunBar.model.Member;
 import tw.FunBar.model.OrderBean;
 import tw.FunBar.model.OrderItemBean;
 import tw.FunBar.model.ProductBean;
+import tw.FunBar.model.Room;
+import tw.FunBar.model.RoomOrder;
 import tw.FunBar.service.OrderHandleService;
 
 @Controller
 public class CartController {
- @Autowired
- OrderHandleService orderHandleService;
+	@Autowired
+	OrderHandleService orderHandleService;
 
- @Autowired
- ServletContext context;
+	@Autowired
+	ServletContext context;
 
- @RequestMapping(value = "/cart", method = RequestMethod.POST)
- public String addCart(HttpServletRequest request, HttpSession session, HttpServletRequest response,
-   @RequestParam Integer productId, @RequestParam Integer count) throws IOException {
-  session = request.getSession(false);
+	@RequestMapping(value = "/cart", method = RequestMethod.POST)
+	public String addCart(HttpServletRequest request, HttpSession session, HttpServletRequest response,
+			@RequestParam Integer productId, @RequestParam Integer count) throws IOException {
+		session = request.getSession(false);
 
-  // 未來整合 login 才能產生購物車
+		// 未來整合 login 才能產生購物車
 
-  Cart cart = (Cart) session.getAttribute("Cart");
-  if (cart == null) {
-   cart = new Cart();
-   session.setAttribute("Cart", cart);
-  }
+		Cart cart = (Cart) session.getAttribute("Cart");
+		if (cart == null) {
+			cart = new Cart();
+			session.setAttribute("Cart", cart);
+		}
 
-  ProductBean product = orderHandleService.getProductById(productId);
+		ProductBean product = orderHandleService.getProductById(productId);
 
-  CartItem cartItem = new CartItem();
-  cartItem.setProduct(product);
-  cartItem.setCount(count);
-  cart.add(cartItem);
-  session.setAttribute("Cart", cart);
-
-//  Collection<CartItem> item = cart.getCartItems();
-//  for (CartItem c : item) {
-//   System.out.println("購買產品id:" + c.getProduct().getProductId());
-//   System.out.println("購買產品名稱:" + c.getProduct().getProductName());
-//   System.out.println("購買產品數量:" + c.getCount());
-//  }
-
-  return "cart";
-
- }
-
- @RequestMapping(value = "/changecart", method = RequestMethod.POST)
- public String changecart(HttpServletRequest request, HttpSession session, HttpServletRequest response,
-   @RequestParam Integer productId, @RequestParam Integer count) throws IOException {
-  session = request.getSession(false);
-
-  // 未來整合 login 才能產生購物車
-
-  Cart cart = (Cart) session.getAttribute("Cart");
-  if (cart == null) {
-   cart = new Cart();
-   session.setAttribute("Cart", cart);
-  }
-
-  ProductBean product = orderHandleService.getProductById(productId);
-
-  CartItem cartItem = new CartItem();
-  cartItem.setProduct(product);
-  cartItem.setCount(count);
-  cart.add1(cartItem);
-  session.setAttribute("Cart", cart);
+		CartItem cartItem = new CartItem();
+		cartItem.setProduct(product);
+		cartItem.setCount(count);
+		cart.add(cartItem);
+		session.setAttribute("Cart", cart);
 
 //  Collection<CartItem> item = cart.getCartItems();
 //  for (CartItem c : item) {
@@ -112,16 +87,49 @@ public class CartController {
 //   System.out.println("購買產品數量:" + c.getCount());
 //  }
 
-  return "cart";
+		return "cart";
 
- }
+	}
 
- @RequestMapping(value = "/showCart")
- public String showCart(HttpServletRequest request, HttpSession session, Model model) throws IOException {
-  session = request.getSession(false);
-	Member member = (Member)session.getAttribute("member");
-	if(member==null) return "redirect:/signin";
-  Cart cart = (Cart) session.getAttribute("Cart");
+	@RequestMapping(value = "/changecart", method = RequestMethod.POST)
+	public String changecart(HttpServletRequest request, HttpSession session, HttpServletRequest response,
+			@RequestParam Integer productId, @RequestParam Integer count) throws IOException {
+		session = request.getSession(false);
+
+		// 未來整合 login 才能產生購物車
+
+		Cart cart = (Cart) session.getAttribute("Cart");
+		if (cart == null) {
+			cart = new Cart();
+			session.setAttribute("Cart", cart);
+		}
+
+		ProductBean product = orderHandleService.getProductById(productId);
+
+		CartItem cartItem = new CartItem();
+		cartItem.setProduct(product);
+		cartItem.setCount(count);
+		cart.add1(cartItem);
+		session.setAttribute("Cart", cart);
+
+//  Collection<CartItem> item = cart.getCartItems();
+//  for (CartItem c : item) {
+//   System.out.println("購買產品id:" + c.getProduct().getProductId());
+//   System.out.println("購買產品名稱:" + c.getProduct().getProductName());
+//   System.out.println("購買產品數量:" + c.getCount());
+//  }
+
+		return "cart";
+
+	}
+
+	@RequestMapping(value = "/showCart")
+	public String showCart(HttpServletRequest request, HttpSession session, Model model) throws IOException {
+		session = request.getSession(false);
+		Member member = (Member) session.getAttribute("member");
+		if (member == null)
+			return "redirect:/signin";
+		Cart cart = (Cart) session.getAttribute("Cart");
 
 //  Collection<CartItem> cartItems = cart.getCartItems();
 //  for (CartItem c : cartItems) {
@@ -131,160 +139,242 @@ public class CartController {
 //  }
 
 //  model.addAttribute("cart", cart);
-  if (cart == null || cart.getCartItems().size() == 0) {
-   return "showEmptyCart";
-  } else {
-   return "showCart";
-  }
- }
 
- @RequestMapping(value = "/removeCartItem")
- public String rvemoveCartItem(HttpServletRequest request, HttpSession session,
-   @RequestParam("productId") Integer productId, Model model) {
-  session = request.getSession(false);
-  Cart cart = (Cart) session.getAttribute("Cart");
-  cart.delete(productId);
+		if (cart == null || cart.getCartItems().size() == 0) {
+			return "showEmptyCart";
+		} else {
+			return "showCart";
+		}
+	}
 
-  if (cart.getCartItems().size() == 0) {
-   return "showEmptyCart";
-  } else {
-   return "redirect:/showCart";
-  }
+	@RequestMapping(value = "/removeCartItem")
+	public String rvemoveCartItem(HttpServletRequest request, HttpSession session,
+			@RequestParam("productId") Integer productId, Model model) {
+		session = request.getSession(false);
+		Cart cart = (Cart) session.getAttribute("Cart");
+		cart.delete(productId);
 
- }
+		if (cart.getCartItems().size() == 0) {
+			return "showEmptyCart";
+		} else {
+			return "redirect:/showCart";
+		}
 
- @RequestMapping(value = "/deleteCartItem")
- public String deleteCartItem(HttpServletRequest request, HttpSession session) {
-  session = request.getSession(false);
-  Cart cart = (Cart) session.getAttribute("Cart");
-  cart.clear();
+	}
 
-  return "showEmptyCart";
- }
+	@RequestMapping(value = "/deleteCartItem")
+	public String deleteCartItem(HttpServletRequest request, HttpSession session) {
+		session = request.getSession(false);
+		Cart cart = (Cart) session.getAttribute("Cart");
+		cart.clear();
 
- @RequestMapping(value = "/ProductPictures/{productId}", method = RequestMethod.GET)
- public ResponseEntity<byte[]> getPicture(HttpServletResponse resp, @PathVariable Integer productId) {
-  String filePath = "/WEB-INF/views/ProductImages/noImage.png";
+		return "showEmptyCart";
+	}
 
-  byte[] media = null;
-  HttpHeaders headers = new HttpHeaders();
-  String filename = "";
-  int len = 0;
-  ProductBean pb = orderHandleService.getProductById(productId);
-  if (pb != null) {
-   Blob blob = pb.getProductImage();
-   filename = pb.getFileName();
-   System.out.println("filename" + filename);
-   System.out.println("blob" + blob);
-   if (blob != null) {
-    try {
-     len = (int) blob.length();
-     media = blob.getBytes(1, len);
-    } catch (SQLException e) {
-     throw new RuntimeException("ShoppingController的getPicture()發生SQLException: " + e.getMessage());
-    }
-   } else {
-    media = toByteArray(filePath);
-    filename = filePath;
-   }
-  } else {
-   media = toByteArray(filePath);
-   filename = filePath;
-  }
-  headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-  String mimeType = context.getMimeType(filename);
-  MediaType mediaType = MediaType.valueOf(mimeType);
-  System.out.println("mediaType =" + mediaType);
-  headers.setContentType(mediaType);
-  ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media, headers, HttpStatus.OK);
-  return responseEntity;
- }
+	@RequestMapping(value = "/ProductPictures/{productId}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> getPicture(HttpServletResponse resp, @PathVariable Integer productId) {
+		String filePath = "/WEB-INF/views/ProductImages/noImage.png";
 
- private byte[] toByteArray(String filepath) {
-  byte[] b = null;
-  String realPath = context.getRealPath(filepath);
-  try {
-   File file = new File(realPath);
-   long size = file.length();
-   b = new byte[(int) size];
-   InputStream fis = context.getResourceAsStream(filepath);
-   fis.read(b);
-  } catch (FileNotFoundException e) {
-   e.printStackTrace();
-  } catch (IOException e) {
-   e.printStackTrace();
-  }
-  return b;
- }
+		byte[] media = null;
+		HttpHeaders headers = new HttpHeaders();
+		String filename = "";
+		int len = 0;
+		ProductBean pb = orderHandleService.getProductById(productId);
+		if (pb != null) {
+			Blob blob = pb.getProductImage();
+			filename = pb.getFileName();
+			System.out.println("filename" + filename);
+			System.out.println("blob" + blob);
+			if (blob != null) {
+				try {
+					len = (int) blob.length();
+					media = blob.getBytes(1, len);
+				} catch (SQLException e) {
+					throw new RuntimeException("ShoppingController的getPicture()發生SQLException: " + e.getMessage());
+				}
+			} else {
+				media = toByteArray(filePath);
+				filename = filePath;
+			}
+		} else {
+			media = toByteArray(filePath);
+			filename = filePath;
+		}
+		headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+		String mimeType = context.getMimeType(filename);
+		MediaType mediaType = MediaType.valueOf(mimeType);
+		System.out.println("mediaType =" + mediaType);
+		headers.setContentType(mediaType);
+		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media, headers, HttpStatus.OK);
+		return responseEntity;
+	}
 
- // 新增訂單
- @RequestMapping("/orderSetUp")
- public String orderSetUp(HttpServletRequest request, HttpSession session, @RequestParam String address,Model model,Cart c) {
+	private byte[] toByteArray(String filepath) {
+		byte[] b = null;
+		String realPath = context.getRealPath(filepath);
+		try {
+			File file = new File(realPath);
+			long size = file.length();
+			b = new byte[(int) size];
+			InputStream fis = context.getResourceAsStream(filepath);
+			fis.read(b);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
 
-  session = request.getSession(false);
-  Member member = (Member) session.getAttribute("member");
-  if (member.getMemberName() == null) {
-   return "redirect:/signin";
-  }
+	// 新增訂單
+	@RequestMapping("/orderSetUp")
+	public String orderSetUp(HttpServletRequest request, HttpSession session,String address, Model model,
+			Cart c) {
 
-  // 取得購物車
-  Cart cart = (Cart) session.getAttribute("Cart");
-  if (cart == null) {
-   System.out.println("cart is null");
-   return "redirect:/signin";
-  }
+		session = request.getSession(false);
+		Member member = (Member) session.getAttribute("member");
+		if (member.getMemberName() == null) {
+			return "redirect:/signin";
+		}
 
-  // 於購物車建立訂單
-  OrderBean order = new OrderBean();
+		// 取得購物車
+		Cart cart = (Cart) session.getAttribute("Cart");
+		if (cart == null) {
+			System.out.println("cart is null");
+			return "redirect:/signin";
+		}
 
-  // 產生當下時間
-  Date d = new Date();
-  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-  String createdTime = sdf.format(d);
-  order.setOrderTime(createdTime);
-  order.setTotalAmount(cart.getTotal());
+		// 於購物車建立訂單
+		OrderBean order = new OrderBean();
+		model.addAttribute("orderbean",order);
 
-  System.out.println("memberID:" + member.getId());
-  order.setMemberId(member.getId());
-  order.setShippingAddress(address);
+		// 產生當下時間
+		Date d = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String createdTime = sdf.format(d);
+		order.setOrderTime(createdTime);
+		order.setTotalAmount(cart.getTotal());
 
-  // 訂單項目
-  Set<OrderItemBean> orderItemList = new LinkedHashSet<OrderItemBean>();
+		System.out.println("memberID:" + member.getId());
+		order.setMemberId(member.getId());
+		order.setShippingAddress("taipei");
 
-  for (CartItem cartItem : cart.getCartItems()) {
-   OrderItemBean orderItem = new OrderItemBean();
-   orderItem.setProductId(cartItem.getProduct().getProductId());
-   orderItem.setQuantity(cartItem.getCount());
-   // 候畫面產生，需再測試
-   orderItem.setSubTotal(cartItem.getSubtotal() * cartItem.getProduct().getDiscount());
-   orderItemList.add(orderItem);
-  }
+		// 訂單項目
+		Set<OrderItemBean> orderItemList = new LinkedHashSet<OrderItemBean>();
 
-  order.setOrderItem(orderItemList);
+		for (CartItem cartItem : cart.getCartItems()) {
+			OrderItemBean orderItem = new OrderItemBean();
+			orderItem.setProductId(cartItem.getProduct().getProductId());
+			orderItem.setQuantity(cartItem.getCount());
+			// 候畫面產生，需再測試
+			orderItem.setSubTotal((int)(cartItem.getSubtotal() * cartItem.getProduct().getDiscount()/10));
+			orderItemList.add(orderItem);
+		}
 
-  return "";
- }
- 
- // buy Cart Session
- @RequestMapping(value= "/buyCartJson",produces = "application/json;charset=UTF-8")
- @ResponseBody
- public String buyCartJson(HttpSession session) {
-  Cart cart = (Cart) session.getAttribute("Cart");
-  Collection<CartItem> cartItemList = cart.getCartItems();
-  
-//  List<ProductBean> productList = new ArrayList<>();
-//  for(CartItem cartItem:cartItemList) {
-//   System.out.println(cartItem.getProduct().getProductId());
-//   System.out.println(cartItem.getProduct().getProductName());
-//   System.out.println(cartItem.getCount());
-//   System.out.println(cartItem.getSubtotal());
-//   
-//   productList.add(cartItem.getProduct());
-//  }
-  Gson gson = new Gson();
-  String cartItemListJson = gson.toJson(cartItemList);
+		order.setOrderItem(orderItemList);
+		session.setAttribute("order", order);
 
-  //model.addAttribute("cartItemList", cartItemListJson);
-  return cartItemListJson;
- }
+		return "redirect:/cartpay";
+	}
+	
+	@RequestMapping(value = "/cartpay")
+	public String payByEcPay(HttpServletRequest req,
+						     HttpSession session, Model model) {
+		
+		Member member = (Member) session.getAttribute("member");
+		
+		// session 取得 order 訂單
+		session = req.getSession(false);
+		OrderBean order = (OrderBean)session.getAttribute("order");
+		
+		order.setMemberId(member.getId());
+		System.out.println("==========================>"+order.getMemberId());
+		order.setMemberName(member.getMemberName());
+		order.setMemberPhone(member.getMemberPhone());
+		
+				
+		// http://localhost:XXXX/FunBar
+		String base = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort()
+				+ req.getContextPath();
+
+		// EcPay Begin
+		// EcPay 對各項 method 都有簡單註解說明，可以將滑鼠移動到方法上查看
+		AllInOne all = new AllInOne("");
+		
+		// 指定付款方式為信用卡一次付清
+		AioCheckOutOneTime obj = new AioCheckOutOneTime();
+		
+		int randomOrderId=((int)((Math.random()*9+1)*12345));
+		
+		// 未來替代隨機的 PK
+		order.setOrderId(randomOrderId);
+		order.setPayment("已付款");
+		// roomService.addRoomOrder(room_order);
+		
+		obj.setMerchantTradeNo(String.valueOf(randomOrderId)); // 設定訂單編號
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Timestamp ts = new Timestamp(System.currentTimeMillis());
+		
+		order.setOrderTime(sdf.format(ts));
+		obj.setMerchantTradeDate(order.getOrderTime()); // 設定交易日期
+		
+		orderHandleService.addOrder(order);
+		int totalAmount = 0;
+		for(OrderItemBean orderItemBean:order.getOrderItem()) {
+			System.out.println("小計" + orderItemBean.getSubTotal());
+			totalAmount += orderItemBean.getSubTotal();
+		}
+
+		obj.setTotalAmount(String.valueOf(totalAmount)); // 設定總付款金額
+		obj.setTradeDesc("綠界支付");
+		
+		// 設定顯示在EcPay頁面的購物清單
+		String orderItemListName = "";
+		for(OrderItemBean orderItem:order.getOrderItem()) {
+			ProductBean product = orderHandleService.getProductById(orderItem.getProductId());
+
+			if(order.getOrderItem().size()>1) {
+				
+				orderItemListName += product.getProductName() + "              " + product.getUnitPrice() + "            "+  + orderItem.getQuantity() + "             "  + orderItem.getSubTotal() + "#";
+			} else {
+				orderItemListName = product.getProductName() + "               "  + product.getUnitPrice() + "            "  + orderItem.getQuantity() + "               " + orderItem.getSubTotal();
+			}
+		}
+		System.out.println("orderItemListName =>" + orderItemListName);
+		obj.setItemName(orderItemListName); 
+		
+		obj.setReturnURL("http://localhost:8080/FunBar/");// EcPay會將交易結果相關資訊以POST請求送來這個URL，但是localhost接不到這個。不過此項為必填資訊所以還是要set
+		// EcPay會將交易結果相關資訊以POST請求送來這個URL，但是localhost接不到這個。不過此項為必填資訊所以還是要set
+		// 可以在交易結束後觀察底下對應requestMapping的method -- receive
+		// 的system.err.println並不會出現在console中，藉此得知該方法並沒有被呼叫 -> 沒收到請求
+		obj.setOrderResultURL("http://localhost:8080/FunBar/"); // EcPay會在付款結束後，將USER redirect至此，並附帶交易結果相關資訊
+		obj.setNeedExtraPaidInfo("N"); // Y/N = True/False
+		obj.setRedeem("N"); // 紅利 Y/N = True/False
+		String form = all.aioCheckOut(obj, null); // null for no invoice
+		// all.aioCheckOut會根據前面設定好的參數產生一個html表格的字串，
+		// 裡面的各種input都已經設定好了，並且會自動submit，
+		// 只要將這個字串加為attribute並且顯示在回傳頁面上，便會自動執行，並跳轉到EcPay付款頁面。
+		// EcPay End
+		
+		System.out.println("form =\n" + form);
+		model.addAttribute("ecpayForm", form);
+		return "ecpay";
+
+	}
+
+	// buy Cart Session
+	@RequestMapping(value = "/buyCartJson", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String buyCartJson(HttpSession session) {
+		Cart cart = (Cart) session.getAttribute("Cart");
+		Collection<CartItem> cartItemList = cart.getCartItems();
+
+		Gson gson = new Gson();
+		String cartItemListJson = gson.toJson(cartItemList);
+
+		// model.addAttribute("cartItemList", cartItemListJson);
+		return cartItemListJson;
+	}
+
 }
