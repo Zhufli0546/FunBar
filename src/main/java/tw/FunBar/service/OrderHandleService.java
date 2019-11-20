@@ -18,9 +18,11 @@ public interface OrderHandleService {
 	void updateProduct(Integer productId,String productNo,Blob productCover,String productDetail,String productName, 
 			String category, Double discount,Integer stock);
 	
-	public void addOrder(OrderBean order);
+	public int addOrder(OrderBean order);
 
 	void addOrderItemList(List<OrderItemBean> orderItemList);
+
+	public OrderBean getOrderById(int od);
 
 	
 }

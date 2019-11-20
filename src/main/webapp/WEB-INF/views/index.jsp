@@ -6,9 +6,11 @@
 
 <head>
 	<title>Home</title>
+	<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
+	<link href="<c:url value="/css/hotProduct.css" />" rel="stylesheet">
+
 </head>
 
 <body class="animsition">
@@ -91,11 +93,79 @@
 
 	<!-- Blog -->
 	<section class="page">
+	
+	<h2>
+	最新商品
+	</h2>
+	
+	
+		<div class="row">
+			<c:forEach var="pb" items="${all}" begin="0" step="1" varStatus="i">
+				<div class="prodlist">
+					<p>${pb.productDetail}</p>
+					<p class="prodtitle">${pb.productName}</p>
+					<figure>
+						<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />
+					</figure>
+					<figcaption>
+						<p>建議售價:<span style="color:#FF44AA;font-weight:bold">$ ${pb.unitPrice}</span></p>
+						<p>折扣：<span style="font-weight:bold;color:	#CE0000;">${pb.discount}</span></p>
+						<div>
+						<label for="selectCount" class="">購買數量:</label>
+								<select class="selectCount" id="selectCount" name="count" data-product="${i.index}">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+								</select>
+						</div>
+						
+							<input class="pdid" type="hidden" name="productId" value="${pb.productId}">
+							<button type="button" class="button-add" data-product="${i.index}">加入購物車</button>
+							<div id="snackbar">已加入購物車</div>	
+					</figcaption>
+
+				</div>
+				
+			</c:forEach>
+		</div>
 		
 	</section>
 
 	<!-- Footer -->
 	<jsp:include page="footer.jsp" />
+	<script>
+	<!--購物車jQuery -->
+	function myFunction() {
+		var x = document.getElementById("snackbar");
+			x.className = "show";
+			setTimeout(function() {
+				x.className = x.className.replace("show", "");
+			}, 1000);
+ 		}
+	
+		// Test For Click Event
+		$(".button-add").click(function() {
+			let index = $(this).data("product");
+			console.log("btn index:" + index);
+			myFunction();
+			
+			var url = "/FunBar/";
+			$.ajax({
+				url : "http://localhost:8080" + url + "cart",
+				data:{
+					count:$(".selectCount").eq(index).val(),
+					productId:$(".pdid").eq(index).val()
+				},
+				type:"POST",
+				dataType:"JSON",
+				success:function(data){
+					console.log("success");
+				}
+			})
+		})
+	</script>
 
 	
 

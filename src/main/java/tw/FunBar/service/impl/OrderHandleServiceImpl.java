@@ -53,8 +53,9 @@ public class OrderHandleServiceImpl implements OrderHandleService{
 
 	
 	@Override
-	public void addOrder(OrderBean order) {
-		dao.addOrder(order);
+	public int addOrder(OrderBean order) {
+		return dao.addOrder(order);
+		
 		
 	}
 
@@ -63,6 +64,12 @@ public class OrderHandleServiceImpl implements OrderHandleService{
 	public void addOrderItemList(List<OrderItemBean> orderItemList) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public OrderBean getOrderById(int od) {
+		
+		return dao.getOrderById(od);
 	}
 
 	

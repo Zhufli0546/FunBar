@@ -6,9 +6,7 @@
 <meta charset="UTF-8">
 <title>購物區</title>
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script>
 
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="<c:url value="/css/shoppingCart.css" />" rel="stylesheet">
@@ -45,23 +43,19 @@
 					<figcaption>
 						<p>建議售價:<span style="color:#FF44AA;font-weight:bold">$ ${pb.unitPrice}</span></p>
 						<p>折扣：<span style="font-weight:bold;color:	#CE0000;">${pb.discount}</span></p>
-						<p style="color:#000000">庫存：${pb.stock}</p>
+						<p style="color:#000000" class="theStock" data-product="${i.index}">庫存：${pb.stock}</p>
 							<label for="selectCount" class="">購買數量:</label>
-<!-- 						 <div class="col-sm-6 col-xs-12">  -->
-								<select class="selectCount" name="count">
+								<select class="selectCount" id="selectCount" name="count" data-product="${i.index}">
 									<option value="1">1</option>
 									<option value="2">2</option>
 									<option value="3">3</option>
 									<option value="4">4</option>
 									<option value="5">5</option>
 								</select>
-<!--  							 </div>  -->
 							<input class="pdid" type="hidden" name="productId"
 								value="${pb.productId}">
-							<button type="button" class="button-add" data-product="${i.index}" >加入購物車</button>
-							<div id="snackbar">已加入購物車</div>
-
-					
+							<button type="button" class="button-add" data-product="${i.index}">加入購物車</button>
+							<div id="snackbar">已加入購物車</div>	
 					</figcaption>
 
 				</div>
@@ -69,7 +63,6 @@
 			</c:forEach>
 			<a href="<c:url value='/showCart' />"><button
 					class="btn btn-info">我的購物車</button></a>
-
 
 		</div>
 	</div>

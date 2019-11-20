@@ -14,12 +14,24 @@ import tw.FunBar.service.ShoppingService;
 public class ShoppingServiceImpl implements ShoppingService{
 	@Autowired
 	ShoppingDAO dao;
+	
+	@Transactional
+	@Override
+	public List<ProductBean> showNewProducts() {
+		return dao.showNewProducts();
+	}
 		
 
 	@Transactional
 	@Override
 	public List<ProductBean> getAllProducts() {
 		return dao.getAllProducts();
+	}
+	
+	@Transactional
+	@Override
+	public List<ProductBean> getAllProducts1() {
+		return dao.getAllproducts1() ;
 	}
 
 	@Transactional
@@ -33,7 +45,6 @@ public class ShoppingServiceImpl implements ShoppingService{
 	public List<ProductBean> getProductByCategory(String category) {
 		return dao.getProductByCategory(category);
 	}
-
 	
 
 }

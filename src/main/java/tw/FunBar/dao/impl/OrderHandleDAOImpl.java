@@ -24,7 +24,6 @@ public class OrderHandleDAOImpl implements OrderHandleDAO{
 	
 	@Override
 	public void addProduct(ProductBean pb) {
-//		System.out.println("name:" + pb.getFileName());
 		Session session = sessionFactory.getCurrentSession();
 		session.save(pb);
 	
@@ -41,7 +40,6 @@ public class OrderHandleDAOImpl implements OrderHandleDAO{
 
 	@Override
 	public ProductBean deleteProduct(Integer productId) {
-//		String hql = "Delete From ProductBean where productId = :productId";
 		Session session = sessionFactory.getCurrentSession();	
 		ProductBean pb = session.get(ProductBean.class,productId);
 		session.delete(pb);
@@ -72,7 +70,7 @@ public class OrderHandleDAOImpl implements OrderHandleDAO{
 
 
 	@Override
-	public void addOrder(OrderBean order) {		
+	public int addOrder(OrderBean order) {		
 		Session session = sessionFactory.getCurrentSession();
 			
 		Double total = 0.0 ;
@@ -80,22 +78,30 @@ public class OrderHandleDAOImpl implements OrderHandleDAO{
 			
 			Integer id = orderItem.getProductId(); //取得賣出的商品id		
 			Integer num = orderItem.getQuantity(); //取得數量		
-			ProductBean product = session.get(ProductBean.class, id); //		
+			ProductBean product = session.get(ProductBean.class, id); 		
 			Integer stock = product.getStock();	
-			product.setStock(stock-num); // 		
+			product.setStock(stock-num);  		
 			session.update(product);
-			
-			
-			total += orderItem.getSubTotal();
-			
+					
+			total += orderItem.getSubTotal();		
 			orderItem.setOb(order);
 			
 		}
-			
 		   order.setTotalAmount(total);		
-		   session.save(order);
+		   int od = (int)session.save(order);
+		   
+		   return od ;
 				
 }
 
+	@Override
+	public OrderBean getOrderById(int od) {
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		OrderBean order = session.get(OrderBean.class,od);
+		return order;
+	}
 
+			
 }

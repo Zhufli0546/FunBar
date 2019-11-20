@@ -60,6 +60,9 @@ public class ShoppingController {
 		return "shoppingCart";
 	}
 	
+
+	
+	
 //	*RequestMapping請求不能有多個相同路徑
 	
 //	依分類查詢商品(點擊分類連結進入分類商品頁面）
@@ -88,7 +91,7 @@ public class ShoppingController {
 		Member member = (Member)session.getAttribute("member");
 		if(member==null) return "redirect:/signin";
 		
-		List<ProductBean> show = shoppingService.getAllProducts();
+		List<ProductBean> show = shoppingService.getAllProducts1();
 		model.addAttribute("all", show);
 		return "showAllProduct";
 	}
