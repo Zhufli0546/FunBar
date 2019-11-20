@@ -55,17 +55,16 @@
 									<option value="4">4</option>
 									<option value="5">5</option>
 								</select>
-							<input class="pdid" type="hidden" name="productId"
-								value="${pb.productId}">
-							<button type="button" class="button-add" data-product="${i.index}">加入購物車</button>
-							<div id="snackbar">已加入購物車</div>	
+<!-- 							<input class="pdid" type="hidden" name="productId" -->
+<%-- 								value="${pb.productId}"> --%>
+<%-- 							<button type="button" class="button-add" data-product="${i.index}">加入購物車</button> --%>
+<!-- 							<div id="snackbar">已加入購物車</div>	 -->
 					</figcaption>
 
 				</div>
 				<!-- .prodlist -->
 			</c:forEach>
-			<a href="<c:url value='/showCart' />"><button
-					class="btn btn-info">我的購物車</button></a>
+<%-- 			<a href="<c:url value='/showCart' />"><button class="btn btn-info">我的購物車</button></a> --%>
 
 		</div>
 	</div>

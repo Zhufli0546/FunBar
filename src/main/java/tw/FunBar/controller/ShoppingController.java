@@ -60,9 +60,14 @@ public class ShoppingController {
 		return "shoppingCart";
 	}
 	
-
-	
-	
+	@RequestMapping(value= {"/product"})   //查看單筆商品資訊
+	public String getProduct(@RequestParam("id") Integer productId, Model model) 
+							throws SerialException, SQLException, IOException {
+		model.addAttribute("pb", orderService.getProductById(productId));
+		return "product";
+		
+	}
+		
 //	*RequestMapping請求不能有多個相同路徑
 	
 //	依分類查詢商品(點擊分類連結進入分類商品頁面）
