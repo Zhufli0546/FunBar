@@ -1,7 +1,10 @@
 package tw.FunBar.dao;
 
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import tw.FunBar.model.OrderBean;
 import tw.FunBar.model.OrderItemBean;
@@ -23,5 +26,5 @@ public interface OrderHandleDAO {
 
 	OrderBean getOrderById(int od);
 
-
+	ArrayList<OrderBean> getMyOrders(Integer memberId,HttpServletRequest req);
 }

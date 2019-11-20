@@ -88,6 +88,7 @@
 									<div class="dropdown-menu">
 						           		 <a class="dropdown-item" href="${pageContext.request.contextPath}/shoppingCart">購物商城</a>
        									 <a class="dropdown-item" href="${pageContext.request.contextPath}/showCart">我的購物車</a>
+       									 <a class="dropdown-item" href="${pageContext.request.contextPath}/showMemOrders">我的購物清單</a>
                						</div>
 								</li>
 								
