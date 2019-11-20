@@ -52,7 +52,13 @@ public interface RoomService {
 
 	ArrayList<RoomStatus> getAllRoomStatus();
 
-	void updateRoomStatus(Integer room_number, Integer order_id);
+	void updateRoomStatus(Integer room_number, Integer order_id,String name);
+
+	void checkOut(Integer order_id, Integer room_number);
+
+	void clearAllRoom();
+
+	ArrayList<RoomOrder> personalOrder(String phone);
 
 	
 

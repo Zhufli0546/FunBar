@@ -170,10 +170,13 @@ public class RoomDAOImpl implements RoomDAO {
 		room_order.setCheck_out_time(check_out_time);
 
 		session.save(room_order);
+		
 
+		
+		addOrderInDays(room_order,stay);
 	}
 
-	public void addOrderInDays(RoomOrder room_order) throws ParseException {
+	public void addOrderInDays(RoomOrder room_order,Integer stay) throws ParseException {
 
 		Session session = sessionFactory.getCurrentSession();
 
@@ -184,9 +187,9 @@ public class RoomDAOImpl implements RoomDAO {
 
 		day = fm.parse(date);
 
-		String st = room_order.getCheck_out_time();
+		//String st = room_order.getCheck_out_time();
 
-		Integer stay = Integer.parseInt(st);
+		//Integer stay = Integer.parseInt(st);
 
 		String theDay;
 
@@ -205,6 +208,15 @@ public class RoomDAOImpl implements RoomDAO {
 			roomOrderInDays.setRoom_id(room_order.getRoom_id());
 			roomOrderInDays.setCheck_in_time(theDay);
 			roomOrderInDays.setRooms(room_order.getRooms());
+			
+			   
+			 
+			roomOrderInDays.setRoomOrder(room_order);
+			
+			
+			 
+			  
+			  
 
 			session.save(roomOrderInDays);
 			calendar.add(Calendar.DATE, 1);
@@ -389,13 +401,28 @@ public class RoomDAOImpl implements RoomDAO {
 	@Override
 	public ArrayList<RoomOrder> getTodayOrder(String date) {
 		
-		String hql = "From RoomOrder where check_in_time = :date";
+		String hql = "From RoomOrderInDays where check_in_time = :date";
 		
 		Session session = sessionFactory.getCurrentSession();
 		
-		ArrayList<RoomOrder> orders = (ArrayList<RoomOrder>)session.createQuery(hql).setParameter("date", date).getResultList(); 
+		ArrayList<RoomOrderInDays> orders = (ArrayList<RoomOrderInDays>)session.createQuery(hql).setParameter("date", date).getResultList(); 
 		
-		return orders;
+		ArrayList<RoomOrder> order = new ArrayList<>();
+		
+		for(RoomOrderInDays one : orders) {
+			
+			String hql2 = "From RoomOrder where order_id = :order_id";
+			
+			 RoomOrder main = one.getRoomOrder();
+			 
+			 int id = main.getOrder_id();
+			
+			RoomOrder single = (RoomOrder)session.createQuery(hql2).setParameter("order_id",id).getSingleResult();
+			
+			order.add(single);
+		}
+		
+		return order;
 	}
 
 	@Override
@@ -418,7 +445,7 @@ public class RoomDAOImpl implements RoomDAO {
 		ArrayList<Room> allroom = allRoom();
 		
 		Session session = sessionFactory.getCurrentSession();
-		int number  = 1001;
+		Integer number  = 1001;
 		for(Room r :allroom) {
 			for(int i = 1;i<=r.getRoom_quantity();i++) {
 				
@@ -426,9 +453,11 @@ public class RoomDAOImpl implements RoomDAO {
 				room.setRoom(r.getRoom_type() + i);
 				room.setStatus(0);
 				room.setRoom_number(number);
+				number ++ ;
+
 				session.save(room);
 				
-				number ++ ;
+
 			}
 		}
 		
@@ -455,7 +484,8 @@ public class RoomDAOImpl implements RoomDAO {
 	}
 
 	@Override
-	public void updateRoomStatus(Integer room_number, Integer order_id) {
+	public void updateRoomStatus(Integer room_number, Integer order_id,String name) {
+		
 		
 		String hql = "From RoomStatus where room_number = :room_number";
 		
@@ -465,10 +495,113 @@ public class RoomDAOImpl implements RoomDAO {
 		
 		room.setOrder_id(order_id);
 		
+		room.setOrder_name(name);
+		
 		room.setStatus(1);
 		
 		session.update(room);
 		
+		
+		RoomOrder order = session.get(RoomOrder.class,order_id);
+		
+		Integer rooms = order.getCheck_in();
+		
+
+		
+		order.setRoom_number(room_number);
+		
+		order.setCheck_in(rooms+1);
+		
+		session.update(order);
+		
+		
+		
+	}
+
+	@Override
+	public void checkOut(Integer order_id,Integer room_number) {
+		
+		String hql = "From RoomStatus where order_id = :order_id and room_number = :room_number";
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		RoomStatus roomStatus = (RoomStatus)session.createQuery(hql).setParameter("order_id", order_id).setParameter("room_number",room_number).getSingleResult();
+		
+		roomStatus.setOrder_id(null);
+		
+		roomStatus.setStatus(0);
+		
+		session.update(roomStatus);
+		
+		
+		RoomOrder roomOrder = session.get(RoomOrder.class,order_id);
+		
+		Integer rooms = roomOrder.getCheck_in();
+		
+		roomOrder.setCheck_in(rooms-1);
+		
+		roomOrder.setRoom_number(null);
+		
+		session.update(roomOrder);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void clearAllRoom() {
+		
+		String sql = "truncate table RoomStatus";
+		Session session1 = sessionFactory.getCurrentSession();
+		session1.createSQLQuery(sql).executeUpdate();
+		
+		
+		ArrayList<Room> allroom = allRoom();
+		
+		Session session = sessionFactory.getCurrentSession();
+		Integer number  = 1001;
+		for(Room r :allroom) {
+			for(int i = 1;i<=r.getRoom_quantity();i++) {
+				
+				RoomStatus room = new RoomStatus();
+				room.setRoom(r.getRoom_type() + i);
+				room.setStatus(0);
+				room.setRoom_number(number);
+				number ++ ;
+				session.save(room);
+				
+
+			}
+		}
+		
+		
+		String hql = "From RoomOrder";
+		
+		ArrayList<RoomOrder> orders =(ArrayList<RoomOrder>) session.createQuery(hql).getResultList();
+		
+		for(RoomOrder o : orders) {
+			o.setCheck_in(0);
+			o.setRoom_number(null);
+			
+			session.update(o);
+		}
+		
+	}
+
+	@Override
+	public void addOrderInDays(RoomOrder room_order) throws ParseException {		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<RoomOrder> personalOrder(String phone) {
+		
+		String hql = "From RoomOrder where order_phone = :phone order by order_id DESC";
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		ArrayList<RoomOrder> orders =  (ArrayList<RoomOrder>) session.createQuery(hql).setParameter("phone",phone).getResultList();
+		
+		
+		return orders;
 	}
 
 }

@@ -2,12 +2,17 @@ package tw.FunBar.dao.impl;
 
 import java.sql.Blob;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import tw.FunBar.dao.OrderHandleDAO;
+import tw.FunBar.model.OrderBean;
 import tw.FunBar.model.OrderItemBean;
 import tw.FunBar.model.ProductBean;
 
@@ -72,6 +77,21 @@ public class OrderHandleDAOImpl implements OrderHandleDAO{
 	public int addOrder(OrderItemBean ob) {
 		// 綠介成功回傳後, 在新增此筆訂單編號(Order)與訂單項目(OrderItems)
 		return 0;
+	}
+
+	@Override
+	public void addOrder(OrderBean order) {
+		
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		for(OrderItemBean ob : order.getOrderItem()) {
+				
+			ob.setOb(order);
+		}
+		
+		session.save(order);
+		
 	}
 
 

@@ -157,10 +157,9 @@ button{
     <input name="people" type="text" value="${people}" readonly="readonly">
     
     <input name="name" type="text" placeholder="姓名" required="required">
-    <input name="sex" type="text" placeholder="性別" required="required">
     <input name="phone" type="text" placeholder="連絡電話" required="required">
     <input name="email" type="text" placeholder="e-mail" required="required">
-    <input name="remark" type="text" placeholder="備註" required="required">
+    <input name="remark" type="text" placeholder="備註">
     <div style="text-align:center">
     <button type="button"
 					onclick="location.href='ad_booking'">返回</button>               

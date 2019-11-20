@@ -160,11 +160,32 @@ public class RoomServiceImpl implements RoomService {
 
 
 	@Override
-	public void updateRoomStatus(Integer room_number, Integer order_id) {
+	public void updateRoomStatus(Integer room_number, Integer order_id,String name) {
 			   
 		
-		roomDAO.updateRoomStatus(room_number,order_id);
+		roomDAO.updateRoomStatus(room_number,order_id,name);
 		
+	}
+
+
+	@Override
+	public void checkOut(Integer order_id,Integer room_number) {
+		roomDAO.checkOut(order_id,room_number);
+		
+	}
+
+
+	@Override
+	public void clearAllRoom() {
+		roomDAO.clearAllRoom();
+		
+	}
+
+
+	@Override
+	public ArrayList<RoomOrder> personalOrder(String phone) {
+		
+		return roomDAO.personalOrder(phone);
 	}
 
 

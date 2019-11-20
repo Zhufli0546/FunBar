@@ -36,14 +36,13 @@ function del() {var msg ="是否刪除";if (confirm(msg)==true){return true;}els
 	<div style="padding: 10px ;border:1px solid black;float:left">
 	<table id="ch" class="table table-striped" style="text-align: center" >
 <thead><tr>
-<th>訂單編號<th>訂位人<th>性別<th>訂位日期<th>訂位時間<th>訂位人數<th>手機<th>取消訂位<th>更改訂位
+<th>訂單編號<th>訂位人<th>訂位日期<th>訂位時間<th>訂位人數<th>手機<th>取消訂位<th>更改訂位
 </tr></thead>
 <tbody>
 <c:forEach var="b" items="${All}">
 <tr>
 <td>${b.booking_id}</td>
 <td>${b.name}</td>
-<td>${b.sex}</td>
 <td>${b.date}</td>
 <td>${b.time}</td>
 <td>${b.people}</td>

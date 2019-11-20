@@ -78,6 +78,7 @@
 								           <div class="dropdown-menu">
 								           		 <a class="dropdown-item" href="${pageContext.request.contextPath}/booking">線上訂位</a>
                									 <a class="dropdown-item" href="${pageContext.request.contextPath}/booking_room">線上訂房</a>
+               									 <a class="dropdown-item" href="${pageContext.request.contextPath}/personal_order">我的訂房</a>
                								</div>	 
 
 								</li>

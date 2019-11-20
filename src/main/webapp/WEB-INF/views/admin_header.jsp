@@ -130,7 +130,8 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">######</h6>
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin_blog">部落格管理</a> 
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin_blog">部落格管理</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin_report">部落格檢舉管理</a> 
 				</div></li>
 
 				<!-- 討論區後台 -->

@@ -255,6 +255,8 @@ public class CartController {
 
 		System.out.println("memberID:" + member.getId());
 		order.setMemberId(member.getId());
+		order.setMemberName(member.getMemberName());
+		order.setMemberPhone(member.getMemberPhone());
 		order.setShippingAddress("taipei");
 
 		// 訂單項目
@@ -271,7 +273,8 @@ public class CartController {
 
 		order.setOrderItem(orderItemList);
 		session.setAttribute("order", order);
-
+		
+		
 		return "redirect:/cartpay";
 	}
 	
@@ -280,8 +283,10 @@ public class CartController {
 						     HttpSession session, Model model) {
 		
 		// session 取得 order 訂單
-		session = req.getSession(false);
+		
 		OrderBean order = (OrderBean)session.getAttribute("order");
+		
+		
 		
 		// http://localhost:XXXX/FunBar
 		String base = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort()
@@ -301,12 +306,16 @@ public class CartController {
 		order.setPayment("已付款");
 		// roomService.addRoomOrder(room_order);
 		
+		
+		
 		obj.setMerchantTradeNo(String.valueOf(randomOrderId)); // 設定訂單編號
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
 		
 		order.setOrderTime(sdf.format(ts));
+		
+		orderHandleService.addOrder(order);
 		obj.setMerchantTradeDate(order.getOrderTime()); // 設定交易日期
 		
 		int totalAmount = 0;

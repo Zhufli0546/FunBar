@@ -3,6 +3,7 @@ package tw.FunBar.service;
 import java.sql.Blob;
 import java.util.List;
 
+import tw.FunBar.model.OrderBean;
 import tw.FunBar.model.OrderItemBean;
 import tw.FunBar.model.ProductBean;
 
@@ -20,5 +21,7 @@ public interface OrderHandleService {
 	public int addOrder(OrderItemBean ob) ;
 
 	public void addOrderItemList(List<OrderItemBean> orderItemList);
+
+	public void addOrder(OrderBean order);
 
 }

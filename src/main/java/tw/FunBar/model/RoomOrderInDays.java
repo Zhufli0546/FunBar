@@ -4,7 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="ROOMORDERINDAYS")
@@ -20,6 +25,16 @@ public class RoomOrderInDays {
 		private String check_in_time;
 		
 		private Integer rooms;
+		
+		@Transient
+		private Integer order_id;
+		
+		
+		@JsonIgnoreProperties("roomOrderInDays")
+		@ManyToOne
+		@JoinColumn(name="order_id")
+		private RoomOrder roomOrder;
+		
 
 		public Integer getId() {
 			return id;
@@ -27,6 +42,26 @@ public class RoomOrderInDays {
 
 		public void setId(Integer id) {
 			this.id = id;
+		}
+		
+		
+		
+		
+
+		public RoomOrder getRoomOrder() {
+			return roomOrder;
+		}
+
+		public void setRoomOrder(RoomOrder roomOrder) {
+			this.roomOrder = roomOrder;
+		}
+
+		public Integer getOrder_id() {
+			return order_id;
+		}
+
+		public void setOrder_id(Integer order_id) {
+			this.order_id = order_id;
 		}
 
 		public Integer getRoom_id() {

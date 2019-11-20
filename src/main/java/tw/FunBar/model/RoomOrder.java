@@ -1,5 +1,9 @@
 package tw.FunBar.model;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -7,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -46,10 +51,29 @@ public class RoomOrder {
 	
 	private Integer check_in;
 	
+	private Integer room_number;
+	
+	
+	@JsonIgnoreProperties("roomOrder")
+	@OneToMany(mappedBy = "roomOrder",cascade = CascadeType.ALL)
+	private Set<RoomOrderInDays> roomOrderInDays = new LinkedHashSet<>();
+	
+	
 	@JsonIgnoreProperties("roomOrder")
 	@ManyToOne
 	@JoinColumn(name="ROOM_ID")
 	private Room room;
+	
+	
+
+	public Set<RoomOrderInDays> getRoomOrderInDays() {
+		return roomOrderInDays;
+	}
+
+
+	public void setRoomOrderInDays(Set<RoomOrderInDays> roomOrderInDays) {
+		this.roomOrderInDays = roomOrderInDays;
+	}
 
 
 	public Integer getOrder_id() {
@@ -61,11 +85,16 @@ public class RoomOrder {
 		this.order_id = order_id;
 	}
 	
-	
-	
-	
 
-	
+	public Integer getRoom_number() {
+		return room_number;
+	}
+
+
+	public void setRoom_number(Integer room_number) {
+		this.room_number = room_number;
+	}
+
 
 	public Integer getCheck_in() {
 		return check_in;

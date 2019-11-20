@@ -85,7 +85,7 @@ public class BookingDAOImpl implements BookingDAO {
 	}
 
 	@Override
-	public void addReservations(String date, Integer people, String time, String sex, String name, String phone,
+	public void addReservations(String date, Integer people, String time, String name, String phone,
 			String email, String remark) {
 		
 		
@@ -96,7 +96,6 @@ public class BookingDAOImpl implements BookingDAO {
 		d.setPeople(people);
 		d.setEmail(email);
 		d.setName(name);
-		d.setSex(sex);
 		d.setPhone(phone);
 		d.setRemark(remark);
 		

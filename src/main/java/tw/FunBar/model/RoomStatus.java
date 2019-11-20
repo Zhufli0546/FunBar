@@ -21,6 +21,9 @@ public class RoomStatus {
 	private Integer order_id;
 	
 	private Integer room_number;
+	
+	private String order_name;
+	
 
 	public Integer getId() {
 		return id;
@@ -30,9 +33,14 @@ public class RoomStatus {
 		this.id = id;
 	}
 	
-	
-	
-	
+
+	public String getOrder_name() {
+		return order_name;
+	}
+
+	public void setOrder_name(String order_name) {
+		this.order_name = order_name;
+	}
 
 	public Integer getRoom_number() {
 		return room_number;
