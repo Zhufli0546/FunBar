@@ -57,8 +57,8 @@
 					<!-- Logo -->
 					<div class="logo">
 						<a href="${pageContext.request.contextPath}"> 
-						<img src="<c:url value='/images/icons/logo4nb.png' />" 
-							data-logofixed="<c:url value='/images/icons/logo4nb.png' />">
+						<img src="<c:url value='/images/icons/logo5.png' />" 
+							data-logofixed="<c:url value='/images/icons/logo5.png' />">
 						</a>
 					</div>
 					<!-- Menu -->
@@ -78,6 +78,7 @@
 								           <div class="dropdown-menu">
 								           		 <a class="dropdown-item" href="${pageContext.request.contextPath}/booking">線上訂位</a>
                									 <a class="dropdown-item" href="${pageContext.request.contextPath}/booking_room">線上訂房</a>
+               									 <a class="dropdown-item" href="${pageContext.request.contextPath}/personal_order">我的訂房</a>
                								</div>	 
 
 								</li>
@@ -87,6 +88,7 @@
 									<div class="dropdown-menu">
 						           		 <a class="dropdown-item" href="${pageContext.request.contextPath}/shoppingCart">購物商城</a>
        									 <a class="dropdown-item" href="${pageContext.request.contextPath}/showCart">我的購物車</a>
+       									 <a class="dropdown-item" href="${pageContext.request.contextPath}/showMemOrders">我的購物清單</a>
                						</div>
 								</li>
 								
@@ -157,7 +159,7 @@
 				href="${pageContext.request.contextPath}/blogs" class="txt19">部落格</a>
 			</li>
 
-			<li class="t-center m-b-13"><a href="discuss" class="txt19">討論區</a>
+			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/discuss" class="txt19">討論區</a>
 			</li>
 			
 

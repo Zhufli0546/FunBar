@@ -1,7 +1,10 @@
 package tw.FunBar.service.impl;
 
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DaoSupport;
@@ -16,57 +19,70 @@ import tw.FunBar.service.OrderHandleService;
 
 @Service
 public class OrderHandleServiceImpl implements OrderHandleService{
-	@Autowired
-	OrderHandleDAO dao;
+ @Autowired
+ OrderHandleDAO dao;
 
 
-	@Transactional
-	@Override
-	public void addProduct(ProductBean pb) {
-		dao.addProduct(pb);	
-	}
+ @Transactional
+ @Override
+ public void addProduct(ProductBean pb) {
+  dao.addProduct(pb); 
+ }
 
-	@Transactional
-	@Override
-	public ProductBean getProductById(Integer productId) {
-		return dao.getProductById(productId);
-	}
-
-
-
-	@Transactional
-	@Override
-	public ProductBean deleteProduct(Integer productId) {
-		return dao.deleteProduct(productId);		
-	}
+ @Transactional
+ @Override
+ public ProductBean getProductById(Integer productId) {
+  return dao.getProductById(productId);
+ }
 
 
 
+ @Transactional
+ @Override
+ public ProductBean deleteProduct(Integer productId) {
+  return dao.deleteProduct(productId);  
+ }
 
-	@Transactional
-	@Override
-	public void updateProduct(Integer productId, String productNo,Blob productCover,String productDetail, String productName,
-			 String category, Double discount, Integer stock) {
-		 dao.updateProduct(productId, productNo,productCover,productDetail, productName, category, discount, stock);
-		
-	}
 
+
+
+ @Transactional
+ @Override
+ public void updateProduct(Integer productId, String productNo,Blob productCover,String productDetail, String productName,
+    String category, Double discount, Integer stock) {
+   dao.updateProduct(productId, productNo,productCover,productDetail, productName, category, discount, stock);
+  
+ }
+
+ 
+ @Override
+ public int addOrder(OrderBean order) {
+  return dao.addOrder(order);
+  
+  
+ }
+
+ @Transactional
+ @Override
+ public void addOrderItemList(List<OrderItemBean> orderItemList) {
+  // TODO Auto-generated method stub
+  
+ }
+
+ @Override
+ public OrderBean getOrderById(int od) {
+  
+  return dao.getOrderById(od);
+ }
+
+@Override
+public ArrayList<OrderBean> getMyOrders(int id,HttpServletRequest req) {
 	
-	@Override
-	public void addOrder(OrderBean order) {
-		dao.addOrder(order);
-		
-	}
+	return dao.getMyOrders(id,req);
+}
 
-	@Transactional
-	@Override
-	public void addOrderItemList(List<OrderItemBean> orderItemList) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-	
-	
-	
+ 
+ 
+ 
+ 
 }

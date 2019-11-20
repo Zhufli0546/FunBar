@@ -376,6 +376,9 @@ color:blue;
 	</select>
 	<div class="calendar11" id="time">請先選擇日期人數</div>
 		</div>
+		
+		
+		
 
 		
 	<jsp:include page="admin_footer.jsp" />

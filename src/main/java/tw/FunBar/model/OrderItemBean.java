@@ -9,15 +9,20 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
-@Table(name = "OrderItems")
+@Table(name = "ORDERITEMS")
 public class OrderItemBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer orderItemId;
+	
+	//	@Transient
+	//private Integer orderId;
+	
 	private Integer productId;
 	private Integer quantity;
 	private Integer subTotal;
@@ -36,6 +41,20 @@ public class OrderItemBean implements Serializable {
 	public void setOrderItemId(Integer orderItemId) {
 		this.orderItemId = orderItemId;
 	}
+	
+	
+	
+	
+
+
+//
+//	public Integer getOrderId() {
+//		return orderId;
+//	}
+//
+//	public void setOrderId(Integer orderId) {
+//		this.orderId = orderId;
+//	}
 
 	public Integer getProductId() {
 		return productId;
@@ -68,5 +87,7 @@ public class OrderItemBean implements Serializable {
 	public void setSubTotal(Integer subTotal) {
 		this.subTotal = subTotal;
 	}
+
+
 
 }

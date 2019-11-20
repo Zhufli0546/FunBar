@@ -1,7 +1,10 @@
 package tw.FunBar.dao;
 
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import tw.FunBar.model.OrderBean;
 import tw.FunBar.model.OrderItemBean;
@@ -19,6 +22,9 @@ public interface OrderHandleDAO {
 	void updateProduct(Integer productId, String productNo,Blob productCover,String productDetail, String productName, 
 			String category, Double discount, Integer stock);
 
-	void addOrder(OrderBean order);
+	int addOrder(OrderBean order);
 
+	OrderBean getOrderById(int od);
+
+	ArrayList<OrderBean> getMyOrders(Integer memberId,HttpServletRequest req);
 }

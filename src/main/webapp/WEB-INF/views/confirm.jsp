@@ -5,7 +5,7 @@
 <html>
 
 <head>
-	<title>Home</title>
+	<title>確認訂位</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
@@ -152,15 +152,29 @@ button{
 	<section class="page animsition" style="background-color:#D0D0D0">
 		<form id="signup" method="post" action="addReservations" style="background-color:white;border:2px solid black">
     <h1>填寫訂位人資料</h1>
+    
+    
     <input name="date" type="text" value="${date}"  readonly="readonly">
     <input name="time" type="text" value="${time}"  readonly="readonly">
     <input name="people" type="text" value="${people}" readonly="readonly">
     
+    <c:choose>
+		<c:when test="${sessionScope.member ==null }">
     <input name="name" type="text" placeholder="姓名" required="required">
-    <input name="sex" type="text" placeholder="性別" required="required">
     <input name="phone" type="text" placeholder="連絡電話" required="required">
     <input name="email" type="text" placeholder="e-mail" required="required">
-    <input name="remark" type="text" placeholder="備註" required="required">
+    <input name="remark" type="text" placeholder="備註">
+    </c:when>
+    
+    <c:otherwise>
+    
+        <input name="name" type="text" value="${sessionScope.member.memberName}" required="required">
+    <input name="phone" type="text" value="${sessionScope.member.memberPhone}" required="required">
+    <input name="email" type="text" value="${sessionScope.member.memberEmail}" required="required">
+    <input name="remark" type="text" placeholder="備註">
+    
+    </c:otherwise>
+    </c:choose>
     <div style="text-align:center">
     <button type="button"
 					onclick="location.href='booking'">返回</button>               

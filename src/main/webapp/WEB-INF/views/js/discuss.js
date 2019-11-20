@@ -7,7 +7,7 @@ var newPost = "<div class='card-header'>Create Post</div>"
 		+ "<form method='post' action='createPost'>"
 		+ "<textarea id='postContent' name='postContent' class='form-control mt-1' placeholder='What is on your mind ?'></textarea>"
 		+ "<input id='memberId' name='memberId' class='form-control' type='hidden' value='{{sessionScope.member.id}}'></input>"
-		+ "<div class='text-right'><button class='btn btn-info lg mt-3' type='submit' name='submitPost' onclick='reloadPage()'>POST</button></div>"
+		+ "<div class='text-right'><button class='btn btn-info lg mt-3' type='submit' name='submitPost'>POST</button></div>"
 		+ "</form></div></div>";
 
 var firstLevelComment = "<div class='card' id='firstComment'>"
@@ -15,9 +15,9 @@ var firstLevelComment = "<div class='card' id='firstComment'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0' id='firstCommentBody{{post.postId}}'>"
 		+ "<a href='' class='text-primary'><h5>{{sessionScope.member.memberName}}</h5></a>"
 		+ "<div class='media-date'>{{post.postTime}}"
-		+ "<button type='button' id='drop{{post.postId}}' class='btn-sm ml-2 btn-secondary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></button>"
-		+ "<div class='dropdown-menu'><a class='dropdown-item' id='edit{{post.postId}}' href='#'>Edit</a>"
-		+ "<a class='dropdown-item' id='delete{{post.postId}}' href='#'>Delete</a>"
+		+ "<button type='button' id='drop{{post.postId}}' class='btn-sm ml-2 btn-secondary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true'></button>"
+		+ "<div class='dropdown-menu'><a class='dropdown-item' id='edit{{post.postId}}' href='#edit{{post.postId}}'>Edit</a>"
+		+ "<a class='dropdown-item' id='delete{{post.postId}}' href='#delete{{post.postId}}'>Delete</a>"
 		+ "</div></div>"
 		+ "<form method='post' action='updateContent'>"
 		+ "<blockquote class='blockquote mb-5'><div id='postContent{{post.postId}}' class='font-weight-bold mt-2 mr-4 post-description'>{{post.postContent}}</div></blockquote>"
@@ -48,8 +48,8 @@ var secondLevelComment = "<div class='card mt-3' id='secondComment'>"
 		+ "<a href='' class='text-primary'><h5>{{sessionScope.member.memberName}}</h5></a>"
 		+ "<div class='media-date'>{{post.postTime}}"
 		+ "<button type='button' id='drop{{post.postId}}' class='btn-sm ml-2 btn-secondary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></button>"
-		+ "<div class='dropdown-menu'><a class='dropdown-item' id='edit{{post.postId}}' href='#'>Edit</a>"
-		+ "<a class='dropdown-item' id='delete{{post.postId}}' href='#'>Delete</a>"
+		+ "<div class='dropdown-menu'><a class='dropdown-item' id='edit{{post.postId}}' href='#edit{{post.postId}}'>Edit</a>"
+		+ "<a class='dropdown-item' id='delete{{post.postId}}' href='#delete{{post.postId}}'>Delete</a>"
 		+ "</div></div>"
 		+ "<form method='post' action='updateContent'>"
 		+ "<blockquote class='blockquote mb-5'><div id='postContent{{post.postId}}' class='font-weight-bold mt-2 post-description'>{{post.postContent}}</div></blockquote>"
@@ -76,8 +76,8 @@ var thirdLevelComment = "<div class='card mt-3 ml-5' id='thirdComment'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0'>"
 		+ "<a href='' class='text-primary'><h5>{{sessionScope.member.memberName}}</h5></a>"
 		+ "<div class='media-date'>{{post.postTime}}<button type='button' id='drop{{post.postId}}' class='btn-sm ml-2 btn-secondary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></button>"
-		+ "<div class='dropdown-menu'><a class='dropdown-item' id='edit{{post.postId}}' href='#'>Edit</a>"
-		+ "<a class='dropdown-item' id='delete{{post.postId}}' href='#'>Delete</a>"
+		+ "<div class='dropdown-menu'><a class='dropdown-item' id='edit{{post.postId}}' href='#edit{{post.postId}}'>Edit</a>"
+		+ "<a class='dropdown-item' id='delete{{post.postId}}' href='#delete{{post.postId}}'>Delete</a>"
 		+ "</div></div> "
 		+ "<form method='post' action='updateContent'>"
 		+ "<blockquote class='blockquote mb-5'><div id='postContent{{post.postId}}' class='font-weight-bold mt-2 post-description'>{{post.postContent}}</div></blockquote>"
@@ -101,6 +101,7 @@ var thirdLevelComment_html = null;
 var thirdLevel_html = null;
 var like;
 var mdata;
+var pdata;
 
 $.ajax({
 	url : requestUrl + "discussJson",
@@ -130,11 +131,9 @@ $.ajax({
 				$("#firstLevelComment").append(firstLevelComment_html);
 
 				refreshCommentNumber(post.postId, post.replyPost.length)
-				refreshLikeNumber(post.postId)
 				editContent(post.postId, post.postContent)
 				deleteContent(post.postId)
 				checkDropBtn(post.postId, loginMemberid, post.memberId)
-				checkLikeBtn(post.postId)
 				
 				if (post.replyPost.length > 0) {
 					let second = "";
@@ -194,27 +193,26 @@ $.ajax({
 				let comment = post.replyPost[j];
 
 				refreshCommentNumber(comment.postId, comment.replyPost.length)
-				refreshLikeNumber(comment.postId)
 				editContent(comment.postId, comment.postContent)
 				deleteContent(comment.postId)
 				checkDropBtn(comment.postId, loginMemberid, comment.memberId)
-				checkLikeBtn(comment.postId)
 
 				for (let k = 0; k < comment.replyPost.length; k++) {
 					let thirdComment = comment.replyPost[k];
 
-					refreshLikeNumber(thirdComment.postId)
 					editContent(thirdComment.postId, thirdComment.postContent)
 					deleteContent(thirdComment.postId)
 					checkDropBtn(thirdComment.postId, loginMemberid, thirdComment.memberId)
-					checkLikeBtn(thirdComment.postId)
 
 				}
 			}
-
+			checkLikeBtn(post.postId)
 		}
+		
 	}
 })
+
+
 
 // like 未完成
 function refreshLikeNumber(postId) {
@@ -226,28 +224,40 @@ function refreshLikeNumber(postId) {
 }
 
 function addLike(postId, memberId) {
-	$("#likebtn" + postId).click(function() {
-		$.get("addLike", {
-			postId : postId,
-			memberId : memberId
-		}, function() {
-			
+	
+	$("#likebtn" + postId).mousedown(function() {
+		$.ajax({
+			url : requestUrl + "addLike",
+			data : {postId : postId, memberId : memberId},
+			async:false,
+			success : function() {
+			}
 		})
+	})
+	$("#likebtn" + postId).mouseup(function() {
 		$(this).text("unLike");
-		$(this).attr("id", "unLikebtn" + postId)
-		
+		$(this).attr("id","unLikebtn" + postId);
+		$(this).unbind();
+		unLike(postId, loginMemberid);
+		refreshLikeNumber(postId);
 	})
 }
-
 function unLike(postId, memberId) {
-	$("#unLikebtn" + postId).click(function() {
-		$.get("unLike", {
-			postId : postId,
-			memberId : memberId
-		}, function() {
+	$("#unLikebtn" + postId).mousedown(function() {
+		$.ajax({
+			url : requestUrl + "unLike",
+			data : {postId : postId, memberId : memberId},
+			async:false,
+			success : function() {
+			}
 		})
+	})
+	$("#unLikebtn" + postId).mouseup(function() {
 		$(this).text("Like");
-		$(this).attr("id", "likebtn" + postId)
+		$(this).attr("id","likebtn" + postId);
+		$(this).unbind();
+		addLike(postId, loginMemberid);
+		refreshLikeNumber(postId);
 	})
 }
 
@@ -257,22 +267,24 @@ function checkLikeBtn(postId){
 		method : "POST",
 		dataType : "JSON",
 		data : {memberId : loginMemberid},
+		async:false,
 		success : function(likeData) {
 			like = likeData.like
-			
+			if(like.length == 0){
+				addLike(postId, loginMemberid)
+			}else{
 			for (let i = 0; i < like.length; i++) {
 				let likes = like[i];
 				if(likes.likePK.postId == postId){
-					console.log("post__===="+postId)
 					$("#likebtn" + postId).text("unLike").attr("id", "unLikebtn" + postId)
 					unLike(postId, loginMemberid)
-				}else{
-					addLike(postId, loginMemberid)
+					}
 				}
-			}	
+			}
+			refreshLikeNumber(postId);
 		}
 	})
-	
+	addLike(postId, loginMemberid)	
 }
 
 
@@ -281,7 +293,7 @@ function editContent(postId, postContent) {
 						$("#postContent" + postId).html("<textarea id='postContent' name='postContent' class='form-control mt-3'>"
 												+ postContent
 												+ "</textarea>"
-												+ "<div class='text-right mt-2'><button class='btn btn-primary' type='submit' name='editContent' onclick='reloadPage()'>Edit</button>"
+												+ "<div class='text-right mt-2'><button class='btn btn-primary' type='submit' name='editContent'>Edit</button>"
 												+ "<input id='postId' name='postId' class='form-control' type='hidden' value='"
 												+ postId
 												+ "'></input>"
@@ -327,6 +339,7 @@ var memberList = "<div class='list-group-item d-flex justify-content-between ali
 
 
 $(document).ready(function(){
+	fdata = getFriendShip();
 	$("#searchMember").click(function(){
 $.ajax({
 	url : requestUrl + "memberJson",
@@ -339,25 +352,25 @@ $.ajax({
 					var searchMemberName = $("#searchMemberName").val();
 					let memberListAll = "";
 					mdata = memberData.member
-					
-					
+					if(searchMemberName.length != 0){
 					for (let i = 0; i < mdata.length; i++) {
 						let member = mdata[i];
 						if(member.memberName != loginMemberName){
-							memberList_html = memberList.replace(/\{{member.memberName}}/g, member.memberName)
-														.replace(/\{{friendStatus}}/g, "Add Friend")
-														.replace(/\{{member.memberId}}/g, member.id)
-														
-							memberListAll += memberList_html
+							console.log("count")
+									memberList_html = memberList.replace(/\{{member.memberName}}/g, member.memberName)
+																.replace(/\{{friendStatus}}/g, "Add Friend")
+																.replace(/\{{member.memberId}}/g, member.id)
+					
+									memberListAll += memberList_html
 						}
+
 					}
 					$("#searchResult").append(memberListAll);
 					for (let j = 0; j < mdata.length; j++) {
 						let member = mdata[j];
 							sendFriendRequest(loginMemberid, member.id)
-						
 					}
-				
+					}
 	}
 })
 })
@@ -396,20 +409,27 @@ function getMemberById(memberid){
 	}
 }
 
-$.ajax({
-	url : requestUrl + "friendJson",
-	method : "POST",
-	dataType : "JSON",
-	success : function(friendData) {
-		fdata = friendData.friend
-		for (let i = 0; i < fdata.length; i++) {
-			let friend = fdata[i];
-			if(friend.receiver_memberId == loginMemberid){
-				friend.sender_memberId
+
+function getFriendShip(){
+	$.ajax({
+		url : requestUrl + "friendJson",
+		method : "POST",
+		dataType : "JSON",
+		async:false,
+		success : function(friendData) {
+			fdata = friendData.friend
+			var count = 0;
+			for (let i = 0; i < fdata.length; i++) {
+				let friend = fdata[i];
+				if(friend.receiver_memberId == loginMemberid && friend.friendStatus == 1){
+					count++;
+				}
 			}
-			
+			if(count != 0 ){
+			$("#friendRequest" + loginMemberid).text(count);
+			}
 		}
-		
-	}
-})
+	})
+	return fdata;
+}
 
