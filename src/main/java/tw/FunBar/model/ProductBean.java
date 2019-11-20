@@ -26,13 +26,9 @@ public class ProductBean implements Serializable{
  private String fileName;
  private String category;
  private Double unitPrice;
-// @Transient
-// private String priceStr;
  private Double discount ;
-// @Transient
-// private String discountStr;
  private Integer stock;
- private String payment;
+
  
  @Transient
  private MultipartFile productCover;
@@ -55,7 +51,7 @@ public class ProductBean implements Serializable{
 
  public ProductBean(Integer productId,String productNo, String productName,
    String productDetail, Blob productImage, String fileName, String category,
-   double unitPrice, double discount, Integer stock, String payment) {
+   double unitPrice, double discount, Integer stock) {
    this.productId = productId;
    this.productNo = productNo;
    this.productName = productName;
@@ -66,7 +62,6 @@ public class ProductBean implements Serializable{
    this.unitPrice = unitPrice;
    this.discount = discount;
    this.stock = stock;
-   this.payment = payment;
  }
  
  public ProductBean() {
@@ -136,16 +131,10 @@ public class ProductBean implements Serializable{
  public Integer getStock() {
   return stock;
  }
+ 
  public void setStock(Integer stock) {
   this.stock = stock;
  }
- public String getPayment() {
-  return payment;
- }
- public void setPayment(String payment) {
-  this.payment = payment;
- }
- 
- 
+
 
 }

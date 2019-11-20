@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "OrderItems")
+@Table(name = "Orders")
 public class OrderBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -27,7 +27,7 @@ public class OrderBean implements Serializable {
 	private String memberName;
 	private String memberPhone;
 	
-	@Transient
+	
 	private String payment;
 	private String shippingAddress;
 

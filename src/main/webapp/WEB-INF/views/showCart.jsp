@@ -131,6 +131,7 @@ outline:none;
 			if (num > 50) {
 				alert("數量不得超過50份！");
 			}
+			
 
 			var smallPrice = unitPrice * num * dec;
 			var int_smallPrice = parseInt(smallPrice);
@@ -301,6 +302,21 @@ outline:none;
 			}
 
 		})
+		
+// 		$(".pay").click(function(){
+// 			var finaStock ;
+// 			var index = $(this).data("product");
+// 			var num = $(".num").eq(i).val();
+// 			var stock = $(".stock").eq(i).val();
+			
+// 			if(num != null && num<stock){
+// 				finalStock = stock - num;
+// 			}
+			
+// 		})
+		
+		
+		
 
 	})
 </script>
@@ -333,10 +349,12 @@ outline:none;
 						<tr>
 							<td><img
 								src="<c:url value='/ProductPictures/${ci.product.productId}' />"
-								width="80px" height="120px"></td>
+								height="120px"></td>
 							<td>${ci.product.productName}</td>
 							<td class="unit" data-product="${i.index}">${ci.product.unitPrice}</td>
-							<td align="left">${ci.product.stock}</td>
+							
+							<td align="left" >${ci.product.stock}</td>
+			
 							<td>
 								<button type="button" class="minus" data-product="${i.index}">-</button>
 								<input id="count" type="text" maxlength="2" value="${ci.count}"
@@ -346,11 +364,11 @@ outline:none;
 								<button type="button" class="add" data-product="${i.index}">+</button>
 							</td>
 							<td class="hallin" data-product="${i.index}">${ci.product.discount}</td>
-							<td class="smallPrice pd"></td>
-
-							<td><input type="hidden" class="price"
-								value="${ci.subtotal}"> <a class="removeBtn"
-								href=" <c:url value='/removeCartItem?productId=${ci.product.productId}' />">刪除</a>
+							
+					   		<td class="smallPrice pd"></td>
+							<td>
+							<input type="hidden" class="price" value="${ci.subtotal}"> 
+							<a class="removeBtn" href=" <c:url value='/removeCartItem?productId=${ci.product.productId}' />">刪除</a>
 							</td>
 
 						</tr>
@@ -377,18 +395,16 @@ outline:none;
 	<div class="modal fade" id="createForm"
 		role="dialog" aria-labelledby="myModalLabel1" style="background:rgba(0,0,0,0.8)">
 		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+			<div class="modal-content" style="padding:10px">
 
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 
 				<div class="modal-body" id="createForm">
-					<div class="container page" style="margin-top:20px">
-						<div class="table-responsive">
+					<div class="container page" style="margin-top:20px">								
 							<table class="table" style="margin: 5px 0;">
 								<thead>
 									<tr>
@@ -417,9 +433,7 @@ outline:none;
 						  
 						</div>
 					</div>
-
-						<form >
-				
+						<form method="post" action="orderSetUp" style="padding:0 10px">
 							<div><p>請填寫以下聯絡資料</p></div>
 							<div>
 								<label>姓名</label> 
@@ -437,7 +451,7 @@ outline:none;
 								<label>備註</label>
 								<input type="text" name="remark" placeholder="請填寫注意事項" />
 							</div>
-							<input type="submit" value="確認結帳"  class="btn btn-success" style="float:right"/>
+							<input type="submit" value="確認結帳"  class="btn btn-success pay" style="float:right"/>
 							
 						</form> 						
 				</div>

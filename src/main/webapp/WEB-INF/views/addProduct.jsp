@@ -11,8 +11,9 @@
 <title>商品上架</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+ <script src="js/addProduct.js"></script> 
 
-</head>
+
 <style>
 .page {
 	overflow: hidden;
@@ -67,8 +68,9 @@
 		width: 48%;
 	}
 }
-}
 </style>
+</head>
+
 <body>
 
 
@@ -84,58 +86,59 @@
 			<fieldset>
 				<div class="form-group">
 					<label class='control-label col-lg-2 col-lg-2' for="productNo">商品編號</label>
-					<form:input autocomplete="off" id="productNo" path="productNo"
-						type='text' class='form:input-large' />
+					<form:input autocomplete="off" id="productNo" path="productNo" type='text' class='form:input-large' />
+					<span id="msgNo"></span>
 				</div>
 
 				<div class="form-group">
 					<label class="control-label col-lg-2 col-lg-2" for='productName'>商品名稱</label>
-					<form:input autocomplete="off" id="productName" path="productName"
-						type='text' class='form:input-large' />
+					<form:input autocomplete="off" id="productName" path="productName" type='text' class='form:input-large' />
+					<span id="msgName"></span>
 				</div>
 
 				<div class="form-group">
 					<label class="control-label col-lg-2 col-lg-2" for='productDetail'>商品說明</label>
-					<form:input autocomplete="off" id="productDetail"
-						path="productDetail" type='text' class='form:input-large' />
+					<form:input autocomplete="off" id="productDetail" path="productDetail" type='text' class='form:input-large' />
+					<span id="msgDetail"></span>
 				</div>
 
 				<div class="form-group">
 					<label class='control-label col-lg-2 col-lg-2' for="category">商品分類</label>
 					<form:select path="category">
-						<form:option value="vodka">vodka</form:option>
-						<form:option value="gin">gin</form:option>
-						<form:option value="rum">rum</form:option>
-						<form:option value="tequila">tequila</form:option>
-						<form:option value="whisky">whisky</form:option>
-						<form:option value="brandy">brandy</form:option>
-						<form:option value="beer">beer</form:option>
+						<form:option value="下酒菜">下酒菜</form:option>
+						<form:option value="啤酒與低酒精">啤酒與低酒精</form:option>
+						<form:option value="威士忌">威士忌</form:option>
+						<form:option value="無酒精">無酒精</form:option>
+						<form:option value="蘭姆酒">蘭姆酒</form:option>
+						<form:option value="清酒與燒酒">清酒與燒酒</form:option>
+						<form:option value="葡萄酒">葡萄酒</form:option>
+						<form:option value="調酒器具">調酒器具</form:option>
+						<form:option value="酒器與酒杯">酒器與酒杯</form:option>
 					</form:select>
 				</div>
 
 				<div class="form-group">
 					<label class='control-label col-lg-2 col-lg-2' for="unitPrice">單價</label>
-					<form:input autocomplete="off" id="unitPrice" path="unitPrice"
-						type='text' class='form:input-large' />
+					<form:input autocomplete="off" id="unitPrice" path="unitPrice" type='text' class='form:input-large' />
+					<span id="msgPrice"></span>
 				</div>
 
 				<div class="form-group">
 					<label class='control-label col-lg-2 col-lg-2' for="discount">折扣</label>
-					<form:input autocomplete="off" id="discount" path="discount"
-						type='text' class='form:input-large' />
+					<form:input autocomplete="off" id="discount" path="discount" type='text' class='form:input-large' />
+					<span id="msgDisc"></span>
 				</div>
 
 				<div class="form-group">
-					<label class='control-label col-lg-2 col-lg-2' for="discount">進貨數量</label>
-					<form:input autocomplete="off" id="stock" path="stock" type='text'
-						class='form:input-large' />
+					<label class='control-label col-lg-2 col-lg-2' for="discount">庫存數量</label>
+					<form:input autocomplete="off" id="stock" path="stock" type='text' class='form:input-large' />
+					<span id="msgStock"></span>
 				</div>
 
 
 				<div class="form-group">
 					<label class='control-label col-lg-2 col-lg-2' for="productCover">商品圖片</label>
-					<form:input id="productCover" path="productCover" type='file'
-						class='form:input-large' />
+					<form:input id="productCover" path="productCover" type='file' class='form:input-large' />
 				</div>
 
 				<div class="form-group">

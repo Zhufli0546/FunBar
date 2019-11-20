@@ -48,6 +48,7 @@
       <p>
        折扣：<span style="color: #CE0000; font-weight: bold;">${pb.discount}</span>
       </p>
+      <p style="color:#000000">庫存：${pb.stock}</p>
       <label for="selectCount" class="">購買數量:</label>
       <!--        <div class="col-sm-6 col-xs-12"> -->
       <select class="selectCount" name="count">

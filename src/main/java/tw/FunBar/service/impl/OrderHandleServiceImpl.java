@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import tw.FunBar.dao.OrderHandleDAO;
+import tw.FunBar.model.OrderBean;
 import tw.FunBar.model.OrderItemBean;
 import tw.FunBar.model.ProductBean;
 import tw.FunBar.service.OrderHandleService;
@@ -50,11 +51,11 @@ public class OrderHandleServiceImpl implements OrderHandleService{
 		
 	}
 
-	@Transactional
+	
 	@Override
-	public int addOrder(OrderItemBean ob) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void addOrder(OrderBean order) {
+		dao.addOrder(order);
+		
 	}
 
 	@Transactional
@@ -63,6 +64,8 @@ public class OrderHandleServiceImpl implements OrderHandleService{
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 	
 	
 	

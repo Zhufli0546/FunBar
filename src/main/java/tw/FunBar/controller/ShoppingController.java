@@ -76,14 +76,7 @@ public class ShoppingController {
 	public List<String> getAllCategories() {
 		return shoppingService.getAllCategories();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	//----------後台功能----------
 
