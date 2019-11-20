@@ -10,6 +10,8 @@
 <meta charset="UTF-8">
 <title>Chat box</title>
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/chatbox.css'/>">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+<script src="https://kit.fontawesome.com/c523dff261.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="<c:url value="/vendor/jquery/jquery-3.2.1.min.js"/>"></script>
 <!--sockJS cdn-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
@@ -25,9 +27,9 @@
 	<a id="loginMemberid" style="display: none">${sessionScope.member.id}</a>
 	<a id="loginMemberName" style="display: none">${sessionScope.member.memberName}</a>
 	<!-- left menu -->
-	<nav class="navbar navbar-dark bg-dark" id="sidebarbtn">
-		<button type="button" id="sidebarCollapse" class="btn btn-info">
-			<span>Chat</span>
+	<nav class="navbar" id="sidebarbtn">
+		<button type="button" id="sidebarCollapse" class="btn btn-info btn-lg">
+			<h4><span>Friends</span></h4>
 		</button>
 	</nav>
 
