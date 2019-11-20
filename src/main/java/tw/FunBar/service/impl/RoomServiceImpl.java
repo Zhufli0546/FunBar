@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import tw.FunBar.dao.RoomDAO;
 import tw.FunBar.model.Room;
 import tw.FunBar.model.RoomOrder;
+import tw.FunBar.model.RoomStatus;
 import tw.FunBar.service.RoomService;
 
 
@@ -134,6 +135,57 @@ public class RoomServiceImpl implements RoomService {
 	public ArrayList<RoomOrder> phoneSearch(String phone) {
 		
 		return roomDAO.phoneSearch(phone);
+	}
+
+
+	@Override
+	public ArrayList<RoomOrder> getTodayOrder(String date) {
+		
+		return roomDAO.getTodayOrder(date);
+	}
+
+
+	@Override
+	public void createOrderList() {
+		roomDAO.createOrderList();
+		
+	}
+
+
+	@Override
+	public ArrayList<RoomStatus> getAllRoomStatus() {
+		
+		return roomDAO.getAllRoomStatus();
+	}
+
+
+	@Override
+	public void updateRoomStatus(Integer room_number, Integer order_id,String name) {
+			   
+		
+		roomDAO.updateRoomStatus(room_number,order_id,name);
+		
+	}
+
+
+	@Override
+	public void checkOut(Integer order_id,Integer room_number) {
+		roomDAO.checkOut(order_id,room_number);
+		
+	}
+
+
+	@Override
+	public void clearAllRoom() {
+		roomDAO.clearAllRoom();
+		
+	}
+
+
+	@Override
+	public ArrayList<RoomOrder> personalOrder(String phone) {
+		
+		return roomDAO.personalOrder(phone);
 	}
 
 

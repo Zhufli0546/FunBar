@@ -114,12 +114,14 @@ public class BlogController {
 						   @RequestParam String blogContent,
 						   @RequestParam Integer categoryId, HttpServletRequest request, HttpSession session) throws IOException {
 		
-		String ext = context.getMimeType(blogImage.getOriginalFilename());
-		ext = ext.substring(6);
-		Date date = new Date();
-		String filename = String.valueOf(date.getTime() + "." + ext);
+		String sourceFileName = blogImage.getOriginalFilename();
         
-        if(filename.length()>0) {
+		String path = "";
+        if(sourceFileName.length()>0) {
+        	String ext = context.getMimeType(sourceFileName);
+    		ext = ext.substring(6);
+    		Date date = new Date();
+    		String filename = String.valueOf(date.getTime() + "." + ext);
         	InputStream in = blogImage.getInputStream();
         	String basePath = "C:\\FunBar\\imgUpload\\";
             System.out.println("basePath:" + basePath);
@@ -135,9 +137,12 @@ public class BlogController {
             }
             output.close();
             in.close();
+
+            path = request.getContextPath() + "/imgUpload/" + filename;
+        } else {
+        	path = request.getContextPath() + "/ProductImages/noImage.png";
         }
         
-		String path = request.getContextPath() + "/imgUpload/" + filename;
 		Blog blog = new Blog();
 		blog.setBlogImage(path);
 		blog.setBlogTitle(blogTitle);

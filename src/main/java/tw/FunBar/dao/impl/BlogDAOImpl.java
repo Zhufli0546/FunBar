@@ -105,4 +105,13 @@ public class BlogDAOImpl implements BlogDAO {
 		session.update(blog);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Blog> queryAllHotBlogs() {
+		String hql = "From Blog Where blogIsHot = 1";
+		Session session = sessionFactory.getCurrentSession();
+		List<Blog> blogs = (List<Blog>)session.createQuery(hql).getResultList();
+		return blogs;
+	}
+
 }

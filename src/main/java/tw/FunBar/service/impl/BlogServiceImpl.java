@@ -75,4 +75,9 @@ public class BlogServiceImpl implements BlogService {
 		blogDao.modifyBlog(blog);
 	}
 
+	@Override
+	public List<Blog> queryAllHotBlogs() {
+		return blogDao.queryAllHotBlogs();
+	}
+
 }

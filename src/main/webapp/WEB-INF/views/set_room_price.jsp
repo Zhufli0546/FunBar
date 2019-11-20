@@ -366,35 +366,32 @@ color:blue;
 			</div>
 
 		</div>
-
-		<div class="calendar1" style="margin-top:50px">
-		<form method="POST" action="admin_chooseRoom">
-			入住天數:<br>
-			 <select name="stay" class="text" style="text-align: center">
-
-	<c:forEach var="i" begin="1" end="30" step="1">
-	<option value="${i}">${i}天</option>
-	</c:forEach>
-	</select><br>
-	
-	客房數: <br>
-	<select name="rooms" class="text" style="text-align: center">
-
-	<c:forEach var="i" begin="1" end="20" step="1">
-	<option value="${i}">${i}間</option>
-	</c:forEach>
-	</select>
-	
-					<br>
-				<input id="date" type="hidden" name="date"> <input type="submit" style="height:50px;background-color:white;border-radius:5px;color:black;width:100%;font-size:22px;border:2px solid blue;margin-top:50px "
-					value="選擇房型      >>">
-			</form>
-		</div>
-
+		
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel"> 設定當日房價</h4>
+            </div>
+            <form id="form_data">
+            <div class="modal-body">
+                將房價提高: <input type="text" id="user_id" name="user_id"/>倍
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+                <button type="button" onclick="add_info()" class="btn btn-primary">確定</button>
+            </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 
 		
 	<jsp:include page="admin_footer.jsp" />
 	
-	<script src="<c:url value='/js/ad_RoomBooking.js'/>"></script>
+	<script src="<c:url value='/js/set_room_price.js'/>"></script>
 </body>
 </html>

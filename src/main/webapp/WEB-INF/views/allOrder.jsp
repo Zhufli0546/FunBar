@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>查詢訂房</title>
+<title>所有訂房</title>
 <style>
 
 .qb{

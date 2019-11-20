@@ -33,7 +33,7 @@ function init() {
 		txt += "<td>" + reports[i].reportCreatedTime;
 		txt += "<td>" + reports[i].commentReportName;
 		txt += "<td><a class='lockData btn btn-info' data-lock='" + requestUrl
-				+ "/admin_lock/" + reports[i].comment.commentId + "'>刪除評論</a>";
+				+ "/admin_lock/" + reports[i].comment.commentId + "'>刪除留言</a>";
 	}
 	$("#reportProcess").html(txt);
 	hiddenContent();
