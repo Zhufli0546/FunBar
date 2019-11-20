@@ -4,6 +4,9 @@ package tw.FunBar.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -66,31 +69,56 @@ public class BookingController {
 
 	@RequestMapping("/addReservations")
 	public String addrReservations(@RequestParam(name = "date") String date,
-			@RequestParam(name = "people") Integer people, @RequestParam(name = "time") String time,@RequestParam(name="sex")String sex,
+			@RequestParam(name = "people") Integer people, @RequestParam(name = "time") String time,
 			@RequestParam(name = "name") String name, @RequestParam(name = "phone") String phone,
-			@RequestParam(name = "email") String email, @RequestParam(name = "remark") String remark, Model model) {
+			@RequestParam(name = "email") String email,String remark, Model model,HttpSession session) {
 		
 
-		bookingService.addReservations(date,people,time,sex,name,phone,email,remark);
+		bookingService.addReservations(date,people,time,name,phone,email,remark);
 		
 		BookingData data = bookingService.getBookingByphone(phone);
 		
+		session.setAttribute("data",data);
+		
+		
+		//model.addAttribute("date", date);
+		//model.addAttribute("number",data.getBooking_id());
+		session.setAttribute("date",date);
+		session.setAttribute("number",data.getBooking_id());
+		
+		return "redirect:/complete_ok";
+	}
+	
+	@RequestMapping("/complete_ok")
+	public String completeOk(HttpSession session,HttpServletRequest req,Model model) {
+		
+		session = req.getSession(false);
+		
+		BookingData data = (BookingData) session.getAttribute("data");
+		
 		emailService.sendBookingEmail(data);
-		model.addAttribute("date", date);
-		model.addAttribute("number",data.getBooking_id());
+		
+		String date = (String)session.getAttribute("date");
+		
+		Integer number = (Integer)session.getAttribute("number");
+		
+		model.addAttribute("date",date);
+		model.addAttribute("number",number);
+		
 		return "completeOk";
+		
 	}
 	
 
 	
 	@RequestMapping("/ad_addReservations")
 	public String adAddrReservations(@RequestParam(name = "date") String date,
-			@RequestParam(name = "people") Integer people, @RequestParam(name = "time") String time,@RequestParam(name="sex")String sex,
+			@RequestParam(name = "people") Integer people, @RequestParam(name = "time") String time,
 			@RequestParam(name = "name") String name, @RequestParam(name = "phone") String phone,
-			@RequestParam(name = "email") String email, @RequestParam(name = "remark") String remark, Model model) {
+			@RequestParam(name = "email") String email,String remark, Model model) {
 		
 
-		bookingService.addReservations(date,people,time,sex,name,phone,email,remark);
+		bookingService.addReservations(date,people,time,name,phone,email,remark);
 		
 		model.addAttribute("date", date);
 		return "admin_booking";

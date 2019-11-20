@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -26,6 +27,7 @@ import tw.FunBar.model.BookingData;
 import tw.FunBar.model.Room;
 import tw.FunBar.model.RoomOrder;
 import tw.FunBar.model.RoomOrderInDays;
+import tw.FunBar.model.RoomStatus;
 
 @Repository
 public class RoomDAOImpl implements RoomDAO {
@@ -91,6 +93,10 @@ public class RoomDAOImpl implements RoomDAO {
 			D = calendar.getTime();
 
 			check_in_time = fm.format(D);
+		}
+		
+		if(allroom.size()==0) {
+			return null ;
 		}
 
 		return allroom;
@@ -164,10 +170,13 @@ public class RoomDAOImpl implements RoomDAO {
 		room_order.setCheck_out_time(check_out_time);
 
 		session.save(room_order);
+		
 
+		
+		addOrderInDays(room_order,stay);
 	}
 
-	public void addOrderInDays(RoomOrder room_order) throws ParseException {
+	public void addOrderInDays(RoomOrder room_order,Integer stay) throws ParseException {
 
 		Session session = sessionFactory.getCurrentSession();
 
@@ -178,9 +187,9 @@ public class RoomDAOImpl implements RoomDAO {
 
 		day = fm.parse(date);
 
-		String st = room_order.getCheck_out_time();
+		//String st = room_order.getCheck_out_time();
 
-		Integer stay = Integer.parseInt(st);
+		//Integer stay = Integer.parseInt(st);
 
 		String theDay;
 
@@ -199,6 +208,15 @@ public class RoomDAOImpl implements RoomDAO {
 			roomOrderInDays.setRoom_id(room_order.getRoom_id());
 			roomOrderInDays.setCheck_in_time(theDay);
 			roomOrderInDays.setRooms(room_order.getRooms());
+			
+			   
+			 
+			roomOrderInDays.setRoomOrder(room_order);
+			
+			
+			 
+			  
+			  
 
 			session.save(roomOrderInDays);
 			calendar.add(Calendar.DATE, 1);
@@ -377,6 +395,213 @@ public class RoomDAOImpl implements RoomDAO {
 				.getResultList();
 
 		return ro;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<RoomOrder> getTodayOrder(String date) {
+		
+		String hql = "From RoomOrderInDays where check_in_time = :date";
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		ArrayList<RoomOrderInDays> orders = (ArrayList<RoomOrderInDays>)session.createQuery(hql).setParameter("date", date).getResultList(); 
+		
+		ArrayList<RoomOrder> order = new ArrayList<>();
+		
+		for(RoomOrderInDays one : orders) {
+			
+			String hql2 = "From RoomOrder where order_id = :order_id";
+			
+			 RoomOrder main = one.getRoomOrder();
+			 
+			 int id = main.getOrder_id();
+			
+			RoomOrder single = (RoomOrder)session.createQuery(hql2).setParameter("order_id",id).getSingleResult();
+			
+			order.add(single);
+		}
+		
+		return order;
+	}
+
+	@Override
+	public void createOrderList() {
+		
+		
+		String hql =  "From RoomStatus where status = 1";
+		
+		Session session2 = sessionFactory.getCurrentSession();
+		
+		List Y = session2.createQuery(hql).getResultList();
+		
+		
+		if(Y.size() == 0) {
+		String sql = "truncate table RoomStatus";
+		Session session1 = sessionFactory.getCurrentSession();
+		session1.createSQLQuery(sql).executeUpdate();
+		
+		
+		ArrayList<Room> allroom = allRoom();
+		
+		Session session = sessionFactory.getCurrentSession();
+		Integer number  = 1001;
+		for(Room r :allroom) {
+			for(int i = 1;i<=r.getRoom_quantity();i++) {
+				
+				RoomStatus room = new RoomStatus();
+				room.setRoom(r.getRoom_type() + i);
+				room.setStatus(0);
+				room.setRoom_number(number);
+				number ++ ;
+
+				session.save(room);
+				
+
+			}
+		}
+		
+	}
+		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<RoomStatus> getAllRoomStatus() {
+		
+		
+		String hql = "From RoomStatus";
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		
+		ArrayList<RoomStatus> allroom =(ArrayList<RoomStatus>) session.createQuery(hql).getResultList();
+		
+		
+		
+		
+		return allroom;
+	}
+
+	@Override
+	public void updateRoomStatus(Integer room_number, Integer order_id,String name) {
+		
+		
+		String hql = "From RoomStatus where room_number = :room_number";
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		RoomStatus room = (RoomStatus) session.createQuery(hql).setParameter("room_number", room_number).getSingleResult();
+		
+		room.setOrder_id(order_id);
+		
+		room.setOrder_name(name);
+		
+		room.setStatus(1);
+		
+		session.update(room);
+		
+		
+		RoomOrder order = session.get(RoomOrder.class,order_id);
+		
+		Integer rooms = order.getCheck_in();
+		
+
+		
+		order.setRoom_number(room_number);
+		
+		order.setCheck_in(rooms+1);
+		
+		session.update(order);
+		
+		
+		
+	}
+
+	@Override
+	public void checkOut(Integer order_id,Integer room_number) {
+		
+		String hql = "From RoomStatus where order_id = :order_id and room_number = :room_number";
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		RoomStatus roomStatus = (RoomStatus)session.createQuery(hql).setParameter("order_id", order_id).setParameter("room_number",room_number).getSingleResult();
+		
+		roomStatus.setOrder_id(null);
+		
+		roomStatus.setStatus(0);
+		
+		session.update(roomStatus);
+		
+		
+		RoomOrder roomOrder = session.get(RoomOrder.class,order_id);
+		
+		Integer rooms = roomOrder.getCheck_in();
+		
+		roomOrder.setCheck_in(rooms-1);
+		
+		roomOrder.setRoom_number(null);
+		
+		session.update(roomOrder);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void clearAllRoom() {
+		
+		String sql = "truncate table RoomStatus";
+		Session session1 = sessionFactory.getCurrentSession();
+		session1.createSQLQuery(sql).executeUpdate();
+		
+		
+		ArrayList<Room> allroom = allRoom();
+		
+		Session session = sessionFactory.getCurrentSession();
+		Integer number  = 1001;
+		for(Room r :allroom) {
+			for(int i = 1;i<=r.getRoom_quantity();i++) {
+				
+				RoomStatus room = new RoomStatus();
+				room.setRoom(r.getRoom_type() + i);
+				room.setStatus(0);
+				room.setRoom_number(number);
+				number ++ ;
+				session.save(room);
+				
+
+			}
+		}
+		
+		
+		String hql = "From RoomOrder";
+		
+		ArrayList<RoomOrder> orders =(ArrayList<RoomOrder>) session.createQuery(hql).getResultList();
+		
+		for(RoomOrder o : orders) {
+			o.setCheck_in(0);
+			o.setRoom_number(null);
+			
+			session.update(o);
+		}
+		
+	}
+
+	@Override
+	public void addOrderInDays(RoomOrder room_order) throws ParseException {		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<RoomOrder> personalOrder(String phone) {
+		
+		String hql = "From RoomOrder where order_phone = :phone order by order_id DESC";
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		ArrayList<RoomOrder> orders =  (ArrayList<RoomOrder>) session.createQuery(hql).setParameter("phone",phone).getResultList();
+		
+		
+		return orders;
 	}
 
 }

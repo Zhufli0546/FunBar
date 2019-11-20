@@ -47,263 +47,7 @@ outline:none;
 <meta charset="UTF-8">
 <title>show cart</title>
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script>
-	$(document).ready(function() {
-
-		totalPrice = 0;
-		for (let i = 0; i < $(".pd").length; i++) {
-			unitPrice = $(".unit").eq(i).text();
-			var disc = $(".hallin").eq(i).text(); //折扣
-			var dec = disc / 10;
-
-			number = $(".num").eq(i).val();
-
-			subTotal = unitPrice * number * dec;
-
-			var int_subTotal = parseInt(subTotal);
-			$(".pd").eq(i).text(int_subTotal);
-			totalPrice = totalPrice + int_subTotal;
-		}
-
-		$(".totalAmount").text(totalPrice);
-
-		var totalPrice;
-
-		//數量減少
-		$(".minus").click(function() {
-			var index = $(this).data("product");
-			var num = $(this).siblings(".num").val();
-			num--;
-			$(this).siblings(".num").val(num < 1 ? 1 : num);
-			var unitPrice = $(".unit").eq(index).text(); //單價
-			var disc = $(".hallin").eq(index).text(); //折扣
-			var dec = disc / 10;
-
-			if (num < 1) {
-				alert('不要再按了！哪有人買零個的辣!');
-				num = 1;
-			}
-			//小計   
-			var smallPrice = unitPrice * num * dec;
-			var int_smallPrice = parseInt(smallPrice);
-			$(".pd").eq(index).text(int_smallPrice);
-
-			//總計  
-			totalPrice = 0;
-			for (let i = 0; i < $(".pd").length; i++) {
-				unitPrice = $(".unit").eq(i).text();
-				var disc = $(".hallin").eq(i).text();
-				var dec = disc / 10;
-				number = $(".num").eq(i).val();
-
-				subTotal = unitPrice * number * dec;
-				var int_subTotal = parseInt(subTotal);
-				totalPrice = totalPrice + int_subTotal;
-
-				var url = "/FunBar/"
-				$.ajax({
-					url : "http://localhost:8080" + url + "changecart",
-					data : {
-						count : number,
-						productId : $(".pdid").eq(i).val()
-					},
-					type : "POST",
-					dataType : "JSON",
-					success : function() {
-					}
-				})
-			}
-			$(".totalAmount").text(totalPrice);
-
-		})
-
-		//數量增加
-		$(".add").click(function() {
-			var index = $(this).data("product");
-// 			console.log(".add data-product 索引:" + index);
-			var num = $(this).siblings(".num").val();
-			num++;
-			$(this).siblings(".num").val(num > 50 ? 50 : num);
-			var unitPrice = $(".unit").eq(index).text();
-			var disc = $(".hallin").eq(index).text(); //折扣
-			var dec = disc / 10;
-
-			if (num > 50) {
-				alert("數量不得超過50份！");
-			}
-
-			var smallPrice = unitPrice * num * dec;
-			var int_smallPrice = parseInt(smallPrice);
-			$(".pd").eq(index).text(int_smallPrice);
-
-			//總計
-			totalPrice = 0;
-			for (let i = 0; i < $(".pd").length; i++) {
-				unitPrice = $(".unit").eq(i).text();
-				var disc = $(".hallin").eq(i).text();
-				var dec = disc / 10;
-
-				number = $(".num").eq(i).val();
-
-				subTotal = unitPrice * number * dec;
-				var int_subTotal = parseInt(subTotal);
-				totalPrice = totalPrice + int_subTotal;
-
-				var url = "/FunBar/";
-				$.ajax({
-					url : "http://localhost:8080" + url + "changecart",
-					data : {
-						count : number,
-						productId : $(".pdid").eq(i).val(),
-					},
-					type : "POST",
-					dataType : "JSON",
-					success : function() {
-					}
-				})
-			}
-			$(".totalAmount").text(totalPrice);
-
-		})
-
-		//input欄位輸入數量
-		$(".num").blur(function() {
-			var index = $(this).data("product");
-			var unitPrice = $(".unit").eq(index).text();
-			var num = $(".num").eq(index).val();
-			var disc = $(".hallin").eq(index).text(); //折扣
-			var dec = disc / 10;
-			var smallPrice;
-			if (num > 50) {
-				alert("數量不得超過50份!");
-
-				var smallPrice = unitPrice * 50 * dec;
-				var int_smallPrice = parseInt(smallPrice);
-				$(".pd").eq(index).text(int_smallPrice);
-
-				totalPrice = 0;
-				for (let i = 0; i < $(".pd").length; i++) {
-					unitPrice = $(".unit").eq(i).text();
-					number = $(".num").eq(i).val();
-
-					if (number > 50) {
-						number = 50;
-					}
-					var disc = $(".hallin").eq(i).text();
-					var dec = disc / 10;
-					$(this).val(50); //輸入的數字大於50，當下的input設為50
-
-					//smallPrice = unitPrice * 50 * dec;
-					//var int_smallPrice = parseInt(smallPrice)
-					//$(".pd").eq(index).text(int_smallPrice);
-
-					subTotal = unitPrice * number * dec;
-					var int_subTotal = parseInt(subTotal);
-					totalPrice = totalPrice + int_subTotal;
-
-					var url = "/FunBar/"
-					$.ajax({
-						url : "http://localhost:8080" + url + "changecart",
-						data : {
-							count : number,
-							productId : $(".pdid").eq(i).val()
-						},
-						type : "POST",
-						dataType : "JSON",
-						success : function() {
-						}
-					})
-				}
-				$(".totalAmount").text(totalPrice);
-			} else if (num < 1) {
-
-				alert("數量不得小於1!");
-
-				var smallPrice = unitPrice * 1 * dec;
-				var int_smallPrice = parseInt(smallPrice);
-				$(".pd").eq(index).text(int_smallPrice);
-
-				totalPrice = 0;
-				for (let i = 0; i < $(".pd").length; i++) {
-					unitPrice = $(".unit").eq(i).text();
-					number = $(".num").eq(i).val();
-
-					if (number < 1) {
-						number = 1;
-					}
-					var disc = $(".hallin").eq(i).text();
-					var dec = disc / 10;
-					$(this).val(1);
-					//smallPrice = unitPrice * 1 * dec;
-					//var int_smallPrice = parseInt(smallPrice);
-					//$(".pd").eq(index).text(int_smallPrice);
-
-					subTotal = unitPrice * number * dec;
-					var int_subTotal = parseInt(subTotal);
-					totalPrice = totalPrice + int_subTotal;
-
-					var url = "/FunBar/"
-					$.ajax({
-						url : "http://localhost:8080" + url + "changecart",
-						data : {
-							count : number,
-							productId : $(".pdid").eq(i).val()
-						},
-						type : "POST",
-						dataType : "JSON",
-						success : function() {
-						
-						}
-					})
-				}
-
-				$(".totalAmount").text(totalPrice);
-			} else {
-
-				var smallPrice = unitPrice * num * dec;
-				var int_smallPrice = parseInt(smallPrice);
-				$(".pd").eq(index).text(int_smallPrice);
-
-				totalPrice = 0;
-				for (let i = 0; i < $(".pd").length; i++) {
-					unitPrice = $(".unit").eq(i).text();
-					number = $(".num").eq(i).val();
-					var disc = $(".hallin").eq(i).text();
-					var dec = disc / 10;
-					$(this).val();
-					//smallPrice = unitPrice * num * dec;
-					//var int_smallPrice = parseInt(smallPrice);
-					//$(".pd").eq(index).text(int_smallPrice);
-
-					subTotal = unitPrice * number * dec;
-					var int_subTotal = parseInt(subTotal);
-					totalPrice = totalPrice + int_subTotal;
-					console.log(subTotal);
-
-					var url = "/FunBar/"
-					$.ajax({
-						url : "http://localhost:8080" + url + "changecart",
-						data : {
-							count : number,
-							productId : $(".pdid").eq(i).val()
-						},
-						type : "POST",
-						dataType : "JSON",
-						success : function() {
-							console.log(number);
-							console.log("success");
-						}
-					})
-				}
-
-				$(".totalAmount").text(totalPrice);
-
-			}
-
-		})
-
-	})
-</script>
+<script src=js/showCart.js></script>
 </head>
 
 <body>
@@ -333,10 +77,11 @@ outline:none;
 						<tr>
 							<td><img
 								src="<c:url value='/ProductPictures/${ci.product.productId}' />"
-								width="80px" height="120px"></td>
+								height="120px"></td>
 							<td>${ci.product.productName}</td>
 							<td class="unit" data-product="${i.index}">${ci.product.unitPrice}</td>
-							<td align="left">${ci.product.stock}</td>
+							<td align="left" class="theStock" data-product="${i.index}" >${ci.product.stock}</td>
+			
 							<td>
 								<button type="button" class="minus" data-product="${i.index}">-</button>
 								<input id="count" type="text" maxlength="2" value="${ci.count}"
@@ -346,11 +91,11 @@ outline:none;
 								<button type="button" class="add" data-product="${i.index}">+</button>
 							</td>
 							<td class="hallin" data-product="${i.index}">${ci.product.discount}</td>
-							<td class="smallPrice pd"></td>
-
-							<td><input type="hidden" class="price"
-								value="${ci.subtotal}"> <a class="removeBtn"
-								href=" <c:url value='/removeCartItem?productId=${ci.product.productId}' />">刪除</a>
+							
+					   		<td class="smallPrice pd"></td>
+							<td>
+							<input type="hidden" class="price" value="${ci.subtotal}"> 
+							<a class="removeBtn" href=" <c:url value='/removeCartItem?productId=${ci.product.productId}' />">刪除</a>
 							</td>
 
 						</tr>
@@ -377,18 +122,16 @@ outline:none;
 	<div class="modal fade" id="createForm"
 		role="dialog" aria-labelledby="myModalLabel1" style="background:rgba(0,0,0,0.8)">
 		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+			<div class="modal-content" style="padding:10px">
 
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 
 				<div class="modal-body" id="createForm">
-					<div class="container page" style="margin-top:20px">
-						<div class="table-responsive">
+					<div class="container page" style="margin-top:20px">								
 							<table class="table" style="margin: 5px 0;">
 								<thead>
 									<tr>
@@ -417,9 +160,7 @@ outline:none;
 						  
 						</div>
 					</div>
-
-						<form >
-				
+						<form method="post" action="orderSetUp" style="padding:0 10px">
 							<div><p>請填寫以下聯絡資料</p></div>
 							<div>
 								<label>姓名</label> 
@@ -437,7 +178,7 @@ outline:none;
 								<label>備註</label>
 								<input type="text" name="remark" placeholder="請填寫注意事項" />
 							</div>
-							<input type="submit" value="確認結帳"  class="btn btn-success" style="float:right"/>
+							<input type="submit" value="確認結帳"  class="btn btn-success pay" style="float:right"/>
 							
 						</form> 						
 				</div>

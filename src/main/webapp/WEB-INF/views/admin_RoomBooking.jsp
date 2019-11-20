@@ -391,6 +391,7 @@ color:blue;
 			</form>
 		</div>
 
+
 		
 	<jsp:include page="admin_footer.jsp" />
 	

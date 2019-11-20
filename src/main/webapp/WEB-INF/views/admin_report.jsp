@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <style>
+.mgb5 { margin-bottom: 5px;}
 #reportProcess { letter-spacing: 2px;}
 #reportProcess .showComment { cursor: pointer;}
 #reportProcess .showComment:hover { color: red;}
@@ -16,14 +17,38 @@
 	padding: 5px 15px;
 	margin-bottom: 10px;
 }
+
+#reportProcess .tdshowComment { cursor: pointer;}
+#reportProcess .tdshowComment:hover{color: red;}
 </style>
 <body>
 <!-- Header -->
 <jsp:include page="admin_header.jsp" />
 
 <!-- content 區塊 -->
-<div style="margin-top:80px; margin-bottom:120px" class="container">
-  	<table id="reportProcess" class="table table-dark table-hover" id="demo"></table>
+<div style="margin-top:50px; margin-bottom:120px" class="container">
+	<!-- Search Widget -->
+	<div class=" col-md-6 mgb5">
+	    <div class="card my-6">
+	      <h5 class="card-header">Search</h5>
+	      <div class="card-body">
+	        <div class="input-group">
+	        	<div class="input-group">
+			  		<select class="custom-select" id="inputGroupSelect04">
+			    		<option value="0" selected>所有檢舉</option>
+			    		<option value="1">留言編號</option>
+			    		<option value="2">留言內容</option>
+			    		<option value="3">檢舉人</option>
+			    		<option value="4">被檢舉人</option>
+			  		</select>
+			  		<input id="searchKeyUp" type="text" class="form-control searchValue" placeholder="Search for...">
+			</div>
+	        </div>
+	      </div>
+	    </div>
+    </div>
+
+  	<table id="reportProcess" class="table table-dark table-hover"></table>
   	<ul id="showProcess" class="pagination"></ul>
 </div>
 
@@ -33,30 +58,36 @@
       <div class="modal-content">
       
         <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title blogTitle">{{comment.blog.blogTitle}}</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-header bg-dark" style="color: #fff">
+          <h4 class="modal-title blogTitle">文章: {{comment.blog.blogTitle}}</h4>
         </div>
         
         <!-- Modal body -->
         <div class="modal-body row">
           <div class="offset-md-2 col-md-8 box">
-          	<p class="commentName">留言者: {{comment.commentName}}</p>
-          	<p class="commentCreatedTime">留言時間: {{commentCreatedTime}}</p>
+			  <label>留言編號: </label>
+			  <p class="commentId">{{comment.commentId}}</p>
+			  <label>留言者:</label>          
+          	  <p class="commentName">{{comment.commentName}}</p>
+          	  <label>留言時間: </label>
+          	  <p class="commentCreatedTime">{{commentCreatedTime}}</p>
           </div>
           
           <div class="offset-md-2 col-md-8 box">
-          	<p class="commentContent">留言內容: {{comment.commentContent}}</p>
+              <label>留言內容: </label>
+          	  <p class="commentContent">{{comment.commentContent}}</p>
           </div>
           
           <div class="offset-md-2 col-md-8 box">
-          	<p class="reportName">檢舉人: {{comment.reports[i].reportName}}</p>
-          	<p class="reportContent">檢舉原因: {{comment.reports[i].reportContent}}</p>
+              <label>檢舉人: </label>
+          	  <p class="reportName">{{comment.reports[i].reportName}}</p>
+          	  <label>檢舉原因: </label>
+          	  <p style="word-break: break-all;" class="reportContent"> {{comment.reports[i].reportContent}}</p>
           </div>
         </div>
         
         <!-- Modal footer -->
-        <div class="modal-footer">
+        <div class="modal-footer bg-dark" style="color: #fff">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
         

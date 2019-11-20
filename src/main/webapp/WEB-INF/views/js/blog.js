@@ -1,5 +1,5 @@
 var requestUrl = $('.requestUrl').text();
-var blogTemplate = "<div class='row blogMargin box'><span class='blogMore' data-memberid='{{blog.memberId}}' data-click='{{data-click}}'><i class='fas fa-align-center'></i></span><div class='col-md-5'><img src='{{blogImage}}' /></div><div class='col-md-7'><div class='blog-title'>{{blogTitle}}</div><p><span>{{blogUser}}</span><span>{{blogCreatedTime}}</span><span>文章分類:{{categoryName}}</span></p><div class='blog-content'  data-id='{{data-id}}'>{{blogContent}}</div></div></div>";
+var blogTemplate = "<div class='row blogMargin box'><span class='blogMore' data-memberid='{{blog.memberId}}' data-click='{{data-click}}'><i class='fas fa-align-center'></i></span><div class='col-md-5 blogBlock'><img src='{{blogImage}}' /></div><div class='col-md-7'><div class='blog-title'>{{blogTitle}}</div><p><span>{{blogUser}}</span><span>{{blogCreatedTime}}</span><span>文章分類:{{categoryName}}</span></p><div class='blog-content'  data-id='{{data-id}}'>{{blogContent}}</div></div></div>";
 let pageRow = 5;
 let pageRowStart = 0;
 let pageRowEnd = 5;
@@ -77,8 +77,7 @@ function init() {
         init(); 
     });
     
-    // 未來整合個人文章才可以進行編輯及刪除
-    
+    // 整合會員進行編輯/刪除文章
     $(".blogMore").each(function() {
     	let id = $(this).data('click');
     	sessionScopeMemberId = $('.sessionScopeMemberId').val();
@@ -125,7 +124,7 @@ function init() {
 	    	})
 	    	
 	    	$('#blog_img2').on('change', function () {
-	    		preview(this);
+	    		updatePreview(this);
 	    	});
 		})
 		
@@ -194,13 +193,28 @@ function hiddenContent() {
 }
 
 function preview(input) {
-	if (input.files && input.files[0]) {
+	if (input.files && input.files[0] && input.files.length>0) {
 		var reader = new FileReader();
 		reader.onload = function (e) {
 			var resultArea = '#imgArea img';
 			$(resultArea).attr('src', e.target.result);
 		}
 		reader.readAsDataURL(input.files[0]);
+	} else {
+		$("#imgArea img").removeAttr("src");
+	}
+}
+
+function updatePreview(input) {
+	if (input.files && input.files[0] && input.files.length>0) {
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			var resultArea = '#imgArea2 img';
+			$(resultArea).attr('src', e.target.result);
+		}
+		reader.readAsDataURL(input.files[0]);
+	} else {
+		$("#imgArea2 img").removeAttr("src");
 	}
 }
 

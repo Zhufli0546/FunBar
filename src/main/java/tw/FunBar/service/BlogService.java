@@ -28,4 +28,6 @@ public interface BlogService {
 	public List<Blog> searchBlogs(String searchKey);
 	
 	public void modifyBlog(Blog blog);
+	
+	public List<Blog> queryAllHotBlogs();
 }

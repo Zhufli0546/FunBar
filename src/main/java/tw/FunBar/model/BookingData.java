@@ -14,8 +14,7 @@ public class BookingData {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer booking_id;
-	
-	private String sex;
+
 	
 	private String email;
 	
@@ -44,13 +43,6 @@ public class BookingData {
 		this.remark = remark;
 	}
 
-	public String getSex() {
-		return sex;
-	}
-
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
 
 	public String getEmail() {
 		return email;

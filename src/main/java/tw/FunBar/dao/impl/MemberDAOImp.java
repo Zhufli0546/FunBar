@@ -117,17 +117,44 @@ public class MemberDAOImp implements MemberDAO {
 	//找自己
 	@Override
 	public void updateself(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
-			String memberPwd, String memberId, String memberEmail, Blob blob) {
+			 String memberEmail, Blob blob) {
 		Session session = factory.getCurrentSession();
 		String hql = "UPDATE Member SET memberName =:memberName," + "memberAddress =:memberAddress,"
-				+ "memberBirth =:memberBirth," + "memberPhone =:memberPhone," + "memberPwd =:memberPwd,"
-				+ "memberId =:memberId," + "memberEmail =:memberEmail," + "memberPic =:memberPic WHERE id =:id";
+				+ "memberBirth =:memberBirth," + "memberPhone =:memberPhone," + 
+				  "memberEmail =:memberEmail," + "memberPic =:memberPic WHERE id =:id";
 
 		session.createQuery(hql).setParameter("id", id).setParameter("memberName", memberName)
 				.setParameter("memberAddress", memberAddress).setParameter("memberBirth", memberBirth)
-				.setParameter("memberPhone", memberPhone).setParameter("memberPwd", memberPwd)
-				.setParameter("memberId", memberId).setParameter("memberEmail", memberEmail)
+				.setParameter("memberPhone", memberPhone)
+			.setParameter("memberEmail", memberEmail)
 				.setParameter("memberPic", blob).executeUpdate();
 
 	}
+
+
+	//驗證
+	@Override
+	public void levelup(int memberLevel,int id) {
+		Session session = factory.getCurrentSession();
+		String hql ="UPDATE Member SET memberLevel =:memberLevel WHERE id =:id";
+		session.createQuery(hql).setParameter("id", id).setParameter("memberLevel", 1).executeUpdate();
+	}
+
+
+
+	@Override
+	public void stateup(int memberLevel) {
+		Session session = factory.getCurrentSession();
+		
+		
+	}
+
+
+
+
+
+	
+	
+	
+	
 }

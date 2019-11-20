@@ -66,7 +66,7 @@ margin:5px 0;
 	
 <div class="div">
 <h2>重設時段及人數</h2>
-<form method="post" action="${pageContext.request.contextPath}/admin/reset_time_people_ok">
+<form method="post" action="${pageContext.request.contextPath}/reset_time_people_ok">
 
 
 	<select class="time" name="time0" class="text">

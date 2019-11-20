@@ -13,6 +13,34 @@
 
 
 
+<style>
+
+
+
+.calendar1 {
+	
+	width: 300px;
+	height:398px;
+	
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, .1);
+	margin: 0 auto;
+	color: #66B3FF;
+	text-align: center;
+	padding: 30px auto;
+	font-size: 30px;
+	float:left;
+	display:block;
+	margin-left:2px;
+	margin-top:52px;
+	border: 1px solid #FF8F59;
+	border-radius: 5px;
+
+}
+
+
+</style>
+
+
 </head>
 
 <body>
@@ -20,9 +48,9 @@
 	<jsp:include page="header.jsp" />
 	
 
-	<section class="page animsition" style="background-color:#E0E0E0;height:500px;">
+	<section class="page animsition" style="background-color:#3C3C3C;height:500px;">
 		<div class="calendar"
-			style="border: 1px solid #66B3FF; border-radius: 5px">
+			style="border: 1px solid #FF8F59; border-radius: 5px">
 
 			選擇入住日期:
 			<div class="title">
@@ -49,29 +77,34 @@
 			</div>
 		</div>
 
-		<div class="calendar1" style="background-color:#E0E0E0;color:black">
+		<div class="calendar1" style="color:black;background-color:white">
 					<form method="POST" action="chooseRoom">
-				入住天數: 
-				<select name="stay" id="slc" class="text" style="text-align:center">
-				<option value="1" selected = "selected">1天</option>
-				<option value="2">2天</option>
-				<option value="3">3天</option>
-				<option value="4">4天</option>
-				<option value="5">5天</option>
-				<option value="6">6天</option>
-				<option value="7">7天</option>
-				</select><br>
-				客房數 :
-				<select name="rooms" id="rooms" class="text" style="text-align:center">
-				<option value="1" selected = "selected">1間</option>
-				<option value="2">2間</option>
-				<option value="3">3間</option>
-				<option value="4">4間</option>
-				<option value="5">5間</option>
-				</select>
-				<hr style="border:none;margin-bottom:110px">
+				<h3 style="font-family: DFKai-sb;margin-left:25px;background-color:#FF8F59;border-radius:5px;border-top-right-radius:0px;border-top-left-radius:0px;width:250px;border:1px solid black;border-top:none">選擇天數與間數</h3>
+				<div style="margin-top: 85px">
+				<span style="font-family: DFKai-sb">客房間數:</span>
+				<select name="rooms" id="rooms" class="custom-select" style="text-align:center;font-size:15px;width:85px">
+				<option value="1" selected = "selected">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				</select><span style="font-family: DFKai-sb">間</span>	<br>
+				</div>	
+					
+				<div style="margin-top: 30px">
+				<span style="font-family: DFKai-sb">入住天數:</span>
+				<select name="stay" id="slc" class="custom-select" style="text-align:center;font-size:15px;width:85px">
+				<option value="1" selected = "selected">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				</select><span style="font-family: DFKai-sb">晚</span>
+				</div>
+
+				
 				<br>
-				<input id="date" type="hidden" name="date"> <input type="submit" style="height:50px;background-color:white;border-radius:15px;color:black;width:100%;font-size:22px;border:2px solid #66B3FF; "
+				<input id="date" type="hidden" name="date"> <input type="submit" style="height:50px;background-color:#FF8F59;border-radius:10px;color:black;width:100%;font-size:22px;font-family: DFKai-sb;margin-top:30px;border:2px solid black;margin-left:14px"
 					value="選擇房型      >>">
 			</form>
 		</div>
