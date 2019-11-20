@@ -56,7 +56,7 @@ public class CartController {
 
 	@RequestMapping(value = "/cart", method = RequestMethod.POST)
 	public String addCart(HttpServletRequest request, HttpSession session, HttpServletRequest response,
-			@RequestParam Integer productId, @RequestParam Integer count) throws IOException {
+			@RequestParam Integer productId, @RequestParam Integer count, Model model) throws IOException {
 		session = request.getSession(false);
 
 		// 未來整合 login 才能產生購物車
@@ -68,6 +68,21 @@ public class CartController {
 		}
 
 		ProductBean product = orderHandleService.getProductById(productId);
+		Collection<CartItem> cartItemList = cart.getCartItems();
+		int old_count = 0;
+		for(CartItem item:cartItemList) {
+			if(item.getProduct().getProductId() == productId) {
+				old_count = item.getCount();
+			}
+		}
+		int checkStockNum = old_count + count;
+		if(product.getStock() < checkStockNum) {
+			Gson gson = new Gson();
+			String status = gson.toJson("1");
+			model.addAttribute("status", status);
+			return "cart";
+		}
+		//product.getStock() < (count+cart.getCartItems().get(productId))
 
 		CartItem cartItem = new CartItem();
 		cartItem.setProduct(product);

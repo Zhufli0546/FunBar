@@ -34,38 +34,19 @@
 
 		<div class="row">
 			<c:forEach var="pb" items="${all}" begin="0" step="1" varStatus="i">
-				<div class="prodlist">
+			<div class="prodlist">
 					<p>${pb.productDetail}</p>
 					<p class="prodtitle">${pb.productName}</p>
 					<figure>
-					<a href="<c:url value='/product?id=${pb.productId}' />">
+					<a href="<c:url value='/product?id=${pb.productId}' />" ">
 						<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />
-					 </a>
-							
+					</a>						
 					</figure>
-					<figcaption>
 						<p>建議售價:<span style="color:#FF44AA;font-weight:bold">$ ${pb.unitPrice}</span></p>
-						<p>折扣：<span style="font-weight:bold;color:	#CE0000;">${pb.discount}</span></p>
-						<p style="color:#000000" class="theStock" data-product="${i.index}">庫存：${pb.stock}</p>
-							<label for="selectCount" class="">購買數量:</label>
-								<select class="selectCount" id="selectCount" name="count" data-product="${i.index}">
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-								</select>
-<!-- 							<input class="pdid" type="hidden" name="productId" -->
-<%-- 								value="${pb.productId}"> --%>
-<%-- 							<button type="button" class="button-add" data-product="${i.index}">加入購物車</button> --%>
-<!-- 							<div id="snackbar">已加入購物車</div>	 -->
-					</figcaption>
-
-				</div>
-				<!-- .prodlist -->
+						<p>折扣：<span style="font-weight:bold;color:	#CE0000;">${pb.discount}</span></p>				
+				</div> 
+				<!-- .prodlist --> 
 			</c:forEach>
-<%-- 			<a href="<c:url value='/showCart' />"><button class="btn btn-info">我的購物車</button></a> --%>
-
 		</div>
 	</div>
 	<!-- .container -->

@@ -43,7 +43,7 @@
 
 <div>
 <label for="selectCount" style="font-size:18px;padding:10px 5px;color:#000">購買數量:</label>
-<select class="selectCount" id="selectCount" name="count" data-product="${i.index}">
+<select class="selectCount" id="selectCount" name="count" data-product="0">
 <option value="1">1</option>
 <option value="2">2</option>
 <option value="3">3</option>
@@ -51,7 +51,7 @@
 <option value="5">5</option>
 </select>
 <input class="pdid" type="hidden" name="productId" value="${pb.productId}">
-<button type="button" class="button-add" data-product="${i.index}">加入購物車</button>
+<button class="btn button-add" data-product="0"  style="margin:0 10px;background-color:#1AFD9C;color: #fff;outline: none;border-radius: 5px;">加入購物車</button>
 </div>
 
 <div id="snackbar">已加入購物車</div>	
@@ -69,32 +69,42 @@
 <jsp:include page="footer.jsp" />
 <script>
 function myFunction() {
-var x = document.getElementById("snackbar");
-x.className = "show";
-setTimeout(function() {
-x.className = x.className.replace("show", "");
+	var x = document.getElementById("snackbar");
+	x.className = "show";
+	setTimeout(function() {
+		
+		x.className = x.className.replace("show", "");
 	}, 1000);
 }
 	
 // Test For Click Event
-	$(".button-add").click(function() {
+$(".button-add").click(function() {
 	let index = $(this).data("product");
 	console.log("btn index:" + index);
-	myFunction();
 			
 	var url = "/FunBar/";
 	$.ajax({
-	url : "http://localhost:8080" + url + "cart",
-	data:{
-		count:$(".selectCount").eq(index).val(),
-		productId:$(".pdid").eq(index).val()
-	},
+		url : "http://localhost:8080" + url + "cart",
+		data:{
+			count:$(".selectCount").eq(index).val(),
+			productId:$(".pdid").eq(index).val()
+		},
 		type:"POST",
 		dataType:"JSON",
 		success:function(data){
-		console.log("success");
-	}
-})
+			if(data.status == undefined) {
+				myFunction();
+			} else {
+				alert("加入購物車失敗");
+			}
+// 			let check = parseInt(data.status);
+// 			if(check) {
+// 				alert("加入購物車失敗");
+// 			} else {
+// 				alert("加入購物車失敗");
+// 			}
+		}
+	})
 })
 </script>
 </body>

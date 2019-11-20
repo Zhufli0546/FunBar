@@ -12,8 +12,7 @@ p{
 
 .prodlist {
 	float: left;
-	width: 18%;
-	min-height: 360px;
+	width: 16%;
 	padding: 5px;
 	text-align: center;
 	border-top:20px solid #9D9D9D;
@@ -32,8 +31,8 @@ p{
 
 .prodlist img {
 	display: block;
-	width: 100px;
-	height: 120px;
+	width: 150px;
+	height: 180px;
 	margin: 0 auto;
 }
 
@@ -49,21 +48,6 @@ p{
 .button-add:hover {
 	background-color: #fff;
 	color: #019858;
-}
-
-.button-confirm {
-	margin: 0 auto;
-	padding: 5px 10px;
-	background-color: #FF359A;
-	color: #fff;
-	outline: none;
-	border-radius: 5px;
-}
-
-.button-confirm:hover {
-	background-color: #fff;
-	color: #FF359A;
-	border: 1px solid #FF359A;
 }
 
 @media ( max-width : 960px) {
