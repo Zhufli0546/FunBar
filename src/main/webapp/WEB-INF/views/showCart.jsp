@@ -77,7 +77,7 @@ outline:none;
 						<tr>
 							<td><img
 								src="<c:url value='/ProductPictures/${ci.product.productId}' />"
-								width="80px" height="120px"></td>
+								height="120px"></td>
 							<td>${ci.product.productName}</td>
 							<td class="unit" data-product="${i.index}">${ci.product.unitPrice}</td>
 							<td align="left" class="theStock" data-product="${i.index}" >${ci.product.stock}</td>
