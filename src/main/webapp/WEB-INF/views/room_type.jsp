@@ -32,8 +32,9 @@ height:70px;
 					<td>${r.room_quantity}</td>
 					<td>${r.room_price}</td>
 					<td>${r.room_description}</td>
-					<td><a href="cancelRoom/${r.room_id}"><button class="button" type="button" onclick="return confirm('是否刪除');">刪除</button></a></td>
 					<td><a href="pullSingleRoom/${r.room_id}"><button class="button" type="button">修改</button></a></td>
+					<td><a href="cancelRoom/${r.room_id}"><button class="button" type="button" onclick="return confirm('是否刪除');">刪除</button></a></td>
+					
 				</tr>
 			</c:forEach>
 			</tbody>

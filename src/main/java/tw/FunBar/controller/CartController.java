@@ -44,7 +44,9 @@ import tw.FunBar.model.Member;
 import tw.FunBar.model.OrderBean;
 import tw.FunBar.model.OrderItemBean;
 import tw.FunBar.model.ProductBean;
+import tw.FunBar.model.RoomOrder;
 import tw.FunBar.service.OrderHandleService;
+import tw.FunBar.service.impl.OrderHandleServiceImpl;
 
 @Controller
 public class CartController {
@@ -238,8 +240,7 @@ public class CartController {
 
 	// 新增訂單
 	@RequestMapping("/orderSetUp")
-	public String orderSetUp(HttpServletRequest request, HttpSession session,String address, Model model,
-			Cart c) {
+	public String orderSetUp(HttpServletRequest request, HttpSession session, String address, Model model, Cart c) {
 
 		session = request.getSession(false);
 		Member member = (Member) session.getAttribute("member");
@@ -256,7 +257,7 @@ public class CartController {
 
 		// 於購物車建立訂單
 		OrderBean order = new OrderBean();
-		model.addAttribute("orderbean",order);
+		model.addAttribute("orderbean", order);
 
 		// 產生當下時間
 		Date d = new Date();
@@ -277,7 +278,7 @@ public class CartController {
 			orderItem.setProductId(cartItem.getProduct().getProductId());
 			orderItem.setQuantity(cartItem.getCount());
 			// 候畫面產生，需再測試
-			orderItem.setSubTotal((int)(cartItem.getSubtotal() * cartItem.getProduct().getDiscount()/10));
+			orderItem.setSubTotal((int) (cartItem.getSubtotal() * cartItem.getProduct().getDiscount() / 10));
 			orderItemList.add(orderItem);
 		}
 
@@ -286,79 +287,75 @@ public class CartController {
 
 		return "redirect:/cartpay";
 	}
-	
+
 	@RequestMapping(value = "/cartpay")
-	public String payByEcPay(HttpServletRequest req,
-						     HttpSession session, Model model) {
-		
+	public String payByEcPay(HttpServletRequest req, HttpSession session, Model model) {
+
 		Member member = (Member) session.getAttribute("member");
-		
+
 		// session 取得 order 訂單
 		session = req.getSession(false);
-		OrderBean order = (OrderBean)session.getAttribute("order");
-		
+		OrderBean order = (OrderBean) session.getAttribute("order");
+
 		order.setMemberId(member.getId());
-		System.out.println("==========================>"+order.getMemberId());
+		System.out.println("==========================>" + order.getMemberId());
 		order.setMemberName(member.getMemberName());
 		order.setMemberPhone(member.getMemberPhone());
-		
-				
+
 		// http://localhost:XXXX/FunBar
-		String base = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort()
-				+ req.getContextPath();
+		String base = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + req.getContextPath();
 
 		// EcPay Begin
 		// EcPay 對各項 method 都有簡單註解說明，可以將滑鼠移動到方法上查看
 		AllInOne all = new AllInOne("");
-		
+
 		// 指定付款方式為信用卡一次付清
 		AioCheckOutOneTime obj = new AioCheckOutOneTime();
-		
-		int randomOrderId=((int)((Math.random()*9+1)*12345));
-		
+
+		int randomOrderId = ((int) ((Math.random() * 9 + 1) * 12345));
+
 		// 未來替代隨機的 PK
 		order.setOrderId(randomOrderId);
 		order.setPayment("已付款");
 		// roomService.addRoomOrder(room_order);
-		
+
 		obj.setMerchantTradeNo(String.valueOf(randomOrderId)); // 設定訂單編號
-		
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
-		
+
 		order.setOrderTime(sdf.format(ts));
 		obj.setMerchantTradeDate(order.getOrderTime()); // 設定交易日期
+
 		
-		int od = orderHandleService.addOrder(order);
-		
-		
-		
-		
-		
+
 		int totalAmount = 0;
-		for(OrderItemBean orderItemBean:order.getOrderItem()) {
+		for (OrderItemBean orderItemBean : order.getOrderItem()) {
 			System.out.println("小計" + orderItemBean.getSubTotal());
 			totalAmount += orderItemBean.getSubTotal();
 		}
 
 		obj.setTotalAmount(String.valueOf(totalAmount)); // 設定總付款金額
 		obj.setTradeDesc("綠界支付");
-		
+
 		// 設定顯示在EcPay頁面的購物清單
 		String orderItemListName = "";
-		for(OrderItemBean orderItem:order.getOrderItem()) {
+		for (OrderItemBean orderItem : order.getOrderItem()) {
 			ProductBean product = orderHandleService.getProductById(orderItem.getProductId());
 
-			if(order.getOrderItem().size()>1) {
-				
-				orderItemListName += product.getProductName() + "              " + product.getUnitPrice() + "            "+  + orderItem.getQuantity() + "             "  + orderItem.getSubTotal() + "#";
+			if (order.getOrderItem().size() > 1) {
+				orderItemListName += product.getProductName() + " "
+						+ (int) (product.getUnitPrice() * product.getDiscount() / 10) + " 元 x "
+						+ +orderItem.getQuantity() + "#";
 			} else {
-				orderItemListName = product.getProductName() + "               "  + product.getUnitPrice() + "            "  + orderItem.getQuantity() + "               " + orderItem.getSubTotal();
+				orderItemListName = product.getProductName() + " "
+						+ (int) (product.getUnitPrice() * product.getDiscount() / 10) + " 元 x "
+						+ orderItem.getQuantity();
 			}
 		}
 		System.out.println("orderItemListName =>" + orderItemListName);
-		obj.setItemName(orderItemListName); 
-		
+		obj.setItemName(orderItemListName);
+
 		obj.setReturnURL("http://localhost:8080/FunBar/");// EcPay會將交易結果相關資訊以POST請求送來這個URL，但是localhost接不到這個。不過此項為必填資訊所以還是要set
 		// EcPay會將交易結果相關資訊以POST請求送來這個URL，但是localhost接不到這個。不過此項為必填資訊所以還是要set
 		// 可以在交易結束後觀察底下對應requestMapping的method -- receive
@@ -371,48 +368,45 @@ public class CartController {
 		// 裡面的各種input都已經設定好了，並且會自動submit，
 		// 只要將這個字串加為attribute並且顯示在回傳頁面上，便會自動執行，並跳轉到EcPay付款頁面。
 		// EcPay End
-		
+
 		System.out.println("form =\n" + form);
 		model.addAttribute("ecpayForm", form);
 		return "ecpay";
 
 	}
-	
+
 	@RequestMapping("/order_result")
-	public String orderResult(HttpServletRequest req,
-		     HttpSession session, Model model) {
-		
+	public String orderResult(HttpServletRequest req, HttpSession session, Model model) {
+
 		session = req.getSession(false);
-		OrderBean order = (OrderBean)session.getAttribute("order");
-		
+		OrderBean order = (OrderBean) session.getAttribute("order");
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
-		
+
 		order.setPayment("已付款");
 		order.setOrderTime(sdf.format(ts));
-		
+
 		int od = orderHandleService.addOrder(order);
 		session.removeAttribute("order");
-		
+
 		// showOrder
-		OrderBean showOrder = (OrderBean)orderHandleService.getOrderById(od);
+		OrderBean showOrder = (OrderBean) orderHandleService.getOrderById(od);
 		List<OrderItemBean> orderItemList = new ArrayList<>();
 		List<ProductBean> showProducts = new ArrayList<>();
-		
-		for(OrderItemBean orderItem:showOrder.getOrderItem()) {
+
+		for (OrderItemBean orderItem : showOrder.getOrderItem()) {
 			ProductBean product = orderHandleService.getProductById(orderItem.getProductId());
 			showProducts.add(product);
 			orderItemList.add(orderItem);
 		}
-		
-		
+
 		session.setAttribute("showOrder", showOrder);
 		session.setAttribute("showProducts", showProducts);
 		session.setAttribute("orderItemList", orderItemList);
-		
-		
+
 		return "order_result";
-		
+
 	}
 
 	// buy Cart Session
@@ -427,6 +421,27 @@ public class CartController {
 
 		// model.addAttribute("cartItemList", cartItemListJson);
 		return cartItemListJson;
+	}
+
+	@RequestMapping("/showMemOrders")
+	public String orderResultByMember(Model model, HttpServletRequest req, HttpSession session) {
+		session = req.getSession(false);
+
+		Member member = (Member) session.getAttribute("member");
+		
+		List<OrderBean> obList = new ArrayList<OrderBean>();
+		ArrayList<OrderBean> orders = orderHandleService.getMyOrders(member.getId(),req);
+		
+		
+
+		
+		
+		
+		
+		model.addAttribute("orders", orders);
+
+		return "showMemOrders";
+
 	}
 
 }

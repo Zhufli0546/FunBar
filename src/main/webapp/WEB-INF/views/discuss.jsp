@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -11,29 +10,33 @@
 <meta charset="UTF-8">
 <!-- Header -->
 <jsp:include page="header.jsp" />
-<link rel="stylesheet" type="text/css"
-	href="<c:url value='/css/discuss.css'/>">
+<link rel="stylesheet" type="text/css" href="<c:url value='/css/discuss.css'/>">
 </head>
 
 <body class="animsition bg-dark">
-	<br>
-	<!-- Member detail block -->
-	<div class="col-md-2 fixed-top" style="margin:192px 120px; width:200px">
+		
+		<br>
+			<!-- Member detail block -->
+			<div class="col-md-2 fixed-top" style="margin:192px 120px; width:200px">
 				<div class="list-group">
-					<p class="list-group-item list-group-item-action active">${title}</p>
-					<a href="" class="list-group-item list-group-item-action" id="loginMemberName">${sessionScope.member.memberName}</a>
+					<div class="list-group-item list-group-item-action">
+					<img class="card-img-top rounded-circle" style="height: 50px; width: 50px" src="<c:url value='/membergetPicture/${member.id}'/>">
+					<span id="loginMemberName">${sessionScope.member.memberName}</span></div>
 					<a href="" class="list-group-item list-group-item-action" id="loginMemberid" style="display:none">${sessionScope.member.id}</a>
 					<a href="" class="list-group-item list-group-item-action" id="requestUrl" style="display:none"><c:url value='/'/></a>
-					<a href="${pageContext.request.contextPath}/friend" class="list-group-item list-group-item-action list-group-item d-flex justify-content-between align-items-center">好友
-					<button class='badge badge-primary badge-pill btn btn-primary btn-sm' id='friendRequest{{member.memberId}}'>2</button></a>
+					<p class="list-group-item list-group-item-action active">${title}</p>
+					<a href="${pageContext.request.contextPath}/friend" class="list-group-item list-group-item-action list-group-item d-flex justify-content-between align-items-center">
+					好友
+					<button class='badge badge-primary badge-pill btn btn-primary btn-sm' id='friendRequest${sessionScope.member.id}'></button></a>
+					<a href="${pageContext.request.contextPath}/chat" class="list-group-item list-group-item-action ">聊天</a>
 				</div>
 			</div>
 	<!-- Body -->
 	<section class="container page">
 		<div class="row mt-5">
+		
 
-			<div class="col-md-2">
-			</div>
+			<div class="col-md-2"></div>
 
 			<!-- Post area -->
 			<!--create new post block-->
@@ -42,30 +45,33 @@
 				<br>
 				<!-- 第一層Post -->
 				<div id="firstLevelComment">
-				<!-- 第二層Post -->
+					<!-- 第二層Post -->
 				</div>
 			</div>
 
 			<!-- friend request block -->
-			<div class="col-md-3" style="background-color: white;">
-				<div class="col-md-12 font-weight-bold mt-4">Add Friend</div>
-				<div class="col-md-12 mt-5">
+			<div class="col-md-3 rounded" style="background-color: white;">
+				<div class="col-md-12 font-weight-bold mt-4"><h5>Add Friend</h5></div>
+				<div class="col-md-12 mt-4">
 					<div class="input-group mb-3">
-						<input type="text" class="form-control" id="searchMemberName"
-							placeholder="search" aria-describedby="button-addon2">
+						<input type="search" class="form-control rounded" id="searchMemberName"
+							placeholder="Search" aria-describedby="button-addon2">
 						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" id='searchMember' type="button">search</button>
+							<button class="btn btn-outline-success ml-2" id='searchMember'
+								type="button">Search</button>
 						</div>
 					</div>
 					<div id="searchResult" class="list-group"></div>
 				</div>
 			</div>
 		</div>
+		
 	</section>
-
+	
+	<!-- Chat Box -->
+	<jsp:include page="chatbox.jsp" />
 	<!-- Footer -->
 	<jsp:include page="footer.jsp" />
-	<script type="text/javascript" src="<c:url value='/js/discuss.js'/>">
-	</script>
+	<script type="text/javascript" src="<c:url value='/js/discuss.js'/>"></script>
 </body>
 </html>

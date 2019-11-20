@@ -7,6 +7,13 @@ let tododata;
 let now = 1;
 let sessionScopeMemberId = 0;
 
+//Sweet Alert Plugin
+//自訂預設值
+swal.setDefaults({
+    confirmButtonText: "確定",
+    cancelButtonText: "取消"
+});
+
 // init()
 $.ajax({
 	url: requestUrl + "/blogJson",
@@ -130,20 +137,35 @@ function init() {
 		
 		$(".deleteData").click(function() {
 	    		let deleteBlogId = $(this).data("blog");
-	    		console.log("delete = " + deleteBlogId);
-	    		if(confirm("確定要刪除嗎?")) {
-	    			$.ajax({
-		    			url: requestUrl + "/admin_delete/" + deleteBlogId,
-		    			method: "POST",
-		    			dataType: "JSON",
-		    			success: function(res){
-		    				$(".fade.show").css({"opacity":0});
-		    				$(".blogs").html("");
-		    		        $("#show").html("");
-		    				refresh();
-		    			}
-		    		})
-	    		}
+
+	    		swal({
+		   	         title: "確定要刪除嗎?",
+		   	         html: "按下確定後刪除文章",
+		   	         type: "warning",
+		   	         showCancelButton: true//顯示取消按鈕
+	   	     	}).then(function (result) {
+	   	             if (result.value) {
+	   	                 //使用者按下「確定」要做的事
+	   	                 swal("成功", "文章刪除完畢", "success");
+	   	                 
+		   	              $.ajax({
+				    			url: requestUrl + "/admin_delete/" + deleteBlogId,
+				    			method: "POST",
+				    			dataType: "JSON",
+				    			success: function(res){
+				    				$(".fade.show").css({"opacity":0});
+				    				$(".blogs").html("");
+				    		        $("#show").html("");
+				    				refresh();
+				    			}
+				    		})
+	   	             } else if (result.dismiss === "cancel") {
+	   	                  //使用者按下「取消」要做的事
+	   	                 swal("取消", "文章未刪除", "error");
+	   	             }//end else  
+	   	     	});//end then 
+	    		
+	    		
 	    })
 	})
 }
