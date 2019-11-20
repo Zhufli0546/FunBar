@@ -18,9 +18,10 @@ public interface OrderHandleDAO {
 
 	void updateProduct(Integer productId, String productNo,Blob productCover,String productDetail, String productName, 
 			String category, Double discount, Integer stock);
-	
-	public int addOrder(OrderItemBean ob) ;
 
-	void addOrder(OrderBean order);
+	int addOrder(OrderBean order);
+
+	OrderBean getOrderById(int od);
+
 
 }

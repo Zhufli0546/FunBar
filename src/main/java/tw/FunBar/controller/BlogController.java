@@ -114,12 +114,14 @@ public class BlogController {
 						   @RequestParam String blogContent,
 						   @RequestParam Integer categoryId, HttpServletRequest request, HttpSession session) throws IOException {
 		
-		String ext = context.getMimeType(blogImage.getOriginalFilename());
-		ext = ext.substring(6);
-		Date date = new Date();
-		String filename = String.valueOf(date.getTime() + "." + ext);
+		String sourceFileName = blogImage.getOriginalFilename();
         
-        if(filename.length()>0) {
+		String path = "";
+        if(sourceFileName.length()>0) {
+        	String ext = context.getMimeType(sourceFileName);
+    		ext = ext.substring(6);
+    		Date date = new Date();
+    		String filename = String.valueOf(date.getTime() + "." + ext);
         	InputStream in = blogImage.getInputStream();
         	String basePath = "C:\\FunBar\\imgUpload\\";
             System.out.println("basePath:" + basePath);
@@ -135,13 +137,17 @@ public class BlogController {
             }
             output.close();
             in.close();
+
+            path = request.getContextPath() + "/imgUpload/" + filename;
+        } else {
+        	path = request.getContextPath() + "/ProductImages/noImage.png";
         }
         
-		String path = request.getContextPath() + "/imgUpload/" + filename;
 		Blog blog = new Blog();
 		blog.setBlogImage(path);
 		blog.setBlogTitle(blogTitle);
 		blog.setBlogContent(blogContent);
+		blog.setBlogIsHot(0);
 		
 		Date d = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -182,6 +188,14 @@ public class BlogController {
 
 		model.addAttribute("blogs", blogs);
 		return "admin_blog";
+	}
+	
+	@RequestMapping("/admin_blog/{id}")
+	public String adminBlogById(@PathVariable Integer id, Model model) {
+		Blog blog = blogService.findByIdBlog(id);
+
+		model.addAttribute("blog", blog);
+		return "adminBlogById";
 	}
 	
 	@RequestMapping("/admin_delete/{id}")
@@ -253,5 +267,14 @@ public class BlogController {
 			
 		
 		return "redirect:/blog/" + blogId;
+	}
+	
+	@RequestMapping("/admin_switch/{id}")
+	public String adminSwitch(@PathVariable Integer id, @RequestParam Integer blogIsHot) {
+		Blog blog = blogService.findByIdBlog(id);
+		blog.setBlogIsHot(blogIsHot);
+		blogService.modifyBlog(blog);
+
+		return "adminSwitch";
 	}
 }

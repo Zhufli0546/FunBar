@@ -1,15 +1,31 @@
 package tw.FunBar.dao;
 
 import java.util.List;
+import java.util.Set;
 
+import tw.FunBar.model.Activity;
 import tw.FunBar.model.Applicant;
+import tw.FunBar.model.Member;
+import tw.FunBar.model.Suggestion;
 
 public interface ApplicantDao {
 	
-	public void addApplicant(String applicantName,String gender, String applicantPhone,
-			String applicantEmail, int activityId);
-	
-	public List<Applicant> getApplicantsAndActivities(int applicantId);
+	public void addApplicant(String applicantName, String gender, String applicantPhone,
+			String applicantEmail, int activityId,String memberId);
 
-	//void addApplicant(String applicantName, String gender, String applicantPhone, String applicantEmail);
+	public Set<Applicant> QuerySignupApplicant(int activityId);
+	
+	public Set<Activity> QuerySignActivity(String memberId);
+	
+	public Applicant deleteApplicantById(int applicantId);
+	
+	public void deleteMap(String memerId, int activityId);
+	
+	public List<Applicant> getApplicants();
+	
+	//------------------------------------------------------------
+	
+	public void addSuggestion(Suggestion suggestion);
+
+	List<Suggestion> getAllSuggestion();
 }

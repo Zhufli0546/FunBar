@@ -5,10 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>後台管理</title>
+<title>後台管理</title>  
+      
 </head>
 <body id="page-top">
-	<jsp:include page="admin_header.jsp" />
+
+<jsp:include page="admin_header.jsp" />
 	<jsp:include page="admin_footer.jsp" />
 </body>
 </html>

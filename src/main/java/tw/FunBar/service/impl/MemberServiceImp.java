@@ -38,17 +38,8 @@ public class MemberServiceImp implements MemberService {
 		dao.delete(id);
 	}
 
-	@Override
-	public void updateMember(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
-			String memberPwd, String memberId, String memberEmail,Blob blob) {
-		dao.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberPwd, memberId, memberEmail, blob);
-	}
+	
 
-	@Override
-	public void updateself(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
-			String memberPwd, String memberId, String memberEmail,Blob blob) {
-		dao.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberPwd, memberId, memberEmail, blob);
-	}
 	
 	
 	@Override
@@ -73,6 +64,28 @@ public class MemberServiceImp implements MemberService {
 		
 		return dao.getONEmember(id);
 	}
+
+	@Override
+	public void levelup(int memberLevel, int id) {
+	
+		dao.levelup(memberLevel, id);
+	}
+
+	@Override
+	public void updateself(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
+			 String memberEmail, Blob blob) {
+		dao.updateself(id, memberName, memberAddress, memberBirth, memberPhone, memberEmail, blob);
+		
+	}
+	@Override
+	public void updateMember(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
+			String memberPwd, String memberId, String memberEmail,Blob blob) {
+		dao.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberPwd, memberId, memberEmail, blob);
+	}
+
+	
+
+	
 
 
 	
