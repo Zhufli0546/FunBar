@@ -161,7 +161,7 @@
 				href="${pageContext.request.contextPath}/blogs" class="txt19">部落格</a>
 			</li>
 
-			<li class="t-center m-b-13"><a href="discuss" class="txt19">討論區</a>
+			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/discuss" class="txt19">討論區</a>
 			</li>
 			
 
