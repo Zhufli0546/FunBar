@@ -130,10 +130,6 @@
 					</div>
 					<!-- Social -->
 					<div class="social flex-w flex-l-m p-r-20">
-						<a href="#"><i class="fa fa-tripadvisor" aria-hidden="true"></i></a>
-						<a href="#"><i class="fa fa-facebook m-l-21"
-							aria-hidden="true"></i></a> <a href="#"><i
-							class="fa fa-twitter m-l-21" aria-hidden="true"></i></a>
 						<button class="btn-show-sidebar m-l-33 trans-0-4"></button>
 					</div>
 				</div>
@@ -172,11 +168,11 @@
 			<li class="t-center m-b-13"><a href="admin">後台管理</a></li>
 
 
-			<li class="t-center">
-				<!-- Button3 --> <a href="reservation.html"
-				class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-					Reservation </a>
-			</li>
+<!-- 			<li class="t-center"> -->
+<!-- 				<a href="reservation.html" -->
+<!-- 				class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto"> -->
+<!-- 					Reservation </a> -->
+<!-- 			</li> -->
 		</ul>
 	</aside>
 </body>

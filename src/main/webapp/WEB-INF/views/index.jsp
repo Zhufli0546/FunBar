@@ -3,12 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-
+<style>
+.section1 { margin: 10px 0;}
+</style>
 <head>
 	<title>Home</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
+	<link rel="stylesheet" href="<c:url value='/vendor/slick/slick.css' />">
+	<link rel="stylesheet" href="<c:url value='/vendor/slick/slick-theme.css' />">
+	<link rel="stylesheet" href="<c:url value='/css/index_blog.css' />">
 </head>
 
 <body class="animsition">
@@ -90,15 +94,35 @@
 	</section>
 
 	<!-- Blog -->
-	<section class="page">
-		
+	<section class="section1">
+		<div class="row container">
+			<div class="col-md-1">
+				<h2 style="writing-mode: vertical-lr;">焦點文章</h2>
+			</div>
+			
+			<div class="blogSlick col-md-11">
+				<c:forEach var="blog" items="${blogs}">
+					<div style="height:350px; overflow: hidden;" class="card col-md-3">
+						<div class="blogBlock">
+							<img class="card-img-top" src="${blog.blogImage}" >
+						</div>
+						<div class="card-body">
+					    	<h4 class="card-title">
+					       		<a href="#" class="blog-title">${blog.blogTitle}</a>
+					    	</h4>
+					    	<div class="card-text blog-content" data-blogid="${blog.blogId}">${blog.blogContent}</div>
+				   		</div>
+					</div>
+				</c:forEach>
+			</div>
+						
+		</div>
 	</section>
 
 	<!-- Footer -->
+	<div class="requestUrl" style="display: none;">${pageContext.request.contextPath}</div>
 	<jsp:include page="footer.jsp" />
-
-	
-
+	<script src="<c:url value='/js/main_blog.js' />"></script>
 </body>
 
 </html>
