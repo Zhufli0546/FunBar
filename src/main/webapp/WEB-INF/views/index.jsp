@@ -102,14 +102,12 @@
 		<div class="row">
 			<c:forEach var="pb" items="${all}" begin="0" step="1" varStatus="i">
 				<div class="prodlist">
-					<p>${pb.productDetail}</p>
-					<p class="prodtitle">${pb.productName}</p>
 					<figure>
 						<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />
 					</figure>
+					<p class="prodtitle">${pb.productName}</p>	
 					<figcaption>
 						<p>建議售價:<span style="color:#FF44AA;font-weight:bold">$ ${pb.unitPrice}</span></p>
-						<p>折扣：<span style="font-weight:bold;color:	#CE0000;">${pb.discount}</span></p>
 						<div>
 						<label for="selectCount" class="">購買數量:</label>
 								<select class="selectCount" id="selectCount" name="count" data-product="${i.index}">

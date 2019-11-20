@@ -38,7 +38,10 @@
 					<p>${pb.productDetail}</p>
 					<p class="prodtitle">${pb.productName}</p>
 					<figure>
+					<a href="<c:url value='/product?id=${pb.productId}' />">
 						<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />
+					 </a>
+							
 					</figure>
 					<figcaption>
 						<p>建議售價:<span style="color:#FF44AA;font-weight:bold">$ ${pb.unitPrice}</span></p>
