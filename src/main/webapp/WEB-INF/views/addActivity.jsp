@@ -8,7 +8,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>新增活動</title>
 <style>
 	.container{
 		font-family:微軟正黑體;

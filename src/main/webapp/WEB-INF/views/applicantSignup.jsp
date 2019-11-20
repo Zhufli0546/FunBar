@@ -9,6 +9,21 @@
 <title>已報名活動資料</title>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+	show();
+});
+	function show(){
+		var ac = "${activity}";
+		console.log("ac=>"+ac );
+		console.log(ac.length);
+		if(ac.length == 2 ){
+			document.getElementById("ns").style.display="block";
+			
+		}
+	}
+
+</script>
   <script>
     $(function () {
       var len = 90; // 超過字數以"..."取代
@@ -20,7 +35,63 @@
         }
       });
     });
+    
   </script>
+  
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.0/sweetalert2.all.js"></script>
+    <script type="text/javascript">
+        //自訂預設值
+        swal.setDefaults({
+            confirmButtonText: "確定",
+            cancelButtonText: "取消"
+        });
+        //swal.resetDefaults();//清空自訂預設值
+
+
+        $(function () {
+            $("input").click(function () {
+                //confirm dialog範例
+                let currentClick = $(this);
+                swal({
+                    title: "確定要取消?",
+                    html: "按下確定後將取消活動",
+                    type: "question",
+                    showCancelButton: true//顯示取消按鈕
+                }).then(
+                    function (result) {
+                        if (result.value) {
+                            //使用者按下「確定」要做的事
+                            let requestUrl = "${pageContext.request.contextPath}";
+                            let memberId = currentClick.data("memberid");
+                            let activityId = currentClick.data("activityid");
+							
+                            // ajax 非同步取消活動
+							$.ajax({
+								url: requestUrl + "/cancelSignup",
+								method: "POST",
+								data: {
+									activityId: activityId,
+									memberId: memberId
+								},
+								success: function() {
+// 									window.location.href = requestUrl + "/activities?index=1";
+									window.location.href = requestUrl + "/getsiqnupActivity/${member.memberId}";
+									
+								}
+							})
+							
+                            
+                            swal("成功", "活動已經取消", "success");
+                        } else if (result.dismiss === "cancel")
+                        {
+                             //使用者按下「取消」要做的事
+                            swal("取消", "活動未取消", "error");
+                        }//end else  
+                    });//end then 
+            });
+        });
+    </script>
 </head>
 <body>
 	<jsp:include page="header.jsp" />
@@ -44,9 +115,9 @@
 							<p class="card-text">${activity.introduction}</p>
 							
 						</div>
-						<a href="<spring:url value='/cancelSignup/${memberId}&${activity.activityId}'/>">
-						<button type="button" class="btn btn-outline-secondary btn-block">取消報名</button></a>
-						
+						<input type="button" value="取消報名" class="btn btn-outline-secondary btn-block" data-memberid="${memberId}" data-activityid="${activity.activityId}" />
+					
+						 
 						<a href="<spring:url value='/addSuggestion'/>">
 						<button type="button" class="btn btn-outline-secondary btn-block" >我要給意見</button></a>
 					</div>							
@@ -54,6 +125,21 @@
 			</c:forEach>
 		</div>
 	</div>
+	
+	<div id="ns" style="height:50%; width:25%; margin:50px auto; display:none">
+	<div style="height:100px;background-color:black;">
+    <h2 style="margin-bottom:0px; font-size: 4em;color :white;font-family:Copperplate;
+	font-weight:bold;font-style:italic;text-decoration:underline;text-align: center;">FunBar</h2>
+        <h6 style="margin-top: 0px;text-align: center;color :white;font-family:Papyrus;font-size: 1em;">CHILL&CHEER</h6>
+    </div >
+   	<br><br>
+
+	<h2 style="color:rgba(204, 74, 14, 0.438);font-family:微軟正黑體">還沒報名任何活動喔!!</h2><br><br>
+		<a href="${pageContext.request.contextPath}/activities?index=1">
+				<button type="button" class="btn btn-outline-secondary">熱門活動</button>
+			</a>
+	</div>
+
 	<jsp:include page="footer.jsp" />
 </body>
 </html>

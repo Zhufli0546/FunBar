@@ -14,14 +14,15 @@
 		
 		<div id='somedivS'></div>
 		
-<div class="container">
+<div class="container" style="font-family:微軟正黑體; padding:15px">
     <h2>活動報名管理</h2>
     <hr>
-	<h4>活動名稱:${activity.activityId}</h4>
-    <h4>報名者基本資料</h4>
-    <table class="table table-dark table-hover">
+	<h4>活動名稱：</h4>
+	<h4 style="color:rgba(97, 35, 6, 0.877)">${ac.eventName}</h4><br>
+    <h5>報名者基本資料</h5>
+    <table class="table table-striped">
       <thead>
-        <tr>
+        <tr class="dark">
           <th>姓名</th>
           <th>性別</th>
           <th>Email</th>

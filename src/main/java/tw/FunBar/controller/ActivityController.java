@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +17,6 @@ import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
-import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import tw.FunBar.model.Activity;
+import tw.FunBar.model.ActivityMap;
 import tw.FunBar.model.Applicant;
 import tw.FunBar.model.Member;
 import tw.FunBar.service.ActivityService;
@@ -83,7 +85,7 @@ public class ActivityController {
 	}
 
 	// 活動管理查詢
-	@RequestMapping(value = { "activityQuery" })
+	@RequestMapping(value = { "/activityQuery" })
 	public String Management(Model model, Integer index) {
 		List<Activity> activity = service.getAllActivities();
 		model.addAttribute("activities", activity);
@@ -247,11 +249,16 @@ public class ActivityController {
 	// 查詢活動前一天並寄送郵件
 	
 	@RequestMapping(value="/getTimeAndSend")
-	public String getTimeAndSend(Activity activity) {
-		Applicant email = service.getTime();
-		emailService.sendActivityEmail(email, activity);
+	public String getTimeAndSend() {
 		
-		return "activityQuery";
+		Activity activity = service.getTimeActivity();
+		if(activity == null) {
+			
+		}else {
+		List<Applicant> email = service.getTime();
+		emailService.sendActivityEmail(email, activity);
+		}
+		return "redirect:/activityQuery";
 		
 	}
 	
@@ -260,14 +267,25 @@ public class ActivityController {
 
 	// 新增使用者報名表單
 	@RequestMapping(value = { "activityRegistration" })
-	public String getActivity2(@RequestParam("id") Integer activityId, Model model, HttpServletRequest request,
-			HttpSession session) {
+	public String getActivity2(@RequestParam("id") Integer activityId,
+//			@RequestParam String memberId,
+							   Model model, HttpServletRequest request,
+							   HttpSession session) {
 		model.addAttribute("activity", service.getActivity(activityId));
 		session = request.getSession(false);
 		Member member = (Member) session.getAttribute("member");
+//		Set<Activity> acs = applicantservice.QuerySignActivity(memberId);
+//		int id = 0;
+//		for(Activity ac:acs ) {
+//			id = ac.getActivityId();
+//		}
 		if (member == null) {
 			return "redirect:/signin";
-		} else
+//		} 
+//		else if(id == activityId) {
+//			return "redirect:/activities?index=1";
+			
+		}else
 			return "activityRegistration";
 	}
 

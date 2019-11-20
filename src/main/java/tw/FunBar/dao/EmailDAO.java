@@ -13,6 +13,6 @@ public interface EmailDAO {
 
 		void sendBookingEmail(BookingData data);
 		
-		void sendActivityEmail(Applicant email,Activity activity);
+		void sendActivityEmail(List<Applicant> email,Activity activity);
 		
 }

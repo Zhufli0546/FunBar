@@ -16,7 +16,6 @@ import tw.FunBar.dao.ActivityDao;
 import tw.FunBar.model.Activity;
 import tw.FunBar.model.ActivityMap;
 import tw.FunBar.model.Applicant;
-import tw.FunBar.model.BookingData;
 
 
 @Repository
@@ -35,7 +34,7 @@ public class ActivityDaoImpl implements ActivityDao {
 	//分頁
 	@Override
 	public List<Activity> getPageActivities(int index) {
-		String hql = "FROM Activity";
+		String hql = "FROM Activity order by eventCreateTime desc";
 		Session session = factory.getCurrentSession();
 		Query query = session.createQuery(hql);
 		query.setFirstResult((index-1)*num);
@@ -58,6 +57,7 @@ public class ActivityDaoImpl implements ActivityDao {
 	public Activity getActivity(int activityId) {
 		Session session = factory.getCurrentSession();
 		Activity ac = session.get(Activity.class, activityId);
+		
 		return ac;
 	}
 	
@@ -118,10 +118,10 @@ public class ActivityDaoImpl implements ActivityDao {
 		
 	}
 
-	//取得日期時間 在活動前一天
+	//取得報名的使用者 (活動前一天)
 
 	@Override
-	public Applicant getTime() {
+	public List<Applicant> getTime() {
 		String hql = "From Activity where DATEDIFF(day,GETDATE(),eventDate) = 1";
 		Session session = factory.getCurrentSession();
 		List<Activity> acs = session.createQuery(hql).getResultList();
@@ -129,25 +129,57 @@ public class ActivityDaoImpl implements ActivityDao {
 		ArrayList<ActivityMap> ams = new ArrayList<>();
 		for (Activity a :acs ) {
 			String hql2 = "From ActivityMap where activityId = :activityId";
-			System.out.println("activityId" + a.getActivityId());
 			
 
-			ams = (ArrayList<ActivityMap>) session.createQuery(hql2).setParameter("activityId", a.getActivityId())
+			ams = (ArrayList<ActivityMap>) session.createQuery(hql2)
+					.setParameter("activityId", a.getActivityId())
 					.getResultList();
-			
 		}
 		
-		Applicant al = new Applicant();
 		List<Applicant> als = new ArrayList<>();
 		for(ActivityMap aa: ams) {
 			String hql3 = "FROM Applicant where applicantId = :applicantId";
-			System.out.println("applikcantId =>" + aa.getApplicantId());
-			als = (List<Applicant>) session.createQuery(hql3)
-					.setParameter("applicantId",aa.getApplicantId()).getResultList();
-			al = als.get(0);
+			Applicant al = (Applicant) session.createQuery(hql3)
+					.setParameter("applicantId",aa.getApplicantId()).getSingleResult();
+			als.add(al);
+			
 		}
+		return als;
+	}
+	
+	//取得一天後到期的活動
+	@Override
+	public Activity getTimeActivity(){
+		Activity ac = new Activity();
+		String hql = "From Activity where DATEDIFF(day,GETDATE(),eventDate) = 1";
+		Session session = factory.getCurrentSession();
+		ac = (Activity) session.createQuery(hql).getSingleResult();
+		return ac;
+	}
+	
+	//取得活動ID和已報名的活動ID是否重複
+	@Override
+	public List<ActivityMap> repeatActivityId(String memberId) {
+		String hql = "From Applicant where memberId = :memberId";
+		Session session = factory.getCurrentSession();
+		List<Applicant> al = (List<Applicant>) session.createQuery(hql).setParameter("memberId", memberId)
+				.getResultList();
 		
-		return al;
+		List<ActivityMap> ams = new ArrayList<>();
+		for (Applicant a : al) {
+			String hql2 = "From ActivityMap where applicantId=:applicantId";
+
+			ActivityMap am = new ActivityMap();
+
+			am = (ActivityMap) session.createQuery(hql2).setParameter("applicantId", a.getApplicantId())
+					.getSingleResult();
+			ams.add(am);
+			for(ActivityMap aa:ams) {
+				System.out.println("activityId=>"+aa.getActivityId());
+			}
+			
+		}
+		return ams;
 	}
 
 }

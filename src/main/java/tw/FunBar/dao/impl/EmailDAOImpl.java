@@ -20,49 +20,46 @@ import tw.FunBar.model.BookingData;
 import tw.FunBar.model.Room;
 import tw.FunBar.model.RoomOrder;
 
-
-
 @Repository
 public class EmailDAOImpl implements EmailDAO {
 
 	@Override
-	public void sendEmail(RoomOrder room_order,Room room) {
+	public void sendEmail(RoomOrder room_order, Room room) {
 		String host = "smtp.gmail.com";
-		  int port = 587;
-		  final String username = "funbar109@gmail.com";
-		  final String password = "ftnnxuqoxaywfrtt";
+		int port = 587;
+		final String username = "funbar109@gmail.com";
+		final String password = "ftnnxuqoxaywfrtt";
 
-		  Properties props = new Properties();
-		  props.put("mail.smtp.host", host);
-		  props.put("mail.smtp.auth", "true");
-		  props.put("mail.smtp.starttls.enable", "true");
-		  props.put("mail.smtp.port", port);
-		  Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-		   protected PasswordAuthentication getPasswordAuthentication() {
-		    return new PasswordAuthentication(username, password);
-		   }
-		  });
+		Properties props = new Properties();
+		props.put("mail.smtp.host", host);
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.port", port);
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		});
 
-		  try {
+		try {
 
-		   Message message = new MimeMessage(session);
-		   message.setFrom(new InternetAddress("funbar109@gmail.com"));
-		   message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(room_order.getOrder_email()));
-		   message.setSubject("FunBar. 訂房通知");
-		   
-		   String htmlCode = "";
-		   htmlCode += "<div style='margin:0 auto;border:2px solid #02DF82;width:500px;text-align:center;font-size:22px;border-radius:10px'>";
-		   htmlCode += "<h1>您的訂房資訊 :</h1>";
-		   htmlCode += "<table style='border:none;text-align:ceneter;margin:0 auto'>";
-		   htmlCode += "<tr><td>訂房編號:</td><td>"+room_order.getOrder_id()+"</td></tr>";
-		   htmlCode += "<tr><td>訂房人姓名:</td><td>"+room_order.getOrder_name()+"</td></tr>";
-		   htmlCode += "<tr><td>您的房型:</td><td>"+room.getRoom_type()+"</td></tr>";
-		   htmlCode += "<tr><td>入住日期:</td><td>"+room_order.getCheck_in_time()+"</td></tr>";
-		   htmlCode += "<tr><td>退房日期:</td><td>"+room_order.getCheck_out_time()+"</td></tr>";
-		   htmlCode += "</table><h2 style='color:blue'>FunBar 感謝您的預訂</h2></div>";
-		   message.setContent(htmlCode,"text/html;charset=UTF-8");
-		   
-		   
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("funbar109@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(room_order.getOrder_email()));
+			message.setSubject("FunBar. 訂房通知");
+
+			String htmlCode = "";
+			htmlCode += "<div style='margin:0 auto;border:2px solid #02DF82;width:500px;text-align:center;font-size:22px;border-radius:10px'>";
+			htmlCode += "<h1>您的訂房資訊 :</h1>";
+			htmlCode += "<table style='border:none;text-align:ceneter;margin:0 auto'>";
+			htmlCode += "<tr><td>訂房編號:</td><td>" + room_order.getOrder_id() + "</td></tr>";
+			htmlCode += "<tr><td>訂房人姓名:</td><td>" + room_order.getOrder_name() + "</td></tr>";
+			htmlCode += "<tr><td>您的房型:</td><td>" + room.getRoom_type() + "</td></tr>";
+			htmlCode += "<tr><td>入住日期:</td><td>" + room_order.getCheck_in_time() + "</td></tr>";
+			htmlCode += "<tr><td>退房日期:</td><td>" + room_order.getCheck_out_time() + "</td></tr>";
+			htmlCode += "</table><h2 style='color:blue'>FunBar 感謝您的預訂</h2></div>";
+			message.setContent(htmlCode, "text/html;charset=UTF-8");
+
 //           MimeBodyPart textPart = new MimeBodyPart();
 //           StringBuffer html = new StringBuffer();
 //           html.append("<h2>�o�O�Ĥ@��</h2><br>");
@@ -83,57 +80,54 @@ public class EmailDAOImpl implements EmailDAO {
 //
 //           message.setContent(email);
 
-		   Transport transport = session.getTransport("smtp");
-		   transport.connect(host, port, username, password);
+			Transport transport = session.getTransport("smtp");
+			transport.connect(host, port, username, password);
 
-		   Transport.send(message);
+			Transport.send(message);
 
-		   
-
-		  } catch (MessagingException e) {
-		   throw new RuntimeException(e);
-		  }
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
 
 	}
 
 	@Override
 	public void sendBookingEmail(BookingData data) {
 		String host = "smtp.gmail.com";
-		  int port = 587;
-		  final String username = "funbar109@gmail.com";
-		  final String password = "ftnnxuqoxaywfrtt";
+		int port = 587;
+		final String username = "funbar109@gmail.com";
+		final String password = "ftnnxuqoxaywfrtt";
 
-		  Properties props = new Properties();
-		  props.put("mail.smtp.host", host);
-		  props.put("mail.smtp.auth", "true");
-		  props.put("mail.smtp.starttls.enable", "true");
-		  props.put("mail.smtp.port", port);
-		  Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-		   protected PasswordAuthentication getPasswordAuthentication() {
-		    return new PasswordAuthentication(username, password);
-		   }
-		  });
+		Properties props = new Properties();
+		props.put("mail.smtp.host", host);
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.port", port);
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		});
 
-		  try {
+		try {
 
-		   Message message = new MimeMessage(session);
-		   message.setFrom(new InternetAddress("funbar109@gmail.com"));
-		   message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(data.getEmail()));
-		   message.setSubject("FunBar. 訂房通知");
-		   
-		   String htmlCode = "";
-		   htmlCode += "<div style='margin:0 auto;border:2px solid #02DF82;width:500px;text-align:center;font-size:22px;border-radius:10px'>";
-		   htmlCode += "<h1>您的訂位資訊 :</h1>";
-		   htmlCode += "<table style='border:none;text-align:ceneter;margin:0 auto'>";
-		   htmlCode += "<tr><td>訂位編號:</td><td>"+data.getBooking_id()+"</td></tr>";
-		   htmlCode += "<tr><td>訂位人姓名:</td><td>"+data.getName()+"</td></tr>";
-		   htmlCode += "<tr><td>訂位日期:</td><td>"+data.getDate()+"</td></tr>";
-		   htmlCode += "<tr><td>訂位時段:</td><td>"+data.getTime()+"</td></tr>";
-		   htmlCode += "<tr><td>訂位人數:</td><td>"+data.getPeople()+"人</td></tr>";
-		   htmlCode += "</table><h2 style='color:blue'>FunBar 感謝您的預訂</h2></div>";
-		   message.setContent(htmlCode,"text/html;charset=UTF-8");
-		   
-		   
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("funbar109@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(data.getEmail()));
+			message.setSubject("FunBar. 訂房通知");
+
+			String htmlCode = "";
+			htmlCode += "<div style='margin:0 auto;border:2px solid #02DF82;width:500px;text-align:center;font-size:22px;border-radius:10px'>";
+			htmlCode += "<h1>您的訂位資訊 :</h1>";
+			htmlCode += "<table style='border:none;text-align:ceneter;margin:0 auto'>";
+			htmlCode += "<tr><td>訂位編號:</td><td>" + data.getBooking_id() + "</td></tr>";
+			htmlCode += "<tr><td>訂位人姓名:</td><td>" + data.getName() + "</td></tr>";
+			htmlCode += "<tr><td>訂位日期:</td><td>" + data.getDate() + "</td></tr>";
+			htmlCode += "<tr><td>訂位時段:</td><td>" + data.getTime() + "</td></tr>";
+			htmlCode += "<tr><td>訂位人數:</td><td>" + data.getPeople() + "人</td></tr>";
+			htmlCode += "</table><h2 style='color:blue'>FunBar 感謝您的預訂</h2></div>";
+			message.setContent(htmlCode, "text/html;charset=UTF-8");
+
 //         MimeBodyPart textPart = new MimeBodyPart();
 //         StringBuffer html = new StringBuffer();
 //         html.append("<h2>�o�O�Ĥ@��</h2><br>");
@@ -154,67 +148,81 @@ public class EmailDAOImpl implements EmailDAO {
 //
 //         message.setContent(email);
 
-		   Transport transport = session.getTransport("smtp");
-		   transport.connect(host, port, username, password);
+			Transport transport = session.getTransport("smtp");
+			transport.connect(host, port, username, password);
 
-		   Transport.send(message);
+			Transport.send(message);
 
-		   
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
 
-		  } catch (MessagingException e) {
-		   throw new RuntimeException(e);
-		  }
-		
 	}
-	
+
 	@Override
-	public void sendActivityEmail(Applicant email, Activity activity) {
+	public void sendActivityEmail(List<Applicant> email, Activity activity) {
 		String host = "smtp.gmail.com";
-		  int port = 587;
-		  final String username = "funbar109@gmail.com";
-		  final String password = "ftnnxuqoxaywfrtt";
+		int port = 587;
+		final String username = "funbar109@gmail.com";
+		final String password = "ftnnxuqoxaywfrtt";
 
-		  Properties props = new Properties();
-		  props.put("mail.smtp.host", host);
-		  props.put("mail.smtp.auth", "true");
-		  props.put("mail.smtp.starttls.enable", "true");
-		  props.put("mail.smtp.port", port);
-		  Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-		   protected PasswordAuthentication getPasswordAuthentication() {
-		    return new PasswordAuthentication(username, password);
-		   }
-		  });
+		Properties props = new Properties();
+		props.put("mail.smtp.host", host);
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.port", port);
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		});
 
-		  try {
+		try {
 
-		   Message message = new MimeMessage(session);
-		   message.setFrom(new InternetAddress("funbar109@gmail.com"));
-		   message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email.getApplicantEmail()));
-		   message.setSubject("FunBar. 活動倒數通知");
-		   
-		   String htmlCode = "";
-		   
-		   htmlCode += "<div style='width: 40%; height: 600px; margin: 10px auto'>";
-		   htmlCode += "<fieldset style='background-color: rgb(248, 243, 232)'>";
-		   htmlCode += "<legend>活動倒數通知</legend>";
-		   htmlCode += "<p>"+email.getApplicantName()+"先生，小姐 你好，</p>";
-		   htmlCode += "<p>你所報名的活動 </p>";
-		   htmlCode += "<p>將於明天舉行 </p>";
-		   htmlCode += "<p>以此郵件通知您，</p>";
-		   htmlCode += "<p>期待您蒞臨參加。</p>";
-		   message.setContent(htmlCode,"text/html;charset=UTF-8");
-		   
-		   
-		   Transport transport = session.getTransport("smtp");
-		   transport.connect(host, port, username, password);
+			for (Applicant a : email) {
+				System.out.println("email=>" + a.getApplicantEmail());
+				
+					Message message = new MimeMessage(session);
+					message.setFrom(new InternetAddress("funbar109@gmail.com"));
+					message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(a.getApplicantEmail()));
+					message.setSubject("FunBar. 活動倒數通知");
 
-		   Transport.send(message);
+					String htmlCode = "";
+					
+					htmlCode += "<div style='height:100px;background-color:black'>";
+					htmlCode += " <h2 style='margin-bottom:0px; font-size: 4em;color :white;font-family:Copperplate;"
+							+ "font-weight:bold;font-style:italic;text-decoration:underline;text-align: center'>FunBar</h2>";
+							
+					htmlCode += "<h6 style='margin-top: 0px;text-align: center;color :white;font-family:Papyrus;font-size: 1em; '>CHILL&CHEER</h6></div>";
+					htmlCode += "<div style='margin:50px auto;width:100px;height:35px ;border: 1px gray solid;border-radius:25px; '>";
+					htmlCode += "<p style='color:gray ;margin-top: 6px ;font-family: 微軟正黑體;font-size:1em; text-align: center'>活動通知</p></div>";
+					htmlCode += "<div style='margin:auto ;width: 500px;height: 350px;border: 1px gray solid'>";
+					System.out.println("gender=>" + a.getGender() );
+					if(a.getGender() == "女" ) {
+						htmlCode += "<p style='text-align: center;font-size: 1.8em;color: rgb(22, 15, 1)'>"+a.getApplicantName()+"小姐 您好</p>";
+					}else if(a.getGender() =="男" ) {
+						htmlCode += "<p style='text-align: center;font-size: 1.8em;color: rgb(22, 15, 1)'>"+a.getApplicantName()+"先生 您好</p>";
+					}
+					
+					
+					htmlCode += "<p style='text-align: center;font-size: 1.5em;color: gray'>您報名的活動：</p>";
+					htmlCode += "<p style='text-align: center;font-size: 2em;color:rgb(228, 121, 21)'>"+activity.getEventName()+ "</p>";
+					
+					htmlCode += "<p style='text-align: center;font-size: 1.5em;color: gray'>將於明天舉行</p>";
+					htmlCode += "<p style='text-align: center;font-size: 1.5em;color: gray'>期待您蒞臨參加。</div>";
+					
+					message.setContent(htmlCode, "text/html;charset=UTF-8");
 
-		   
+					Transport transport = session.getTransport("smtp");
+					transport.connect(host, port, username, password);
 
-		  } catch (MessagingException e) {
-		   throw new RuntimeException(e);
-		  }
+					Transport.send(message);
+
+				}
+			
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }
