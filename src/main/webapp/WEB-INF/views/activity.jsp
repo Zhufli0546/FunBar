@@ -157,7 +157,7 @@
 		<div style="width:20%;margin:25px 20% 15px 85%;">
 
 			<a
-				 href="<spring:url value='activityRegistration?id=${activity.activityId}' />">
+				 href="<spring:url value='activityRegistration?id=${activity.activityId}&memberId=${member.memberId}'/>">
 				<button id="signup" type="button" class="btn btn-primary active">我要報名</button>
 			</a>
 

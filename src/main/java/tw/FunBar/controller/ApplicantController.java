@@ -85,9 +85,9 @@ public class ApplicantController {
 	//----------------------------------------------------------------
 	
 	@RequestMapping(value = "/addSuggestion", method = RequestMethod.GET)
-	public String input(Model model) {
-//		activityservice.getActivity(activityId);
-		
+	public String input(Model model
+			,@RequestParam(value = "activityId") Integer activityId) {
+		model.addAttribute("activity", activityservice.getActivity(activityId));
 		model.addAttribute("suggestion", new Suggestion());
 		return "addSuggestion";
 	}

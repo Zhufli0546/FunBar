@@ -174,9 +174,7 @@ public class ActivityDaoImpl implements ActivityDao {
 			am = (ActivityMap) session.createQuery(hql2).setParameter("applicantId", a.getApplicantId())
 					.getSingleResult();
 			ams.add(am);
-			for(ActivityMap aa:ams) {
-				System.out.println("activityId=>"+aa.getActivityId());
-			}
+			
 			
 		}
 		return ams;

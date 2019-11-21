@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						<input type="button" value="取消報名" class="btn btn-outline-secondary btn-block" data-memberid="${memberId}" data-activityid="${activity.activityId}" />
 					
 						 
-						<a href="<spring:url value='/addSuggestion'/>">
+						<a href="<spring:url value='/addSuggestion?activityId=${activity.activityId}&memberId=${member.memberId}'/>">
 						<button type="button" class="btn btn-outline-secondary btn-block" >我要給意見</button></a>
 					</div>							
 				</div>

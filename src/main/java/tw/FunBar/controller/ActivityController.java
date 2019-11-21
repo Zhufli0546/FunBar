@@ -268,22 +268,24 @@ public class ActivityController {
 	// 新增使用者報名表單
 	@RequestMapping(value = { "activityRegistration" })
 	public String getActivity2(@RequestParam("id") Integer activityId,
-//			@RequestParam String memberId,
+							   @RequestParam("memberId") String memberId,
 							   Model model, HttpServletRequest request,
 							   HttpSession session) {
 		model.addAttribute("activity", service.getActivity(activityId));
 		session = request.getSession(false);
 		Member member = (Member) session.getAttribute("member");
-//		Set<Activity> acs = applicantservice.QuerySignActivity(memberId);
-//		int id = 0;
-//		for(Activity ac:acs ) {
-//			id = ac.getActivityId();
-//		}
+		List<ActivityMap> acs = service.repeatActivityId(memberId);
+		int id = 0;
+		for(ActivityMap ac:acs ) {
+			id = ac.getActivityId();
+			if(id == activityId)
+				break;
+		}
 		if (member == null) {
 			return "redirect:/signin";
-//		} 
-//		else if(id == activityId) {
-//			return "redirect:/activities?index=1";
+		} 
+		else if(id == activityId) {
+			return "redirect:/activities?index=1";
 			
 		}else
 			return "activityRegistration";
