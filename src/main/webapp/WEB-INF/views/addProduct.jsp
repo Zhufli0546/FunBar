@@ -84,11 +84,11 @@
 		<form:form method='POST' modelAttribute="productBean"
 			class='form-horizontal' enctype="multipart/form-data">
 			<fieldset>
-<!-- 				<div class="form-group"> -->
-<!-- 					<label class='control-label col-lg-2 col-lg-2' for="productNo">商品編號</label> -->
-<%-- 					<form:input autocomplete="off" id="productNo" path="productNo" type='text' class='form:input-large' /> --%>
-<!-- 					<span id="msgNo"></span> -->
-<!-- 				</div> -->
+				<div class="form-group">
+					<label class='control-label col-lg-2 col-lg-2' for="productNo">商品編號</label>
+					<form:input  type="hidden" autocomplete="off" id="productNo" path="productNo" class='form:input-large' />
+					<span id="msgNo"></span>
+				</div>
 
 				<div class="form-group">
 					<label class="control-label col-lg-2 col-lg-2" for='productName'>商品名稱</label>
@@ -138,6 +138,10 @@
 					<label class='control-label col-lg-2 col-lg-2' for="productCover">商品圖片</label>
 					<form:input id="productCover" path="productCover" type='file' class='form:input-large' />
 				</div>
+				
+				<!-- 預設商品為上架狀態 -->
+				<form:input type="hidden" id="status" path="status" value="0"  class='form:input-large' />
+				
 
 				<div class="form-group">
 					<input type='submit' class='button' value="送出" />

@@ -38,12 +38,19 @@ public class OrderHandleDAOImpl implements OrderHandleDAO {
 	}
 
 	@Override
-	public ProductBean deleteProduct(Integer productId) {
+	public void pullProduct(Integer productId) {
 		Session session = sessionFactory.getCurrentSession();
 		ProductBean pb = session.get(ProductBean.class, productId);
-		session.delete(pb);
-		return pb;
-
+		pb.setStatus(1);
+		session.update(pb);
+	}
+	
+	@Override
+	public void pushProduct(Integer productId) {
+		Session session = sessionFactory.getCurrentSession();
+		ProductBean pb = session.get(ProductBean.class, productId);
+		pb.setStatus(0);
+		session.update(pb);
 	}
 
 	@Override

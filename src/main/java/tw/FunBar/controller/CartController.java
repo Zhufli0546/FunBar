@@ -66,7 +66,7 @@ public class CartController {
 		Member member = (Member) session.getAttribute("member");
 		if (member == null) {
 			Gson gson = new Gson();
-			String redirect = gson.toJson("2");  //未登入狀態下案點擊add to cart
+			String redirect = gson.toJson("2");  //未登入狀態下按點擊add to cart
 			model.addAttribute("redirect", redirect);
 			return "cart";
 		}
@@ -99,13 +99,6 @@ public class CartController {
 		cartItem.setCount(count);
 		cart.add(cartItem);
 		session.setAttribute("Cart", cart);
-
-//  Collection<CartItem> item = cart.getCartItems();
-//  for (CartItem c : item) {
-//   System.out.println("購買產品id:" + c.getProduct().getProductId());
-//   System.out.println("購買產品名稱:" + c.getProduct().getProductName());
-//   System.out.println("購買產品數量:" + c.getCount());
-//  }
 
 		return "cart";
 
@@ -155,14 +148,6 @@ public class CartController {
 			return "redirect:/signin";
 		Cart cart = (Cart) session.getAttribute("Cart");
 
-//  Collection<CartItem> cartItems = cart.getCartItems();
-//  for (CartItem c : cartItems) {
-//   System.out.println("購買產品id:" + c.getProduct().getProductId());
-//   System.out.println("購買產品名稱:" + c.getProduct().getProductName());
-//   System.out.println("購買產品數量:" + c.getCount());
-//  }
-
-//  model.addAttribute("cart", cart);
 
 		if (cart == null || cart.getCartItems().size() == 0) {
 			return "showEmptyCart";
@@ -443,12 +428,7 @@ public class CartController {
 		
 		List<OrderBean> obList = new ArrayList<OrderBean>();
 		ArrayList<OrderBean> orders = orderHandleService.getMyOrders(member.getId(),req);
-		
-		
-
-		
-		
-		
+			
 		
 		model.addAttribute("orders", orders);
 
