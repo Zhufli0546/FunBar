@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>修改商品資料</title>
+<title>Update Product Info</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -75,10 +75,10 @@ form{
 </div>
 
 
-<div>
-<label for="productNo">商品編號</label>
-<input id="productNo" name="productNo" value="${pb.productNo}" type='text' />
-</div>
+<!-- <div> -->
+<!-- <label for="productNo">商品編號</label> -->
+<%-- <input id="productNo" name="productNo" value="${pb.productNo}" type='text' /> --%>
+<!-- </div> -->
 	
 <div>
 <label  for='productDetail'>商品說明</label>

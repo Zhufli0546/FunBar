@@ -57,40 +57,60 @@ public class CartController {
 	ServletContext context;
 
 	@RequestMapping(value = "/cart", method = RequestMethod.POST)
-	public String addCart(HttpServletRequest request, HttpSession session, HttpServletRequest response,
-			@RequestParam Integer productId, @RequestParam Integer count,Model model) throws IOException {
-		session = request.getSession(false);
+	 public String addCart(HttpServletRequest request, HttpSession session, HttpServletRequest response,
+	   @RequestParam Integer productId, @RequestParam Integer count, Model model) throws IOException {
+	  session = request.getSession(false);
 
-		// 未來整合 login 才能產生購物車
+	  // 未來整合 login 才能產生購物車
+	  session = request.getSession(false);
+	  Member member = (Member) session.getAttribute("member");
+	  if (member == null) {
+	   Gson gson = new Gson();
+	   String redirect = gson.toJson("2");  //未登入狀態下按點擊add to cart
+	   model.addAttribute("redirect", redirect);
+	   return "cart";
+	  }
+	  Cart cart = (Cart) session.getAttribute("Cart");
 
-		Cart cart = (Cart) session.getAttribute("Cart");
-		if (cart == null) {
-			cart = new Cart();
-			session.setAttribute("Cart", cart);
-		}
+	  if (cart == null) {
+	   cart = new Cart();
+	   session.setAttribute("Cart", cart);
+	  }
 
-		ProductBean product = orderHandleService.getProductById(productId);
+	  ProductBean product = orderHandleService.getProductById(productId);
+	  Collection<CartItem> cartItemList = cart.getCartItems();
+	  int old_count = 0;
+	  for(CartItem item:cartItemList) {
+	   if(item.getProduct().getProductId() == productId) {
+	    old_count = item.getCount();
+	   }
+	  }
+	  int checkStockNum = old_count + count;
+	  if(product.getStock() < checkStockNum) {
+	   Gson gson = new Gson();
+	   String status = gson.toJson("1");
+	   model.addAttribute("status", status);
+	   return "cart";
+	  }
+	  //product.getStock() < (count+cart.getCartItems().get(productId))
 
-		CartItem cartItem = new CartItem();
-		cartItem.setProduct(product);
-		cartItem.setCount(count);
-		cart.add(cartItem);
-		session.setAttribute("Cart", cart);
-		
-		model.addAttribute("Cart",cart);
-		
-		
+	  CartItem cartItem = new CartItem();
+	  cartItem.setProduct(product);
+	  cartItem.setCount(count);
+	  cart.add(cartItem);
+	  session.setAttribute("Cart", cart);
+	 
 
-//  Collection<CartItem> item = cart.getCartItems();
-//  for (CartItem c : item) {
-//   System.out.println("購買產品id:" + c.getProduct().getProductId());
-//   System.out.println("購買產品名稱:" + c.getProduct().getProductName());
-//   System.out.println("購買產品數量:" + c.getCount());
-//  }
+	//  Collection<CartItem> item = cart.getCartItems();
+	//  for (CartItem c : item) {
+	//   System.out.println("購買產品id:" + c.getProduct().getProductId());
+	//   System.out.println("購買產品名稱:" + c.getProduct().getProductName());
+	//   System.out.println("購買產品數量:" + c.getCount());
+	//  }
 
-		return "cart";
+	  return "cart";
 
-	}
+	 }
 
 	@RequestMapping(value = "/changecart", method = RequestMethod.POST)
 	public String changecart(HttpServletRequest request, HttpSession session, HttpServletRequest response,
@@ -98,8 +118,12 @@ public class CartController {
 		session = request.getSession(false);
 
 		// 未來整合 login 才能產生購物車
-
+		session = request.getSession(false);
+		Member member = (Member) session.getAttribute("member");
+		if (member == null)
+			return "redirect:/signin";
 		Cart cart = (Cart) session.getAttribute("Cart");
+
 		if (cart == null) {
 			cart = new Cart();
 			session.setAttribute("Cart", cart);

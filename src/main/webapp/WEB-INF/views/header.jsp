@@ -87,9 +87,9 @@
 								<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">購物區</a>
 									<div class="dropdown-menu">
-						           		 <a class="dropdown-item" href="${pageContext.request.contextPath}/shoppingCart">購物商城</a>
-       									 <a class="dropdown-item" href="${pageContext.request.contextPath}/showCart">我的購物車</a>
-       									 <a class="dropdown-item" href="${pageContext.request.contextPath}/showMemOrders">我的購物清單</a>
+						           		 <a class="dropdown-item" href="${pageContext.request.contextPath}/shoppingCart">Mall</a>
+       									 <a class="dropdown-item" href="${pageContext.request.contextPath}/showCart">My Cart</a>
+       									 <a class="dropdown-item" href="${pageContext.request.contextPath}/showMemOrders">My Orders</a>
                						</div>
 								</li>
 								
@@ -130,8 +130,8 @@
 								</c:choose>
 						
 						      <li class="nav-item dropdown no-arrow">
-        <a class="nav-link" href="#" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-cart-arrow-down"></i>
+        <a class="nav-link" href="${pageContext.request.contextPath}/showCart" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <i style="color:red;"class="fa fa-cart-arrow-down"></i>
           <span class="badge badge-danger cart">${fn:length(sessionScope.Cart.cartItems)}</span>
           </a>
       </li>
