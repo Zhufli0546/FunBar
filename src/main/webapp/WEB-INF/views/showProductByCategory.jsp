@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +10,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="<c:url value="/css/shoppingCart.css" />" rel="stylesheet">
+
+
+
+
 </head>
 
 
@@ -68,6 +73,8 @@
 						<button type="button" class="button-add" data-product="${i.index}">Add
 							to Cart</button>
 						<div id="snackbar">已加入購物車</div>
+						
+					
 
 					</figcaption>
 
@@ -106,11 +113,29 @@
 				type : "POST",
 				dataType : "JSON",
 				success : function(data) {
+
+					console.log(data);
 					console.log("success");
+					$(".cart").text(data.Cart.cartItem.length);
 				}
 			})
 		})
 	</script>
+	
+	<script>
+
+
+		
+	
+	$(".button-add").click(function(){
+
+
+			
+		
+		})
+		
+
+</script>
 
 </body>
 </html>

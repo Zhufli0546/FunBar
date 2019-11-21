@@ -58,7 +58,7 @@ public class CartController {
 
 	@RequestMapping(value = "/cart", method = RequestMethod.POST)
 	public String addCart(HttpServletRequest request, HttpSession session, HttpServletRequest response,
-			@RequestParam Integer productId, @RequestParam Integer count) throws IOException {
+			@RequestParam Integer productId, @RequestParam Integer count,Model model) throws IOException {
 		session = request.getSession(false);
 
 		// 未來整合 login 才能產生購物車
@@ -76,6 +76,10 @@ public class CartController {
 		cartItem.setCount(count);
 		cart.add(cartItem);
 		session.setAttribute("Cart", cart);
+		
+		model.addAttribute("Cart",cart);
+		
+		
 
 //  Collection<CartItem> item = cart.getCartItems();
 //  for (CartItem c : item) {
