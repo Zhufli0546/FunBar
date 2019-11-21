@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>商品介紹</title>
+<title>Product Info</title>
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,7 +21,7 @@
 			<div class="col-md-3">
 				<div class="list-group" style="width: 150px">
 					<a href="${pageContext.request.contextPath}/shoppingCart"
-						class="list-group-item">所有商品</a>
+						class="list-group-item">All Products</a>
 					<c:forEach var='category' items='${categoryList}'>
 						<a
 							href="${pageContext.request.contextPath}/shoppingCart/${category}"
@@ -73,16 +73,14 @@
 						<option value="3">3</option>
 						<option value="4">4</option>
 						<option value="5">5</option>
-					</select> <input class="pdid" type="hidden" name="productId"
-						value="${pb.productId}">
+					</select> 
+					<input class="pdid" type="hidden" name="productId" value="${pb.productId}">
 					<div style="float:right;margin-right:10px">
-					<button type="button" class="button-add" data-product="${i.index}">Add
-							to Cart</button>
-							</div>
+<button type="button" class="btn button-add" data-product="${i.index}" style="margin:10px 0;padding:5px 10px;background-color:#019858;color: #fff;border-radius:5px;"
+>Add to Cart</button></div>
 				</div>
 
 				<div id="snackbar">已加入購物車</div>
-
 
 
 			</div>
@@ -91,11 +89,8 @@
 		<!-- .prodBlock -->
 
 		<div align="center" colspan="8">
-			<a href="<c:url value='/shoppingCart' />">
-				<button class="btn-back">回購物首頁</button>
-			</a> <a href="<c:url value='/showCart' />">
-				<button class="btn btn-info">我的購物車</button>
-			</a>
+			<a href="<c:url value='/shoppingCart' />"><button class="btn-back">Back to shop</button></a>
+ 			<a href="<c:url value='/showCart' />"><button class="btn btn-info">Go to pay</button></a>
 		</div>
 
 	</div>
@@ -127,17 +122,21 @@ $(".button-add").click(function() {
 		type:"POST",
 		dataType:"JSON",
 		success:function(data){
-			if(data.status == undefined) {
-				myFunction();
-			} else {
-				alert("加入購物車失敗");
+			// 加入購物車失敗 /cart 會回傳 1
+			let check = 0;
+			if(data.status!=null) {
+				console.log(data.status);
+				console.log(data.status[1]);
+				check = data.status[1];
+			} else if(data.redirect!=null) {
+				window.location.href = "http://localhost:8080/FunBar/signin"; 
 			}
-// 			let check = parseInt(data.status);
-// 			if(check) {
-// 				alert("加入購物車失敗");
-// 			} else {
-// 				alert("加入購物車失敗");
-// 			}
+			
+			if(check) {
+				alert("加入購物車失敗");
+			} else {
+				myFunction();
+			}
 		}
 	})
 })

@@ -36,14 +36,14 @@
 }
 
 
-.button-add {
-	margin: 15px;
-	padding: 5px 10px;
-	background-color: #1AFD9C;
-	color: #fff;
-	outline: none;
-	border-radius: 5px;
-}
+/* .button-add { */
+/* 	margin: 15px; */
+/* 	padding: 5px 10px; */
+/* 	background-color: #019858; */
+/* 	color: #fff; */
+/* 	outline: none; */
+/* 	border-radius: 5px; */
+/* } */
 
 .button-add:hover {
 	background-color: #fff;

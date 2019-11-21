@@ -4,12 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>購物區</title>
+<title>Shopping Center</title>
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="<c:url value="/css/shoppingCart.css" />" rel="stylesheet">
+<link rel="stylesheet" href="<c:url value="/css/shoppingCart.css" />" >
 </head>
 
 <body>
@@ -21,13 +21,17 @@
 			<div class="col-md-3">
 				<div class="list-group" style="width: 150px">
 					<a href="${pageContext.request.contextPath}/shoppingCart"
-						class="list-group-item">所有商品</a>
+						class="list-group-item">All Products</a>
 					<c:forEach var='category' items='${categoryList}'>
 						<a
 							href="${pageContext.request.contextPath}/shoppingCart/${category}"
 							class="list-group-item">${category}</a>
 					</c:forEach>
 				</div>
+				<div style="margin-top: 5px">
+					<a href="<c:url value='/showCart' />"><button class="btn btn-info">My Cart</button></a>
+				</div>
+			</div>
 			</div>
 		</div>
 
@@ -53,35 +57,6 @@
 
 
 	<jsp:include page="footer.jsp" />
-	<script>
-	function myFunction() {
-		var x = document.getElementById("snackbar");
-			x.className = "show";
-			setTimeout(function() {
-				x.className = x.className.replace("show", "");
-			}, 1000);
- 		}
 	
-		// Test For Click Event
-		$(".button-add").click(function() {
-			let index = $(this).data("product");
-			console.log("btn index:" + index);
-			myFunction();
-			
-			var url = "/FunBar/";
-			$.ajax({
-				url : "http://localhost:8080" + url + "cart",
-				data:{
-					count:$(".selectCount").eq(index).val(),
-					productId:$(".pdid").eq(index).val()
-				},
-				type:"POST",
-				dataType:"JSON",
-				success:function(data){
-					console.log("success");
-				}
-			})
-		})
-	</script>
 </body>
 </html>

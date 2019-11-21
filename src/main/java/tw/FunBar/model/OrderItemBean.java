@@ -20,8 +20,8 @@ public class OrderItemBean implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer orderItemId;
 	
-	@Transient
-	private Integer orderId;
+	//@Transient
+	//private Integer orderId;
 	
 	private Integer productId;
 	private Integer quantity;
@@ -48,13 +48,13 @@ public class OrderItemBean implements Serializable {
 
 
 
-	public Integer getOrderId() {
-		return orderId;
-	}
+//	public Integer getOrderId() {
+//		return orderId;
+//	}
 
-	public void setOrderId(Integer orderId) {
-		this.orderId = orderId;
-	}
+//	public void setOrderId(Integer orderId) {
+//		this.orderId = orderId;
+//	}
 
 	public Integer getProductId() {
 		return productId;

@@ -62,8 +62,16 @@ public class CartController {
 		session = request.getSession(false);
 
 		// 未來整合 login 才能產生購物車
-
+		session = request.getSession(false);
+		Member member = (Member) session.getAttribute("member");
+		if (member == null) {
+			Gson gson = new Gson();
+			String redirect = gson.toJson("2");  //未登入狀態下案點擊add to cart
+			model.addAttribute("redirect", redirect);
+			return "cart";
+		}
 		Cart cart = (Cart) session.getAttribute("Cart");
+
 		if (cart == null) {
 			cart = new Cart();
 			session.setAttribute("Cart", cart);
@@ -109,8 +117,12 @@ public class CartController {
 		session = request.getSession(false);
 
 		// 未來整合 login 才能產生購物車
-
+		session = request.getSession(false);
+		Member member = (Member) session.getAttribute("member");
+		if (member == null)
+			return "redirect:/signin";
 		Cart cart = (Cart) session.getAttribute("Cart");
+
 		if (cart == null) {
 			cart = new Cart();
 			session.setAttribute("Cart", cart);

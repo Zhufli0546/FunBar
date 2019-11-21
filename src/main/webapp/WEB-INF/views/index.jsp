@@ -121,24 +121,29 @@
 	</section>
 	
 	<section class="section2">
-	 <h2>最新商品</h2>
-
-		<div class="row">
+	
+	<div class="row container">
+		<div class="col-md-1">
+			<h2 style="writing-mode: vertical-lr;">最新商品</h2>
+		</div>
+	 
+		<div class="blogSlick col-md-8" >
 			<c:forEach var="pb" items="${all}" begin="0" step="1" varStatus="i">
 			<div class="prodlist">
-					<p>${pb.productDetail}</p>
 					<p class="prodtitle">${pb.productName}</p>
 					<figure>
 					<a href="<c:url value='/product?id=${pb.productId}' />" ">
 						<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />
 					</a>						
 					</figure>
-						<p>建議售價:<span style="color:#FF44AA;font-weight:bold">$ ${pb.unitPrice}</span></p>
-						<p>折扣：<span style="font-weight:bold;color:	#CE0000;">${pb.discount}</span></p>				
+						<p>建議售價:<span style="color:#FF44AA;font-weight:bold;font-size:20px">$ ${pb.unitPrice}</span></p>
+						<p>折扣：<span style="font-weight:bold;color:	#CE0000;font-size:20px">${pb.discount}</span></p>				
 				</div> 
 				<!-- .prodlist --> 
 			</c:forEach>
 		</div>
+	</div>
+	
 		</section>
 		
 
