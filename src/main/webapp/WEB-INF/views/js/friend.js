@@ -1,100 +1,119 @@
 //Post area
-var table = "<tr><th scope='row'>{{Member.memberimg}}</th>"
-			+ "<td>{{Member.memberName}}</td>" 
-			+ "<td>{{Member.memberBirth}}</td>" 
-			+ "</tr>"
+var friendshipListTable = "<tr><th scope='row'>{{Member.memberimg}}</th>"
+		+ "<td>{{Member.memberName}}</td>" 
+		+ "<td>{{Member.memberBirth}}</td>"
+		+ "<td>{{Member.memberEmail}}</td>"
+		+ "<td><></td>"
+		+ "</tr>"
 
+var receiverTable = "<tr><th scope='row'>"
+		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{member.id}}'></th>"
+		+ "<td>{{Member.memberName}}</td>" 
+		+ "<td>{{Member.memberBirth}}</td>"
+		+ "<td><button type='button' class='btn btn-info' id='confirmbtn{{Member.id}}'>Confirm</button></td>"
+		+ "</tr>"
+		
 var requestUrl = ""
 var loginMemberName = $('#loginMemberName').text();
 var loginMemberid = $('#loginMemberid').text();
 
-var mdata = null;
+var mbrData = null;
 
-$.ajax({
-	url : requestUrl + "getAllMemberJson",
-	method : "POST",
-	dataType : "JSON",
-	success : function(memberData) {
-		requestUrl = $('#requestUrl').text();
-		mdata = memberData.Member;
-	}
-})
-
-$(document).ready(function(){
-	
+function getMemberData(){
+	var mdata = null;
 	$.ajax({
-	url : requestUrl + "friendJson",
-	method : "POST",
-	dataType : "JSON",
-	success : function(friendData) {
-		let tableArea = "";
-		fdata = friendData.friend
-		for (let i = 0; i < fdata.length; i++) {
-			let friend = fdata[i];
-			if (friend.receiver_memberId == loginMemberid && friend.friendStatus == 1) {
-				for(let i = 0; i < mdata.length; i++) {
-					let member = mdata[i];
-					if(friend.sender_memberId == member.id){
-						
-						table_html = table.replace(/\{{Member.memberimg}}/g, member.memberimg)
-						  				  .replace(/\{{Member.memberName}}/g, member.memberName)
-						  				  .replace(/\{{Member.memberBirth}}/g, member.memberBirth)
+		url : requestUrl + "getAllMemberJson",
+		method : "POST",
+		dataType : "JSON",
+		async:false,
+		success : function(memberData) {
+			let friendshipListTableArea = "";
+			requestUrl = $('#requestUrl').text();
+			mdata = memberData.Member;
+			for (let i = 0; i < mdata.length; i++) {
+				let member = mdata[i];
+			
+				friendshipListTable_html = friendshipListTable
+				.replace(/\{{Member.memberimg}}/g, member.memberimg)
+				.replace(/\{{Member.memberName}}/g, member.memberName)
+				.replace(/\{{Member.memberBirth}}/g, member.memberBirth)
+				.replace(/\{{Member.memberEmail}}/g, member.memberEmail)
+				.replace(/\{{requestUrl}}/g, requestUrl);
+			
+				friendshipListTableArea += friendshipListTable_html
+			
+			}
+			$("#friendshipList").append(friendshipListTableArea);
+		}
+	})
+	return mdata;
+}
 
-						 tableArea += table_html;
+
+$(document).ready(
+		function() {
+			requestUrl = $('#requestUrl').text();
+			mdata = getMemberData();
+			$.ajax({
+				url : requestUrl + "friendJson",
+				method : "POST",
+				dataType : "JSON",
+				success : function(friendData) {
+					var count = 0;
+					let receiverTableArea = "";
+					var fdata = friendData.friend
+					for (let i = 0; i < fdata.length; i++) {
+						let friend = fdata[i];
+						if (friend.receiver_memberId == loginMemberid
+								&& friend.friendStatus == 1) {
+							for (let i = 0; i < mdata.length; i++) {
+								let member = mdata[i];
+								if (friend.sender_memberId == member.id && friend.friendStatus == 1) {
+									
+									receiverTable_html = receiverTable
+									.replace(/\{{member.id}}/g, member.id)
+									.replace(/\{{Member.memberName}}/g, member.memberName)
+									.replace(/\{{Member.memberBirth}}/g, member.memberBirth)
+									.replace(/\{{Member.id}}/g, member.id)
+									.replace(/\{{requestUrl}}/g, requestUrl);
+									
+
+									receiverTableArea += receiverTable_html;
+									count++;
+								}
+							}
+						}
+
+					}
+					$("#friendshipTable").append(receiverTableArea);
+					$("#friendRequest" + loginMemberid).text(count);
+					
+					for (let i = 0; i < fdata.length; i++) {
+						let friend = fdata[i];
+						if (friend.receiver_memberId == loginMemberid
+								&& friend.friendStatus == 1) {
+							for (let i = 0; i < mdata.length; i++) {
+								let member = mdata[i];
+								if (friend.sender_memberId == member.id) {
+									confirmFriendRequest(loginMemberid, member.id)
+								}
+							}
+						}
 					}
 				}
-			}
-			
-		}
-	$("#friendshipTable").append(tableArea);
-	}
-})
-})
+			})
 
-
-
-function sendFriendRequest(memberId, memberIdf) {
-	$("#friendRequest" + memberIdf).click(function() {
-		$.get("sendFriendRequest", {
-			memberId : memberId,
-			memberIdf : memberIdf
-		}, function() {
 		})
-		$(this).text("unFriend")
-	})
-}
 
-function confirmFriendRequest() {
-	$("#friendRequest" + memberIdf).text("Confirm")
-	$("#friendRequest" + memberIdf).click(function() {
+function confirmFriendRequest(loginMemberid, memberIdf) {
+	$("#confirmbtn" + memberIdf).mousedown(function() {
 		$.get("confirmFriendRequest", {
-			memberId : memberId,
+			memberId : loginMemberid,
 			memberIdf : memberIdf
 		}, function() {
 		})
-		$(this).text("Friend")
 	})
-}
-
-
-
-
-
-
-//Open the web socket connection to the server
-var socketConn = new WebSocket(requestUrl+'socketHandler');
-
-//Send Message
-function send() {
-	var clientMsg = document.getElementById('clientMsg');
-	if (clientMsg.value) {
-		socketConn.send(clientMsg.value);
-		clientMsg.value = '';
-	}
-}
-
-// Recive Message
-socketConn.onmessage = function(event) {
-	var serverMsg = document.getElementById('serverMsg');
-	serverMsg.value = event.data;
+	$("#confirmbtn" + memberIdf).mouseup(function() {
+		
+	})
 }

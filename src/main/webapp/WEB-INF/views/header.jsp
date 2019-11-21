@@ -88,6 +88,7 @@
 									<div class="dropdown-menu">
 						           		 <a class="dropdown-item" href="${pageContext.request.contextPath}/shoppingCart">購物商城</a>
        									 <a class="dropdown-item" href="${pageContext.request.contextPath}/showCart">我的購物車</a>
+       									 <a class="dropdown-item" href="${pageContext.request.contextPath}/showMemOrders">我的購物清單</a>
                						</div>
 								</li>
 								
@@ -158,7 +159,7 @@
 				href="${pageContext.request.contextPath}/blogs" class="txt19">部落格</a>
 			</li>
 
-			<li class="t-center m-b-13"><a href="discuss" class="txt19">討論區</a>
+			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/discuss" class="txt19">討論區</a>
 			</li>
 			
 

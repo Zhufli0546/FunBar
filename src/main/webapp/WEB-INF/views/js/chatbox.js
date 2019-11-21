@@ -54,24 +54,24 @@ function friendlist() {
 									/\{{receiverMemberId}}/g, member.id)
 
 							receiverArea += friendList_html;
-							let conn = [ loginMemberid, friend.receiver_memberId ];
-							conn.sort();
-							stompClient.subscribe('/member/message/' + conn[0] + "/" + conn[1], function(message) {
-								var json = JSON.parse(message.body);
-								var senderMemberId = json.senderMemberId;
-								var receiverMemberId = json.receiverMemberId;
-								var messageType = json.messageType;
-								var user = json.userName;
-								var date = json.sendDate;
-								var msg = json.content;
-								if (messageType == "text") {
-									showNewMessage(user, date, msg,
-											senderMemberId, receiverMemberId);
-								} else if (messageType == "image") {
-									showNewImage(user, date, msg,
-											senderMemberId, receiverMemberId);
-								}
-							})
+//							let conn = [ loginMemberid, friend.receiver_memberId ];
+//							conn.sort();
+//							stompClient.subscribe('/member/message/' + conn[0] + "/" + conn[1], function(message) {
+//								var json = JSON.parse(message.body);
+//								var senderMemberId = json.senderMemberId;
+//								var receiverMemberId = json.receiverMemberId;
+//								var messageType = json.messageType;
+//								var user = json.userName;
+//								var date = json.sendDate;
+//								var msg = json.content;
+//								if (messageType == "text") {
+//									showNewMessage(user, date, msg,
+//											senderMemberId, receiverMemberId);
+//								} else if (messageType == "image") {
+//									showNewImage(user, date, msg,
+//											senderMemberId, receiverMemberId);
+//								}
+//							})
 						}
 					}
 				}
@@ -83,6 +83,50 @@ function friendlist() {
 	})
 
 }
+
+function friends(){
+	$.ajax({
+		url : requestUrl + "friendJson",
+		method : "POST",
+		dataType : "JSON",
+		success : function(friendData) {
+			var fdata = friendData.friend
+			for (let i = 0; i < fdata.length; i++) {
+				let friend = fdata[i];
+				if(friend.sender_memberId == loginMemberid && friend.friendStatus == 1){
+//					let memberid = parseInt(loginMemberid);
+					let conn = [ loginMemberid, friend.receiver_memberId ];
+					console.log("loginMemberId = " + loginMemberid)
+					console.log("ReceiverMemberId = " + friend.receiver_memberId)
+					console.log("排列前 =  "+ conn[0] + "/" + conn[1]);
+					if(conn[0] > conn[1]){
+						let temp = conn[0];
+						conn[0] = conn[1];
+						conn[1] = temp;
+					}
+					
+//					conn.sort();
+					console.log("排列後 =  "+ conn[0] + "/" + conn[1]);
+					stompClient.subscribe('/member/message/' + conn[0] + "/" + conn[1], function(message) {
+						var json = JSON.parse(message.body);
+						var senderMemberId = json.senderMemberId;
+						var receiverMemberId = json.receiverMemberId;
+						var messageType = json.messageType;
+						var user = json.userName;
+						var date = json.sendDate;
+						var msg = json.content;
+						if (messageType == "text") {
+							showNewMessage(user, date, msg, senderMemberId, receiverMemberId);
+						} else if (messageType == "image") {
+							showNewImage(user, date, msg, senderMemberId, receiverMemberId);
+						}
+					})
+				}
+			}
+		}
+	})
+}
+
 
 $(document).ready(function() {
 	requestUrl = $('#requestUrl').text();
@@ -180,7 +224,7 @@ function initEmoji() {
  * messageType分为：text与image
  */
 function connect() {
-	
+	var receiverMemberId = 12;
 
 	var socket = new SockJS($("#websocketUrl").val().trim());
 	stompClient = Stomp.over(socket);
@@ -205,6 +249,7 @@ function connect() {
 			showNewUser(message.body);
 		});
 
+		friends();
 		// stompClient.subscribe('/member/message/'+ loginMemberid, function
 		// (message) {
 		// var json = JSON.parse(message.body);

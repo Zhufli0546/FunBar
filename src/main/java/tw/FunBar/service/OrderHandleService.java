@@ -1,7 +1,10 @@
 package tw.FunBar.service;
 
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import tw.FunBar.model.OrderBean;
 import tw.FunBar.model.OrderItemBean;
@@ -23,5 +26,9 @@ public interface OrderHandleService {
 	void addOrderItemList(List<OrderItemBean> orderItemList);
 
 	public OrderBean getOrderById(int od);
+
+	public ArrayList<OrderBean> getMyOrders(int id,HttpServletRequest req);
+
+	
 
 }

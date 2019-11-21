@@ -13,13 +13,13 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint("/websocket").addInterceptors(new HttpSessionHandshakeInterceptor()).withSockJS();
+		registry.addEndpoint("/websocket").setAllowedOrigins("*").withSockJS();
 	}
 
-	 @Override
-	    public void configureMessageBroker(MessageBrokerRegistry registry) {
-	        registry.setApplicationDestinationPrefixes("/app");
-	        registry.enableSimpleBroker("/topic");
-	    }
+	@Override
+	public void configureMessageBroker(MessageBrokerRegistry registry) {
+		registry.enableSimpleBroker("/topic", "/member");
+		registry.setUserDestinationPrefix("/member");
+	}
 
 }

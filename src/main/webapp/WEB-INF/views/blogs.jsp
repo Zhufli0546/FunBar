@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
     <script src="https://kit.fontawesome.com/c523dff261.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/blog.css"/>">
 </head>
 <style>
@@ -233,14 +234,16 @@
         </div><!-- modal-content -->
     </div><!-- modal-dialog -->
 </div><!-- modal -->
-
+	
 <!-- Footer -->
 <div style="display:none; " class="requestUrl">${pageContext.request.contextPath}</div>
 <input type="hidden" class="sessionScopeMemberId" value="${sessionScope.member.id}" />
 <jsp:include page="footer.jsp" />
 <script src="<c:url value='/vendor/ckeditor/ckeditor.js'/>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.0/sweetalert2.all.js"></script>
 <script>
 $(document).ready(function () {
+	// CKEditor Plugin
 	$('#createBlog').on('shown.bs.modal', function() {
         $(document).off('focusin.modal');
     });
@@ -263,5 +266,8 @@ $(document).ready(function () {
 })
 </script>
 <script src="<c:url value='/js/blog.js'/>"></script>
+
+<!-- Chat Box -->
+<jsp:include page="chatbox.jsp" />
 </body>
 </html>

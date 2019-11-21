@@ -1,7 +1,10 @@
 package tw.FunBar.service.impl;
 
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DaoSupport;
@@ -71,6 +74,12 @@ public class OrderHandleServiceImpl implements OrderHandleService{
   
   return dao.getOrderById(od);
  }
+
+@Override
+public ArrayList<OrderBean> getMyOrders(int id,HttpServletRequest req) {
+	
+	return dao.getMyOrders(id,req);
+}
 
  
  

@@ -1,4 +1,4 @@
-var requestUrl = $('.requestUrl').text();
+var requestUrl_blog = $('.requestUrl').text();
 var blogTemplate = "<div class='row blogMargin box'><span class='blogMore' data-memberid='{{blog.memberId}}' data-click='{{data-click}}'><i class='fas fa-align-center'></i></span><div class='col-md-5 blogBlock'><img src='{{blogImage}}' /></div><div class='col-md-7'><div class='blog-title'>{{blogTitle}}</div><p><span>{{blogUser}}</span><span>{{blogCreatedTime}}</span><span>文章分類:{{categoryName}}</span></p><div class='blog-content'  data-id='{{data-id}}'>{{blogContent}}</div></div></div>";
 let pageRow = 5;
 let pageRowStart = 0;
@@ -7,9 +7,16 @@ let tododata;
 let now = 1;
 let sessionScopeMemberId = 0;
 
+//Sweet Alert Plugin
+//自訂預設值
+swal.setDefaults({
+    confirmButtonText: "確定",
+    cancelButtonText: "取消"
+});
+
 // init()
 $.ajax({
-	url: requestUrl + "/blogJson",
+	url: requestUrl_blog + "/blogJson",
 	method: "POST",
 	dataType: "JSON",
 	success: function (res) {
@@ -21,7 +28,7 @@ $.ajax({
 // refresh
 function refresh() {
 	$.ajax({
-		url: requestUrl + "/blogJson",
+		url: requestUrl_blog + "/blogJson",
 		method: "POST",
 		dataType: "JSON",
 		success: function (res) {
@@ -68,6 +75,7 @@ function init() {
     }
 
     $("#show li").click(function () {
+    	$(".fade.show").css({"opacity":0});
         // 頁數起始筆數 結束筆數
         console.log($(this).index());
         now = $(this).index() + 1;
@@ -102,7 +110,7 @@ function init() {
 	    	let modifyBlogId = $(this).data("blog");
 	    	console.log("modify = " + modifyBlogId);
 	    	$.ajax({
-	    		url: requestUrl + "/getmodifyBlog/" + modifyBlogId,
+	    		url: requestUrl_blog + "/getmodifyBlog/" + modifyBlogId,
 	    		method: "POST",
 	    		dataType: "JSON",
 	    		success: function(res) {
@@ -112,8 +120,8 @@ function init() {
 	    			CKEDITOR.instances["blogContent2"].destroy(true);
     				CKEDITOR.replace('blogContent2', {
 	    		        height: 400,
-	    		        filebrowserUploadUrl: requestUrl + '/blogInsert',
-	    		        filebrowserBrowseUrl: requestUrl + '/blogBrowse'
+	    		        filebrowserUploadUrl: requestUrl_blog + '/blogInsert',
+	    		        filebrowserBrowseUrl: requestUrl_blog + '/blogBrowse'
 	    		    });
 	    			
 	    			
@@ -130,20 +138,35 @@ function init() {
 		
 		$(".deleteData").click(function() {
 	    		let deleteBlogId = $(this).data("blog");
-	    		console.log("delete = " + deleteBlogId);
-	    		if(confirm("確定要刪除嗎?")) {
-	    			$.ajax({
-		    			url: requestUrl + "/admin_delete/" + deleteBlogId,
-		    			method: "POST",
-		    			dataType: "JSON",
-		    			success: function(res){
-		    				$(".fade.show").css({"opacity":0});
-		    				$(".blogs").html("");
-		    		        $("#show").html("");
-		    				refresh();
-		    			}
-		    		})
-	    		}
+
+	    		swal({
+		   	         title: "確定要刪除嗎?",
+		   	         html: "按下確定後刪除文章",
+		   	         type: "warning",
+		   	         showCancelButton: true//顯示取消按鈕
+	   	     	}).then(function (result) {
+	   	             if (result.value) {
+	   	                 //使用者按下「確定」要做的事
+	   	                 swal("成功", "文章刪除完畢", "success");
+	   	                 
+		   	              $.ajax({
+				    			url: requestUrl_blog + "/admin_delete/" + deleteBlogId,
+				    			method: "POST",
+				    			dataType: "JSON",
+				    			success: function(res){
+				    				$(".fade.show").css({"opacity":0});
+				    				$(".blogs").html("");
+				    		        $("#show").html("");
+				    				refresh();
+				    			}
+				    		})
+	   	             } else if (result.dismiss === "cancel") {
+	   	                  //使用者按下「取消」要做的事
+	   	                 swal("取消", "文章未刪除", "error");
+	   	             }//end else  
+	   	     	});//end then 
+	    		
+	    		
 	    })
 	})
 }
@@ -153,7 +176,7 @@ function init() {
 $(".categoryClick").click(function() {
 	let categoryId = $(this).data("category");
 	$.ajax({
-		url: requestUrl + "/blogsByCategoryId/" + categoryId,
+		url: requestUrl_blog + "/blogsByCategoryId/" + categoryId,
 		method: "POST",
 		dataType: "JSON",
 		success: function(res) {
@@ -188,7 +211,7 @@ function hiddenContent() {
 	  if(txt.length>len){
 		txt=txt.substr(0,len);
 	  }
-	  $(this).html(txt+" ......<div><a class='btn btn-info page-btn' href='" + requestUrl + "/blog/" + id + "'>閱讀詳細內容</a></div>");
+	  $(this).html(txt+" ......<div><a class='btn btn-info page-btn' href='" + requestUrl_blog + "/blog/" + id + "'>閱讀詳細內容</a></div>");
   });
 }
 
@@ -226,7 +249,7 @@ $(".allBlogs").click(function() {
 	$(".blogs").html("");
     $("#show").html("");
     $.ajax({
-    	url: requestUrl + "/blogJson",
+    	url: requestUrl_blog + "/blogJson",
     	method: "POST",
     	dataType: "JSON",
     	success: function (res) {
@@ -239,7 +262,7 @@ $(".allBlogs").click(function() {
 // Like
 $(".searchClick").click(function() {
 	$.ajax({
-		url: requestUrl + "/search",
+		url: requestUrl_blog + "/search",
 		method: "POST",
 		data:{
 			searchKey: $(".searchValue").val()

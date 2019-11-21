@@ -143,7 +143,7 @@
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">Discuss</h6>
 					<a class="dropdown-item" href="#">好友系統</a> <a
-						class="dropdown-item" href="#">貼文管理</a> <a
+						class="dropdown-item" href="${pageContext.request.contextPath}/admin_discuss">貼文管理</a> <a
 						class="dropdown-item" href="#"></a>
 				</div></li>
 		</ul>
