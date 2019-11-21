@@ -11,8 +11,8 @@
 <title>Chat box</title>
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/chatbox.css'/>">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-<script src="https://kit.fontawesome.com/c523dff261.js" crossorigin="anonymous"></script>
-<script type="text/javascript" src="<c:url value="/vendor/jquery/jquery-3.2.1.min.js"/>"></script>
+<!-- <script src="https://kit.fontawesome.com/c523dff261.js" crossorigin="anonymous"></script> -->
+<%-- <script type="text/javascript" src="<c:url value="/vendor/jquery/jquery-3.2.1.min.js"/>"></script> --%>
 <!--sockJS cdn-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/web-socket-js/1.0.0/web_socket.js"></script>
