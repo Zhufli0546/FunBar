@@ -51,6 +51,7 @@
     <hr>
     <a href="<spring:url value='/allSuggestion' />">
                 <button type="button" class="btn btn-outline-secondary">查看活動建議</button></a>
+                
      <a href="<spring:url value='/getTimeAndSend' />">
     <button type="button" class="btn btn-outline-secondary">發送通知email</button></a>
                 <hr>

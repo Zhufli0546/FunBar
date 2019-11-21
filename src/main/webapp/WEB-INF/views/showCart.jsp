@@ -42,10 +42,26 @@ input{
 outline:none;
 }
 
+.btn-back{
+	padding: .5rem .75rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    border-radius: .25rem;
+	color: #fff;
+    background-color: #FF359A;
+    border-color: #FF359A;
+}
+
+.btn-back:hover{
+	color: #fff;
+	background-color: #BF0060;
+    border-color: #BF0060;
+}
+
 </style>
 <head>
 <meta charset="UTF-8">
-<title>show cart</title>
+<title>My cart</title>
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src=js/showCart.js></script>
 </head>
@@ -107,8 +123,8 @@ outline:none;
 					<tr>
 						<td align="right" colspan="8">
 							<div class="col-sm-4 col-xs-12">
-								<button id="buy" type="button" class="btn btn-info page-btn"
-									data-toggle="modal" data-target="#createForm">結帳去</button>
+							<a href="<c:url value='/shoppingCart' />"><button class="btn-back">Back to shop</button></a>
+							<button id="buy" type="button" class="btn btn-info page-btn"data-toggle="modal" data-target="#createForm">Go to pay</button>
 							</div>
 						</td>
 					</tr>

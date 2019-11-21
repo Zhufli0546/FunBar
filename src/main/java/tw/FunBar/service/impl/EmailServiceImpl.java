@@ -44,7 +44,8 @@ public class EmailServiceImpl implements EmailService {
 		emailDAO.sendmembercheck(mail);
 
 	}
-	public void sendActivityEmail(Applicant email,Activity activity) {
+	@Override
+	public void sendActivityEmail(List<Applicant> email,Activity activity) {
 		emailDAO.sendActivityEmail(email,activity);
 
 		
