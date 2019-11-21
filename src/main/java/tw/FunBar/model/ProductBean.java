@@ -28,6 +28,7 @@ public class ProductBean implements Serializable{
  private Double unitPrice;
  private Double discount ;
  private Integer stock;
+ private Integer status;
 
  
  @Transient
@@ -51,7 +52,7 @@ public class ProductBean implements Serializable{
 
  public ProductBean(Integer productId,String productNo, String productName,
    String productDetail, Blob productImage, String fileName, String category,
-   double unitPrice, double discount, Integer stock) {
+   double unitPrice, double discount, Integer stock,Integer status) {
    this.productId = productId;
    this.productNo = productNo;
    this.productName = productName;
@@ -62,14 +63,25 @@ public class ProductBean implements Serializable{
    this.unitPrice = unitPrice;
    this.discount = discount;
    this.stock = stock;
+   this.status=status;
  }
  
  public ProductBean() {
   
  }
+ 
+ public Integer getStatus() {
+	return status;
+}
+
+public void setStatus(Integer status) {
+	this.status = status;
+}
+
  public Integer getProductId() {
   return productId;
  }
+ 
  public void setProductId(Integer productId) {
   this.productId = productId;
  }
@@ -135,6 +147,7 @@ public class ProductBean implements Serializable{
  public void setStock(Integer stock) {
   this.stock = stock;
  }
+
 
 
 }

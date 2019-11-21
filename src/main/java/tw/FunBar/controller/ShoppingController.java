@@ -95,24 +95,33 @@ public class ShoppingController {
 		session = request.getSession(false);
 		Member member = (Member)session.getAttribute("member");
 		if(member==null) return "redirect:/signin";
-		
+			
 		List<ProductBean> show = shoppingService.getAllProducts1();
 		model.addAttribute("all", show);
 		return "showAllProduct";
 	}
 	
-	//刪除單筆資料
-		@RequestMapping("/deleteProduct")
-		public String deleteProduct(@RequestParam("id") Integer productId, Model model) {
-			model.addAttribute("pb", orderService.deleteProduct(productId));
+	//下架單筆資料
+		@RequestMapping("/pullProduct")
+		public String pullProduct(@RequestParam("id") Integer productId, Model model) {
+			orderService.pullProduct(productId);
 			return "redirect:/showAllProduct" ;
 		}
+		
+	
+		//上架單筆資料
+		@RequestMapping("/pushProduct")
+		public String pushProduct(@RequestParam("id") Integer productId, Model model) {
+			orderService.pushProduct(productId);
+			return "redirect:/showAllProduct";
+		}
 
+		
 	//點擊"修改"按鈕單筆查詢該資料
 	@RequestMapping("/update")
 	public String getProductsById(@RequestParam("id") Integer productId, Model model) throws SerialException, SQLException, IOException {
 		model.addAttribute("pb", orderService.getProductById(productId));
-	
+		
 		return "updateProduct";
 	}
 	
@@ -186,7 +195,7 @@ public class ShoppingController {
 				throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
 			}
 		}
-
+		
 		orderService.addProduct(pb);
 		String ext = originalFilename.substring(originalFilename.lastIndexOf("."));
 		String rootDirectory = context.getRealPath("/");
