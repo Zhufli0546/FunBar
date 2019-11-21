@@ -14,14 +14,14 @@ public interface EmailDAO {
 		void sendEmail(RoomOrder room_order,Room room);
 
 		void sendBookingEmail(BookingData data);
+		
+		void sendActivityEmail(List<Applicant> email,Activity activity);
+
 
 
 
 		void sendmembercheck(Member mail);
 
-
-
-		void sendActivityEmail(Applicant email,Activity activity);
 		
 
 

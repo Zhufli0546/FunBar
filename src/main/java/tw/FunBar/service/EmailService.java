@@ -15,7 +15,7 @@ public interface EmailService {
 
 		public void sendBookingEmail(BookingData data);
 		
-		void sendActivityEmail(Applicant email,Activity activity);
+		void sendActivityEmail(List<Applicant> email,Activity activity);
 
 		void sendmembercheck(Member mail);
 }

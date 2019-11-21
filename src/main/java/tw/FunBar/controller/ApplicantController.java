@@ -3,9 +3,6 @@ package tw.FunBar.controller;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,20 +11,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.google.gson.Gson;
-
 import tw.FunBar.model.Activity;
 import tw.FunBar.model.Applicant;
 import tw.FunBar.model.Suggestion;
 import tw.FunBar.service.ActivityService;
 import tw.FunBar.service.ApplicantService;
-import tw.FunBar.service.EmailService;
 
 @Controller
 public class ApplicantController {
 	
 	ApplicantService service;
 	
+	ActivityService activityservice;
+
+	@Autowired
+	public void setActivityservice(ActivityService activityservice) {
+		this.activityservice = activityservice;
+	}
 
 	@Autowired
 	public void setService(ApplicantService service) {
@@ -56,7 +56,8 @@ public class ApplicantController {
 	public String getActivities(
 			@RequestParam(name="activityId") Integer activityId,
 			Model model) {
-		
+		Activity ac = activityservice.getActivity(activityId);
+		model.addAttribute("ac", ac);
 		Set<Applicant> al = service.QuerySignupApplicant(activityId);
 		model.addAttribute("al",al);
 		
@@ -74,9 +75,9 @@ public class ApplicantController {
 	}
 
 	//取消報名
-	@RequestMapping("/cancelSignup/{memberId}&{activityId}")
-	public String cancelSignup(@PathVariable(value = "activityId") Integer activityId,
-							   @PathVariable(value = "memberId") String memberId) {
+	@RequestMapping("/cancelSignup")
+	public String cancelSignup(@RequestParam(value = "activityId") Integer activityId,
+							   @RequestParam(value = "memberId") String memberId) {
 		service.deleteMap(memberId, activityId);
 		return "cancelSignupSuccess";
 	}
@@ -84,7 +85,9 @@ public class ApplicantController {
 	//----------------------------------------------------------------
 	
 	@RequestMapping(value = "/addSuggestion", method = RequestMethod.GET)
-	public String input(Model model) {
+	public String input(Model model
+			,@RequestParam(value = "activityId") Integer activityId) {
+		model.addAttribute("activity", activityservice.getActivity(activityId));
 		model.addAttribute("suggestion", new Suggestion());
 		return "addSuggestion";
 	}
