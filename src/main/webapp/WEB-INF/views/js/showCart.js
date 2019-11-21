@@ -30,7 +30,7 @@ $(document).ready(function() {
 			var dec = disc / 10;
 
 			if (num < 1) {
-				alert('不要再按了！哪有人買零個的辣!');
+				alert('數量不可小於1 !');
 				num = 1;
 			}
 			//小計   
@@ -82,12 +82,14 @@ $(document).ready(function() {
 			if (num < stc && num >50 ) {
 				alert("數量不得超過50份！");
 			}else if(num > stc){
-				alert("選購數量不可大於庫存！")
+				alert("選購數量不可大於庫存！");
+				return;
 			}
 			
 			var smallPrice = unitPrice * num * dec;
 			var int_smallPrice = parseInt(smallPrice);
 			$(".pd").eq(index).text(int_smallPrice);
+			
 
 			//總計
 			totalPrice = 0;
@@ -98,8 +100,6 @@ $(document).ready(function() {
 
 				number = $(".num").eq(i).val();
 				
-					
-
 				subTotal = unitPrice * number * dec;
 				var int_subTotal = parseInt(subTotal);
 				totalPrice = totalPrice + int_subTotal;
@@ -210,7 +210,7 @@ $(document).ready(function() {
 			}else if (num > stc){
 				alert("數量不得超過庫存!");
 
-				var smallPrice = unitPrice * stc * dec;
+				var smallPrice = unitPrice * num * dec;
 				var int_smallPrice = parseInt(smallPrice);
 				$(".pd").eq(index).text(int_smallPrice);
 

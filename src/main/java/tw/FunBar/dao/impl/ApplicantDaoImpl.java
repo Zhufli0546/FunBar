@@ -129,7 +129,6 @@ public class ApplicantDaoImpl implements ApplicantDao {
 					.setParameter("activityId", activityId).executeUpdate();
 
 			int t;
-			
 
 			if (asas == 1) {
 				t = a.getApplicantId();

@@ -6,25 +6,20 @@
 	overflow: hidden;
 }
 
-p{
-	margin:150px;
-}
-
 .prodlist {
 	float: left;
-	width: 18%;
-	min-height: 360px;
+	width: 16%;
 	padding: 5px;
 	text-align: center;
 	border-top:20px solid #9D9D9D;
 	border-bottom:20px solid #9D9D9D;
 	border-radius:5px;
-	margin: 0 1% 1% 1%;
+	margin: 0 5px;
 }
-
 
 .prodlist .prodtitle {
 	font-size: 20px;
+	height: 100px;
 	margin: 0 auto 5px;
 	font-weight: bold;
 	color: #000;
@@ -50,33 +45,6 @@ p{
 	color: #019858;
 }
 
-.button-confirm {
-	margin: 0 auto;
-	padding: 5px 10px;
-	background-color: #FF359A;
-	color: #fff;
-	outline: none;
-	border-radius: 5px;
-}
-
-.button-confirm:hover {
-	background-color: #fff;
-	color: #FF359A;
-	border: 1px solid #FF359A;
-}
-
-@media ( max-width : 960px) {
-	.prodlist {
-		width: 31%;
-	}
-}
-
-@media ( max-width : 600px) {
-	.prodlist {
-		width: 48%;
-	}
-}
-
 #snackbar {
 	visibility: hidden;
 	min-width: 250px;
@@ -93,54 +61,20 @@ p{
 	font-size: 17px;
 }
 
+@media ( max-width : 960px) {
+	.prodlist {
+		width: 31%;
+	}
+}
+
+@media ( max-width : 600px) {
+	.prodlist {
+		width: 48%;
+	}
+}
+
 #snackbar.show {
 	visibility: visible;
 	-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
 	animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
-
-@-webkit-keyframes fadein {
-	from {
-		bottom: 0;
-		opacity: 0;
-	}
-
-	to {
-		bottom: 30px;
-		opacity: 1;
-	}
-}
-@keyframes fadein {
-	from {
-		bottom: 0;
-		opacity: 0;
-	}
-
-	to {
-		bottom: 30px;
-		opacity: 1;
-	}
-}
-@-webkit-keyframes fadeout {
-	from {
-		bottom: 30px;
-		opacity: 1;
-	}
-
-	to {
-		bottom: 0;
-		opacity: 0;
-	}
-}
-
-@keyframes fadeout {
-	from {
-		bottom: 30px;
-		opacity: 1;
-	}
-
-	to {
-		bottom: 0;
-		opacity: 0;
-	}
 }

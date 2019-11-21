@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>修改商品資料</title>
+<title>Update Product Info</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -52,7 +52,7 @@ form{
 
 <jsp:include page="admin_header.jsp" />
 
-<jsp:useBean id="pb" scope="request" class="tw.FunBar.model.ProductBean" />
+
 
 <!-- Content 區塊 -->
 <div class="context">
