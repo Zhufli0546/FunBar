@@ -75,7 +75,7 @@
 				<tr>
 					<th scope="col">照片</th>
 					<th scope="col">ID</th>
-<!-- 					<th scope="col">編號</th> -->
+					<!-- 					<th scope="col">編號</th> -->
 					<th scope="col">名稱</th>
 					<th scope="col">說明</th>
 					<th scope="col">分類</th>
@@ -88,11 +88,12 @@
 			<tbody>
 				<c:forEach var="pb" items="${all}">
 					<tr>
-						<th scope="row"><img
-							src="<c:url value='/ProductPicture/${pb.productId}'/>"
-							height="120px" /></th>
+						<th scope="row"><div style="text-align: center">
+								<img src="<c:url value='/ProductPicture/${pb.productId}'/>"
+									height="120px" />
+							</div></th>
 						<td>${pb.productId}</td>
-<%-- 						<td>${pb.productNo}</td> --%>
+						<%-- 						<td>${pb.productNo}</td> --%>
 						<td>${pb.productName}</td>
 						<td>${pb.productDetail}</td>
 						<td>${pb.category}</td>

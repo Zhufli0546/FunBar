@@ -52,7 +52,7 @@
 						<p>Unit Price:<span style="color: #FF44AA; font-weight: bold">$ ${pb.unitPrice}</span>
 						</p>
 						<p>
-							discount：<span style="color: #CE0000; font-weight: bold;">${pb.discount}</span>
+						discount：<span style="color: #CE0000; font-weight: bold;">${pb.discount}</span>
 						</p>
 
 					</figcaption>
