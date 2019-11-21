@@ -23,9 +23,10 @@
 <body>
 
 	<input id="websocketUrl" type="hidden" value="<c:url value="/websocket"/> ">
-	<input id="emojiBaseUri" type="hidden" value="<c:url value="/resources/media/emoji/"/> ">
-	<a id="loginMemberid" style="display: none">${sessionScope.member.id}</a>
-	<a id="loginMemberName" style="display: none">${sessionScope.member.memberName}</a>
+	<%-- <input id="emojiBaseUri" type="hidden" value="<c:url value="/resources/media/emoji/"/> "> --%>
+	<a id="loginMemberid_chatbox" style="display: none">${sessionScope.member.id}</a>
+	<a id="loginMemberName_chatbox" style="display: none">${sessionScope.member.memberName}</a>
+	<a href="" class="list-group-item list-group-item-action" id="requestUrl_chatbox" style="display:none"><c:url value='/'/></a>
 	<!-- left menu -->
 	<nav class="navbar" id="sidebarbtn">
 		<button type="button" id="sidebarCollapse" class="btn btn-info btn-lg">
@@ -44,7 +45,7 @@
 						src="<c:url value='/membergetPicture/${member.id}'/>"
 						class="online" />
 					<p>${sessionScope.member.memberName}</p>
-					<i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
+					<!-- <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
 					<div id="status-options">
 						<ul>
 							<li id="status-online" class="active"><span class="status-circle"></span>
@@ -66,12 +67,12 @@
 							for="twitter"><i class="fa fa-instagram fa-fw"
 							aria-hidden="true"></i></label> <input name="twitter" type="text"
 							value="mike.ross" />
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<div id="search">
 				<label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
-				<input type="text" placeholder="Search contacts..." />
+				<input type="text" placeholder="Search Friends" />
 			</div>
 			<div id="contacts">
 				<ul id="receiverArea">
@@ -101,12 +102,6 @@
 				<div class="chatbox__body">
 					<div class="messages">
 						<ul id="conversation">
-							<li class="sent"><img
-								src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
-								<p>Hello, How's going ?</p></li>
-							<li class="replies"><img
-								src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-								<p>Always Programming...</p></li>
 						</ul>
 					</div>
 				</div>
