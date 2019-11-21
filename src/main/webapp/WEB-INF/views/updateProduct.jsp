@@ -75,10 +75,10 @@ form{
 </div>
 
 
-<!-- <div> -->
-<!-- <label for="productNo">商品編號</label> -->
-<%-- <input id="productNo" name="productNo" value="${pb.productNo}" type='text' /> --%>
-<!-- </div> -->
+<div>
+<label for="productNo">商品編號</label>
+<input id="productNo" name="productNo" value="${pb.productNo}" type='text' />
+</div>
 	
 <div>
 <label  for='productDetail'>商品說明</label>

@@ -11,10 +11,10 @@
 	<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="<c:url value="/css/hotProduct.css" />" >
 	<link rel="stylesheet" href="<c:url value='/vendor/slick/slick.css' />">
 	<link rel="stylesheet" href="<c:url value='/vendor/slick/slick-theme.css' />">
 	<link rel="stylesheet" href="<c:url value='/css/index_blog.css' />">
+	<link rel="stylesheet" href="<c:url value="/css/hotProduct.css" />" >
 </head>
 
 <body class="animsition">
@@ -97,7 +97,7 @@
 
 	<!-- Blog -->
 	<section class="section1">
-		<div class="row container">
+		<div class="row container-fluid">
 			<div class="col-md-1">
 				<h2 style="writing-mode: vertical-lr;">焦點文章</h2>
 			</div>
@@ -122,24 +122,24 @@
 	
 	<section class="section2">
 	
-	<div class="row container">
+	<div class="row container-fluid">
 		<div class="col-md-1">
 			<h2 style="writing-mode: vertical-lr;">最新商品</h2>
 		</div>
 	 
-		<div class="blogSlick col-md-8" >
+		<div class="col-md-11" >
 			<c:forEach var="pb" items="${all}" begin="0" step="1" varStatus="i">
-			<div class="prodlist">
-					<p class="prodtitle">${pb.productName}</p>
-					<figure>
-					<a href="<c:url value='/product?id=${pb.productId}' />" ">
-						<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />
-					</a>						
-					</figure>
-						<p>建議售價:<span style="color:#FF44AA;font-weight:bold;font-size:20px">$ ${pb.unitPrice}</span></p>
-						<p>折扣：<span style="font-weight:bold;color:	#CE0000;font-size:20px">${pb.discount}</span></p>				
-				</div> 
-				<!-- .prodlist --> 
+			<div class="prodlist" style="height:350px;">
+				<p class="prodtitle">${pb.productName}</p>
+				<figure>
+				<a href="<c:url value='/product?id=${pb.productId}' />" ">
+					<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />
+				</a>						
+				</figure>
+					<p>建議售價:<span style="color:#FF44AA;font-weight:bold;font-size:20px">$ ${pb.unitPrice}</span></p>
+					<p>折扣：<span style="font-weight:bold;color:	#CE0000;font-size:20px">${pb.discount}</span></p>				
+			</div> 
+			<!-- .prodlist --> 
 			</c:forEach>
 		</div>
 	</div>

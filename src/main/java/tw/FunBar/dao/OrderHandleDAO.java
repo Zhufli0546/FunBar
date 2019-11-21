@@ -17,7 +17,9 @@ public interface OrderHandleDAO {
 	
 	void addProduct(ProductBean pb); 
 	
-	ProductBean deleteProduct(Integer productId);
+	void pullProduct(Integer productId);  //商品下架
+	
+	void pushProduct(Integer productId);  //商品重新上架
 
 	void updateProduct(Integer productId, String productNo,Blob productCover,String productDetail, String productName, 
 			String category, Double discount, Integer stock);

@@ -9,6 +9,9 @@
 <title>All Product Management</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+</script>
 </head>
 <style>
 .page {
@@ -59,6 +62,38 @@
 	color: #272727;
 	text-decoration: none;
 }
+
+.button-push{
+	margin: 0 auto;
+	padding: 5px 10px;
+	background-color: #336666;
+	color: #fff;
+	outline: none;
+	border-radius: 5px;
+}
+
+.button-push:hover{
+	background-color: #fff;
+	color: #336666;
+	text-decoration: none;
+}
+
+.button-pull{
+	margin: 0 auto;
+	padding: 5px 10px;
+	background-color: #7E3D76;
+	color: #fff;
+	outline: none;
+	border-radius: 5px;
+}
+
+.button-pull:hover{
+	background-color: #fff;
+	color: #7E3D76;
+	text-decoration: none;
+}
+
+
 </style>
 
 <body>
@@ -75,7 +110,7 @@
 				<tr>
 					<th scope="col">照片</th>
 					<th scope="col">ID</th>
-<!-- 					<th scope="col">編號</th> -->
+					<th scope="col">編號</th>
 					<th scope="col">名稱</th>
 					<th scope="col">說明</th>
 					<th scope="col">分類</th>
@@ -86,13 +121,13 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="pb" items="${all}">
+				<c:forEach var="pb" items="${all}" >
 					<tr>
 						<th scope="row"><img
 							src="<c:url value='/ProductPicture/${pb.productId}'/>"
 							height="120px" /></th>
 						<td>${pb.productId}</td>
-<%-- 						<td>${pb.productNo}</td> --%>
+						<td>${pb.productNo}</td>
 						<td>${pb.productName}</td>
 						<td>${pb.productDetail}</td>
 						<td>${pb.category}</td>
@@ -100,15 +135,23 @@
 						<td>${pb.discount}</td>
 						<td>${pb.stock}</td>
 						<td>
-							<form method="post" class="form-group row"
-								action="<c:url value='/deleteProduct?id=${pb.productId}'/>">
-								<input type="hidden" name="id" value="${pb.productId}" /> <input
-									type="submit" value="刪除" class="button"
-									onclick="return confirm('確定刪除？')" />
+							
+							<c:if test="${pb.status=='0'}">
+							<form method="post" class="form-group row" action="<c:url value='/pullProduct?id=${pb.productId}'/>">
+									<input type="hidden" name="id" value="${pb.productId}" /> 
+									<input type="submit" value="下架"  class="button-pull" onclick="return confirm('確定下架？')" />				
 							</form>
+							</c:if>
+							<c:if test="${pb.status=='1'}">
+							<form method="post" class="form-group row" action="<c:url value='/pushProduct?id=${pb.productId}'/>">
+								<input type="hidden" name="id" value="${pb.productId}" /> 
+								<input type="submit" value="上架"  class="button-push" onclick="return confirm('確定重新上架？')"/>
+							</form> 
+							</c:if>
+							
+							
 
-							<form method="get" class="form-group row"
-								action="<c:url value='update?id=${pb.productId}'/>">
+							<form method="get" class="form-group row" action="<c:url value='update?id=${pb.productId}'/>">
 								<input type="hidden" name="id" value="${pb.productId}">
 								<input type="submit" value="修改" class="button" />
 							</form>
