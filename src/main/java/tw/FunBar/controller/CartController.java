@@ -56,10 +56,7 @@ public class CartController {
 	@Autowired
 	ServletContext context;
 
-
-	
-	
-	
+	@RequestMapping(value = "/cart", method = RequestMethod.POST)
 	public String addCart(HttpServletRequest request, HttpSession session, HttpServletRequest response,
 			@RequestParam Integer productId, @RequestParam Integer count, Model model) throws IOException {
 		session = request.getSession(false);
