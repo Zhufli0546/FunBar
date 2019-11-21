@@ -234,8 +234,7 @@
         </div><!-- modal-content -->
     </div><!-- modal-dialog -->
 </div><!-- modal -->
-	<!-- Chat Box -->
-	<jsp:include page="chatbox.jsp" />
+	
 <!-- Footer -->
 <div style="display:none; " class="requestUrl">${pageContext.request.contextPath}</div>
 <input type="hidden" class="sessionScopeMemberId" value="${sessionScope.member.id}" />
@@ -267,5 +266,8 @@ $(document).ready(function () {
 })
 </script>
 <script src="<c:url value='/js/blog.js'/>"></script>
+
+<!-- Chat Box -->
+<jsp:include page="chatbox.jsp" />
 </body>
 </html>
