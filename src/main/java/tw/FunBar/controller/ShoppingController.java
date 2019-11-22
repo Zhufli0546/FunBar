@@ -51,32 +51,44 @@ public class ShoppingController {
 	@Autowired
 	ServletContext context;
 
+
 	//---------前台功能-------	
 	
 	@RequestMapping("/shoppingCart")
-	public String shoppingCart(Model model) {		
-		List<ProductBean> show = shoppingService.getAllProducts();
-		model.addAttribute("all", show);
+	public String shoppingCart(@RequestParam Integer index, Model model) {		
+//		List<ProductBean> show = shoppingService.getAllProducts();    //顯示所有商品
+//		model.addAttribute("all", show);	
+		List<ProductBean> products = shoppingService.getProductByPage(index);   //分頁
+		int count = shoppingService.getIndex();					
+		model.addAttribute("shoppingCart", products);
+		model.addAttribute("listCount", count);
 		return "shoppingCart";
 	}
+	
+	
 	
 	@RequestMapping(value= {"/product"})   //查看單筆商品資訊
 	public String getProduct(@RequestParam("id") Integer productId, Model model) 
 							throws SerialException, SQLException, IOException {
 		model.addAttribute("pb", orderService.getProductById(productId));
-		return "product";
-		
+		return "product";		
 	}
 		
 //	*RequestMapping請求不能有多個相同路徑
-	
 //	依分類查詢商品(點擊分類連結進入分類商品頁面）
 	@RequestMapping("/shoppingCart/{category}")
-	public String getProductByCategory(@PathVariable("category")String category, Model model ) {
-			
-		List <ProductBean> products = shoppingService.getProductByCategory(category);
-		model.addAttribute("category", products);
+	public String getProductByCategory(@PathVariable("category")String category,@RequestParam Integer index, Model model ) {	
+		List <ProductBean> products = shoppingService.getProductByCategory(category,index);	
+//		List<ProductBean> products = shoppingService.getProductByPage(index);   //分頁
+		int count = shoppingService.getCategoryIndex(category);	
+		
+		model.addAttribute("shoppingCart", products);
+		model.addAttribute("listCount", count);
+		
+//		model.addAttribute("category", cateProducts);
+		
 		 return "showProductByCategory";		
+		 
 	}
 	
 	//取得所有分類

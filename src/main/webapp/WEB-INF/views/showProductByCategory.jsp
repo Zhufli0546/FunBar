@@ -20,11 +20,10 @@
   <div class="row" style="float: left">
    <div class="col-md-3">
     <div class="list-group" style="width: 150px">
-     <a href="${pageContext.request.contextPath}/shoppingCart"
+     <a href="${pageContext.request.contextPath}/shoppingCart?index=1"
       class="list-group-item">All Products</a>
      <c:forEach var='category' items='${categoryList}'>
-      <a
-       href="${pageContext.request.contextPath}/shoppingCart/${category}"
+      <a href="${pageContext.request.contextPath}/shoppingCart/${category}?index=1"
        class="list-group-item">${category}</a>
      </c:forEach>
     </div>
@@ -39,7 +38,7 @@
  <!-- .container -->
 
   <div class="row">
-   <c:forEach var="pb" items="${category}">
+   <c:forEach var="pb" items="${shoppingCart}" begin="0" step="1" varStatus="i" >
     <div class="prodlist">
      <p>${pb.productDetail}</p>
      <p class="prodtitle">${pb.productName}</p>
@@ -61,6 +60,20 @@
     <!-- .prodlist -->
    </c:forEach>
   </div>
+  <ul class="pagination justify-content-center">
+			<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/shoppingCart/${category}?index=1" aria-label="Previous"> 
+			<span aria-hidden="true">&laquo;</span> <span class="sr-only">Previous</span></a></li>
+			
+			
+			<c:forEach  begin="1" step="1" end="${listCount}" varStatus="i" >
+				<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/shoppingCart/${category}?index=${i.index}">${i.index}</a></li>		
+			</c:forEach>
+			
+		
+			<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/shoppingCart/${category}?index=${listCount}" aria-label="Next"> 
+			<span aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span></a></li>
+		</ul>
+  
  </div>
  <!-- .container -->
 

@@ -6,7 +6,9 @@ import tw.FunBar.model.ProductBean;
 
 public interface ShoppingService {
 	
-	List<ProductBean> showNewProducts(); 
+	 List<ProductBean> showNewProducts(); 
+	
+	 List<ProductBean> getProductByPage(int index);
 	
 	 List <ProductBean> getAllProducts();
 	 
@@ -14,7 +16,14 @@ public interface ShoppingService {
 	 
 	 List <String> getAllCategories();
 	 
-	 List <ProductBean> getProductByCategory(String category);
+	 List <ProductBean> getProductByCategory(String category,Integer index);
+
+	 int getIndex();
+	 
+	 int getCategoryIndex();
+
+	 int getCategoryIndex(String category);
+	
 	 
 	
 	 

@@ -15,10 +15,17 @@ public class ShoppingServiceImpl implements ShoppingService{
 	@Autowired
 	ShoppingDAO dao;
 	
+	
 	@Transactional
 	@Override
 	public List<ProductBean> showNewProducts() {
 		return dao.showNewProducts();
+	}
+	
+	
+	@Override
+	public List<ProductBean> getProductByPage(int index) {
+		return dao.getProductByPage(index);
 	}
 		
 
@@ -42,9 +49,39 @@ public class ShoppingServiceImpl implements ShoppingService{
 
 	@Transactional
 	@Override
-	public List<ProductBean> getProductByCategory(String category) {
-		return dao.getProductByCategory(category);
+	public List<ProductBean> getProductByCategory(String category,Integer index) {
+		return dao.getProductByCategory(category,index);
 	}
+
+
+	@Transactional
+	@Override
+	public int getIndex() {
+		return dao.getIndex();
+	}
+
+
+	@Transactional
+	@Override
+	public int getCategoryIndex() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Transactional
+	@Override
+	public int getCategoryIndex(String category) {
+		return dao.getCategoryIndex(category);
+	}
+
+
+	
+
+	
+	
+
+
+	
 	
 
 }
