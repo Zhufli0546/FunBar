@@ -41,8 +41,7 @@ public class ChatController {
 		participantRepository.add(String.valueOf(member.getId()), member);
 		System.out.println(member);
 		System.out.println("在線人數：" + participantRepository.getActiveSessions().values().size());
-		System.out.println(
-				"member Detail:" + participantRepository.getParticipant(String.valueOf(member.getId())).getId());
+		System.out.println("member Detail:" + participantRepository.getParticipant(String.valueOf(member.getId())).getId());
 		model.addAttribute("member", member);
 		return "chat";
 	}

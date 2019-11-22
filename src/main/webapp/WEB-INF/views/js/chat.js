@@ -326,8 +326,8 @@ function formatDate(dateTime) {
  */
 function showNewMessage(user, date, msg, senderMemberId, receiverMemberId) {
 	var container = document.getElementById("conversation");
+	var messages = document.getElementById("messages");
 	var msgToDisplay = document.createElement('li');
-//	$('.chatbox').toggleClass('chatbox--tray');
 
 	if (user == "系统消息") {
 		msgToDisplay.style.color = 'red';
@@ -341,18 +341,16 @@ function showNewMessage(user, date, msg, senderMemberId, receiverMemberId) {
 		msgToDisplay.innerHTML = "<img src='http://emilcarlsson.se/assets/harveyspecter.png' alt='' />"
 				+ "<p>" + msg + "</p>"
 		container.append(msgToDisplay);
-		container.scrollIntoView(container);
 		
-
 	} else {
 		msgToDisplay.setAttribute("class", "sent");
 		msgToDisplay.innerHTML = "<img src='http://emilcarlsson.se/assets/harveyspecter.png' alt='' />"
 				+ "<p>" + msg + "</p>"
 		container.append(msgToDisplay);
-		container.scrollIntoView(container);
-
+		
 	}
 
+	($('#conversation').children("li:last-child")[0]).scrollIntoView();
 }
 /**
  * 正则表达式显示消息中的emoji图片
@@ -388,7 +386,7 @@ function showNewImage(user, date, url) {
 			+ '</span><br/>[' + user + '] : <br/>'
 			+ '<img class="img-thumbnail" src="' + url + '"/>';
 	container.append(msgToDisplay);
-	container.scrollTop = container.scrollHeight;
+//	container.scrollTop = container.scrollHeight;
 }
 /**
  * 发送输入框中的信息
