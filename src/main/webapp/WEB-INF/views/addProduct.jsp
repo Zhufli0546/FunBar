@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>商品上架</title>
+<title>Add Products</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
  <script src="js/addProduct.js"></script> 
@@ -86,7 +86,7 @@
 			<fieldset>
 				<div class="form-group">
 					<label class='control-label col-lg-2 col-lg-2' for="productNo">商品編號</label>
-					<form:input autocomplete="off" id="productNo" path="productNo" type='text' class='form:input-large' />
+					<form:input  type="hidden" autocomplete="off" id="productNo" path="productNo" class='form:input-large' />
 					<span id="msgNo"></span>
 				</div>
 
@@ -105,15 +105,13 @@
 				<div class="form-group">
 					<label class='control-label col-lg-2 col-lg-2' for="category">商品分類</label>
 					<form:select path="category">
-						<form:option value="下酒菜">下酒菜</form:option>
-						<form:option value="啤酒與低酒精">啤酒與低酒精</form:option>
-						<form:option value="威士忌">威士忌</form:option>
-						<form:option value="無酒精">無酒精</form:option>
-						<form:option value="蘭姆酒">蘭姆酒</form:option>
-						<form:option value="清酒與燒酒">清酒與燒酒</form:option>
-						<form:option value="葡萄酒">葡萄酒</form:option>
-						<form:option value="調酒器具">調酒器具</form:option>
-						<form:option value="酒器與酒杯">酒器與酒杯</form:option>
+						<form:option value="beer">beer</form:option>
+						<form:option value="gin">gin</form:option>
+						<form:option value="rum">rum</form:option>
+						<form:option value="tequila">tequila</form:option>
+						<form:option value="vodka">vodka</form:option>
+						<form:option value="whisky">whisky</form:option>
+						<form:option value="wine">wine</form:option>
 					</form:select>
 				</div>
 
@@ -140,6 +138,10 @@
 					<label class='control-label col-lg-2 col-lg-2' for="productCover">商品圖片</label>
 					<form:input id="productCover" path="productCover" type='file' class='form:input-large' />
 				</div>
+				
+				<!-- 預設商品為上架狀態 -->
+				<form:input type="hidden" id="status" path="status" value="0"  class='form:input-large' />
+				
 
 				<div class="form-group">
 					<input type='submit' class='button' value="送出" />

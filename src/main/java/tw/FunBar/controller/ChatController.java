@@ -2,6 +2,7 @@ package tw.FunBar.controller;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,26 +17,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import tw.FunBar.chat.ParticipantRepository;
 import tw.FunBar.model.Member;
 import tw.FunBar.model.Message;
+import tw.FunBar.service.ChatService;
 
 @Controller
 public class ChatController {
 
+	@Autowired
 	private ParticipantRepository participantRepository;
+	@Autowired
 	private SimpMessagingTemplate messagingTemplate;
-
 	@Autowired
-	public void setMessagingTemplate(SimpMessagingTemplate messagingTemplate) {
-		this.messagingTemplate = messagingTemplate;
-	}
-
-	@Autowired
-	public void setParticipantRepository(ParticipantRepository participantRepository) {
-		this.participantRepository = participantRepository;
-	}
+	private ChatService service;
 
 	@RequestMapping(value = "/chat", method = RequestMethod.GET)
 	public String loginIntoChatRoom(Model model, HttpServletRequest request, HttpSession session) {
@@ -64,14 +61,22 @@ public class ChatController {
 		System.out.println("receiverId = " + message.getReceiverMemberId());
 		System.out.println("sessionId = " + sessionId);
 		System.out.println("name = " + message.getUserName());
-		System.out.println("chatValue = " + message.getContent());
+		System.out.println("chatValue = " + message.getMessageContent());
 		message.setMessageType("text");
 		Date sendDate = new Date();
 		message.setSendDate(sendDate);
 		int[] conn = { message.getSenderMemberId(), message.getReceiverMemberId() };
 		Arrays.sort(conn);
 		messagingTemplate.convertAndSend("/member/message/" + conn[0] + "/" + conn[1], message);
+		service.saveMessage(message);
 		return message;
+	}
+
+	@RequestMapping(value = "/getHistoryMessageJson", produces = "application/json")
+	public String getHistoryMessage(@RequestParam(value = "subscribe") String subscribe, Model model) {
+		List<Message> list = service.getHistoryMessage(subscribe);
+		model.addAttribute("message",list);
+		return "getHistoryMessageJson";
 	}
 
 }

@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded",function(){
-	document.getElementById("productNo").addEventListener("blur",chkNo);
+//	document.getElementById("productNo").addEventListener("blur",chkNo);
  	document.getElementById("productName").addEventListener("blur",chkName);
 	document.getElementById("productDetail").addEventListener("blur",chkDetail);
 	document.getElementById("unitPrice").addEventListener("blur",chkPrice);

@@ -6,25 +6,32 @@
 	overflow: hidden;
 }
 
-p{
-	margin:150px;
-}
+.sectionBlock {min-height: 350px; margin: 10px 0; padding: 10px 0 30px 0; overflow: hidden;}
+.section1 {}
+.section2 {overflow:hidden; position: relative; height: 550px;}
+.section2 .title {padding: 5px 0 5px 0; text-align: center;}
+
+.productCard { position: absolute; left:0px; top:65px;}
 
 .prodlist {
-	float: left;
-	width: 18%;
-	min-height: 360px;
+	display: inline-block;
+	width: 200px;
 	padding: 5px;
 	text-align: center;
-	border-top:20px solid #9D9D9D;
-	border-bottom:20px solid #9D9D9D;
+	border-top:10px solid #9D9D9D;
+	border-bottom:10px solid #9D9D9D;
 	border-radius:5px;
-	margin: 0 1% 1% 1%;
+	margin: 0 5px;
+	transition: all .2s;
 }
 
+.prodlist:hover {
+	background-color: #FFF4C1;
+}
 
 .prodlist .prodtitle {
 	font-size: 20px;
+	height: 100px;
 	margin: 0 auto 5px;
 	font-weight: bold;
 	color: #000;
@@ -32,7 +39,7 @@ p{
 
 .prodlist img {
 	display: block;
-	height: 120px;
+	height: 100px;
 	margin: 0 auto;
 }
 
@@ -48,33 +55,6 @@ p{
 .button-add:hover {
 	background-color: #fff;
 	color: #019858;
-}
-
-.button-confirm {
-	margin: 0 auto;
-	padding: 5px 10px;
-	background-color: #FF359A;
-	color: #fff;
-	outline: none;
-	border-radius: 5px;
-}
-
-.button-confirm:hover {
-	background-color: #fff;
-	color: #FF359A;
-	border: 1px solid #FF359A;
-}
-
-@media ( max-width : 960px) {
-	.prodlist {
-		width: 31%;
-	}
-}
-
-@media ( max-width : 600px) {
-	.prodlist {
-		width: 48%;
-	}
 }
 
 #snackbar {
@@ -93,54 +73,20 @@ p{
 	font-size: 17px;
 }
 
+@media ( max-width : 960px) {
+	.prodlist {
+		width: 31%;
+	}
+}
+
+@media ( max-width : 600px) {
+	.prodlist {
+		width: 48%;
+	}
+}
+
 #snackbar.show {
 	visibility: visible;
 	-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
 	animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
-
-@-webkit-keyframes fadein {
-	from {
-		bottom: 0;
-		opacity: 0;
-	}
-
-	to {
-		bottom: 30px;
-		opacity: 1;
-	}
-}
-@keyframes fadein {
-	from {
-		bottom: 0;
-		opacity: 0;
-	}
-
-	to {
-		bottom: 30px;
-		opacity: 1;
-	}
-}
-@-webkit-keyframes fadeout {
-	from {
-		bottom: 30px;
-		opacity: 1;
-	}
-
-	to {
-		bottom: 0;
-		opacity: 0;
-	}
-}
-
-@keyframes fadeout {
-	from {
-		bottom: 30px;
-		opacity: 1;
-	}
-
-	to {
-		bottom: 0;
-		opacity: 0;
-	}
 }

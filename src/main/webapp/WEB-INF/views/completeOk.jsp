@@ -23,7 +23,7 @@
 
 	go();
 	function go() {
-		setTimeout("location.href='http://localhost:8080/FunBar/'", 5000);
+		setTimeout("location.href='http://localhost:8080/FunBar/'", 8000);
 	}
 </script>
 
@@ -69,15 +69,15 @@
 					</div>
 
 					<div class="modal-body" style="text-align: center">
-						<h4 class="modal-title" style="font-size:28px;font-family:bold">訂位完成</h4>
-						<span style="font-size:28px;font-family:bold">訂位編號 : ${number}</span><br>
-						<span style="font-size:25px">感謝您的訂位,我們 <span style="color: blue;font-family:bold"> ${date} </span>見 !</span>
+						<h4 class="modal-title" style="font-size:28px;font-family:DFKai-sb;">訂位完成</h4>
+						<span style="font-size:28px;font-family:DFKai-sb;">訂位編號 : ${number}</span><br>
+						<span style="font-size:25px;font-family:DFKai-sb;">感謝您的訂位,我們 <span style="color: blue;font-family:DFKai-sb;"> ${date} </span>見 !</span>
 
 					</div>
 
 					<div class="modal-footer" style="text-align: center">
 
-						<button style="background-color: orange; border: 1px solid red;font-size:22px;width:400px" onclick="location='http://localhost:8080/FunBar/'" type="button" class="btn btn-default" data-dismiss="modal">回首頁</button>
+						<button style="background-color: orange; border: 1px solid black;font-size:22px;width:400px" onclick="location='http://localhost:8080/FunBar/'" type="button" class="btn btn-default" data-dismiss="modal">回首頁</button>
 
 					</div>
 

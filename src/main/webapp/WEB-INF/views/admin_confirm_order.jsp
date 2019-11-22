@@ -36,6 +36,7 @@
 					style="background-color: #66B3FF; border: 2px solid black;height:50px;width:300px">重新選擇日期</button>
 			
 			<span style="margin-left: 90px;color:red;">TWD : ${total} 元整</span>
+			
 					
 			</div>
 			
@@ -72,6 +73,7 @@
 				<form:input type="hidden" path="check_in_time" value="${date}" />
 				<form:input type="hidden" path="check_out_time" value="${stay}" />
 				<form:input type="hidden" path="rooms" value="${rooms}" />
+				<form:input type="hidden" path="total" value="${total}" />
 				<form:input type="hidden" path="status" value="未付款" />
 				<span>繳款方式 : 當日現場付款</span>
 				<button type="submit" class="btn btn-primary"

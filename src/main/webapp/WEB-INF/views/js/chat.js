@@ -1,16 +1,15 @@
 var stompClient = null;
 var friendList = "<li class='contact'><div class='wrap'><span class='contact-status online'></span>"
-		+ "<img src='"
-		+ requestUrl
-		+ "/membergetPicture/{{receiverMemberId}}' alt='' /><div class='meta'>"
-		+ "<p class='name'>{{receiverMemberName}}</p>"
+		+ "<img src='{{requestUrl}}/membergetPicture/{{receiverMemberId}}'/><div class='meta'>"
+		+ "<p class='name' id='Name{{receiverMemberId}}'>{{receiverMemberName}}</p>"
 		+ "<button class='badge badge-primary badge-pill btn btn-primary btn-sm' id='receiver{{receiverMemberId}}'"
 		+ "onclick='sendto({{receiverMemberId}})'>CHAT</button>"
 		+ "</div></div></li>";
 
 var requestUrl = ""
-var loginMemberName = $('#loginMemberName').text();
-var loginMemberid = $('#loginMemberid').text();
+var loginMemberName = $('#loginMemberName_chatbox').text();
+var loginMemberid = $('#loginMemberid_chatbox').text();
+var friendList_html = null;
 
 function getMemberData() {
 	var mdata = null;
@@ -21,7 +20,7 @@ function getMemberData() {
 		async : false,
 		success : function(memberData) {
 			let friendshipListTableArea = "";
-			requestUrl = $('#requestUrl').text();
+			requestUrl = $('#requestUrl_chatbox').text();
 			mdata = memberData.Member;
 			for (let i = 0; i < mdata.length; i++) {
 				let member = mdata[i];
@@ -38,54 +37,75 @@ function friendlist() {
 		dataType : "JSON",
 		success : function(friendData) {
 			let receiverTableArea = "";
-			let friendList_html = "";
 			var fdata = friendData.friend
 			for (let i = 0; i < fdata.length; i++) {
 				let friend = fdata[i];
 				if (friend.sender_memberId == loginMemberid
-						&& friend.friendStatus == 1) {
+						&& friend.friendStatus == 2) {
 					for (let i = 0; i < mdata.length; i++) {
 						let member = mdata[i];
 						if (friend.receiver_memberId == member.id) {
 
-							friendList_html = friendList.replace(
-									/\{{receiverMemberName}}/g,
-									member.memberName).replace(
-									/\{{receiverMemberId}}/g, member.id)
+							friendList_html = friendList
+											.replace(/\{{receiverMemberName}}/g, member.memberName)
+											.replace(/\{{receiverMemberId}}/g, member.id)
+											.replace(/\{{requestUrl}}/g, requestUrl);
 
 							receiverArea += friendList_html;
-							let conn = [ loginMemberid, friend.receiver_memberId ];
-							conn.sort();
-							stompClient.subscribe('/member/message/' + conn[0] + "/" + conn[1], function(message) {
-								var json = JSON.parse(message.body);
-								var senderMemberId = json.senderMemberId;
-								var receiverMemberId = json.receiverMemberId;
-								var messageType = json.messageType;
-								var user = json.userName;
-								var date = json.sendDate;
-								var msg = json.content;
-								if (messageType == "text") {
-									showNewMessage(user, date, msg,
-											senderMemberId, receiverMemberId);
-								} else if (messageType == "image") {
-									showNewImage(user, date, msg,
-											senderMemberId, receiverMemberId);
-								}
-							})
+							
 						}
 					}
 				}
 
 			}
-			$("#receiverArea").append(receiverArea);
-
+			var temp = receiverArea.toString()
+			var newtemp = temp.slice(25)
+			$("#receiverArea").append(newtemp);
 		}
 	})
 
 }
 
+function friends(){
+	$.ajax({
+		url : requestUrl + "friendJson",
+		method : "POST",
+		dataType : "JSON",
+		success : function(friendData) {
+			var fdata = friendData.friend
+			for (let i = 0; i < fdata.length; i++) {
+				let friend = fdata[i];
+				if(friend.sender_memberId == loginMemberid && friend.friendStatus == 2){
+
+					let conn = [ loginMemberid, friend.receiver_memberId ];
+					if(conn[0] > conn[1]){
+						let temp = conn[0];
+						conn[0] = conn[1];
+						conn[1] = temp;
+					}
+					stompClient.subscribe('/member/message/' + conn[0] + "/" + conn[1], function(message) {
+						var json = JSON.parse(message.body);
+						var senderMemberId = json.senderMemberId;
+						var receiverMemberId = json.receiverMemberId;
+						var messageType = json.messageType;
+						var user = json.userName;
+						var date = json.sendDate;
+						var msg = json.messageContent;
+						if (messageType == "text") {
+							showNewMessage(user, date, msg, senderMemberId, receiverMemberId);
+						} else if (messageType == "image") {
+							showNewImage(user, date, msg, senderMemberId, receiverMemberId);
+						}
+					})
+				}
+			}
+		}
+	})
+}
+
+
 $(document).ready(function() {
-	requestUrl = $('#requestUrl').text();
+	requestUrl = $('#requestUrl_chatbox').text();
 	mdata = getMemberData();
 	friendlist();
 
@@ -93,14 +113,6 @@ $(document).ready(function() {
 
 $(function() {
 	connect();
-	/**
-	 * 键盘enter事件，用来发送消息
-	 */
-//	$("#messageInput").bind("keyup", function(event) {
-//		if (event.keyCode == 13) {
-//			sendMessage(loginMemberid, 12);
-//		}
-//	});
 
 	/**
 	 * 清除聊天窗口的所有内容
@@ -180,7 +192,7 @@ function initEmoji() {
  * messageType分为：text与image
  */
 function connect() {
-	
+	var receiverMemberId = 12;
 
 	var socket = new SockJS($("#websocketUrl").val().trim());
 	stompClient = Stomp.over(socket);
@@ -198,13 +210,14 @@ function connect() {
 			showActiveUserNumber(message.body);
 			var user = "系统消息";
 			var date = null;
-			var msg = $("#myName").val() + "加入聊天！";
+			var msg = loginMemberName + "加入聊天！";
 			showNewMessage(user, date, msg);
 		});
 		stompClient.subscribe("/topic/login", function(message) {
 			showNewUser(message.body);
 		});
 
+		friends();
 		// stompClient.subscribe('/member/message/'+ loginMemberid, function
 		// (message) {
 		// var json = JSON.parse(message.body);
@@ -313,8 +326,8 @@ function formatDate(dateTime) {
  */
 function showNewMessage(user, date, msg, senderMemberId, receiverMemberId) {
 	var container = document.getElementById("conversation");
+	var messages = document.getElementById("messages");
 	var msgToDisplay = document.createElement('li');
-	$('.chatbox').toggleClass('chatbox--tray');
 
 	if (user == "系统消息") {
 		msgToDisplay.style.color = 'red';
@@ -328,17 +341,16 @@ function showNewMessage(user, date, msg, senderMemberId, receiverMemberId) {
 		msgToDisplay.innerHTML = "<img src='http://emilcarlsson.se/assets/harveyspecter.png' alt='' />"
 				+ "<p>" + msg + "</p>"
 		container.append(msgToDisplay);
-		container.scrollIntoView(container);
-
+		
 	} else {
 		msgToDisplay.setAttribute("class", "sent");
 		msgToDisplay.innerHTML = "<img src='http://emilcarlsson.se/assets/harveyspecter.png' alt='' />"
 				+ "<p>" + msg + "</p>"
 		container.append(msgToDisplay);
-		container.scrollIntoView(container);
-
+		
 	}
 
+	($('#conversation').children("li:last-child")[0]).scrollIntoView();
 }
 /**
  * 正则表达式显示消息中的emoji图片
@@ -374,35 +386,67 @@ function showNewImage(user, date, url) {
 			+ '</span><br/>[' + user + '] : <br/>'
 			+ '<img class="img-thumbnail" src="' + url + '"/>';
 	container.append(msgToDisplay);
-	container.scrollTop = container.scrollHeight;
+//	container.scrollTop = container.scrollHeight;
 }
 /**
  * 发送输入框中的信息
  */
 function sendMessage(loginMemberid, receiverMemberId) {
 	var content = $("#messageInput").val();
-	console.log(content)
-	console.log("Login id = " + loginMemberid)
-	console.log("Login Name = " + loginMemberName)
+	let conn = [ loginMemberid, receiverMemberId];
+	if(conn[0] > conn[1]){
+		let temp = conn[0];
+		conn[0] = conn[1];
+		conn[1] = temp;
+	}
+	let subscribe = conn[0] + "/" + conn[1];
 	if (content.trim().length != 0) {
 		$("#messageInput").val('');
 		stompClient.send("/message", {}, JSON.stringify({
 			'senderMemberId' : loginMemberid,
 			'receiverMemberId' : receiverMemberId,
+			'subscribe' : subscribe,
 			'userName' : loginMemberName,
-			'content' : content
+			'messageContent' : content,
 		}));
 	}
 }
 
  function sendto(receiverMemberId){
- $("#messageInput").unbind("keyup").bind("keyup", function (event) {
- if (event.keyCode == 13){
- sendMessage(loginMemberid,receiverMemberId);
- }
- });
-	
+	 $("#messageInput").unbind("keyup").bind("keyup", function(event) {
+		if (event.keyCode == 13) {
+			sendMessage(loginMemberid, receiverMemberId);
+			}
+	   });
+	let receiverMemberName = $("#Name" + receiverMemberId).text();
+ 	let conn = [ loginMemberid, receiverMemberId];
+	if(conn[0] > conn[1]){
+		let temp = conn[0];
+		conn[0] = conn[1];
+		conn[1] = temp;
+	}
+	let subscribe = conn[0] + "/" + conn[1];
+	$("#receiverMemberName").text(receiverMemberName);
+ 	getHistoryMessage(subscribe)
  }
 
-// test
-
+ function getHistoryMessage(subscribe){
+	 $("#conversation").html("");
+ $.ajax({
+		url : requestUrl + "getHistoryMessageJson",
+		method : "POST",
+		dataType : "JSON",
+		async : false,
+		data : {subscribe : subscribe},
+		success : function(messageHistoryData) {
+			let messageArea = "";
+			let messageData = messageHistoryData.message
+			for(let i = 0; i < messageData.length; i++){
+				let message = messageData[i];
+				showNewMessage(message.userName, message.sendDate, message.messageContent
+						, message.senderMemberId, message.receiverMemberId);
+				
+			}
+		}
+ 	})
+ }

@@ -39,11 +39,16 @@ public class OrderHandleServiceImpl implements OrderHandleService{
 
  @Transactional
  @Override
- public ProductBean deleteProduct(Integer productId) {
-  return dao.deleteProduct(productId);  
+ public void pullProduct(Integer productId) {
+	 dao.pullProduct(productId);  
  }
-
-
+ 
+ 
+ @Transactional
+ @Override
+ public void pushProduct(Integer productId) {
+ 	dao.pushProduct(productId);
+ }
 
 
  @Transactional
@@ -54,31 +59,38 @@ public class OrderHandleServiceImpl implements OrderHandleService{
   
  }
 
- 
+ @Transactional
  @Override
  public int addOrder(OrderBean order) {
   return dao.addOrder(order);
   
-  
  }
 
  @Transactional
- @Override
- public void addOrderItemList(List<OrderItemBean> orderItemList) {
-  // TODO Auto-generated method stub
-  
- }
-
  @Override
  public OrderBean getOrderById(int od) {
   
   return dao.getOrderById(od);
  }
 
+@Transactional
 @Override
 public ArrayList<OrderBean> getMyOrders(int id,HttpServletRequest req) {
 	
 	return dao.getMyOrders(id,req);
+}
+
+@Transactional
+@Override
+public void addOrderItemList(List<OrderItemBean> orderItemList) {
+ // TODO Auto-generated method stub
+ 
+}
+
+@Override
+public ArrayList<OrderBean> getAllOrders(HttpServletRequest req) {
+	
+	return dao.getAllOrders(req);
 }
 
  

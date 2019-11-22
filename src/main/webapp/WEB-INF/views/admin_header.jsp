@@ -32,27 +32,13 @@
 			id="sidebarToggle" href="#">
 			<i class="fas fa-bars"></i>
 		</button>
-
-		<!-- Navbar Search -->
-		<!-- <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="button">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
-    </form> -->
-
-		<!-- Navbar -->
 	</nav>
 
 	<div id="wrapper">
 
 		<!-- Sidebar -->
 		<ul class="sidebar navbar-nav">
-			<li class="nav-item active"><a class="nav-link" href="#"> <i
+			<li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/admin"> <i
 					class="fas fa-fw fa-tachometer-alt"></i> <span>管理員您好</span>
 			</a></li>
 			<li class="nav-item dropdown"><a
@@ -103,14 +89,8 @@
 					<h6 class="dropdown-header">######</h6>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/showAllProduct">所有商品</a> <a
 						class="dropdown-item" href="${pageContext.request.contextPath}/addProduct">新增商品</a> <a
-						class="dropdown-item" href="#">###</a>
+						class="dropdown-item" href="${pageContext.request.contextPath}/showAllOrders">查看所有訂單</a>
 				</div></li>
-			<li class="nav-item"><a class="nav-link" href="charts.html">
-					<i class="fas fa-fw fa-chart-area"></i> <span>efg</span>
-			</a></li>
-			<li class="nav-item"><a class="nav-link" href="tables.html">
-					<i class="fas fa-fw fa-table"></i> <span>hij</span>
-			</a></li>
 			
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="pagesDropdown"

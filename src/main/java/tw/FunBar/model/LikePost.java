@@ -21,7 +21,5 @@ public class LikePost implements Serializable {
 	public void setLikePK(LikePK likePK) {
 		this.likePK = likePK;
 	}
-	
-	
 
 }
