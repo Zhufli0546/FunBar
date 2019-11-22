@@ -52,7 +52,7 @@
 	<!-- Header -->
 	<header>
 		<!-- Header desktop -->
-		<div class="wrap-menu-header gradient1 trans-0-4" style="background-color: black; position: relative;">
+		<div class="wrap-menu-header gradient1 trans-0-4" style="background-color: black;">
 			<div class="container-fluid h-full">
 				<div class="wrap_header trans-0-3">
 					<!-- Logo -->
