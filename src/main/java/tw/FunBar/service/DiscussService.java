@@ -17,7 +17,9 @@ public interface DiscussService {
 
 	void updatePostContent(Post post);
 
-	void deletePostContent(Integer postId);
+	void deletePostContent(Post post);
+
+	Post getPostById(Integer postId);
 
 	List<LikePost> getLikesById(Integer memberId);
 
@@ -32,6 +34,10 @@ public interface DiscussService {
 	void sendFriendRequest(Friendship friendship);
 
 	void confirmFriendRequest(Friendship friendship);
+
+	void cancelFriendRequest(Friendship friendship);
+
+	Friendship getFriendRequest(Integer sender_memberId, Integer receiver_memberId);
 
 	List<Member> searchMember(String memberName);
 
