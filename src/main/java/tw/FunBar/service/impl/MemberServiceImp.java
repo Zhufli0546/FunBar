@@ -83,6 +83,19 @@ public class MemberServiceImp implements MemberService {
 		dao.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberPwd, memberId, memberEmail, blob);
 	}
 
+	@Override
+	public Member forget(String memberId) {
+		
+		return dao.forget(memberId);
+	}
+
+	@Override
+	public void newPwd(String memberId, String memberPwd) {
+		dao.newPwd(memberId, memberPwd);
+	}
+
+	
+
 	
 
 	

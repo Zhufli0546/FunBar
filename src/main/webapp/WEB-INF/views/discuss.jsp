@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Discuss</title>
+<title>討論區</title>
 <meta charset="UTF-8">
 <!-- Header -->
 <jsp:include page="header.jsp" />
@@ -21,7 +21,7 @@
 				<div class="list-group">
 					<div class="list-group-item list-group-item-action">
 					<img class="card-img-top rounded-circle" style="height: 50px; width: 50px" src="<c:url value='/membergetPicture/${member.id}'/>">
-					<span id="loginMemberName">${sessionScope.member.memberName}</span></div>
+					<span id="loginMemberName" class="ml-3 text-xl" style="font-family: 'Russo One', sans-serif; font-size:18px;">${sessionScope.member.memberName}</span></div>
 					<a href="" class="list-group-item list-group-item-action" id="loginMemberid" style="display:none">${sessionScope.member.id}</a>
 					<a href="" class="list-group-item list-group-item-action" id="requestUrl" style="display:none"><c:url value='/'/></a>
 					<p class="list-group-item list-group-item-action active">${title}</p>
@@ -51,27 +51,28 @@
 
 			<!-- friend request block -->
 			<div class="col-md-3 rounded" style="background-color: white;">
-				<div class="col-md-12 font-weight-bold mt-4"><h5>Add Friend</h5></div>
+				<div class="col-md-12 font-weight-bold mt-4" style="font-family: 'Russo One', sans-serif; font-size:20px;"><h5>Add Friend</h5></div>
 				<div class="col-md-12 mt-4">
 					<div class="input-group mb-3">
 						<input type="search" class="form-control rounded" id="searchMemberName"
 							placeholder="Search" aria-describedby="button-addon2">
 						<div class="input-group-append">
-							<button class="btn btn-outline-success ml-2" id='searchMember'
+							<button class="btn btn-success ml-2" id='searchMember'
 								type="button">Search</button>
 						</div>
 					</div>
-					<div id="searchResult" class="list-group"></div>
+					<div id="searchResult" class="list-group mb-4"></div>
 				</div>
 			</div>
 		</div>
 		
 	</section>
 	
-	<!-- Chat Box -->
-	<jsp:include page="chatbox.jsp" />
+	
 	<!-- Footer -->
 	<jsp:include page="footer.jsp" />
 	<script type="text/javascript" src="<c:url value='/js/discuss.js'/>"></script>
+	<!-- Chat Box -->
+	<jsp:include page="chatbox.jsp" />
 </body>
 </html>

@@ -29,4 +29,7 @@ public interface OrderHandleDAO {
 	OrderBean getOrderById(int od);
 
 	ArrayList<OrderBean> getMyOrders(Integer memberId,HttpServletRequest req);
+	
+	public ArrayList<OrderBean> getAllOrders(HttpServletRequest req);
+	
 }
