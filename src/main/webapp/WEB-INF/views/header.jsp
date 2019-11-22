@@ -52,8 +52,8 @@
 	<!-- Header -->
 	<header>
 		<!-- Header desktop -->
-		<div class="wrap-menu-header gradient1 trans-0-4">
-			<div class="container h-full">
+		<div class="wrap-menu-header gradient1 trans-0-4" style="background-color: black;">
+			<div class="container-fluid h-full">
 				<div class="wrap_header trans-0-3">
 					<!-- Logo -->
 					<div class="logo">
@@ -66,76 +66,54 @@
 					<div class="wrap_menu p-l-20 p-l-0">
 						<nav class="menu">
 							<ul class="main_menu">
-						<li><a href="${pageContext.request.contextPath}/activities?index=1">熱門活動</a></li>
-
+								<li><a href="${pageContext.request.contextPath}/activities?index=1">熱門活動</a></li>
+		
 								<li><a href="${pageContext.request.contextPath}/blogs">部落格</a></li>
-
+		
 								<li><a href="${pageContext.request.contextPath}/discuss">討論區</a></li>
-
+		
 								<li class="nav-item dropdown">
-								
-								         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">線上預約</a>
-								         
-								           <div class="dropdown-menu"">
-								           		 <a class="dropdown-item" href="${pageContext.request.contextPath}/booking">線上訂位</a>
-               									 <a class="dropdown-item" href="${pageContext.request.contextPath}/booking_room">線上訂房</a>
-               									 <a class="dropdown-item" href="${pageContext.request.contextPath}/personal_order">我的訂房</a>
-               								</div>	 
-
+									<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">線上預約</a>    
+								    <div class="dropdown-menu">
+								    	<a class="dropdown-item" href="${pageContext.request.contextPath}/booking">線上訂位</a>
+		             					<a class="dropdown-item" href="${pageContext.request.contextPath}/booking_room">線上訂房</a>
+		             				</div>
 								</li>
-								
+										
 								<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">購物區</a>
+									<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">購物區</a>
 									<div class="dropdown-menu">
-						           		 <a class="dropdown-item" href="${pageContext.request.contextPath}/shoppingCart">Mall</a>
-       									 <a class="dropdown-item" href="${pageContext.request.contextPath}/showCart">My Cart</a>
-       									 <a class="dropdown-item" href="${pageContext.request.contextPath}/showMemOrders">My Orders</a>
-               						</div>
+						            	<a class="dropdown-item" href="${pageContext.request.contextPath}/shoppingCart">Mall</a>
+		     							<a class="dropdown-item" href="${pageContext.request.contextPath}/showCart">My Cart</a>
+		     							<a class="dropdown-item" href="${pageContext.request.contextPath}/showMemOrders">My Orders</a>
+		             				</div>
 								</li>
-								
+										
 								<c:choose>
 									<c:when test="${sessionScope.member.memberName==null}">
-										
 										<li><a href="${pageContext.request.contextPath}/signin">登入</a></li>
 									</c:when>
 									<c:otherwise>
-
-										<a href="<c:url value='getself?id=${member.id}' />"> <img
-											class="card-img-top rounded-circle"
-											style="height: 50px; width: 50px"
-											src="<c:url value='/membergetPicture/${member.id}'/>">
-										</a>
-										<div class="dropdown">
-											<button  type="button" class="btn dropdown-toggle" 
-												id="dropdownMenu1" data-toggle="dropdown">
-												${sessionScope.member.memberName}, 你好 <span class="caret"></span>
-											</button>
-											<ul 
-											class="dropdown-menu" role="menu"
-												aria-labelledby="dropdownMenu1">
-												<li role="presentan"><a role="menuitem" tabindex="-1"
-													href="<c:url value='getself?id=${member.id}' />">修改會員資料</a>
-												</li>
-												<div class="dropdown-divider"></div>
-													<li role="presentan"><a role="menuitem" tabindex="-1"
-													href="<c:url value='getONE?id=${member.id}' />">修改訂單資料</a>
-												</li>
-													
-											</ul>
-										</div>
-
-										<!-- 	<a>${sessionScope.member.memberName}, 你好</a> -->
-										<td><a href="${pageContext.request.contextPath}/logout">登出</a></td>
+										<li class="nav-item dropdown">
+											<a class="nav-item dropdown-toggle" data-toggle="dropdown" href="#">
+												<img id="dropdownMenu1" data-toggle="dropdown" class="card-img-top rounded-circle" style="height: 50px; width: 50px" src="<c:url value='/membergetPicture/${member.id}'/>">
+											</a>
+											<div class="dropdown-menu">
+												<a class="dropdown-item" href="<c:url value='getself?id=${member.id}' />">修改會員資料</a>
+												<a class="dropdown-item" href="<c:url value='getONE?id=${member.id}' />">修改訂單資料</a>
+												<a class="dropdown-item" href="${pageContext.request.contextPath}/personal_order">我的訂房</a>
+												<a class="dropdown-item" href="${pageContext.request.contextPath}/logout">登出</a>
+											</div>
+										</li>
 									</c:otherwise>
 								</c:choose>
-						
-						      <li class="nav-item dropdown no-arrow">
-        <a class="nav-link" href="${pageContext.request.contextPath}/showCart" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
-          <i style="color:red;"class="fa fa-cart-arrow-down"></i>
-          <span class="badge badge-danger cart">${fn:length(sessionScope.Cart.cartItems)}</span>
-          </a>
-      </li>
-						
+								<li class="nav-item dropdown no-arrow">
+							    	<a class="nav-link" href="${pageContext.request.contextPath}/showCart" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+									<i style="color:red;"class="fa fa-cart-arrow-down"></i>
+		         					<span class="badge badge-danger cart">${fn:length(sessionScope.Cart.cartItems)}</span>
+		         					</a>
+		     					</li>
+							</ul>
 						
 						</nav>
 					</div>
