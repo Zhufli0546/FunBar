@@ -11,9 +11,9 @@ var newPost = "<div class='card-header'>Create Post</div>"
 		+ "<div class='text-right'><button class='btn btn-info lg mt-3' type='submit' name='submitPost'>POST</button></div>"
 		+ "</form></div></div>";
 
-var firstLevelComment = "<div class='card' id='firstComment'>"
+var firstLevelComment = "<div class='card' id='firstComment{{post.memberId}}' style='display:none;'>"
 		+ "<div class='media p-4 bg-light'>" 
-		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{sessionScope.member.id}}'>"
+		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{post.memberId}}'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0' id='firstCommentBody{{post.postId}}'>"
 		+ "<a href='' class='text-primary'><h5>{{sessionScope.member.memberName}}</h5></a>"
 		+ "<div class='media-date'>{{post.postTime}}"
@@ -46,7 +46,7 @@ var level = "<div class='collapse' id='comment{{post.postId}}'>"
 
 var secondLevelComment = "<div class='card mt-3' id='secondComment'>"
 		+ "<div class='media p-4 bg-light'>" 
-		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{sessionScope.member.id}}'>"
+		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{post.memberId}}'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0'id='secondCommentBody{{post.postId}}' >"
 		+ "<a href='' class='text-primary'><h5>{{sessionScope.member.memberName}}</h5></a>"
 		+ "<div class='media-date'>{{post.postTime}}"
@@ -76,7 +76,7 @@ var secondLevelComment = "<div class='card mt-3' id='secondComment'>"
 
 var thirdLevelComment = "<div class='card mt-3 ml-5' id='thirdComment'>"
 		+ "<div class='media p-4 bg-light'>"
-		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{sessionScope.member.id}}'>"
+		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{post.memberId}}'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0'>"
 		+ "<a href='' class='text-primary'><h5>{{sessionScope.member.memberName}}</h5></a>"
 		+ "<div class='media-date'>{{post.postTime}}<button type='button' id='drop{{post.postId}}' class='btn-sm ml-2 btn-secondary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></button>"
@@ -107,10 +107,12 @@ var like;
 var mdata;
 var pdata;
 
+function refreshAllPost(){
 $.ajax({
 	url : requestUrl + "discussJson",
 	method : "POST",
 	dataType : "JSON",
+	async : false,
 	success : function(postData) {
 
 		newPost_html = newPost.replace(/\{{sessionScope.member.memberName}}/g, loginMemberName)
@@ -123,7 +125,7 @@ $.ajax({
 		for (let i = 0; i < data.length; i++) {
 			let post = data[i];
 
-			if (post.parentPostId == null && post.postStatus == 0 && post.memberId == loginMemberid) {
+			if (post.parentPostId == null && post.postStatus == 0) {
 
 				firstLevelComment_html = firstLevelComment
 									.replace(/\{{post.memberId}}/g, post.memberId)
@@ -136,10 +138,11 @@ $.ajax({
 
 				$("#firstLevelComment").append(firstLevelComment_html);
 
-				refreshCommentNumber(post.postId, post.replyPost.length)
-				editContent(post.postId, post.postContent)
-				deleteContent(post.postId)
-				checkDropBtn(post.postId, loginMemberid, post.memberId)
+				
+				
+				if(loginMemberid == post.memberId){
+					$("#firstComment" + loginMemberid).show();
+				}
 				
 				if (post.replyPost.length > 0) {
 					let second = "";
@@ -197,7 +200,29 @@ $.ajax({
 				}
 			}
 
-			for (let j = 0; j < post.replyPost.length; j++) {
+		}
+		
+	}
+})
+}
+
+function checkAllBtn(){
+	$.ajax({
+		url : requestUrl + "discussJson",
+		method : "POST",
+		dataType : "JSON",
+		async : false,
+		success : function(postData) {
+			for (let i = 0; i < data.length; i++) {
+				let post = data[i];
+				
+				checkLikeBtn(post.postId)
+				refreshCommentNumber(post.postId, post.replyPost.length)
+				editContent(post.postId, post.postContent)
+				deleteContent(post.postId)
+				checkDropBtn(post.postId, loginMemberid, post.memberId)
+				
+				for (let j = 0; j < post.replyPost.length; j++) {
 				let comment = post.replyPost[j];
 
 				checkLikeBtn(comment.postId)
@@ -205,8 +230,8 @@ $.ajax({
 				editContent(comment.postId, comment.postContent)
 				deleteContent(comment.postId)
 				checkDropBtn(comment.postId, loginMemberid, comment.memberId)
-
-				for (let k = 0; k < comment.replyPost.length; k++) {
+					
+					for (let k = 0; k < comment.replyPost.length; k++) {
 					let thirdComment = comment.replyPost[k];
 
 					checkLikeBtn(thirdComment.postId)
@@ -214,15 +239,32 @@ $.ajax({
 					deleteContent(thirdComment.postId)
 					checkDropBtn(thirdComment.postId, loginMemberid, thirdComment.memberId)
 
+					}
+				}
+				
+			}
+		}
+	})
+}
+
+
+function showFriendsPost(){
+$.ajax({
+		url : requestUrl + "friendJson",
+		method : "POST",
+		dataType : "JSON",
+		success : function(friendData) {
+			console.log("===================================")
+			fdata = friendData.friend
+			for (let i = 0; i < fdata.length; i++) {
+				let friend = fdata[i];
+				if(friend.sender_memberId == loginMemberid && friend.friendStatus == 2){
+					$("#firstComment" + friend.receiver_memberId).show();
 				}
 			}
-			checkLikeBtn(post.postId)
 		}
-		
-	}
-})
-
-
+	})
+}
 
 // like 
 function refreshLikeNumber(postId) {
@@ -234,7 +276,7 @@ function refreshLikeNumber(postId) {
 }
 
 function addLike(postId, memberId) {
-	
+	$("#likebtn" + postId).unbind();
 	$("#likebtn" + postId).mousedown(function() {
 		$.ajax({
 			url : requestUrl + "addLike",
@@ -253,6 +295,7 @@ function addLike(postId, memberId) {
 	})
 }
 function unLike(postId, memberId) {
+	$("#unLikebtn" + postId).unbind();
 	$("#unLikebtn" + postId).mousedown(function() {
 		$.ajax({
 			url : requestUrl + "unLike",
@@ -351,6 +394,9 @@ var memberList = "<div class='list-group-item d-flex justify-content-between ali
 $(document).ready(function(){
 	requestUrl = $('#requestUrl').text();
 	fdata = getFriendShip();
+	refreshAllPost();
+	showFriendsPost();
+	checkAllBtn();
 	$("#searchMember").click(function(){
 $.ajax({
 	url : requestUrl + "memberJson",

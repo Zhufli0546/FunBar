@@ -58,9 +58,8 @@
 					</div>
 					<form class="form-inline mr-right">
 						<div class="md-form my-0">
-							<input class="form-control" type="text" placeholder="Search"
-								aria-label="Search"> 
-								<i class="fas fa-search text-white ml-3" aria-hidden="true"></i>
+							<i class="fa fa-search mr-2" aria-hidden="true"></i>
+							<input class="form-control" type="text" placeholder="Search" aria-label="Search"> 		
 						</div>
 					</form>
 				</nav>

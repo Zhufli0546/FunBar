@@ -3,6 +3,10 @@ package tw.FunBar.model;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Embeddable
 public class LikePK implements Serializable {
