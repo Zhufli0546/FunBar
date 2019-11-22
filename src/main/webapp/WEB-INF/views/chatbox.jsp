@@ -1,24 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Chat box</title>
-<link rel="stylesheet" type="text/css" href="<c:url value='/css/chatbox.css'/>">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-<!-- <script src="https://kit.fontawesome.com/c523dff261.js" crossorigin="anonymous"></script> -->
-<%-- <script type="text/javascript" src="<c:url value="/vendor/jquery/jquery-3.2.1.min.js"/>"></script> --%>
 <!--sockJS cdn-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/web-socket-js/1.0.0/web_socket.js"></script>
 <!--stomp cdn-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
-
+<!-- Font Awesome -->
+<link rel="stylesheet" type="text/css" href="<c:url value='/css/chatbox.css'/>">
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
@@ -95,7 +89,7 @@
 				style="z-index: 9998">
 				<div class="chatbox__title">
 					<h5>
-						<a href="javascript:void()">Leave a message</a>
+						<a id="receiverMemberName" href="javascript:void()">Message</a>
 					</h5>
 					<button class="chatbox__title__close"></button>
 				</div>
@@ -118,7 +112,7 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="<c:url value='/js/chatbox.js'/>"></script>
+	<script type="text/javascript" src="<c:url value='/js/chat.js'/>"></script>
 	<script>
 		$(document).ready(function() {
 							var $chatbox = $('.chatbox'), $chatboxTitle = $('.chatbox__title'), $chatboxTitleClose = $('.chatbox__title__close'), $chatboxCredentials = $('.chatbox__credentials');

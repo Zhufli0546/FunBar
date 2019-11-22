@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -9,10 +8,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Friend</title>
-<!-- Header -->
-<jsp:include page="header.jsp" />
+
 </head>
 <body class="animsition bg-dark">
+<!-- Header -->
+<jsp:include page="header.jsp" />
 	<br>
 
 	<section class="container page">
@@ -25,7 +25,9 @@
 						<img class="card-img-top rounded-circle"
 							style="height: 50px; width: 50px"
 							src="<c:url value='/membergetPicture/${member.id}'/>"><span
-							id="loginMemberName">${sessionScope.member.memberName}</span>
+							id="loginMemberName"
+							style="font-family: 'Russo One', sans-serif; font-size: 18px;"
+							class="ml-3 text-xl">${sessionScope.member.memberName}</span>
 					</div>
 					<a href="${pageContext.request.contextPath}/friend"
 						class="list-group-item list-group-item-action active list-group-item d-flex justify-content-between align-items-center">
@@ -50,22 +52,26 @@
 						<a class="nav-item nav-link active" id="navFriendList"
 							data-toggle="tab" href="#FriendList" role="tab"
 							aria-controls="nav-home" aria-selected="true">好友列表</a> <a
-							class="nav-item nav-link ml-3 bg-info" id="navReceiver" data-toggle="tab"
-							href="#Receiver" role="tab" aria-controls="nav-profile"
-							aria-selected="false">交友邀請</a>
+							class="nav-item nav-link ml-3 bg-info" id="navReceiver"
+							data-toggle="tab" href="#Receiver" role="tab"
+							aria-controls="nav-profile" aria-selected="false">交友邀請</a>
 					</div>
-					<form class="form-inline my-2 my-lg-0">
-						<input class="form-control mr-sm-2" type="search"
-							placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+					<form class="form-inline mr-right">
+						<div class="md-form my-0">
+							<input class="form-control" type="text" placeholder="Search"
+								aria-label="Search"> 
+								<i class="fas fa-search text-white ml-3" aria-hidden="true"></i>
+						</div>
 					</form>
 				</nav>
 				<div class="tab-content" id="nav-tabContent">
 					<div class="tab-pane fade show active" id="FriendList"
 						role="tabpanel" aria-labelledby="nav-home-tab">
 
-						<table class='table table-striped table-light table-hover rounded-bottom'>
-							<thead class="bg-info">
+						<table
+							class='table table-striped table-light table-hover rounded-bottom'>
+							<thead class="bg-info"
+								style="font-family: 'Russo One', sans-serif; font-size: 20px;">
 								<tr>
 									<th scope='col'>Friend Pic</th>
 									<th scope='col'>Friend Name</th>
@@ -84,7 +90,8 @@
 					</div>
 					<div class="tab-pane fade" id="Receiver" role="tabpanel"
 						aria-labelledby="nav-profile-tab">
-						<table class='table table-striped table-light table-hover rounded-bottom'>
+						<table
+							class='table table-striped table-light table-hover rounded-bottom'>
 							<thead class="bg-info">
 								<tr>
 									<th scope='col'>Friend Pic</th>
@@ -101,12 +108,11 @@
 			</div>
 		</div>
 	</section>
-	<!-- Chat Box -->
-	<jsp:include page="chatbox.jsp" />
+
 	<!-- Footer -->
 	<jsp:include page="footer.jsp" />
-	<script type="text/javascript" src="<c:url value='/js/friend.js'/>">
-		
-	</script>
+	<script type="text/javascript" src="<c:url value='/js/friend.js'/>"></script>
+	<!-- Chat Box -->
+	<jsp:include page="chatbox.jsp" />
 </body>
 </html>

@@ -44,7 +44,7 @@
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/css/own.css"/>">
 <link href="https://fonts.googleapis.com/css?family=Poller+One|Sarina|Sonsie+One&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css?family=Paytone+One|Russo+One&display=swap" rel="stylesheet">
 
 </head>
 <body>

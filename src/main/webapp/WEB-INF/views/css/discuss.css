@@ -21,3 +21,8 @@ div .media-date {
     right: 25px;
     top: 25px;
 }
+
+.card-header{
+	font-family: 'Russo One', sans-serif; 
+	font-size:20px;
+}
