@@ -17,7 +17,8 @@
 		<h2>請留下您對此活動的意見</h2>
 		<hr>
 		
-		<p>活動名稱 : ${activity.activityName}</p><br><br>
+		<p>活動名稱 :</P><br>
+		<p Style="font-size:2em;color:rgba(97, 35, 6, 0.877)">${activity.eventName}</p><br>
 		<form:form modelAttribute="suggestion" action="addSuggestion" method="POST">
 			
 			
@@ -26,7 +27,7 @@
 			
 			<div class="form-group">
 				<label for="name">會員名稱 :　</label>
-				<input name="memberName" type="text" class="form-control"
+				<input name="memberName" type="text" class="form-control" readonly="readonly"
 					id="name" placeholder="${member.memberName}" />
 				<input name="memberName" type="hidden" value="${member.memberName}" />
 			</div>
@@ -42,6 +43,8 @@
 				<form:textarea path="suggestion" class="form-control" rows="5"
 					id="content" />
 			</div>
+			
+			<input name="eventName" type="hidden" value="${activity.eventName}" />
 
 			<form:button type="submit" class="btn btn-outline-secondary">送出</form:button>
 			<a href="${pageContext.request.contextPath}/getsiqnupActivity/${member.memberId}">

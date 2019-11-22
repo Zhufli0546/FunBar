@@ -29,40 +29,25 @@
 }
 
 .intro div{
-	height:45px;
-	background-color:#F0F0F0;
+	height:50px;
+ 	background-color:#F0F0F0; 
 	border-bottom:2px solid #FFF;
 }
 }
 
 
-.button-add {
-	margin: 15px;
-	padding: 5px 10px;
-	background-color: #01B468;
-	color: #fff;
-	outline: none;
-	border-radius: 5px;
-}
+/* .button-add { */
+/* 	margin: 15px; */
+/* 	padding: 5px 10px; */
+/* 	background-color: #019858; */
+/* 	color: #fff; */
+/* 	outline: none; */
+/* 	border-radius: 5px; */
+/* } */
 
 .button-add:hover {
 	background-color: #fff;
 	color: #019858;
-}
-
-.button-confirm {
-	margin: 0 auto;
-	padding: 5px 10px;
-	background-color: #FF359A;
-	color: #fff;
-	outline: none;
-	border-radius: 5px;
-}
-
-.button-confirm:hover {
-	background-color: #fff;
-	color: #FF359A;
-	border: 1px solid #FF359A;
 }
 
 .btn-back{

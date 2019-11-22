@@ -82,16 +82,18 @@ function init() {
 	
 	$(".lockData").click(function() {
 		let lockUrl = $(this).data("lock");
-		$.ajax({
-			url: lockUrl,
-			method: "POST",
-			dataType: "JSON",
-			success: function() {
-				$("#reportProcess").html("");
-				$("#showProcess").html("");
-				generateReport();
-			}
-		})
+		if(confirm("確定刪除此留言嗎?")){
+			$.ajax({
+				url: lockUrl,
+				method: "POST",
+				dataType: "JSON",
+				success: function() {
+					$("#reportProcess").html("");
+					$("#showProcess").html("");
+					generateReport();
+				}
+			})
+		}
 	})
 }
 

@@ -62,6 +62,8 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 		registry.addResourceHandler("/ad_scss/**").addResourceLocations("/WEB-INF/views/ad_scss/");
 		
 		registry.addResourceHandler("/imgUpload/**").addResourceLocations("file:C:\\FunBar\\imgUpload\\");
+	
+		registry.addResourceHandler("/activityimages/**").addResourceLocations("/WEB-INF/views/activityimages/");
 	}
 	
 	@Bean

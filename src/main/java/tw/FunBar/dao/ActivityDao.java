@@ -4,6 +4,7 @@ import java.sql.Blob;
 import java.util.List;
 
 import tw.FunBar.model.Activity;
+import tw.FunBar.model.ActivityMap;
 import tw.FunBar.model.Applicant;
 
 public interface ActivityDao {
@@ -25,7 +26,11 @@ public interface ActivityDao {
 	
 	public Activity deleteActivityById(int activityId);
 	
-	public Applicant getTime();
+	public List<Applicant> getTime();
+	
+	public Activity getTimeActivity();
+	
+	public List<ActivityMap> repeatActivityId(String memberId);
 	
 
 	
