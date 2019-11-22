@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 
@@ -75,7 +76,7 @@
 								
 								         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">線上預約</a>
 								         
-								           <div class="dropdown-menu">
+								           <div class="dropdown-menu"">
 								           		 <a class="dropdown-item" href="${pageContext.request.contextPath}/booking">線上訂位</a>
                									 <a class="dropdown-item" href="${pageContext.request.contextPath}/booking_room">線上訂房</a>
                									 <a class="dropdown-item" href="${pageContext.request.contextPath}/personal_order">我的訂房</a>
@@ -127,6 +128,14 @@
 										<td><a href="${pageContext.request.contextPath}/logout">登出</a></td>
 									</c:otherwise>
 								</c:choose>
+						
+						      <li class="nav-item dropdown no-arrow">
+        <a class="nav-link" href="${pageContext.request.contextPath}/showCart" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <i style="color:red;"class="fa fa-cart-arrow-down"></i>
+          <span class="badge badge-danger cart">${fn:length(sessionScope.Cart.cartItems)}</span>
+          </a>
+      </li>
+						
 						
 						</nav>
 					</div>
