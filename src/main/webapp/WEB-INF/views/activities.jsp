@@ -61,7 +61,7 @@
 		<section>
 			<div class="row">
 			<c:if test="${!empty activities}">
-				<c:forEach var="activity" items="${activities}">
+				<c:forEach var="activity" items="${activities}" begin="0" step="1" varStatus="i">
 					<div class="col-lg-4 col-sm-6 mb-4">
 						<div class="card h-100">
 							<a href="<spring:url value='/activity?id=${activity.activityId}' />">
@@ -86,15 +86,11 @@
 		</section>
 
 		<ul class="pagination justify-content-center">
-			<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/activities?index=1" aria-label="Previous"> <span
-						aria-hidden="true">&laquo;</span> <span class="sr-only">Previous</span>
-				</a></li>
-			<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/activities?index=1">1</a></li>
-			<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/activities?index=2">2</a></li>
-<%-- 			<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/activities?index=3">3</a></li> --%>
-			<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/activities?index=2" aria-label="Next"> <span
-						aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span>
-				</a></li>
+			
+			<c:forEach begin="1" step="1" end="${listCount}" varStatus="i">
+			<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/activities?index=${i.index}">${i.index}</a></li>
+			</c:forEach>
+			
 		</ul>
 
 	</div>	

@@ -30,8 +30,8 @@
 
 <jsp:include page="admin_header.jsp" />
 <div class="container">
-    <h2>活動名稱</h2>
-    <h2>${eventName}</h2>
+    <h2>--活動名稱--</h2><br>
+    <h2 style="color:rgba(58, 26, 11, 0.877)">${eventName}</h2><br>
     <hr>
     
     <table class="table table-dark table-striped">

@@ -22,8 +22,6 @@ import tw.FunBar.model.Applicant;
 @SuppressWarnings("unchecked")
 public class ActivityDaoImpl implements ActivityDao {
 	
-	final int num = 6;
-	
 	SessionFactory factory;
 	
 	@Autowired
@@ -36,11 +34,26 @@ public class ActivityDaoImpl implements ActivityDao {
 	public List<Activity> getPageActivities(int index) {
 		String hql = "FROM Activity order by eventCreateTime desc";
 		Session session = factory.getCurrentSession();
-		Query query = session.createQuery(hql);
-		query.setFirstResult((index-1)*num);
-		query.setMaxResults(num);
-		return query.list();
+		List<Activity> list = (List<Activity>) session.createQuery(hql)
+				.setFirstResult((index-1)*6).setMaxResults(6).getResultList();
+		return list;
 	}
+	
+	
+	public int getIndex() {
+		String hql = "FROM Activity";
+		Session session = factory.getCurrentSession();
+		List<Activity> list = new ArrayList<>();
+		list = session.createQuery(hql).getResultList();
+		
+		int listCount = list.size()/6;
+		if(list.size()%6==0) {
+			return listCount;
+		}else {
+			return listCount+1;
+		}
+	}
+	
 	
 	//取得全部活動
 	@Override

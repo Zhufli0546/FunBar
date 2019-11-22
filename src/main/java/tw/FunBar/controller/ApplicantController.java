@@ -95,7 +95,7 @@ public class ApplicantController {
 	@RequestMapping(value = "/addSuggestion", method = RequestMethod.POST)
 	public String addSuggestion(Suggestion suggestion) {
 		service.addSuggestion(suggestion);
-		return "addSuggestion";
+		return "SuggestionOk";
 	}
 		
 	@RequestMapping(value="/allSuggestion",method = RequestMethod.GET)

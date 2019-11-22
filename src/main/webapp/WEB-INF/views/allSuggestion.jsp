@@ -29,7 +29,10 @@
 <body>
 
 <jsp:include page="admin_header.jsp" />
+
 <div class="container">
+
+<h2 style="color:rgba(58, 26, 11, 0.877)">--請點選活動查看活動建議--</h2><br>
    <c:forEach var="eventName" items="${sus}">
 						<a href="${pageContext.request.contextPath}/Suggestions/${eventName}"
 							class="list-group-item">${eventName}</a>

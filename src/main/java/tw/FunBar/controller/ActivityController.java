@@ -78,6 +78,8 @@ public class ActivityController {
 		model.addAttribute("categoryList", list);
 		List<Activity> activity = service.getPageActivities(index);
 		model.addAttribute("activities", activity);
+		int count = service.getIndex();
+		model.addAttribute("listCount", count);
 
 		return "activities";
 	}
@@ -247,15 +249,20 @@ public class ActivityController {
 	// 查詢活動前一天並寄送郵件
 	
 	@RequestMapping(value="/getTimeAndSend")
-	public String getTimeAndSend(Model model,Activity activity) {
+	public String getTimeAndSend(HttpSession session,HttpServletRequest req) {
 		
-		activity = service.getTimeActivity();//找到一天後到期活動
+		Activity activity = service.getTimeActivity();//找到一天後到期活動
 		
 		if(activity == null) {
 			System.out.println("activity=>"+activity);
-			model.addAttribute("noactivity","na");
+			
+			session = req.getSession();
+			
+			session.setAttribute("activity", "na");
 			
 			return "redirect:/activityQuery";
+			
+			
 			
 		}else {
 		List<Applicant> email = service.getTime();//抓到報名此活動使用者
