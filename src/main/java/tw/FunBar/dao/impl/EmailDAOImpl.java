@@ -263,4 +263,62 @@ public class EmailDAOImpl implements EmailDAO {
 		}
 	}
 
+	//忘記密碼
+	@Override
+	public void sendpassword(Member pass) {
+	 String host = "smtp.gmail.com";
+	   int port = 587;
+	   final String username = "funbar109@gmail.com";
+	   final String password = "ftnnxuqoxaywfrtt";
+
+	   Properties props = new Properties();
+	   props.put("mail.smtp.host", host);
+	   props.put("mail.smtp.auth", "true");
+	   props.put("mail.smtp.starttls.enable", "true");
+	   props.put("mail.smtp.port", port);
+	   Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+	    protected PasswordAuthentication getPasswordAuthentication() {
+	     return new PasswordAuthentication(username, password);
+	    }
+	   });
+
+	   try {
+	    Message message = new MimeMessage(session);
+	    message.setFrom(new InternetAddress("funbar109@gmail.com"));
+	    message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(pass.getMemberEmail()));
+	    message.setSubject("FunBar.忘記密碼");
+	    
+	    System.out.println("email:"+pass.getMemberEmail());
+	    
+	    String htmlCode = "";
+	    htmlCode += "<div style='margin:0 auto;border:2px solid #02DF82;width:500px;text-align:center;font-size:22px;border-radius:10px'>";
+	    htmlCode += "<h1>您的會員資料 :</h1>";
+	    htmlCode += "<table style='border:none;text-align:ceneter;margin:0 auto'>";
+	    htmlCode += "<tr><td>會員編號:</td><td>."+pass.getId()+"</td></tr>";
+	    htmlCode += "<tr><td>姓名:</td><td>"+pass.getMemberName()+"</td></tr>";
+	    htmlCode += "<tr><td>信箱:</td><td>"+pass.getMemberEmail()+"</td></tr>";
+	    htmlCode += "<tr><td>電話:</td><td>"+pass.getMemberPhone()+"</td></tr>";
+	    htmlCode += "<tr><td>日期:</td><td>"+pass.getMemberBirth()+"</td></tr>";
+	    htmlCode += "<tr><td>帳號:</td><td>"+pass.getMemberId()+"</td></tr>";
+	    htmlCode += "<tr><td>密碼:</td><td>"+pass.getMemberPwd()+"</td></tr>";
+	    htmlCode += "<tr><td>大頭貼:</td><td>"+pass.getMemberfileName()+"</td></tr>";
+	    htmlCode += "<tr><td>認證:</td><td>"+ "<a href =http://localhost:8080/FunBar/find?memberId="+pass.getMemberId() +">點及認證</a>"+ "</td></tr>";
+	    message.setContent(htmlCode,"text/html;charset=UTF-8");
+	 
+	    
+	    
+
+
+	    Transport transport = session.getTransport("smtp");
+	    transport.connect(host, port, username, password);
+
+	    Transport.send(message);
+
+	    
+
+	   } catch (MessagingException e) {
+	    throw new RuntimeException(e);
+	   }
+	 
+	}
 }
