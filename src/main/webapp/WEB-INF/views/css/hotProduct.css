@@ -6,9 +6,9 @@
 	overflow: hidden;
 }
 
-.sectionBlock {min-height: 450px; margin: 10px 0; padding: 10px 0 30px 0; overflow: hidden;}
+.sectionBlock {min-height: 350px; margin: 10px 0; padding: 10px 0 30px 0; overflow: hidden;}
 .section1 {}
-.section2 {overflow:hidden; position: relative;}
+.section2 {overflow:hidden; position: relative; height: 550px;}
 .section2 .title {padding: 5px 0 5px 0; text-align: center;}
 
 .productCard { position: absolute; left:0px; top:65px;}

@@ -59,7 +59,6 @@
 			<!-- .prodlist -->
 		</c:forEach>
 	</div>
-	</div>
 	<!-- .container -->
 
 

@@ -25,18 +25,11 @@ import tw.FunBar.service.MemberService;
 @Controller
 public class DiscussController {
 
+	@Autowired
 	DiscussService service;
+
+	@Autowired
 	MemberService memberService;
-
-	@Autowired
-	public void setMemberService(MemberService memberService) {
-		this.memberService = memberService;
-	}
-
-	@Autowired
-	public void setService(DiscussService service) {
-		this.service = service;
-	}
 
 	@RequestMapping(value = "/discuss", method = RequestMethod.GET)
 	public String discuss(Model model, HttpServletRequest request, HttpSession session) {
@@ -88,7 +81,8 @@ public class DiscussController {
 
 	@RequestMapping(value = "deleteContent", method = RequestMethod.GET)
 	public String deleteContent(@RequestParam Integer postId) {
-		service.deletePostContent(postId);
+		Post post = service.getPostById(postId);
+		service.deletePostContent(post);
 		return "redirect:/discuss";
 	}
 
@@ -153,13 +147,13 @@ public class DiscussController {
 	public void confirmFriendRequest(@RequestParam(value = "memberId") Integer memberId,
 			@RequestParam(value = "memberIdf") Integer memberIdf) {
 		Friendship friendshipStatus = new Friendship();
-		friendshipStatus.setSender_memberId(memberId);
-		friendshipStatus.setReceiver_memberId(memberIdf);
+		friendshipStatus.setSender_memberId(memberIdf);
+		friendshipStatus.setReceiver_memberId(memberId);
 		friendshipStatus.setFriendStatus(2);
 		service.confirmFriendRequest(friendshipStatus);
 		Friendship friendshipInsert = new Friendship();
-		friendshipInsert.setSender_memberId(memberIdf);
-		friendshipInsert.setReceiver_memberId(memberId);
+		friendshipInsert.setSender_memberId(memberId);
+		friendshipInsert.setReceiver_memberId(memberIdf);
 		friendshipInsert.setFriendStatus(2);
 		service.sendFriendRequest(friendshipInsert);
 	}

@@ -74,19 +74,19 @@ input {
 		<div class="col-md-8">
 			<div align="right" colspan="8"
 				style="float: fight; margin: 10px 10px 0px 0px">
-				<a class="orderBtn" href="<c:url value='/deleteCartItem' />">清空購物車</a>
+				<a class="orderBtn" href="<c:url value='/deleteCartItem' />">remove the cart</a>
 			</div>
 			<div class="table-responsive">
 				<table class="table" style="margin: 20px 0">
 					<thead>
 						<tr>
-							<th>商品示意圖</th>
-							<th>商品名稱</th>
-							<th>單價</th>
-							<th>庫存</th>
-							<th>數量</th>
-							<th>折扣</th>
-							<th>小計</th>
+							<th>picture</th>
+							<th>item</th>
+							<th>unitPrice</th>
+							<th>stock</th>
+							<th>quantity</th>
+							<th>discount</th>
+							<th>subtotal</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -102,10 +102,10 @@ input {
 								<td class="unit" data-product="${i.index}">${ci.product.unitPrice}</td>
 								<td align="left" class="theStock" data-product="${i.index}">${ci.product.stock}</td>
 
-								<td>
+								<td style="width: 200px">
 									<button type="button" class="minus" data-product="${i.index}">-</button>
 									<input id="count" type="text" maxlength="2" value="${ci.count}"
-									size="2" class="num" data-product="${i.index}" /> <input
+									size="1" class="num" data-product="${i.index}" /> <input
 									class="pdid" type="hidden" value="${ci.product.productId}"
 									data-product="${i.index}">
 									<button type="button" class="add" data-product="${i.index}">+</button>
@@ -116,7 +116,7 @@ input {
 								<td><div style="float: right">
 										<input type="hidden" class="price" value="${ci.subtotal}">
 										<a class="removeBtn"
-											href=" <c:url value='/removeCartItem?productId=${ci.product.productId}' />">刪除</a>
+											href=" <c:url value='/removeCartItem?productId=${ci.product.productId}' />">delete</a>
 									</div></td>
 
 							</tr>
@@ -131,7 +131,7 @@ input {
 									<a href="<c:url value='/shoppingCart' />"><button
 											class="btn-back">Back to shop</button></a>
 									<button id="buy" type="button" class="btn btn-info page-btn"
-										data-toggle="modal" data-target="#createForm">Go to
+										data-toggle="modal" data-target="#createForm">Go
 										pay</button>
 								</div>
 							</td>

@@ -117,103 +117,140 @@
 			</div>					
 		</div>
 	</section>
-	
+
 	<section class="sectionBlock section2">
 		<h2 class="title">最新商品</h2>
-		<div id="productOffset" class="row container-fluid">
+ 
+		<div id="productOffset"  class="row container-fluid">
 			<div class="productCard" style="display: flex;">
 				<c:forEach var="pb" items="${all}" begin="0" step="1" varStatus="i">
 				<div class="prodlist" style="height:350px;">
 					<p class="prodtitle">${pb.productName}</p>
 					<figure>
-					<a href="<c:url value='/product?id=${pb.productId}' />" ">
-						<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />
-					</a>						
+						<a href="<c:url value='/product?id=${pb.productId}' />" ">
+							<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />
+						</a>						
 					</figure>
+					<figcaption>
 						<p>建議售價:<span style="color:#FF44AA;font-weight:bold;font-size:20px">$ ${pb.unitPrice}</span></p>
-						<p>折扣：<span style="font-weight:bold;color:	#CE0000;font-size:20px">${pb.discount}</span></p>				
+						<p>折扣：<span style="font-weight:bold;color:	#CE0000;font-size:20px">${pb.discount}</span></p>
+	     				<label for="selectCount" style="font-size: 18px; padding: 10px 5px; color: #000">購買數量:</label>
+	     				<select class="selectCount" id="selectCount" name="count" data-product="${i.index}">
+	      					<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select> 
+						<input class="pdid" type="hidden" name="productId" value="${pb.productId}">
+						<button type="button" class="btn button-add" data-product="${i.index}" style="margin:10px 0;padding:5px 10px;background-color:#019858;color: #fff;border-radius:5px;">Add to Cart</button>
+						<div id="snackbar">已加入購物車</div>
+					</figcaption>	
 				</div> 
 				<!-- .prodlist --> 
 				</c:forEach>
 			</div>
 		</div>
 	</section>
-		
 
-	<!-- Footer -->
-	<div class="requestUrl" style="display: none;">${pageContext.request.contextPath}</div>
-	<jsp:include page="footer.jsp" />
-	<script type="text/javascript"
-	src="<c:url value="/vendor/jquery/jquery.mousewheel.min.js"/>"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
-	<script>
-	<!--購物車jQuery -->
-	function myFunction() {
-		var x = document.getElementById("snackbar");
-			x.className = "show";
-			setTimeout(function() {
-				x.className = x.className.replace("show", "");
-			}, 1000);
- 		}
-	
-		// Test For Click Event
-		$(".button-add").click(function() {
-			let index = $(this).data("product");
-			console.log("btn index:" + index);
-			myFunction();
-			
-			var url = "/FunBar/";
-			$.ajax({
-				url : "http://localhost:8080" + url + "cart",
-				data:{
-					count:$(".selectCount").eq(index).val(),
-					productId:$(".pdid").eq(index).val()
-				},
-				type:"POST",
-				dataType:"JSON",
-				success:function(data){
-					console.log("success");
-				}
-			})
-		})
-	let sum = 0;
-	let productWheel = 0;
-	// mouse wheel
-	$("#productOffset").bind("mousewheel",function(event){
-		console.log(event.deltaY);
-		event.preventDefault();
-		if(event.deltaY==1) {
-			console.log("sum 向下拉 => " + $(".productCard").offset().left);
-			if($(".productCard").offset().left == -830 || $(".productCard").offset().left < -830) { 
-				productWheel = 0;
-			} else {
-				productWheel = -50;
-			}
-			
-			TweenMax.to(".productCard",0.1,{
-		        left: "+="+productWheel+"px"
-		     })
+<!-- Footer -->
+<div class="requestUrl" style="display: none;">${pageContext.request.contextPath}</div>
+<jsp:include page="footer.jsp" />
+<script type="text/javascript"
+src="<c:url value="/vendor/jquery/jquery.mousewheel.min.js"/>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+<script>
+function myFunction() {
+ var x = document.getElementById("snackbar");
+ x.className = "show";
+ setTimeout(function() {
+  
+  x.className = x.className.replace("show", "");
+ }, 1000);
+}
 
-		} else if(event.deltaY == -1) {
-			
-			console.log("sum 向上拉 => " + $(".productCard").offset().left);
-			if($(".productCard").offset().left == 0 || $(".productCard").offset().left > 0) { 
-				productWheel = 0;
-			} else {
-				productWheel = 50;
-			}
-			
-	    	TweenMax.to(".productCard",0.1,{
-		        left: "+="+productWheel+"px"
-		     })
-		 }
+function changeCartNum(){
+	$.ajax({
+		url : "http://localhost:8080/FunBar/buyCartJson",
+		method : "POST",
+		dataType : "JSON",
+		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+		success :function(data){
+			$(".cart").text(data.length);
+		}
 	})
-	
-	</script>
+}
 
+// Test For Click Event
+$(".button-add").click(function() {
+	let index = $(this).data("product");
+	console.log("btn index:" + index);
+  
+	var url = "/FunBar/";
+	$.ajax({
+			url : "http://localhost:8080" + url + "cart",
+			data:{
+			count:$(".selectCount").eq(index).val(),
+			productId:$(".pdid").eq(index).val()
+		},
+		type:"POST",
+			dataType:"JSON",
+			success:function(data){
+			// 加入購物車失敗 /cart 會回傳 1
+			let check = 0;
+			if(data.status!=null) {
+				console.log(data.status);
+				console.log(data.status[1]);
+				check = data.status[1];
+			} else if(data.redirect!=null) {
+				window.location.href = "http://localhost:8080/FunBar/signin"; 
+			}
 
-	<script src="<c:url value='/js/main_blog.js' />"></script>
+			if(check) {
+				alert("加入購物車失敗");
+   			} else {
+    			myFunction();
+    			changeCartNum();
+			}
+ 			}
+		})
+})
 
+let sum = 0;
+let productWheel = 0;
+// mouse wheel
+$("#productOffset").bind("mousewheel",function(event){
+	console.log(event.deltaY);
+	event.preventDefault();
+	if(event.deltaY==1) {
+		console.log("sum 向下拉 => " + $(".productCard").offset().left);
+		if($(".productCard").offset().left == -830 || $(".productCard").offset().left < -830) { 
+			productWheel = 0;
+		} else {
+			productWheel = -50;
+		}
+		
+		TweenMax.to(".productCard",0.1,{
+	        left: "+="+productWheel+"px"
+	     })
+
+	} else if(event.deltaY == -1) {
+		
+		console.log("sum 向上拉 => " + $(".productCard").offset().left);
+		if($(".productCard").offset().left == 0 || $(".productCard").offset().left > 0) { 
+			productWheel = 0;
+		} else {
+			productWheel = 50;
+		}
+		
+    	TweenMax.to(".productCard",0.1,{
+	        left: "+="+productWheel+"px"
+	     })
+	 }
+})
+</script>
+
+<script src="<c:url value='/js/main_blog.js' />"></script>
 </body>
 
 </html>

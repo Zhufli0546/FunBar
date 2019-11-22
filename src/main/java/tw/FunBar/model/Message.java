@@ -2,14 +2,32 @@ package tw.FunBar.model;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Message {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer message_id;
 	private Integer senderMemberId;
 	private Integer receiverMemberId;
+	private String subscribe;
 	private String userName;
-	private Date sendDate; 
-	private String content; 
+	private Date sendDate;
 	private String messageType;
+	private String messageContent;
+
+	public Integer getMessage_id() {
+		return message_id;
+	}
+
+	public void setMessage_id(Integer message_id) {
+		this.message_id = message_id;
+	}
 
 	public Integer getSenderMemberId() {
 		return senderMemberId;
@@ -27,12 +45,12 @@ public class Message {
 		this.receiverMemberId = receiverMemberId;
 	}
 
-	public String getMessageType() {
-		return messageType;
+	public String getSubscribe() {
+		return subscribe;
 	}
 
-	public void setMessageType(String messageType) {
-		this.messageType = messageType;
+	public void setSubscribe(String subscribe) {
+		this.subscribe = subscribe;
 	}
 
 	public String getUserName() {
@@ -51,17 +69,27 @@ public class Message {
 		this.sendDate = sendDate;
 	}
 
-	public String getContent() {
-		return content;
+	public String getMessageType() {
+		return messageType;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
+	}
+
+	public String getMessageContent() {
+		return messageContent;
+	}
+
+	public void setMessageContent(String messageContent) {
+		this.messageContent = messageContent;
 	}
 
 	@Override
 	public String toString() {
-		return "Message{" + "userName='" + userName + '\'' + ", sendDate=" + sendDate + ", content='" + content + '\''
-				+ ", messageType='" + messageType + '\'' + '}';
+		return "Message [message_id=" + message_id + ", senderMemberId=" + senderMemberId + ", receiverMemberId="
+				+ receiverMemberId + ", subscribe=" + subscribe + ", userName=" + userName + ", sendDate=" + sendDate
+				+ ", messageType=" + messageType + ", messageContent=" + messageContent + "]";
 	}
+
 }

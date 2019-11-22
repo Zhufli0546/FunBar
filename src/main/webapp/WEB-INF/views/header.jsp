@@ -45,7 +45,7 @@
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/css/own.css"/>">
 <link href="https://fonts.googleapis.com/css?family=Poller+One|Sarina|Sonsie+One&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css?family=Paytone+One|Russo+One&display=swap" rel="stylesheet">
 
 </head>
 <body>
@@ -95,7 +95,7 @@
 								
 								<c:choose>
 									<c:when test="${sessionScope.member.memberName==null}">
-										<li><a href="joinus">註冊</a></li>
+										
 										<li><a href="${pageContext.request.contextPath}/signin">登入</a></li>
 									</c:when>
 									<c:otherwise>

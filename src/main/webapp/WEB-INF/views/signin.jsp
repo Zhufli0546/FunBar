@@ -1,88 +1,52 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix='form' uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
+<script type="text/javascript">
 
+
+
+
+
+</script>
 <head>
- <meta charset="UTF-8">
- <title>login</title>
- <link rel="stylesheet" href="<c:url value='/css/bootstrap.min.css' />">
- <script src="<c:url value='/js/jquery-1.12.4.js' />"></script>
- <script src="<c:url value='/js/bootstrap.min.js' />"></script>
- <script type="text/javascript">
- function enterSomething(){
-	 document.getElementById("user").value='zuo';
-	 document.getElementById("memberPwd").value='password';
- }
- </script>
+<title>login</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="stylesheet" href="<c:url value='/css/bootstrap.min.css' />">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="css/member.css">
 </head>
-<style>
-    * {
-        font-family: 微軟正黑體;
-    }
-
-    html,
-    body {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #eee;
-    }
-
-    .login {
-        background-color: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        padding: 20px;
-        margin-bottom: 10px;
-        font-weight: bold;
-    }
-
-    .registerBox {
-        background-color: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        padding: 10px;
-        font-weight: bold;
-    }
-
-    .registerBox a {
-        text-decoration: none;
-    }
-    
-    .error { color: red}
-</style>
-
 <body>
-<c:set var="go" value="" scope="session"></c:set>
-	<jsp:include page="header.jsp" />
-	
-    <div class="row">
-        <div class="login col-sm-12">
-            <h2>FunBar</h2>
-            <form action="signin" method="post">
-                <fieldset>
-                    <div class="form-group">
-                        <label for="memberId">帳號:</label>
-                        <input id="user" type="text" class="form-control" name="memberId" placeholder="請輸入帳號">
-                        <span class="error">${errorMsg.errUserName}</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="memberPwd">密碼:</label>
-                        <input type="text" class="form-control" id="memberPwd" name="memberPwd" placeholder="請輸入密碼">
-                        <span class="error">${errorMsg.errPassword}</span>
-                    </div>
-                </fieldset>
-                <button type="submit" class="btn btn-info col-md-12">登入</button>
-            </form>
-        </div>
 
-        <div class="registerBox col-sm-12">
-            <span>沒有帳號嗎?</span><a href="<spring:url value='/joinus.jsp' />"> 註冊</a><input style="float:right" type="button" value="一鍵輸入" onclick="enterSomething()"/>
-        </div>
-    </div>
+
+ <form action="signin" class="login" method="post">
+<fieldset>
+<h2>登入</h2>
+<i class="fa fa-user-circle-o"></i>
+<h5>帳號</h5>
+<input type="text"  name="memberId" placeholder="請輸入帳號">
+<span class="error">${errorMsg.errUserName}</span>
+<h5>密碼</h5>
+<input type="text" name="memberPwd" placeholder="請輸入密碼">
+<span class="error">${errorMsg.errPassword}</span>
+<span><a href="memberforget">忘記密碼</a></span>
+<button type="submit">登入</button>
+
+
+ </fieldset>
+  <span>沒有帳號嗎?</span><span><a href="joinus">註冊</a></span>
+<!-- <input type="button" value="一鍵輸入" onclick="enterSomething()"/> -->
+ </form>
+
+
+
+
 </body>
 </html>
+<script src="<c:url value='/js/jquery-1.12.4.js' />"></script>
+<script src="<c:url value='/js/bootstrap.min.js' />"></script>
