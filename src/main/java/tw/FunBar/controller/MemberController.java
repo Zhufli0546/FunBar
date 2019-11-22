@@ -4,16 +4,14 @@ package tw.FunBar.controller;
 
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
-
 import javax.persistence.NoResultException;
-import javax.persistence.metamodel.SetAttribute;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,12 +31,27 @@ import tw.FunBar.service.MemberService;
 
 @Controller
 public class MemberController {
-
 	@Autowired
 	MemberService memberService;
 	@Autowired
 	EmailService emailService;
 	ServletContext context;
+	//密碼錯誤
+	@RequestMapping(value="/find",method = RequestMethod.GET)
+	public String find(@RequestParam("memberId")String memberId,Model model) {
+	System.out.println("帳號:"+memberId);
+	model.addAttribute("one", memberService.forget(memberId));
+		return "find";
+		
+	}
+	@RequestMapping(value="/findyou",method = RequestMethod.POST)
+	public  String findyou(@RequestParam String memberId,@RequestParam String memberPwd) {	
+		memberService.newPwd(memberId, memberPwd);
+		return "index";
+		
+	}
+	
+
 	//認證
 		@RequestMapping(value = "/check", method = RequestMethod.GET)
 		public String check(@RequestParam("id") Integer id) {
@@ -92,7 +105,7 @@ public class MemberController {
 		return "redirect:/";
 	}
 
-// 查詢單筆
+    // 查詢單筆
 	@RequestMapping("/getONE1")
 	public String getONE1(@RequestParam("id") Integer id, Model model) {
 		model.addAttribute("one", memberService.getONEmember(id));
@@ -107,7 +120,12 @@ public class MemberController {
 		model.addAttribute("members", list);
 		return "showAllmember";
 	}
+	
+	
+	
+	
 	// 新增
+	
 	// 這個是對照到jsp的action
 	@RequestMapping(value = "/joinus", method = RequestMethod.GET)
 	public String savemember(Model model) {
@@ -118,7 +136,7 @@ public class MemberController {
 	}
 	@RequestMapping(value = "/joinus", method = RequestMethod.POST)
 	public String dosavemember(@ModelAttribute("Member") Member mb) {
-		//驗證每個註冊欄位
+	//驗證每個註冊欄位
 		
 		
 		
@@ -150,10 +168,6 @@ public class MemberController {
 
 	}
 
-	
-	
-	
-	
 	// 修改
 	@RequestMapping(value = "/getONE", method = RequestMethod.GET)
 	public String getONE(@RequestParam("id") Integer id, Model model) {
@@ -217,5 +231,44 @@ public class MemberController {
 			return "showMAN";
 		}
 	
-	
+		
+		//忘記密碼
+//		@RequestMapping(value = "/memberforget", method = RequestMethod.GET)
+//		public String memberforget(@RequestParam("memberId")String memberId,Model model) {
+//			model.addAttribute("miss", memberService.forget(memberId));
+//			return "memberforget";
+//		}
+//	
+//		@RequestMapping(value="/forget",method=RequestMethod.POST)
+//		public String forget(@RequestParam("memberId") String memberId,Model model) {
+//			
+//			memberService.forget(memberId);
+//			return "redirect:/";
+//			
+//		}
+		// 密碼
+		@RequestMapping(value = "/memberforget", method = RequestMethod.GET)
+		public String memberforget(Model model ) {
+			String memberId = null;
+			System.out.println("55555666666666"+memberId);
+
+			return "memberforget";
+		}
+
+		@RequestMapping(value="/forget",method=RequestMethod.POST)
+		public String forget(@RequestParam("memberId") String memberId) {
+			
+			Member pass = memberService.forget(memberId);
+			System.out.println("7777777777777777"+memberId);
+			
+		emailService.sendpassword(pass);
+		return "index";
+			
+		}
+		
+		
+		
+		
+		
+		
 }

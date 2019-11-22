@@ -422,18 +422,32 @@ public class CartController {
 	}
 
 	@RequestMapping("/showMemOrders")
-	public String orderResultByMember(Model model, HttpServletRequest req, HttpSession session) {
+	public String getOrdersByMember(Model model, HttpServletRequest req, HttpSession session) {
 		session = req.getSession(false);
-
 		Member member = (Member) session.getAttribute("member");
+		if (member == null) {
+			return "redirect:/signin";
+		}
 		
-		List<OrderBean> obList = new ArrayList<OrderBean>();
 		ArrayList<OrderBean> orders = orderHandleService.getMyOrders(member.getId(),req);
-			
+		if (orders.isEmpty()) {
+			return "showEmptyOrder";
+		}
 		
 		model.addAttribute("orders", orders);
 
 		return "showMemOrders";
+
+	}
+	
+	@RequestMapping("/showAllOrders")
+	public String getAllOrders(Model model, HttpServletRequest req) {
+		
+		ArrayList<OrderBean> orders = orderHandleService.getAllOrders(req);
+		
+		model.addAttribute("orders", orders);
+
+		return "showAllOrders";
 
 	}
 
