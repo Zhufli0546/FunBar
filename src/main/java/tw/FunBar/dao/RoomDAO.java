@@ -79,4 +79,10 @@ public interface RoomDAO {
 
 
 	ArrayList<RoomOrder> personalOrder(String phone);
+
+
+	ArrayList<RoomOrder> getLatestOrders();
+
+
+	int getRoomTotalIncome();
 }
