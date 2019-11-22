@@ -1,23 +1,25 @@
 //Post area
 
 var newPost = "<div class='card-header'>Create Post</div>"
-		+ "<div class='media p-4 bg-light'><img class='d-flex mr-3 rounded-circle' src='http://placehold.it/50x50' />"
+		+ "<div class='media p-4 bg-light'>" 
+		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{sessionScope.member.id}}'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0'>"
 		+ "<a href='#' class='text-primary'><h5>{{sessionScope.member.memberName}}</h5></a>"
 		+ "<form method='post' action='createPost'>"
 		+ "<textarea id='postContent' name='postContent' class='form-control mt-1' placeholder='What is on your mind ?'></textarea>"
 		+ "<input id='memberId' name='memberId' class='form-control' type='hidden' value='{{sessionScope.member.id}}'></input>"
-		+ "<div class='text-right'><button class='btn btn-info lg mt-3' type='submit' name='submitPost' onclick='reloadPage()'>POST</button></div>"
+		+ "<div class='text-right'><button class='btn btn-info lg mt-3' type='submit' name='submitPost'>POST</button></div>"
 		+ "</form></div></div>";
 
 var firstLevelComment = "<div class='card' id='firstComment'>"
-		+ "<div class='media p-4 bg-light'><img class='d-flex mr-3 rounded-circle' src='http://placehold.it/50x50'>"
+		+ "<div class='media p-4 bg-light'>" 
+		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{sessionScope.member.id}}'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0' id='firstCommentBody{{post.postId}}'>"
 		+ "<a href='' class='text-primary'><h5>{{sessionScope.member.memberName}}</h5></a>"
 		+ "<div class='media-date'>{{post.postTime}}"
-		+ "<button type='button' id='drop{{post.postId}}' class='btn-sm ml-2 btn-secondary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></button>"
-		+ "<div class='dropdown-menu'><a class='dropdown-item' id='edit{{post.postId}}' href='#'>Edit</a>"
-		+ "<a class='dropdown-item' id='delete{{post.postId}}' href='#'>Delete</a>"
+		+ "<button type='button' id='drop{{post.postId}}' class='btn-sm ml-2 btn-secondary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true'></button>"
+		+ "<div class='dropdown-menu'><a class='dropdown-item' id='edit{{post.postId}}' href='#edit{{post.postId}}'>Edit</a>"
+		+ "<a class='dropdown-item' id='delete{{post.postId}}' href='#delete{{post.postId}}'>Delete</a>"
 		+ "</div></div>"
 		+ "<form method='post' action='updateContent'>"
 		+ "<blockquote class='blockquote mb-5'><div id='postContent{{post.postId}}' class='font-weight-bold mt-2 mr-4 post-description'>{{post.postContent}}</div></blockquote>"
@@ -43,13 +45,14 @@ var firstLevelComment = "<div class='card' id='firstComment'>"
 var level = "<div class='collapse' id='comment{{post.postId}}'>"
 
 var secondLevelComment = "<div class='card mt-3' id='secondComment'>"
-		+ "<div class='media p-4 bg-light'><img class='d-flex mr-3 rounded-circle' src='http://placehold.it/50x50'>"
+		+ "<div class='media p-4 bg-light'>" 
+		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{sessionScope.member.id}}'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0'id='secondCommentBody{{post.postId}}' >"
 		+ "<a href='' class='text-primary'><h5>{{sessionScope.member.memberName}}</h5></a>"
 		+ "<div class='media-date'>{{post.postTime}}"
 		+ "<button type='button' id='drop{{post.postId}}' class='btn-sm ml-2 btn-secondary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></button>"
-		+ "<div class='dropdown-menu'><a class='dropdown-item' id='edit{{post.postId}}' href='#'>Edit</a>"
-		+ "<a class='dropdown-item' id='delete{{post.postId}}' href='#'>Delete</a>"
+		+ "<div class='dropdown-menu'><a class='dropdown-item' id='edit{{post.postId}}' href='#edit{{post.postId}}'>Edit</a>"
+		+ "<a class='dropdown-item' id='delete{{post.postId}}' href='#delete{{post.postId}}'>Delete</a>"
 		+ "</div></div>"
 		+ "<form method='post' action='updateContent'>"
 		+ "<blockquote class='blockquote mb-5'><div id='postContent{{post.postId}}' class='font-weight-bold mt-2 post-description'>{{post.postContent}}</div></blockquote>"
@@ -72,12 +75,13 @@ var secondLevelComment = "<div class='card mt-3' id='secondComment'>"
 		+ "</div></div></form></div></div></div></div>";
 
 var thirdLevelComment = "<div class='card mt-3 ml-5' id='thirdComment'>"
-		+ "<div class='media p-4 bg-light'><img class='d-flex mr-3 rounded-circle' src='http://placehold.it/50x50'>"
+		+ "<div class='media p-4 bg-light'>"
+		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{sessionScope.member.id}}'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0'>"
 		+ "<a href='' class='text-primary'><h5>{{sessionScope.member.memberName}}</h5></a>"
 		+ "<div class='media-date'>{{post.postTime}}<button type='button' id='drop{{post.postId}}' class='btn-sm ml-2 btn-secondary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></button>"
-		+ "<div class='dropdown-menu'><a class='dropdown-item' id='edit{{post.postId}}' href='#'>Edit</a>"
-		+ "<a class='dropdown-item' id='delete{{post.postId}}' href='#'>Delete</a>"
+		+ "<div class='dropdown-menu'><a class='dropdown-item' id='edit{{post.postId}}' href='#edit{{post.postId}}'>Edit</a>"
+		+ "<a class='dropdown-item' id='delete{{post.postId}}' href='#delete{{post.postId}}'>Delete</a>"
 		+ "</div></div> "
 		+ "<form method='post' action='updateContent'>"
 		+ "<blockquote class='blockquote mb-5'><div id='postContent{{post.postId}}' class='font-weight-bold mt-2 post-description'>{{post.postContent}}</div></blockquote>"
@@ -89,7 +93,7 @@ var thirdLevelComment = "<div class='card mt-3 ml-5' id='thirdComment'>"
 		+ "<button type='button' style='display:none' value='{{post.memberId}}'></button>"
 		+ "</div></div></div></div>";
 
-var requestUrl = $('#requestUrl').text();
+var requestUrl = "";
 var loginMemberName = $('#loginMemberName').text();
 var loginMemberid = $('#loginMemberid').text();
 
@@ -101,6 +105,7 @@ var thirdLevelComment_html = null;
 var thirdLevel_html = null;
 var like;
 var mdata;
+var pdata;
 
 $.ajax({
 	url : requestUrl + "discussJson",
@@ -109,7 +114,8 @@ $.ajax({
 	success : function(postData) {
 
 		newPost_html = newPost.replace(/\{{sessionScope.member.memberName}}/g, loginMemberName)
-						     .replace(/\{{sessionScope.member.id}}/g, loginMemberid)
+							  .replace(/\{{sessionScope.member.id}}/g, loginMemberid)
+							  .replace(/\{{requestUrl}}/g, requestUrl)
 						
 		$("#newPost").append(newPost_html);
 		data = postData.Post
@@ -126,15 +132,14 @@ $.ajax({
 									.replace(/\{{post.postId}}/g, post.postId)
 									.replace(/\{{sessionScope.member.memberName}}/g,loginMemberName)
 									.replace(/\{{sessionScope.member.id}}/g, loginMemberid)
+									.replace(/\{{requestUrl}}/g, requestUrl)
 
 				$("#firstLevelComment").append(firstLevelComment_html);
 
 				refreshCommentNumber(post.postId, post.replyPost.length)
-				refreshLikeNumber(post.postId)
 				editContent(post.postId, post.postContent)
 				deleteContent(post.postId)
 				checkDropBtn(post.postId, loginMemberid, post.memberId)
-				checkLikeBtn(post.postId)
 				
 				if (post.replyPost.length > 0) {
 					let second = "";
@@ -151,6 +156,7 @@ $.ajax({
 								.replace(/\{{post.postId}}/g, comment.postId)
 								.replace(/\{{sessionScope.member.memberName}}/g,loginMemberName)
 								.replace(/\{{sessionScope.member.id}}/g, loginMemberid)
+								.replace(/\{{requestUrl}}/g, requestUrl)
 
 						if (comment.replyPost.length > 0) {
 							let third = "";
@@ -165,6 +171,7 @@ $.ajax({
 										.replace(/\{{post.postId}}/g, thirdComment.postId)
 										.replace(/\{{sessionScope.member.memberName}}/g,loginMemberName)
 										.replace(/\{{sessionScope.member.id}}/g, loginMemberid)
+										.replace(/\{{requestUrl}}/g, requestUrl)
 
 								third += thirdLevelComment_html;
 
@@ -193,30 +200,31 @@ $.ajax({
 			for (let j = 0; j < post.replyPost.length; j++) {
 				let comment = post.replyPost[j];
 
+				checkLikeBtn(comment.postId)
 				refreshCommentNumber(comment.postId, comment.replyPost.length)
-				refreshLikeNumber(comment.postId)
 				editContent(comment.postId, comment.postContent)
 				deleteContent(comment.postId)
 				checkDropBtn(comment.postId, loginMemberid, comment.memberId)
-				checkLikeBtn(comment.postId)
 
 				for (let k = 0; k < comment.replyPost.length; k++) {
 					let thirdComment = comment.replyPost[k];
 
-					refreshLikeNumber(thirdComment.postId)
+					checkLikeBtn(thirdComment.postId)
 					editContent(thirdComment.postId, thirdComment.postContent)
 					deleteContent(thirdComment.postId)
 					checkDropBtn(thirdComment.postId, loginMemberid, thirdComment.memberId)
-					checkLikeBtn(thirdComment.postId)
 
 				}
 			}
-
+			checkLikeBtn(post.postId)
 		}
+		
 	}
 })
 
-// like 未完成
+
+
+// like 
 function refreshLikeNumber(postId) {
 	$.get("Like", {
 		postId : postId
@@ -226,28 +234,40 @@ function refreshLikeNumber(postId) {
 }
 
 function addLike(postId, memberId) {
-	$("#likebtn" + postId).click(function() {
-		$.get("addLike", {
-			postId : postId,
-			memberId : memberId
-		}, function() {
-			
+	
+	$("#likebtn" + postId).mousedown(function() {
+		$.ajax({
+			url : requestUrl + "addLike",
+			data : {postId : postId, memberId : memberId},
+			async:false,
+			success : function() {
+			}
 		})
+	})
+	$("#likebtn" + postId).mouseup(function() {
 		$(this).text("unLike");
-		$(this).attr("id", "unLikebtn" + postId)
-		
+		$(this).attr("id","unLikebtn" + postId);
+		$(this).unbind();
+		unLike(postId, loginMemberid);
+		refreshLikeNumber(postId);
 	})
 }
-
 function unLike(postId, memberId) {
-	$("#unLikebtn" + postId).click(function() {
-		$.get("unLike", {
-			postId : postId,
-			memberId : memberId
-		}, function() {
+	$("#unLikebtn" + postId).mousedown(function() {
+		$.ajax({
+			url : requestUrl + "unLike",
+			data : {postId : postId, memberId : memberId},
+			async:false,
+			success : function() {
+			}
 		})
+	})
+	$("#unLikebtn" + postId).mouseup(function() {
 		$(this).text("Like");
-		$(this).attr("id", "likebtn" + postId)
+		$(this).attr("id","likebtn" + postId);
+		$(this).unbind();
+		addLike(postId, loginMemberid);
+		refreshLikeNumber(postId);
 	})
 }
 
@@ -256,23 +276,25 @@ function checkLikeBtn(postId){
 		url : requestUrl + "likeJson",
 		method : "POST",
 		dataType : "JSON",
-		data : {memberId : loginMemberid},
+		data : { memberId : loginMemberid },
+		async : false,
 		success : function(likeData) {
 			like = likeData.like
-			
+			if(like.length == 0){
+				addLike(postId, loginMemberid)
+			}else{
 			for (let i = 0; i < like.length; i++) {
 				let likes = like[i];
 				if(likes.likePK.postId == postId){
-					console.log("post__===="+postId)
 					$("#likebtn" + postId).text("unLike").attr("id", "unLikebtn" + postId)
 					unLike(postId, loginMemberid)
-				}else{
-					addLike(postId, loginMemberid)
+					}
 				}
-			}	
+			}
+			refreshLikeNumber(postId);
 		}
 	})
-	
+	addLike(postId, loginMemberid)	
 }
 
 
@@ -281,7 +303,7 @@ function editContent(postId, postContent) {
 						$("#postContent" + postId).html("<textarea id='postContent' name='postContent' class='form-control mt-3'>"
 												+ postContent
 												+ "</textarea>"
-												+ "<div class='text-right mt-2'><button class='btn btn-primary' type='submit' name='editContent' onclick='reloadPage()'>Edit</button>"
+												+ "<div class='text-right mt-2'><button class='btn btn-primary' type='submit' name='editContent'>Edit</button>"
 												+ "<input id='postId' name='postId' class='form-control' type='hidden' value='"
 												+ postId
 												+ "'></input>"
@@ -327,6 +349,8 @@ var memberList = "<div class='list-group-item d-flex justify-content-between ali
 
 
 $(document).ready(function(){
+	requestUrl = $('#requestUrl').text();
+	fdata = getFriendShip();
 	$("#searchMember").click(function(){
 $.ajax({
 	url : requestUrl + "memberJson",
@@ -334,55 +358,73 @@ $.ajax({
 	dataType : "JSON",
 	data : {memberName : $("#searchMemberName").val()},
 	success : function(memberData) {
-				
 					$("#searchResult").empty();
 					var searchMemberName = $("#searchMemberName").val();
 					let memberListAll = "";
 					mdata = memberData.member
-					
-					
+					if(searchMemberName.length != 0){
 					for (let i = 0; i < mdata.length; i++) {
 						let member = mdata[i];
 						if(member.memberName != loginMemberName){
-							memberList_html = memberList.replace(/\{{member.memberName}}/g, member.memberName)
-														.replace(/\{{friendStatus}}/g, "Add Friend")
-														.replace(/\{{member.memberId}}/g, member.id)
-														
-							memberListAll += memberList_html
+
+									memberList_html = memberList.replace(/\{{member.memberName}}/g, member.memberName)
+																.replace(/\{{member.memberId}}/g, member.id)
+																.replace(/\{{friendStatus}}/g, "Add Friend")
+																
+									memberListAll += memberList_html
 						}
+
 					}
 					$("#searchResult").append(memberListAll);
 					for (let j = 0; j < mdata.length; j++) {
-						let member = mdata[j];
-							sendFriendRequest(loginMemberid, member.id)
-						
+							let member = mdata[j];
+							if(member.memberName != loginMemberName){
+								sendFriendRequest(loginMemberid, member.id);
+								for(let i = 0; i < fdata.length; i++) {
+										let friend = fdata[i];
+								if(loginMemberid == friend.sender_memberId && member.id == friend.receiver_memberId && friend.friendStatus == 2) {
+									$("#friendRequest" + member.id).text("Friend")
+									$("#friendRequest" + member.id).attr('disabled', true);
+								} else if(loginMemberid == friend.sender_memberId && member.id == friend.receiver_memberId && friend.friendStatus == 1) {
+									$("#friendRequest" + member.id).text("Request Sended")
+									$("#friendRequest" + member.id).attr('disabled', true);
+									} else if (loginMemberid == friend.receiver_memberId && member.id == friend.sender_memberId && friend.friendStatus == 1){
+										$("#friendRequest" + member.id).text("Confirm");
+										confirmFriendRequest(loginMemberid, friend.sender_memberId);
+									}
+									
+							}
+															
 					}
-				
+							
+				}
+			}
 	}
 })
 })
 })
 
 function sendFriendRequest(memberId, memberIdf) {
-	$("#friendRequest" + memberIdf).click(function() {
+	$("#friendRequest" + memberIdf).unbind().click(function() {
 		$.get("sendFriendRequest", {
 			memberId : memberId,
 			memberIdf : memberIdf
 		}, function() {
 		})
-		$(this).text("unFriend")
+		$(this).text("Send Request")
+		$(this).attr('disabled', true);
 	})
 }
 
-function confirmFriendRequest(){
-	$("#friendRequest" + memberIdf).text("Confirm")
-	$("#friendRequest" + memberIdf).click(function() {
+function confirmFriendRequest(loginMemberid, memberIdf) {
+	$("#friendRequest" + memberIdf).unbind().click(function() {
 		$.get("confirmFriendRequest", {
-			memberId : memberId,
+			memberId : loginMemberid,
 			memberIdf : memberIdf
 		}, function() {
 		})
 		$(this).text("Friend")
+		$(this).attr('disabled', true);
 	})
 }
 
@@ -396,20 +438,27 @@ function getMemberById(memberid){
 	}
 }
 
-$.ajax({
-	url : requestUrl + "friendJson",
-	method : "POST",
-	dataType : "JSON",
-	success : function(friendData) {
-		fdata = friendData.friend
-		for (let i = 0; i < fdata.length; i++) {
-			let friend = fdata[i];
-			if(friend.receiver_memberId == loginMemberid){
-				friend.sender_memberId
+
+function getFriendShip(){
+	$.ajax({
+		url : requestUrl + "friendJson",
+		method : "POST",
+		dataType : "JSON",
+		async:false,
+		success : function(friendData) {
+			fdata = friendData.friend
+			var count = 0;
+			for (let i = 0; i < fdata.length; i++) {
+				let friend = fdata[i];
+				if(friend.receiver_memberId == loginMemberid && friend.friendStatus == 1){
+					count++;
+				}
 			}
-			
+			if(count != 0 ){
+			$("#friendRequest" + loginMemberid).text(count);
+			}
 		}
-		
-	}
-})
+	})
+	return fdata;
+}
 

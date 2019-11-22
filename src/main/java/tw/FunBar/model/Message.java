@@ -2,52 +2,94 @@ package tw.FunBar.model;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Message {
 
-	private String userName;  //发送者
-    private Date sendDate;    //发送日期
-    private String content;   //发送内容
-    private String messageType;//发送消息类型（“text”文本，“image”图片）
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer message_id;
+	private Integer senderMemberId;
+	private Integer receiverMemberId;
+	private String subscribe;
+	private String userName;
+	private Date sendDate;
+	private String messageType;
+	private String messageContent;
 
-    public String getMessageType() {
-        return messageType;
-    }
+	public Integer getMessage_id() {
+		return message_id;
+	}
 
-    public void setMessageType(String messageType) {
-        this.messageType = messageType;
-    }
+	public void setMessage_id(Integer message_id) {
+		this.message_id = message_id;
+	}
 
-    public String getUserName() {
-        return userName;
-    }
+	public Integer getSenderMemberId() {
+		return senderMemberId;
+	}
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+	public void setSenderMemberId(Integer senderMemberId) {
+		this.senderMemberId = senderMemberId;
+	}
 
-    public Date getSendDate() {
-        return sendDate;
-    }
+	public Integer getReceiverMemberId() {
+		return receiverMemberId;
+	}
 
-    public void setSendDate(Date sendDate) {
-        this.sendDate = sendDate;
-    }
+	public void setReceiverMemberId(Integer receiverMemberId) {
+		this.receiverMemberId = receiverMemberId;
+	}
 
-    public String getContent() {
-        return content;
-    }
+	public String getSubscribe() {
+		return subscribe;
+	}
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+	public void setSubscribe(String subscribe) {
+		this.subscribe = subscribe;
+	}
 
-    @Override
-    public String toString() {
-        return "Message{" +
-                "userName='" + userName + '\'' +
-                ", sendDate=" + sendDate +
-                ", content='" + content + '\'' +
-                ", messageType='" + messageType + '\'' +
-                '}';
-    }
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public Date getSendDate() {
+		return sendDate;
+	}
+
+	public void setSendDate(Date sendDate) {
+		this.sendDate = sendDate;
+	}
+
+	public String getMessageType() {
+		return messageType;
+	}
+
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
+	}
+
+	public String getMessageContent() {
+		return messageContent;
+	}
+
+	public void setMessageContent(String messageContent) {
+		this.messageContent = messageContent;
+	}
+
+	@Override
+	public String toString() {
+		return "Message [message_id=" + message_id + ", senderMemberId=" + senderMemberId + ", receiverMemberId="
+				+ receiverMemberId + ", subscribe=" + subscribe + ", userName=" + userName + ", sendDate=" + sendDate
+				+ ", messageType=" + messageType + ", messageContent=" + messageContent + "]";
+	}
+
 }

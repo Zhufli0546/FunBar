@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
     <script src="https://kit.fontawesome.com/c523dff261.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/blog.css"/>">
 </head>
 <style>
@@ -35,7 +36,19 @@
 	.blogMore { position: absolute; top: 5px; right: 5px; display: block; width: 25px; height:25px; z-index:999;}
 	
 	#closeLeftModal { padding: 5px; border-radius: 2px;}
-
+	
+	.blogBlock {height: 200px; overflow: hidden;}
+	.blogBlock img {display: block; width: 100%; height: 100%; transition: all 1s; margin: 0 -15px;}
+	.blogBlock img:hover{transform: scale(1.1,1.1);}
+	
+	.uploadBlock {
+		cursor: pointer;
+		background-color: #eee;
+		padding: 5px;
+		border-radius: 5px;
+		border: 1px solid black;
+		margin-top: 10px;
+	}
 </style>
 <body>
 <!-- Header -->
@@ -105,15 +118,11 @@
                 <form enctype="multipart/form-data" method="post" action="blogPost">
                     <div class="row">
                         <div class="col-md-2">
-                            <!-- 圖片區域 -->
-                            <label
-                                style="cursor: pointer; background-color: #eee; padding: 2px; border-radius: 2px;">
-                                <input type="file" name="blogImage" id="blog_img" style="display: none;"> <i
-                                    class="fa fa-photo"></i>上傳圖片
-                            </label>
+							<!-- Logo 區域  -->
+							<img src="${pageContext.request.contextPath}/images/icons/logo5.png" width="150px" height="180px" />
                             <!-- 圖片顯示區塊 -->
                             <div id="imgArea" title="" style="padding: 20px;">
-                                <img class="imgArea" style="width: 100px; height: auto">
+                                <img class="imgArea" style="width: 300px; height: auto">
                             </div>
                         </div>
 
@@ -134,10 +143,23 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="blogContent" class="col-md-2">文章內容:</label>
+                                <label for="blogContent" class="col-md-2">
+                                	文章內容:
+	                                <label class="uploadBlock">
+	                                	<input type="file" name="blogImage" id="blog_img" style="display: none;">
+	                                	<span><i class="fa fa-photo"></i>封面圖片</span>
+	                            	</label>
+                                </label>
                                 <textarea id="blogContent" name="blogContent"></textarea>
                             </div>
-                            <input type="submit" class="bth btn-info" value="提交" />
+
+                            <hr>
+                            <div class="row">
+                            	<div class="col-md-4"></div>
+                            	<div class="col-md-4">
+                            		<button style="display: block; width: 100px; height: 50px; margin: 0 auto;" class="btn btn-outline-secondary" type="submit">提交</button>
+                            	</div>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -162,14 +184,11 @@
                 <form enctype="multipart/form-data" method="post" action="modifyBlog">
                     <div class="row">
                         <div class="col-md-2">
-                            <!-- 圖片區域 -->
-                            <label style="cursor: pointer; background-color: #eee; padding: 2px; border-radius: 2px;">
-                                <input type="file" name="blogImage" id="blog_img2" style="display: none;">
-                                <i class="fa fa-photo"></i>上傳圖片
-                            </label>
+                            <!-- Logo 區域  -->
+							<img src="${pageContext.request.contextPath}/images/icons/logo5.png" width="150px" height="180px" />
                             <!-- 圖片顯示區塊 -->
-                            <div id="imgArea" title="" style="padding: 20px;">
-                                <img class="imgArea" style="width: 100px; height: auto">
+                            <div id="imgArea2" title="" style="padding: 20px;">
+                                <img class="imgArea" style="width: 300px; height: auto">
                             </div>
                         </div>
 
@@ -190,11 +209,23 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="blogContent2" class="col-md-2">文章內容:</label>
+                                <label for="blogContent2" class="col-md-2">
+                                	文章內容:
+                                	<label class="uploadBlock">
+                                		<input type="file" name="blogImage" id="blog_img2" style="display: none;">
+                                		<span><i class="fa fa-photo"></i>封面圖片</span>
+                            		</label>
+                                </label>
                                 <textarea id="blogContent2" name="blogContent"></textarea>
                             </div>
                             <input id="modifyBlogId" type="hidden" name="blogId" value="" />
-                            <input type="submit" id="closeLeftModal" class="bth btn-success" value="修改" />
+                            <hr>
+                            <div class="row">
+                            	<div class="col-md-4"></div>
+                            	<div class="col-md-4">
+                            		<button style="display: block; width: 100px; height: 50px; margin: 0 auto;" id="closeLeftModal" class="btn btn-outline-secondary" type="submit">修改</button>
+                            	</div>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -203,14 +234,16 @@
         </div><!-- modal-content -->
     </div><!-- modal-dialog -->
 </div><!-- modal -->
-
+	
 <!-- Footer -->
 <div style="display:none; " class="requestUrl">${pageContext.request.contextPath}</div>
 <input type="hidden" class="sessionScopeMemberId" value="${sessionScope.member.id}" />
 <jsp:include page="footer.jsp" />
 <script src="<c:url value='/vendor/ckeditor/ckeditor.js'/>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.0/sweetalert2.all.js"></script>
 <script>
 $(document).ready(function () {
+	// CKEditor Plugin
 	$('#createBlog').on('shown.bs.modal', function() {
         $(document).off('focusin.modal');
     });
@@ -233,5 +266,8 @@ $(document).ready(function () {
 })
 </script>
 <script src="<c:url value='/js/blog.js'/>"></script>
+
+<!-- Chat Box -->
+<jsp:include page="chatbox.jsp" />
 </body>
 </html>

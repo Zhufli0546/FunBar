@@ -32,20 +32,6 @@
 			id="sidebarToggle" href="#">
 			<i class="fas fa-bars"></i>
 		</button>
-
-		<!-- Navbar Search -->
-		<!-- <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="button">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
-    </form> -->
-
-		<!-- Navbar -->
 	</nav>
 
 	<div id="wrapper">
@@ -77,7 +63,7 @@
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">######</h6>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/allbooking">查詢所有訂位</a> <a
-						class="dropdown-item" href="${pageContext.request.contextPath}/ad_booking">來電訂位</a> <a
+						class="dropdown-item" href="${pageContext.request.contextPath}/ad_booking">新增訂位</a> <a
 						class="dropdown-item" href="${pageContext.request.contextPath}/reset_time_people">重設時段及人數</a>
 				</div></li>
 				
@@ -89,8 +75,9 @@
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">######</h6>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/allOrder">查詢所有訂房</a> <a
-						class="dropdown-item" href="${pageContext.request.contextPath}/admin_RoomBooking">來電訂房</a> <a
+						class="dropdown-item" href="${pageContext.request.contextPath}/admin_RoomBooking">新增訂房</a> <a
 						class="dropdown-item" href="${pageContext.request.contextPath}/room_type">房型</a>
+						<a class="dropdown-item" href="${pageContext.request.contextPath}/check_in">check in</a>
 				</div></li>
 
 			<li class="nav-item dropdown"><a
@@ -129,7 +116,8 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">######</h6>
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin_blog">部落格管理</a> 
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin_blog">部落格管理</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin_report">部落格檢舉管理</a> 
 				</div></li>
 
 				<!-- 討論區後台 -->
@@ -141,7 +129,7 @@
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">Discuss</h6>
 					<a class="dropdown-item" href="#">好友系統</a> <a
-						class="dropdown-item" href="#">貼文管理</a> <a
+						class="dropdown-item" href="${pageContext.request.contextPath}/admin_discuss">貼文管理</a> <a
 						class="dropdown-item" href="#"></a>
 				</div></li>
 		</ul>

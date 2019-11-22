@@ -102,12 +102,12 @@ function generateTemplate() {
 	})
 
 	var firstTemplate = "<p style='color:red'>{{comment.commentIds}}</p>" +
-						"<h5 class='media mt-4 animated fadeIn'><img class='d-flex mr-3 rounded-circle' src='http://placehold.it/50x50'>{{comment.commentName}}</h5>{{comment.commentContent}}" +
+						"<h5 class='media mt-4 animated fadeIn'><img width='50px' height='50px' class='d-flex mr-3 rounded-circle' src='{{comment.memberId}}'>{{comment.commentName}}</h5>{{comment.commentContent}}" +
 						"<div><label for='replyComment' class='replyClick' data-comment='{{comment.commentId}}' data-commentname='{{comment.name}}'><a class='mgl5' href='javascript:;'>回覆</a></label>" +
 						"<a class='mgl5 reportComment' data-toggle='modal' data-target='#reportModal' data-reportcommentid='{{comment.reportcommentid}}' href='javascript:;'>檢舉</a></div>";
 	var secondTemplate = "<div style='padding-left: 100px'>" +
 					     "<p style='color:red'>{{comment.commentIds}}</p>" +
-					     "<div class='media mt-4 animated fadeIn'><img class='d-flex mr-3 rounded-circle' src='http://placehold.it/50x50'>" +
+					     "<div class='media mt-4 animated fadeIn'><img width='50px' height='50px' class='d-flex mr-3 rounded-circle' src='{{comment.memberId}}'>" +
 					     "<h5 class='mt-0'>{{comment.commentName}}</h5></div>" +
 					     "<div>{{comment.commentContent}}</div>" +
 					     "<div><label for='replyComment' class='replyClick' data-comment='{{comment.commentId}}' data-commentname='{{comment.name}}'><a class='mgl5' href='javascript:;'>回覆</a></label>" +
@@ -118,6 +118,7 @@ function generateTemplate() {
 			var first_html;
 			if(firstComment[i].commentName) {
 				first_html = firstTemplate
+				.replace("{{comment.memberId}}", requestUrl + "/membergetPicture/" +firstComment[i].memberId)
 				.replace("{{comment.commentIds}}", firstComment[i].commentId)
 				.replace("{{comment.commentName}}", firstComment[i].commentName)
 				.replace("{{comment.commentContent}}", firstComment[i].commentContent)
@@ -146,6 +147,7 @@ function generateTemplate() {
 	function recursively(tmp) {
 		for(let j=0;j<tmp.length;j++) {	
 			second_html = secondTemplate
+				.replace("{{comment.memberId}}", requestUrl + "/membergetPicture/" +tmp[j].memberId)
 				.replace("{{comment.commentIds}}", tmp[j].commentId)
 				.replace("{{comment.commentName}}", tmp[j].commentName)
 				.replace("{{comment.commentContent}}", tmp[j].commentContent)

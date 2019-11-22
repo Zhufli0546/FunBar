@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 
@@ -44,7 +45,7 @@
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/css/own.css"/>">
 <link href="https://fonts.googleapis.com/css?family=Poller+One|Sarina|Sonsie+One&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css?family=Paytone+One|Russo+One&display=swap" rel="stylesheet">
 
 </head>
 <body>
@@ -57,8 +58,8 @@
 					<!-- Logo -->
 					<div class="logo">
 						<a href="${pageContext.request.contextPath}"> 
-						<img src="<c:url value='/images/icons/logo4nb.png' />" 
-							data-logofixed="<c:url value='/images/icons/logo4nb.png' />">
+						<img src="<c:url value='/images/icons/logo5.png' />" 
+							data-logofixed="<c:url value='/images/icons/logo5.png' />">
 						</a>
 					</div>
 					<!-- Menu -->
@@ -75,9 +76,10 @@
 								
 								         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">線上預約</a>
 								         
-								           <div class="dropdown-menu">
+								           <div class="dropdown-menu"">
 								           		 <a class="dropdown-item" href="${pageContext.request.contextPath}/booking">線上訂位</a>
                									 <a class="dropdown-item" href="${pageContext.request.contextPath}/booking_room">線上訂房</a>
+               									 <a class="dropdown-item" href="${pageContext.request.contextPath}/personal_order">我的訂房</a>
                								</div>	 
 
 								</li>
@@ -85,8 +87,9 @@
 								<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">購物區</a>
 									<div class="dropdown-menu">
-						           		 <a class="dropdown-item" href="${pageContext.request.contextPath}/shoppingCart">購物商城</a>
-       									 <a class="dropdown-item" href="${pageContext.request.contextPath}/showCart">我的購物車</a>
+						           		 <a class="dropdown-item" href="${pageContext.request.contextPath}/shoppingCart">Mall</a>
+       									 <a class="dropdown-item" href="${pageContext.request.contextPath}/showCart">My Cart</a>
+       									 <a class="dropdown-item" href="${pageContext.request.contextPath}/showMemOrders">My Orders</a>
                						</div>
 								</li>
 								
@@ -126,14 +129,18 @@
 									</c:otherwise>
 								</c:choose>
 						
+						      <li class="nav-item dropdown no-arrow">
+        <a class="nav-link" href="${pageContext.request.contextPath}/showCart" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <i style="color:red;"class="fa fa-cart-arrow-down"></i>
+          <span class="badge badge-danger cart">${fn:length(sessionScope.Cart.cartItems)}</span>
+          </a>
+      </li>
+						
+						
 						</nav>
 					</div>
 					<!-- Social -->
 					<div class="social flex-w flex-l-m p-r-20">
-						<a href="#"><i class="fa fa-tripadvisor" aria-hidden="true"></i></a>
-						<a href="#"><i class="fa fa-facebook m-l-21"
-							aria-hidden="true"></i></a> <a href="#"><i
-							class="fa fa-twitter m-l-21" aria-hidden="true"></i></a>
 						<button class="btn-show-sidebar m-l-33 trans-0-4"></button>
 					</div>
 				</div>
@@ -161,7 +168,7 @@
 				href="${pageContext.request.contextPath}/blogs" class="txt19">部落格</a>
 			</li>
 
-			<li class="t-center m-b-13"><a href="discuss" class="txt19">討論區</a>
+			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/discuss" class="txt19">討論區</a>
 			</li>
 			
 
@@ -172,11 +179,11 @@
 			<li class="t-center m-b-13"><a href="admin">後台管理</a></li>
 
 
-			<li class="t-center">
-				<!-- Button3 --> <a href="reservation.html"
-				class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-					Reservation </a>
-			</li>
+<!-- 			<li class="t-center"> -->
+<!-- 				<a href="reservation.html" -->
+<!-- 				class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto"> -->
+<!-- 					Reservation </a> -->
+<!-- 			</li> -->
 		</ul>
 	</aside>
 </body>

@@ -19,8 +19,9 @@
 
 	<jsp:include page="header.jsp" />
 
-	<section class="page animsition" style="background-color:black">
-		<div class="calendar" style="border:1px solid orange;border-radius:5px">
+	<section class="page animsition">
+		<div  style=" background-image:url('images/booking.jpg');">
+		<div class="calendar" style="border:1px solid orange;border-radius:5px;background-color:black;">
 
 			選擇訂位日期:
 			<div class="title">
@@ -47,7 +48,8 @@
 			</div>
 
 		</div>
-
+</div>
+		<div style=" background-color:black">
 		<div class="calendar1">
 			選擇人數: <select id="slc" class="text">
 				<option value="1">1位</option>
@@ -66,7 +68,7 @@
 		</div>
 
 		<div class="calendar1"id="time">請先選擇日期人數</div>
-
+</div>
 	</section>
 
 	<jsp:include page="footer.jsp" />

@@ -43,10 +43,10 @@ public class EmailServiceImpl implements EmailService {
  public void sendmembercheck(Member mail) {
   emailDAO.sendmembercheck(mail);
 
- }
- @Override
- public void sendActivityEmail(List<Applicant> email,Activity activity) {
-  emailDAO.sendActivityEmail(email,activity);
+	}
+	@Override
+	public void sendActivityEmail(List<Applicant> email,Activity activity) {
+		emailDAO.sendActivityEmail(email,activity);
 
   
 

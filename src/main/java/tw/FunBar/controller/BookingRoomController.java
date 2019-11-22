@@ -7,6 +7,9 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,8 +39,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ecpay.payment.integration.AllInOne;
 import ecpay.payment.integration.domain.AioCheckOutOneTime;
 import tw.FunBar.model.Category;
+import tw.FunBar.model.Member;
 import tw.FunBar.model.Room;
 import tw.FunBar.model.RoomOrder;
+import tw.FunBar.model.RoomStatus;
 import tw.FunBar.service.EmailService;
 import tw.FunBar.service.RoomService;
 
@@ -176,11 +182,18 @@ public class BookingRoomController {
 	@RequestMapping("/adpay")
 	public String adOrder(@ModelAttribute("RoomOrder") RoomOrder room_order) throws ParseException {
 		
-		roomService.addOrderInDays(room_order);
+		
 		Room room = roomService.getRoomById(room_order.getRoom_id());
 		
 		room_order.setRoom(room);
+		room_order.setCheck_in(0);
+		
+		//roomService.addOrderInDays(room_order);
+		
 		roomService.addRoomOrder(room_order);
+		
+		
+		
 		
 		return "redirect:/allOrder";
 	}
@@ -190,7 +203,7 @@ public class BookingRoomController {
 			HttpServletRequest req, RedirectAttributes redirect,@ModelAttribute("RoomOrder") RoomOrder room_order,@RequestParam Integer stay) throws ParseException {
 		
 		
-		roomService.addOrderInDays(room_order);
+		
 		Room room = roomService.getRoomById(room_order.getRoom_id());
 		
 		room_order.setRoom(room);
@@ -215,17 +228,27 @@ public class BookingRoomController {
 		
 		int sss=((int)((Math.random()*9+1)*12345));
 		
+		
+		
+		
+		
 		String str = String.valueOf(sss);
 		
-		room_order.setOrder_id(sss);
+		//room_order.setOrder_id(sss);
+		room_order.setCheck_in(0);
 		room_order.setStatus("已付款");
-		roomService.addRoomOrder(room_order);
+		
+		
+		
+		
+		
+		//roomService.addOrderInDays(room_order);
 		
 		obj.setMerchantTradeNo(str); // 設定訂單編號
 		obj.setMerchantTradeDate(sdf.format(ts)); // 設定交易日期
 		obj.setTotalAmount(String.valueOf(room_order.getTotal())); // 設定總付款金額
 		obj.setTradeDesc("Order");
-		obj.setItemName(r.getRoom_type()+"*"+room_order.getRooms()); // 設定顯示在EcPay頁面的購物清單
+		obj.setItemName(r.getRoom_type()+"*"+room_order.getRooms()+"間"+"*"+room_order.getCheck_out_time()+"天"); // 設定顯示在EcPay頁面的購物清單
 		obj.setReturnURL("http:localhost:8080/FunBar/");// EcPay會將交易結果相關資訊以POST請求送來這個URL，但是localhost接不到這個。不過此項為必填資訊所以還是要set
 		// EcPay會將交易結果相關資訊以POST請求送來這個URL，但是localhost接不到這個。不過此項為必填資訊所以還是要set
 		// 可以在交易結束後觀察底下對應requestMapping的method -- receive
@@ -239,8 +262,11 @@ public class BookingRoomController {
 		// 只要將這個字串加為attribute並且顯示在回傳頁面上，便會自動執行，並跳轉到EcPay付款頁面。
 		// EcPay End
 		
-		emailService.sendEmail(room_order,room);
 
+		
+		
+		session.setAttribute("room_order",room_order);
+		session.setAttribute("room",room);
 		System.out.println("form =\n" + form);
 		model.addAttribute("ecpayForm", form);
 		return "ecpay";
@@ -250,7 +276,18 @@ public class BookingRoomController {
 	
 	
 	@RequestMapping("/result")
-	public String result() {
+	public String result(HttpSession session,HttpServletRequest req) throws ParseException {
+		
+		session = req.getSession(false);
+		
+		RoomOrder roomOrder = (RoomOrder)session.getAttribute("room_order");
+		
+		Room room = roomService.getRoomById(roomOrder.getRoom_id());
+		
+		roomService.addRoomOrder(roomOrder);
+		emailService.sendEmail(roomOrder,room);
+		
+				  
 		return "result";
 	}
 	
@@ -392,4 +429,101 @@ public class BookingRoomController {
 		
 		return "redirect:/allOrder";
 	}
+	
+	@RequestMapping("/check_in")
+	public String checkIn(Model model) {
+		
+		roomService.createOrderList();
+		
+		
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+
+
+
+		String date = fm.format(new Date());
+		
+		ArrayList<RoomOrder > orders = roomService.getTodayOrder(date);
+
+		ArrayList<RoomStatus> allroom = roomService.getAllRoomStatus();
+		
+		
+		
+		model.addAttribute("allroom",allroom);
+		
+		model.addAttribute("orders", orders);
+		
+		return "check_in";
+	}
+	
+	
+	@RequestMapping("/clear_all_room")
+	public String clearAllRoom() {
+		roomService.clearAllRoom();
+		
+		return "redirect:/check_in";
+	}
+	
+	
+//	@RequestMapping("/all_type_count")
+//	public String allTypeCount(Model model) {
+//		
+//		roomService.createOrderList();
+//		
+//		
+//		
+//		
+//		
+//		
+//		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+//
+//
+//
+//		String date = fm.format(new Date());
+//		
+//		ArrayList<RoomOrder > orders = roomService.getTodayOrder(date);
+//		
+//		ArrayList<RoomStatus> allroom = roomService.getAllRoomStatus();
+//		
+//		model.addAttribute("allroom",allroom);
+//		model.addAttribute("orders", orders);
+//		
+//		
+//		return "allTypeCount" ;
+//		
+//		
+//	}
+	
+	
+	@RequestMapping("/update_room_status")
+	public String updateRoomStatus(@RequestParam Integer room_number,@RequestParam Integer order_id,@RequestParam String name) {
+		
+		roomService.updateRoomStatus(room_number,order_id,name);
+		
+		return "redirect:/check_in";
+	}
+	
+	
+	@RequestMapping("/check_out")
+	public String checkOut(@RequestParam Integer order_id,@RequestParam Integer room_number) {
+		
+		roomService.checkOut(order_id,room_number);
+		
+		return "redirect:/check_in";
+	}
+	
+	
+	@RequestMapping("/personal_order")
+	public String personalOrder(Model model,HttpServletRequest req,HttpSession session) {
+		
+		session = req.getSession(false);
+		
+		 Member member = (Member) session.getAttribute("member");
+		
+		ArrayList<RoomOrder> orders = roomService.personalOrder(member.getMemberPhone());
+		
+		model.addAttribute("orders",orders);
+		
+		return "personal_order";
+	}
+	
 }

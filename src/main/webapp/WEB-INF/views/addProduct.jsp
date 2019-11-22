@@ -8,11 +8,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>商品上架</title>
+<title>Add Products</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+ <script src="js/addProduct.js"></script> 
 
-</head>
+
 <style>
 .page {
 	overflow: hidden;
@@ -67,8 +68,9 @@
 		width: 48%;
 	}
 }
-}
 </style>
+</head>
+
 <body>
 
 
@@ -84,59 +86,62 @@
 			<fieldset>
 				<div class="form-group">
 					<label class='control-label col-lg-2 col-lg-2' for="productNo">商品編號</label>
-					<form:input autocomplete="off" id="productNo" path="productNo"
-						type='text' class='form:input-large' />
+					<form:input  type="hidden" autocomplete="off" id="productNo" path="productNo" class='form:input-large' />
+					<span id="msgNo"></span>
 				</div>
 
 				<div class="form-group">
 					<label class="control-label col-lg-2 col-lg-2" for='productName'>商品名稱</label>
-					<form:input autocomplete="off" id="productName" path="productName"
-						type='text' class='form:input-large' />
+					<form:input autocomplete="off" id="productName" path="productName" type='text' class='form:input-large' />
+					<span id="msgName"></span>
 				</div>
 
 				<div class="form-group">
 					<label class="control-label col-lg-2 col-lg-2" for='productDetail'>商品說明</label>
-					<form:input autocomplete="off" id="productDetail"
-						path="productDetail" type='text' class='form:input-large' />
+					<form:input autocomplete="off" id="productDetail" path="productDetail" type='text' class='form:input-large' />
+					<span id="msgDetail"></span>
 				</div>
 
 				<div class="form-group">
 					<label class='control-label col-lg-2 col-lg-2' for="category">商品分類</label>
 					<form:select path="category">
-						<form:option value="vodka">vodka</form:option>
+						<form:option value="beer">beer</form:option>
 						<form:option value="gin">gin</form:option>
 						<form:option value="rum">rum</form:option>
 						<form:option value="tequila">tequila</form:option>
+						<form:option value="vodka">vodka</form:option>
 						<form:option value="whisky">whisky</form:option>
-						<form:option value="brandy">brandy</form:option>
-						<form:option value="beer">beer</form:option>
+						<form:option value="wine">wine</form:option>
 					</form:select>
 				</div>
 
 				<div class="form-group">
 					<label class='control-label col-lg-2 col-lg-2' for="unitPrice">單價</label>
-					<form:input autocomplete="off" id="unitPrice" path="unitPrice"
-						type='text' class='form:input-large' />
+					<form:input autocomplete="off" id="unitPrice" path="unitPrice" type='text' class='form:input-large' />
+					<span id="msgPrice"></span>
 				</div>
 
 				<div class="form-group">
 					<label class='control-label col-lg-2 col-lg-2' for="discount">折扣</label>
-					<form:input autocomplete="off" id="discount" path="discount"
-						type='text' class='form:input-large' />
+					<form:input autocomplete="off" id="discount" path="discount" type='text' class='form:input-large' />
+					<span id="msgDisc"></span>
 				</div>
 
 				<div class="form-group">
-					<label class='control-label col-lg-2 col-lg-2' for="discount">進貨數量</label>
-					<form:input autocomplete="off" id="stock" path="stock" type='text'
-						class='form:input-large' />
+					<label class='control-label col-lg-2 col-lg-2' for="discount">庫存數量</label>
+					<form:input autocomplete="off" id="stock" path="stock" type='text' class='form:input-large' />
+					<span id="msgStock"></span>
 				</div>
 
 
 				<div class="form-group">
 					<label class='control-label col-lg-2 col-lg-2' for="productCover">商品圖片</label>
-					<form:input id="productCover" path="productCover" type='file'
-						class='form:input-large' />
+					<form:input id="productCover" path="productCover" type='file' class='form:input-large' />
 				</div>
+				
+				<!-- 預設商品為上架狀態 -->
+				<form:input type="hidden" id="status" path="status" value="0"  class='form:input-large' />
+				
 
 				<div class="form-group">
 					<input type='submit' class='button' value="送出" />

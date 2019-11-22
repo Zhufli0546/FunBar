@@ -13,7 +13,7 @@ p{
 .prodlist {
 	float: left;
 	width: 18%;
-	min-height: 360px;
+	min-height:360px;
 	padding: 5px;
 	text-align: center;
 	border-style:outset;
@@ -26,12 +26,12 @@ p{
 	margin: 0 auto 5px;
 	font-weight: bold;
 	color: #000;
+	height:100px;
 }
 
 .prodlist img {
 	display: block;
-	width: 100px;
-	height: 120px;
+	height:180px;
 	margin: 0 auto;
 }
 

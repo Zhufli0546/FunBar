@@ -40,7 +40,9 @@
 			</div>
 			
 		</div>
-
+		
+		<c:choose>
+		<c:when test="${sessionScope.member ==null }">
 		<div class="col-md-5" style="margin-top: 20px;">
 		
 			<form:form modelAttribute="room_order" method="POST" action="pay">
@@ -80,6 +82,52 @@
 			</form:form>
 			
 		</div>
+		
+		</c:when>
+
+<c:otherwise>
+				<div class="col-md-5" style="margin-top: 20px;">
+		
+			<form:form modelAttribute="room_order" method="POST" action="pay">
+			
+			<form:input type="hidden" path="room_id" value="${room.room_id}" />
+			<form:input type="hidden" path="total"  value="${total}" />
+			<input type="hidden" name="stay" value="${stay}">
+				<div class="form-group">
+					<label style="float:left" for="inputname">姓名 <span style="color: red">* </span></label>
+					<form:input type="text" class="form-control col-md-6" style="float:left" id="inputname" path="order_name"
+						value="${sessionScope.member.memberName}"/> <input style="margin-left:30px"  type="radio" name="sex"
+						value="male" style="margin-left: 15px">Mr<input style="margin-left:30px"
+						type="radio" name="sex" value="female">Ms
+				</div>
+
+
+
+				<div class="form-group">
+					<label for="inputphone">手機 <span style="color: red">*</span></label>
+					<form:input type="text" class="form-control col-md-12" id="inputphone" path="order_phone"
+						value="${sessionScope.member.memberPhone}" />
+										<label for="inputemail">E-mail <span style="color: red">*</span></label>
+					<form:input type="text" class="form-control col-md-12" id="inputemail" path="order_email"
+						value="${sessionScope.member.memberEmail}" />
+						
+					<label for="inputemail">備註 </label>
+					<form:input type="text" class="form-control col-md-12" id="inputremark" path="remark"
+						placeholder="如有需求,可輸入備註" />
+				</div>
+
+				<form:input type="hidden" path="check_in_time" value="${date}" />
+				<form:input type="hidden" path="check_out_time" value="${stay}" />
+				<form:input type="hidden" path="rooms" value="${rooms}" />
+				<span>繳款方式 : 信用卡</span>
+				<button type="submit" class="btn btn-primary"
+					style="background-color: #66B3FF; border: 2px solid black;width:100%;height:50px">前往預訂</button>
+			</form:form>
+			
+		</div>
+		
+		</c:otherwise>
+		</c:choose>
 	</div>
 
 

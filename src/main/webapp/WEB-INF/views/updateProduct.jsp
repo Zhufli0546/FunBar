@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>修改商品資料</title>
+<title>Update Product Info</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -26,7 +26,6 @@ form{
  img { 
  	display: block; 
  	float:right;
- 	width: 100px; 
  	height: 120px; 
  	margin: 0 auto; 
  } 
@@ -53,7 +52,7 @@ form{
 
 <jsp:include page="admin_header.jsp" />
 
-<jsp:useBean id="pb" scope="request" class="tw.FunBar.model.ProductBean" />
+
 
 <!-- Content 區塊 -->
 <div class="context">
@@ -96,7 +95,7 @@ form{
 <select name="category">
 <option>${pb.category}</option>
 <option value="vodka">vodka</option>
-<option value="gin">gin>
+<option value="gin">gin</option>
 <option value="rum">rum</option>
 <option value="tequila">tequila</option>
 <option value="whisky">whisky</option>

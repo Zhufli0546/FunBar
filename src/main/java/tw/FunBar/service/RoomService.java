@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import tw.FunBar.model.Room;
 import tw.FunBar.model.RoomOrder;
+import tw.FunBar.model.RoomStatus;
 
 public interface RoomService {
 		
@@ -44,6 +45,20 @@ public interface RoomService {
 	void cancelOrder(Integer id);
 
 	ArrayList<RoomOrder> phoneSearch(String phone);
+
+	ArrayList<RoomOrder> getTodayOrder(String date);
+
+	void createOrderList();
+
+	ArrayList<RoomStatus> getAllRoomStatus();
+
+	void updateRoomStatus(Integer room_number, Integer order_id,String name);
+
+	void checkOut(Integer order_id, Integer room_number);
+
+	void clearAllRoom();
+
+	ArrayList<RoomOrder> personalOrder(String phone);
 
 	
 

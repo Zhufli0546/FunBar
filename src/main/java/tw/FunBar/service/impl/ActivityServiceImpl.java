@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tw.FunBar.dao.ActivityDao;
 import tw.FunBar.model.Activity;
+import tw.FunBar.model.ActivityMap;
 import tw.FunBar.model.Applicant;
 import tw.FunBar.service.ActivityService;
 
@@ -72,8 +73,19 @@ public class ActivityServiceImpl implements ActivityService {
 	
 	@Transactional
 	@Override
-	public Applicant getTime(){
+	public List<Applicant> getTime(){
 		return dao.getTime();
+	}
+
+	@Transactional
+	@Override
+	public Activity getTimeActivity() {
+		return dao.getTimeActivity();
+	}
+
+	@Override
+	public List<ActivityMap> repeatActivityId(String memberId) {
+		return dao.repeatActivityId(memberId);
 	}
 
 }

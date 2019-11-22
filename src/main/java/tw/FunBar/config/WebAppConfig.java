@@ -47,6 +47,8 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 		
 		registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/views/images/");
 		
+		registry.addResourceHandler("/ProductImages/**").addResourceLocations("/WEB-INF/views/ProductImages/");
+		
 		registry.addResourceHandler("/includes/**").addResourceLocations("/WEB-INF/views/includes/");
 		
 		registry.addResourceHandler("/vendor/**").addResourceLocations("/WEB-INF/views/vendor/");
@@ -60,6 +62,8 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 		registry.addResourceHandler("/ad_scss/**").addResourceLocations("/WEB-INF/views/ad_scss/");
 		
 		registry.addResourceHandler("/imgUpload/**").addResourceLocations("file:C:\\FunBar\\imgUpload\\");
+	
+		registry.addResourceHandler("/activityimages/**").addResourceLocations("/WEB-INF/views/activityimages/");
 	}
 	
 	@Bean
