@@ -16,13 +16,17 @@
 .prodlist {
 	display: inline-block;
 	width: 200px;
-	height: 400px;
 	padding: 5px;
 	text-align: center;
 	border-top:10px solid #9D9D9D;
 	border-bottom:10px solid #9D9D9D;
 	border-radius:5px;
 	margin: 0 5px;
+	transition: all .2s;
+}
+
+.prodlist:hover {
+	background-color: #FFF4C1;
 }
 
 .prodlist .prodtitle {
@@ -35,7 +39,7 @@
 
 .prodlist img {
 	display: block;
-	height: 120px;
+	height: 100px;
 	margin: 0 auto;
 }
 

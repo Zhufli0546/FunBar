@@ -124,7 +124,7 @@
 		<div id="productOffset"  class="row container-fluid">
 			<div class="productCard" style="display: flex;">
 				<c:forEach var="pb" items="${all}" begin="0" step="1" varStatus="i">
-				<div class="prodlist" style="height:350px;">
+				<div class="prodlist">
 					<p class="prodtitle">${pb.productName}</p>
 					<figure>
 						<a href="<c:url value='/product?id=${pb.productId}' />" ">
@@ -207,7 +207,7 @@ $(".button-add").click(function() {
 			}
 
 			if(check) {
-				alert("加入購物車失敗");
+				alert("庫存不足");
    			} else {
     			myFunction();
     			changeCartNum();
@@ -227,7 +227,7 @@ $("#productOffset").bind("mousewheel",function(event){
 		if($(".productCard").offset().left == -830 || $(".productCard").offset().left < -830) { 
 			productWheel = 0;
 		} else {
-			productWheel = -50;
+			productWheel = -100;
 		}
 		
 		TweenMax.to(".productCard",0.1,{
@@ -240,7 +240,7 @@ $("#productOffset").bind("mousewheel",function(event){
 		if($(".productCard").offset().left == 0 || $(".productCard").offset().left > 0) { 
 			productWheel = 0;
 		} else {
-			productWheel = 50;
+			productWheel = 100;
 		}
 		
     	TweenMax.to(".productCard",0.1,{
