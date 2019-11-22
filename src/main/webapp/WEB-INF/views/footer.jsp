@@ -93,12 +93,7 @@
 	<script type="text/javascript"
 		src="<c:url value="/vendor/lightbox2/js/lightbox.min.js"/>"></script>
 	<!--===============================================================================================-->
-	<script src="<c:url value="/js/main.js"/>">
-	</script>
-	
-
-	
-
+	<script src="<c:url value="/js/main.js"/>"></script>
 
 </body>
 

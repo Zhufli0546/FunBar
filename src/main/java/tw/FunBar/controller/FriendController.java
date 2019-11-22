@@ -8,21 +8,24 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import tw.FunBar.model.Friendship;
 import tw.FunBar.model.Member;
+import tw.FunBar.service.DiscussService;
 import tw.FunBar.service.MemberService;
 
 @Controller
 public class FriendController {
 
-	MemberService memberService;
-
 	@Autowired
-	public void setMemberService(MemberService memberService) {
-		this.memberService = memberService;
-	}
+	MemberService memberService;
+	@Autowired
+	DiscussService service;
 
 	@RequestMapping(value = "/friend", method = RequestMethod.GET)
 	public String friend(Model model, HttpServletRequest request, HttpSession session) {
@@ -40,6 +43,14 @@ public class FriendController {
 		List<Member> member = memberService.getAllmembers();
 		model.addAttribute("Member", member);
 		return "getAllMemberJson";
+	}
+
+	@GetMapping(value = "cancelFriendRequest")
+	public void cancelFriendRequest(@RequestParam(value = "sender_memberId") Integer sender_memberId,
+									@RequestParam(value = "receiver_memberId") Integer receiver_memberId) {
+		Friendship friendship = service.getFriendRequest(sender_memberId, receiver_memberId);
+		System.out.println(friendship);
+		service.cancelFriendRequest(friendship);
 	}
 
 }

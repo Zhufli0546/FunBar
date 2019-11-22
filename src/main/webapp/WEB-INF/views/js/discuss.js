@@ -1,7 +1,8 @@
 //Post area
 
 var newPost = "<div class='card-header'>Create Post</div>"
-		+ "<div class='media p-4 bg-light'><img class='d-flex mr-3 rounded-circle' src='http://placehold.it/50x50' />"
+		+ "<div class='media p-4 bg-light'>" 
+		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{sessionScope.member.id}}'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0'>"
 		+ "<a href='#' class='text-primary'><h5>{{sessionScope.member.memberName}}</h5></a>"
 		+ "<form method='post' action='createPost'>"
@@ -11,7 +12,8 @@ var newPost = "<div class='card-header'>Create Post</div>"
 		+ "</form></div></div>";
 
 var firstLevelComment = "<div class='card' id='firstComment'>"
-		+ "<div class='media p-4 bg-light'><img class='d-flex mr-3 rounded-circle' src='http://placehold.it/50x50'>"
+		+ "<div class='media p-4 bg-light'>" 
+		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{sessionScope.member.id}}'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0' id='firstCommentBody{{post.postId}}'>"
 		+ "<a href='' class='text-primary'><h5>{{sessionScope.member.memberName}}</h5></a>"
 		+ "<div class='media-date'>{{post.postTime}}"
@@ -43,7 +45,8 @@ var firstLevelComment = "<div class='card' id='firstComment'>"
 var level = "<div class='collapse' id='comment{{post.postId}}'>"
 
 var secondLevelComment = "<div class='card mt-3' id='secondComment'>"
-		+ "<div class='media p-4 bg-light'><img class='d-flex mr-3 rounded-circle' src='http://placehold.it/50x50'>"
+		+ "<div class='media p-4 bg-light'>" 
+		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{sessionScope.member.id}}'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0'id='secondCommentBody{{post.postId}}' >"
 		+ "<a href='' class='text-primary'><h5>{{sessionScope.member.memberName}}</h5></a>"
 		+ "<div class='media-date'>{{post.postTime}}"
@@ -72,7 +75,8 @@ var secondLevelComment = "<div class='card mt-3' id='secondComment'>"
 		+ "</div></div></form></div></div></div></div>";
 
 var thirdLevelComment = "<div class='card mt-3 ml-5' id='thirdComment'>"
-		+ "<div class='media p-4 bg-light'><img class='d-flex mr-3 rounded-circle' src='http://placehold.it/50x50'>"
+		+ "<div class='media p-4 bg-light'>"
+		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{sessionScope.member.id}}'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0'>"
 		+ "<a href='' class='text-primary'><h5>{{sessionScope.member.memberName}}</h5></a>"
 		+ "<div class='media-date'>{{post.postTime}}<button type='button' id='drop{{post.postId}}' class='btn-sm ml-2 btn-secondary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></button>"
@@ -89,7 +93,7 @@ var thirdLevelComment = "<div class='card mt-3 ml-5' id='thirdComment'>"
 		+ "<button type='button' style='display:none' value='{{post.memberId}}'></button>"
 		+ "</div></div></div></div>";
 
-var requestUrl = $('#requestUrl').text();
+var requestUrl = "";
 var loginMemberName = $('#loginMemberName').text();
 var loginMemberid = $('#loginMemberid').text();
 
@@ -110,7 +114,8 @@ $.ajax({
 	success : function(postData) {
 
 		newPost_html = newPost.replace(/\{{sessionScope.member.memberName}}/g, loginMemberName)
-						     .replace(/\{{sessionScope.member.id}}/g, loginMemberid)
+							  .replace(/\{{sessionScope.member.id}}/g, loginMemberid)
+							  .replace(/\{{requestUrl}}/g, requestUrl)
 						
 		$("#newPost").append(newPost_html);
 		data = postData.Post
@@ -127,6 +132,7 @@ $.ajax({
 									.replace(/\{{post.postId}}/g, post.postId)
 									.replace(/\{{sessionScope.member.memberName}}/g,loginMemberName)
 									.replace(/\{{sessionScope.member.id}}/g, loginMemberid)
+									.replace(/\{{requestUrl}}/g, requestUrl)
 
 				$("#firstLevelComment").append(firstLevelComment_html);
 
@@ -150,6 +156,7 @@ $.ajax({
 								.replace(/\{{post.postId}}/g, comment.postId)
 								.replace(/\{{sessionScope.member.memberName}}/g,loginMemberName)
 								.replace(/\{{sessionScope.member.id}}/g, loginMemberid)
+								.replace(/\{{requestUrl}}/g, requestUrl)
 
 						if (comment.replyPost.length > 0) {
 							let third = "";
@@ -164,6 +171,7 @@ $.ajax({
 										.replace(/\{{post.postId}}/g, thirdComment.postId)
 										.replace(/\{{sessionScope.member.memberName}}/g,loginMemberName)
 										.replace(/\{{sessionScope.member.id}}/g, loginMemberid)
+										.replace(/\{{requestUrl}}/g, requestUrl)
 
 								third += thirdLevelComment_html;
 
@@ -192,6 +200,7 @@ $.ajax({
 			for (let j = 0; j < post.replyPost.length; j++) {
 				let comment = post.replyPost[j];
 
+				checkLikeBtn(comment.postId)
 				refreshCommentNumber(comment.postId, comment.replyPost.length)
 				editContent(comment.postId, comment.postContent)
 				deleteContent(comment.postId)
@@ -200,6 +209,7 @@ $.ajax({
 				for (let k = 0; k < comment.replyPost.length; k++) {
 					let thirdComment = comment.replyPost[k];
 
+					checkLikeBtn(thirdComment.postId)
 					editContent(thirdComment.postId, thirdComment.postContent)
 					deleteContent(thirdComment.postId)
 					checkDropBtn(thirdComment.postId, loginMemberid, thirdComment.memberId)
@@ -214,7 +224,7 @@ $.ajax({
 
 
 
-// like 未完成
+// like 
 function refreshLikeNumber(postId) {
 	$.get("Like", {
 		postId : postId
@@ -266,8 +276,8 @@ function checkLikeBtn(postId){
 		url : requestUrl + "likeJson",
 		method : "POST",
 		dataType : "JSON",
-		data : {memberId : loginMemberid},
-		async:false,
+		data : { memberId : loginMemberid },
+		async : false,
 		success : function(likeData) {
 			like = likeData.like
 			if(like.length == 0){
@@ -339,6 +349,7 @@ var memberList = "<div class='list-group-item d-flex justify-content-between ali
 
 
 $(document).ready(function(){
+	requestUrl = $('#requestUrl').text();
 	fdata = getFriendShip();
 	$("#searchMember").click(function(){
 $.ajax({
@@ -347,7 +358,6 @@ $.ajax({
 	dataType : "JSON",
 	data : {memberName : $("#searchMemberName").val()},
 	success : function(memberData) {
-				
 					$("#searchResult").empty();
 					var searchMemberName = $("#searchMemberName").val();
 					let memberListAll = "";
@@ -356,46 +366,65 @@ $.ajax({
 					for (let i = 0; i < mdata.length; i++) {
 						let member = mdata[i];
 						if(member.memberName != loginMemberName){
-							console.log("count")
+
 									memberList_html = memberList.replace(/\{{member.memberName}}/g, member.memberName)
-																.replace(/\{{friendStatus}}/g, "Add Friend")
 																.replace(/\{{member.memberId}}/g, member.id)
-					
+																.replace(/\{{friendStatus}}/g, "Add Friend")
+																
 									memberListAll += memberList_html
 						}
 
 					}
 					$("#searchResult").append(memberListAll);
 					for (let j = 0; j < mdata.length; j++) {
-						let member = mdata[j];
-							sendFriendRequest(loginMemberid, member.id)
+							let member = mdata[j];
+							if(member.memberName != loginMemberName){
+								sendFriendRequest(loginMemberid, member.id);
+								for(let i = 0; i < fdata.length; i++) {
+										let friend = fdata[i];
+								if(loginMemberid == friend.sender_memberId && member.id == friend.receiver_memberId && friend.friendStatus == 2) {
+									$("#friendRequest" + member.id).text("Friend")
+									$("#friendRequest" + member.id).attr('disabled', true);
+								} else if(loginMemberid == friend.sender_memberId && member.id == friend.receiver_memberId && friend.friendStatus == 1) {
+									$("#friendRequest" + member.id).text("Request Sended")
+									$("#friendRequest" + member.id).attr('disabled', true);
+									} else if (loginMemberid == friend.receiver_memberId && member.id == friend.sender_memberId && friend.friendStatus == 1){
+										$("#friendRequest" + member.id).text("Confirm");
+										confirmFriendRequest(loginMemberid, friend.sender_memberId);
+									}
+									
+							}
+															
 					}
-					}
+							
+				}
+			}
 	}
 })
 })
 })
 
 function sendFriendRequest(memberId, memberIdf) {
-	$("#friendRequest" + memberIdf).click(function() {
+	$("#friendRequest" + memberIdf).unbind().click(function() {
 		$.get("sendFriendRequest", {
 			memberId : memberId,
 			memberIdf : memberIdf
 		}, function() {
 		})
-		$(this).text("unFriend")
+		$(this).text("Send Request")
+		$(this).attr('disabled', true);
 	})
 }
 
-function confirmFriendRequest(){
-	$("#friendRequest" + memberIdf).text("Confirm")
-	$("#friendRequest" + memberIdf).click(function() {
+function confirmFriendRequest(loginMemberid, memberIdf) {
+	$("#friendRequest" + memberIdf).unbind().click(function() {
 		$.get("confirmFriendRequest", {
-			memberId : memberId,
+			memberId : loginMemberid,
 			memberIdf : memberIdf
 		}, function() {
 		})
 		$(this).text("Friend")
+		$(this).attr('disabled', true);
 	})
 }
 
