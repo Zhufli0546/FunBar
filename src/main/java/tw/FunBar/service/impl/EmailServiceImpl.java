@@ -19,36 +19,41 @@ import tw.FunBar.service.EmailService;
 @Transactional
 public class EmailServiceImpl implements EmailService {
 
-	@Autowired
-	EmailDAO emailDAO;
+ @Autowired
+ EmailDAO emailDAO;
 
-	@Override
-	public void sendEmail(RoomOrder room_order, Room room) {
+ @Override
+ public void sendEmail(RoomOrder room_order, Room room) {
 
-		emailDAO.sendEmail(room_order, room);
+  emailDAO.sendEmail(room_order, room);
 
-	}
+ }
 
-	@Override
-	public void sendBookingEmail(BookingData data) {
+ @Override
+ public void sendBookingEmail(BookingData data) {
 
-		emailDAO.sendBookingEmail(data);
+  emailDAO.sendBookingEmail(data);
 
-	}
+ }
 
-	@Override
+ @Override
 
 
 
-	public void sendmembercheck(Member mail) {
-		emailDAO.sendmembercheck(mail);
+ public void sendmembercheck(Member mail) {
+  emailDAO.sendmembercheck(mail);
 
-	}
-	public void sendActivityEmail(Applicant email,Activity activity) {
-		emailDAO.sendActivityEmail(email,activity);
+ }
+ @Override
+ public void sendActivityEmail(List<Applicant> email,Activity activity) {
+  emailDAO.sendActivityEmail(email,activity);
 
+  
+
+ }
+ @Override
+	public void sendpassword(Member pass) {
+		emailDAO.sendpassword(pass);
 		
-
 	}
 }
-

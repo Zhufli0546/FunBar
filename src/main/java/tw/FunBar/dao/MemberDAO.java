@@ -25,14 +25,34 @@ public interface MemberDAO {
 	
 	Member signin (String memberId,String memberPwd);
 	
-	//沒屁用
-	Member  checkuser (String memberId,String memberPwd);
-	
 	void saveMember(Member mb);
 	//check level
 	
 	void levelup(int memberLevel,int id);
 	
-	void stateup(int memberLevel);
+	Member forget(String memberId);
 	
+	void newPwd(String memberId,String memberPwd);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//沒屁用
+		Member  checkuser (String memberId,String memberPwd);
+		void stateup(int memberLevel);
 }

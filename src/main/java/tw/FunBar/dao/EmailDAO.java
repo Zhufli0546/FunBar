@@ -11,18 +11,18 @@ import tw.FunBar.model.Room;
 import tw.FunBar.model.RoomOrder;
 
 public interface EmailDAO {
-		void sendEmail(RoomOrder room_order,Room room);
+  void sendEmail(RoomOrder room_order,Room room);
 
-		void sendBookingEmail(BookingData data);
-
-
-
-		void sendmembercheck(Member mail);
+  void sendBookingEmail(BookingData data);
+  
+  void sendActivityEmail(List<Applicant> email,Activity activity);
 
 
+  void sendpassword(Member pass);
 
-		void sendActivityEmail(Applicant email,Activity activity);
-		
+  void sendmembercheck(Member mail);
+
+  
 
 
 
