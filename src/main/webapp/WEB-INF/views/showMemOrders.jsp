@@ -120,7 +120,7 @@
 		<div class="col-md-2"></div>
 		<div class="col-md-8">
 			<h1 style="font-family:fantasy;"">Dear ${sessionScope.member.memberName} ,</h1>
-			<h3 style="font-family:fantasy;">here are all your orders , please check out.</h3><br>
+			<h3 style="font-family:fantasy;">here are all your orders , check out please.</h3><br>
 			<div id="accordion">
 				<c:forEach var="o" items="${orders}" begin="0" step="1"
 					end="${fn:length(orders)}" varStatus="i">
@@ -131,7 +131,7 @@
 								<button class="orderToggle btn btn-link" data-toggle="collapse"
 									data-target="#collapse${i.index}" aria-expanded="true"
 									aria-controls="collapse${i.index}">Your Order
-									#${i.index+1}</button>
+									#${i.index+1} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ${o.orderTime}</button>
 							</h3>
 						</div>
 
