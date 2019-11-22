@@ -87,6 +87,12 @@ public void addOrderItemList(List<OrderItemBean> orderItemList) {
  
 }
 
+@Override
+public ArrayList<OrderBean> getAllOrders(HttpServletRequest req) {
+	
+	return dao.getAllOrders(req);
+}
+
  
  
  

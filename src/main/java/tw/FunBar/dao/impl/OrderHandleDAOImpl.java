@@ -44,7 +44,7 @@ public class OrderHandleDAOImpl implements OrderHandleDAO {
 		pb.setStatus(1);
 		session.update(pb);
 	}
-	
+
 	@Override
 	public void pushProduct(Integer productId) {
 		Session session = sessionFactory.getCurrentSession();
@@ -103,39 +103,76 @@ public class OrderHandleDAOImpl implements OrderHandleDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ArrayList<OrderBean> getMyOrders(Integer memberId,HttpServletRequest req) {
+	public ArrayList<OrderBean> getMyOrders(Integer memberId, HttpServletRequest req) {
 		Session session = sessionFactory.getCurrentSession();
-		
-		String hql =" From OrderBean where memberId  = :id";
-		
-		ArrayList<OrderBean> orders = (ArrayList<OrderBean>) session.createQuery(hql).setParameter("id",memberId).getResultList();
+
+		String hql = " From OrderBean where memberId  = :id";
+
+		ArrayList<OrderBean> orders = (ArrayList<OrderBean>) session.createQuery(hql).setParameter("id", memberId)
+				.getResultList();
 		ArrayList<ArrayList<ProductBean>> allProduct = new ArrayList<>();
-		for(OrderBean o : orders) {
-		
-		String hql1 = "From OrderItemBean where orderId = :order_id order by orderItemId ASC";
-		
-		ArrayList<OrderItemBean> items = (ArrayList<OrderItemBean>)session.createQuery(hql1).setParameter("order_id",o.getOrderId()).getResultList();
-		
-		
-		int id;
-		ArrayList<ProductBean> showProducts = new ArrayList<>();
-		for(int i =0;i<items.size();i++) {
-			
-			id = items.get(i).getProductId();
-			
-			ProductBean product = getProductById(id);
-			showProducts.add(product);
+		for (OrderBean o : orders) {
+
+			String hql1 = "From OrderItemBean where orderId = :order_id order by orderItemId ASC";
+
+			ArrayList<OrderItemBean> items = (ArrayList<OrderItemBean>) session.createQuery(hql1)
+					.setParameter("order_id", o.getOrderId()).getResultList();
+
+			int id;
+			ArrayList<ProductBean> showProducts = new ArrayList<>();
+			for (int i = 0; i < items.size(); i++) {
+
+				id = items.get(i).getProductId();
+
+				ProductBean product = getProductById(id);
+				showProducts.add(product);
+			}
+
+			allProduct.add(showProducts);
+
 		}
-		
-		allProduct.add(showProducts);
-		
-		}
-		
+
 		HttpSession session1 = req.getSession(false);
+
+		session1.setAttribute("allProduct", allProduct);
+
+		return orders;
+	}
+
+	@Override
+	public ArrayList<OrderBean> getAllOrders(HttpServletRequest req) {
 		
-		session1.setAttribute("allProduct",allProduct);
+		Session session = sessionFactory.getCurrentSession();
+
+		String hql = " From OrderBean";
+
+		ArrayList<OrderBean> orders =(ArrayList<OrderBean>) session.createQuery(hql).getResultList();
 		
-		
+		ArrayList<ArrayList<ProductBean>> allProduct = new ArrayList<>();
+		for (OrderBean o : orders) {
+
+			String hql1 = "From OrderItemBean order by orderItemId ASC";
+
+			ArrayList<OrderItemBean> items = (ArrayList<OrderItemBean>) session.createQuery(hql1).getResultList();
+
+			int id;
+			ArrayList<ProductBean> showProducts = new ArrayList<>();
+			for (int i = 0; i < items.size(); i++) {
+
+				id = items.get(i).getProductId();
+
+				ProductBean product = getProductById(id);
+				showProducts.add(product);
+			}
+
+			allProduct.add(showProducts);
+
+		}
+
+		HttpSession session1 = req.getSession(false);
+
+		session1.setAttribute("allProduct", allProduct);
+
 		return orders;
 	}
 

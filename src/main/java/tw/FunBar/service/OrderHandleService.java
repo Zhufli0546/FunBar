@@ -31,6 +31,6 @@ public interface OrderHandleService {
 
 	public ArrayList<OrderBean> getMyOrders(int id,HttpServletRequest req);
 
-	
+	public ArrayList<OrderBean> getAllOrders(HttpServletRequest req);
 
 }
