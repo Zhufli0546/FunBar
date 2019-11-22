@@ -8,9 +8,38 @@
 <head>
   <meta charset="UTF-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.0/sweetalert2.all.js"></script>
+  
   <title>活動管理</title>
-  <script>
+  <script type="text/javascript">
+  
+  function noemail(){
+		
+		var e = $("#noactivity").val();
+		
+		console.log(e);
+		
+		if( e == "na"){
+			alert("沒有即將到期活動");
+//			swal({
+//			    title: '你已報名過此活動!!!',
+//			    text: '2秒後自動關閉',
+//			    timer: 2000
+//			}).then(
+//			    function () {},
+//			    // handling the promise rejection
+//			    function (dismiss) {
+//			        if (dismiss === 'timer') {
+//			            console.log('I was closed by the timer')
+//			        }
+//			    }
+//			)
+		}
+		
+		};
+  
+
     $(function () {
       var len = 20; // 超過20個字以"..."取代
       $(".tb").each(function (i) {
@@ -21,6 +50,8 @@
         }
       });
     });
+
+
   </script>
   <style>
     body,
@@ -52,7 +83,7 @@
     <a href="<spring:url value='/allSuggestion' />">
                 <button type="button" class="btn btn-outline-secondary">查看活動建議</button></a>
                 
-     <a href="<spring:url value='/getTimeAndSend' />">
+     <a  onclick="noemail()" href="<spring:url value='/getTimeAndSend' />">
     <button type="button" class="btn btn-outline-secondary">發送通知email</button></a>
                 <hr>
     <table class="table table-dark table-hover">
@@ -92,8 +123,10 @@
     </table>
   </div>
 
+<input type="hidden" id="noactivity" value="${noactivity}">
 
   <jsp:include page="admin_footer.jsp" />
+
 </body>
 
 </html>

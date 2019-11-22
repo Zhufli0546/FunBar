@@ -273,14 +273,9 @@ public class EmailDAOImpl implements EmailDAO {
 					htmlCode += "<div style='margin:50px auto;width:100px;height:35px ;border: 1px gray solid;border-radius:25px; '>";
 					htmlCode += "<p style='color:gray ;margin-top: 6px ;font-family: 微軟正黑體;font-size:1em; text-align: center'>活動通知</p></div>";
 					htmlCode += "<div style='margin:auto ;width: 500px;height: 350px;border: 1px gray solid'>";
-					System.out.println("gender=>" + a.getGender() );
-					if(a.getGender() == "女" ) {
-						htmlCode += "<p style='text-align: center;font-size: 1.8em;color: rgb(22, 15, 1)'>"+a.getApplicantName()+"小姐 您好</p>";
-					}else if(a.getGender() =="男" ) {
-						htmlCode += "<p style='text-align: center;font-size: 1.8em;color: rgb(22, 15, 1)'>"+a.getApplicantName()+"先生 您好</p>";
-					}
-					
-					
+	
+					htmlCode += "<p style='text-align: center;font-size: 1.8em;color: rgb(22, 15, 1)'>"+"親愛的 "+a.getApplicantName()+" 您好</p>";
+
 					htmlCode += "<p style='text-align: center;font-size: 1.5em;color: gray'>您報名的活動：</p>";
 					htmlCode += "<p style='text-align: center;font-size: 2em;color:rgb(228, 121, 21)'>"+activity.getEventName()+ "</p>";
 					

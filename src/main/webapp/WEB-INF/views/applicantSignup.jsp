@@ -91,6 +91,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     });//end then 
             });
         });
+        
     </script>
 </head>
 <body>
@@ -115,11 +116,11 @@ document.addEventListener("DOMContentLoaded", function() {
 							<p class="card-text">${activity.introduction}</p>
 							
 						</div>
-						<input type="button" value="取消報名" class="btn btn-outline-secondary btn-block" data-memberid="${memberId}" data-activityid="${activity.activityId}" />
+						<input id="cancel" type="button" value="取消報名" class="btn btn-outline-secondary btn-block" data-memberid="${memberId}" data-activityid="${activity.activityId}" />
 					
 						 
 						<a href="<spring:url value='/addSuggestion?activityId=${activity.activityId}&memberId=${member.memberId}'/>">
-						<button type="button" class="btn btn-outline-secondary btn-block" >我要給意見</button></a>
+						<button id="" type="button" class="btn btn-outline-secondary btn-block" >我要給意見</button></a>
 					</div>							
 				</div>
 			</c:forEach>
@@ -142,4 +143,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	<jsp:include page="footer.jsp" />
 </body>
+<script>
+
+</script>
 </html>

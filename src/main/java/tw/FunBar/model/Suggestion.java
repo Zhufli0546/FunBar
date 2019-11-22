@@ -18,6 +18,7 @@ public class Suggestion {
 	private String memberId;
 	private String memberName;
 	private String memberEmail;
+	private String eventName;
 	@Transient
 	private String suggestionCreateTime;
 	
@@ -57,6 +58,12 @@ public class Suggestion {
 	}
 	public void setMemberEmail(String memberEmail) {
 		this.memberEmail = memberEmail;
+	}
+	public String getEventName() {
+		return eventName;
+	}
+	public void setEventName(String eventName) {
+		this.eventName = eventName;
 	}
 	
 	

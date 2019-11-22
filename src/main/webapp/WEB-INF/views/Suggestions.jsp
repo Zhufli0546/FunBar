@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>活動參加者建議</title>
+<title>活動參加者意見</title>
 <style>
     body,
     title {
@@ -30,10 +30,30 @@
 
 <jsp:include page="admin_header.jsp" />
 <div class="container">
-   <c:forEach var="eventName" items="${sus}">
-						<a href="${pageContext.request.contextPath}/Suggestions/${eventName}"
-							class="list-group-item">${eventName}</a>
-					</c:forEach>
+    <h2>活動名稱</h2>
+    <h2>${eventName}</h2>
+    <hr>
+    
+    <table class="table table-dark table-striped">
+      <thead>
+        <tr>
+          <th>使用者ID</th>
+          <th>姓名</th>
+          <th>E-mail</th>
+          <th>意見內容</th>
+        </tr>
+      </thead>
+      <c:forEach var='su' varStatus='status' items='${su}'>
+        <tbody>
+          <tr>
+            <td class="tb">${su.memberId}</td>
+            <td class="tb">${su.memberName}</td>
+            <td class="tb">${su.memberEmail}</td>
+            <td class="tb">${su.suggestion} </td>        
+          </tr>
+        </tbody>
+      </c:forEach>
+    </table>
   </div>
 
 

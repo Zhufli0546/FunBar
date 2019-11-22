@@ -100,11 +100,17 @@ public class ApplicantController {
 		
 	@RequestMapping(value="/allSuggestion",method = RequestMethod.GET)
 	public String showAllSuggestion(Model model) {
-		List<Suggestion> su = service.getAllSuggestion();
-		model.addAttribute("su", su);
+		List<Suggestion> sus = service.getSuggestionEventName();
+		model.addAttribute("sus", sus);
 		
 		return "allSuggestion";
-		
+	}
+	
+	@RequestMapping("/Suggestions/{eventName}")
+	public String getActivityByCategory(@PathVariable("eventName") String eventName, Model model) {
+		List<Suggestion> su = service.getSuggestionByEventName(eventName);
+		model.addAttribute("su", su);
+		return "Suggestions";
 	}
 	
 	

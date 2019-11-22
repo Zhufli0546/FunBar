@@ -150,11 +150,21 @@ public class ActivityDaoImpl implements ActivityDao {
 	//取得一天後到期的活動
 	@Override
 	public Activity getTimeActivity(){
-		Activity ac = new Activity();
+//		Activity ac = new Activity();
+//		String hql = "From Activity where DATEDIFF(day,GETDATE(),eventDate) = 1";
+//		Session session = factory.getCurrentSession();
+//		ac = (Activity) session.createQuery(hql).uniqueResult();
+//
+//		return ac;
+		
+		List<Activity> ac = new ArrayList<>();
 		String hql = "From Activity where DATEDIFF(day,GETDATE(),eventDate) = 1";
 		Session session = factory.getCurrentSession();
-		ac = (Activity) session.createQuery(hql).getSingleResult();
-		return ac;
+		ac = (List<Activity>) session.createQuery(hql).getResultList();
+		if(ac.size() > 0) {
+			return ac.get(0);
+		}else
+			return null;
 	}
 	
 	//取得活動ID和已報名的活動ID是否重複
