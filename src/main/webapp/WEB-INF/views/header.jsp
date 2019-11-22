@@ -95,7 +95,7 @@
 								
 								<c:choose>
 									<c:when test="${sessionScope.member.memberName==null}">
-										<li><a href="joinus">註冊</a></li>
+										
 										<li><a href="${pageContext.request.contextPath}/signin">登入</a></li>
 									</c:when>
 									<c:otherwise>

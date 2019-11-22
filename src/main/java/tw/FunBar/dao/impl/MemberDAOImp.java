@@ -37,7 +37,7 @@ public class MemberDAOImp implements MemberDAO {
 	public void saveMember(Member mb) {
 		Session session = factory.getCurrentSession();
 		session.save(mb);
-
+		
 	}
 
 	// 刪除
@@ -66,6 +66,17 @@ public class MemberDAOImp implements MemberDAO {
 				.setParameter("memberPic", blob).executeUpdate();
 
 	}
+	//修改密碼
+	@Override
+	public void newPwd(String memberId, String memberPwd) {
+		Session session = factory.getCurrentSession();
+		String hql = "UPDATE Member SET memberPwd =:memberPwd WHERE memberId =:memberId";
+		
+		session.createQuery(hql).setParameter("memberPwd", memberPwd)
+								.setParameter("memberId", memberId).executeUpdate();
+	}
+	
+	
 
 //	一般會員打完登入資料，進入這個方法
 	@Override
@@ -138,6 +149,19 @@ public class MemberDAOImp implements MemberDAO {
 		Session session = factory.getCurrentSession();
 		String hql ="UPDATE Member SET memberLevel =:memberLevel WHERE id =:id";
 		session.createQuery(hql).setParameter("id", id).setParameter("memberLevel", 1).executeUpdate();
+		
+	}
+	
+	@Override
+	public Member forget(String memberId) {
+		Session session = factory.getCurrentSession();
+		
+		String hql = "FROM Member WHERE memberId =:memberId";
+		Member mb=(Member) session.createQuery(hql).setParameter("memberId", memberId).getSingleResult();
+		return mb;
+		
+
+		
 	}
 
 
@@ -148,7 +172,11 @@ public class MemberDAOImp implements MemberDAO {
 		
 		
 	}
+	
 
+
+
+	
 
 
 
