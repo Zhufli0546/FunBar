@@ -57,7 +57,7 @@
 						<input type="search" class="form-control rounded" id="searchMemberName"
 							placeholder="Search" aria-describedby="button-addon2">
 						<div class="input-group-append">
-							<button class="btn btn-outline-success ml-2" id='searchMember'
+							<button class="btn btn-success ml-2" id='searchMember'
 								type="button">Search</button>
 						</div>
 					</div>

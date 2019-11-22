@@ -26,9 +26,6 @@ public class DiscussDAOImpl implements DiscussDAO {
 	@Autowired
 	SessionFactory factory;
 
-	
-
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Post> getAllPostDetail() {
@@ -69,8 +66,6 @@ public class DiscussDAOImpl implements DiscussDAO {
 	@Override
 	public void deletePostContent(Post post) {
 		Session session = factory.getCurrentSession();
-		String hql = "DELETE FROM LikePost WHERE postId = :postId";
-		session.createQuery(hql).setParameter("postId", post.getPostId()).executeUpdate();
 		session.delete(post);
 	}
 

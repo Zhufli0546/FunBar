@@ -89,7 +89,7 @@
 					<h6 class="dropdown-header">######</h6>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/showAllProduct">所有商品</a> <a
 						class="dropdown-item" href="${pageContext.request.contextPath}/addProduct">新增商品</a> <a
-						class="dropdown-item" href="#">###</a>
+						class="dropdown-item" href="${pageContext.request.contextPath}/showAllOrders">查看所有訂單</a>
 				</div></li>
 			<li class="nav-item"><a class="nav-link" href="charts.html">
 					<i class="fas fa-fw fa-chart-area"></i> <span>efg</span>

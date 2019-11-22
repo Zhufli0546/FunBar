@@ -25,7 +25,7 @@
 	<div id="emptyCart">
 		<div align="center" colpsan="8">
 		<a href="/FunBar/shoppingCart"><img src="images/emptyCart.png" style="height: 367px" alt="emptyCart" title="back to shop"></a>
-		<h3 style="margin-bottom:10px">There is no any product in your cart.</h3>
+		<br><br><h3 style="margin-bottom:10px">There is no any product in your cart.</h3>
 		</div>
 		 
 		<div align="center" colspan="8" style="margin:20px ">

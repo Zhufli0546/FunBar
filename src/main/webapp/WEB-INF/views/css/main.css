@@ -592,7 +592,8 @@ input[type="date" i] {
 }
 
 .header-fixed .main_menu > li > a {
-  color: #222222;
+/*   color: #222222; */
+	color: white;
 }
 
 .main_menu > li:hover > a {

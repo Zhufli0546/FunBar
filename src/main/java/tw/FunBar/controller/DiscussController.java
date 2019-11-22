@@ -35,7 +35,6 @@ public class DiscussController {
 	public String discuss(Model model, HttpServletRequest request, HttpSession session) {
 		session = request.getSession(false);
 		Member member = (Member) session.getAttribute("member");
-		System.out.println(member);
 		if (member == null)
 			return "redirect:/signin";
 		model.addAttribute("title", "討論區");
@@ -59,8 +58,9 @@ public class DiscussController {
 	}
 
 	@RequestMapping(value = "replyComment", method = RequestMethod.POST)
-	public String replyComment(@RequestParam String postContent, @RequestParam Integer parentPostId,
-			@RequestParam Integer memberId) {
+	public String replyComment(@RequestParam String postContent, 
+							   @RequestParam Integer parentPostId,
+							   @RequestParam Integer memberId) {
 		Post parentPost = service.findByIdPost(parentPostId);
 		Post post = new Post();
 		post.setPostContent(postContent);
@@ -102,9 +102,10 @@ public class DiscussController {
 	@GetMapping(value = "addLike")
 	public @ResponseBody void addLike(@RequestParam(value = "postId") Integer postId,
 			@RequestParam(value = "memberId") Integer memberId) {
+		Post post = service.findByIdPost(postId);
 		LikePK likepk = new LikePK();
-		likepk.setPostId(postId);
 		likepk.setMemberId(memberId);
+		likepk.setPostId(postId);
 		LikePost like = new LikePost();
 		like.setLikePK(likepk);
 		service.addLike(like);

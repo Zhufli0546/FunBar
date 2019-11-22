@@ -30,7 +30,7 @@ public class ShoppingDAOImpl implements ShoppingDAO{
 		Session session = null;
 		List<ProductBean> list = new ArrayList<>();
 		session = factory.getCurrentSession();
-		list = session.createQuery(hql).setFirstResult(0).setMaxResults(8).getResultList();
+		list = session.createQuery(hql).setFirstResult(0).setMaxResults(10).getResultList();
 		return list;
 	}
 	

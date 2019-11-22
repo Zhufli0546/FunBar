@@ -31,7 +31,7 @@
 		<!-- Friend List -->
 		<nav id="sidebar">
 			<div id="dismiss">
-				<i class="fas fa-arrow-left"></i>
+				<i class="fa fa-arrow-left"></i>
 			</div>
 			<div id="profile">
 				<div class="wrap">
@@ -94,7 +94,7 @@
 					<button class="chatbox__title__close"></button>
 				</div>
 				<div class="chatbox__body">
-					<div class="messages">
+					<div class="messages" id="messages">
 						<ul id="conversation">
 						</ul>
 					</div>
