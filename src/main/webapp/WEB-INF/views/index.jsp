@@ -3,9 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<style>
-.section1 { margin: 10px 0;}
-</style>
+
 <head>
 	<title>Home</title>
 	<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -96,7 +94,7 @@
 	</section>
 
 	<!-- Blog -->
-	<section class="section1">
+	<section class="sectionBlock section1">
 		<div class="row container-fluid">
 			<div class="col-md-1">
 				<h2 style="writing-mode: vertical-lr;">焦點文章</h2>
@@ -104,7 +102,7 @@
 			
 			<div class="blogSlick col-md-11">
 				<c:forEach var="blog" items="${blogs}">
-					<div style="height:350px; overflow: hidden;" class="card col-md-3">
+					<div style="height:400px; overflow: hidden;" class="card col-md-3">
 						<div class="blogBlock">
 							<img class="card-img-top" src="${blog.blogImage}" >
 						</div>
@@ -120,37 +118,34 @@
 		</div>
 	</section>
 	
-	<section class="section2">
-	
-	<div class="row container-fluid">
-		<div class="col-md-1">
-			<h2 style="writing-mode: vertical-lr;">最新商品</h2>
+	<section class="sectionBlock section2">
+		<h2 class="title">最新商品</h2>
+		<div id="productOffset" class="row container-fluid">
+			<div class="productCard" style="display: flex;">
+				<c:forEach var="pb" items="${all}" begin="0" step="1" varStatus="i">
+				<div class="prodlist" style="height:350px;">
+					<p class="prodtitle">${pb.productName}</p>
+					<figure>
+					<a href="<c:url value='/product?id=${pb.productId}' />" ">
+						<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />
+					</a>						
+					</figure>
+						<p>建議售價:<span style="color:#FF44AA;font-weight:bold;font-size:20px">$ ${pb.unitPrice}</span></p>
+						<p>折扣：<span style="font-weight:bold;color:	#CE0000;font-size:20px">${pb.discount}</span></p>				
+				</div> 
+				<!-- .prodlist --> 
+				</c:forEach>
+			</div>
 		</div>
-	 
-		<div class="col-md-11" >
-			<c:forEach var="pb" items="${all}" begin="0" step="1" varStatus="i">
-			<div class="prodlist" style="height:350px;">
-				<p class="prodtitle">${pb.productName}</p>
-				<figure>
-				<a href="<c:url value='/product?id=${pb.productId}' />" ">
-					<img src="<c:url value='/ProductPicture/${pb.productId}'/>" />
-				</a>						
-				</figure>
-					<p>建議售價:<span style="color:#FF44AA;font-weight:bold;font-size:20px">$ ${pb.unitPrice}</span></p>
-					<p>折扣：<span style="font-weight:bold;color:	#CE0000;font-size:20px">${pb.discount}</span></p>				
-			</div> 
-			<!-- .prodlist --> 
-			</c:forEach>
-		</div>
-	</div>
-	
-		</section>
+	</section>
 		
 
 	<!-- Footer -->
 	<div class="requestUrl" style="display: none;">${pageContext.request.contextPath}</div>
 	<jsp:include page="footer.jsp" />
-
+	<script type="text/javascript"
+	src="<c:url value="/vendor/jquery/jquery.mousewheel.min.js"/>"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
 	<script>
 	<!--購物車jQuery -->
 	function myFunction() {
@@ -181,6 +176,39 @@
 				}
 			})
 		})
+	let sum = 0;
+	let productWheel = 0;
+	// mouse wheel
+	$("#productOffset").bind("mousewheel",function(event){
+		console.log(event.deltaY);
+		event.preventDefault();
+		if(event.deltaY==1) {
+			console.log("sum 向下拉 => " + $(".productCard").offset().left);
+			if($(".productCard").offset().left == -830 || $(".productCard").offset().left < -830) { 
+				productWheel = 0;
+			} else {
+				productWheel = -50;
+			}
+			
+			TweenMax.to(".productCard",0.1,{
+		        left: "+="+productWheel+"px"
+		     })
+
+		} else if(event.deltaY == -1) {
+			
+			console.log("sum 向上拉 => " + $(".productCard").offset().left);
+			if($(".productCard").offset().left == 0 || $(".productCard").offset().left > 0) { 
+				productWheel = 0;
+			} else {
+				productWheel = 50;
+			}
+			
+	    	TweenMax.to(".productCard",0.1,{
+		        left: "+="+productWheel+"px"
+		     })
+		 }
+	})
+	
 	</script>
 
 
