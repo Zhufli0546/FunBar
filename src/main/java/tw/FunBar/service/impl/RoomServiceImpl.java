@@ -189,6 +189,20 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 
+	@Override
+	public ArrayList<RoomOrder> getLatestOrders() {
+	
+		return roomDAO.getLatestOrders();
+	}
+
+
+	@Override
+	public int getRoomTotalIncome() {
+		
+		return roomDAO.getRoomTotalIncome();
+	}
+
+
 
 
 

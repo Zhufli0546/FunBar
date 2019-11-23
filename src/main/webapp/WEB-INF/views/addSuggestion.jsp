@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>意見</title>
+
 </head>
 <body>
 <jsp:include page="header.jsp" />
@@ -28,8 +29,8 @@
 			<div class="form-group">
 				<label for="name">會員名稱 :　</label>
 				<input name="memberName" type="text" class="form-control" readonly="readonly"
-					id="name" placeholder="${member.memberName}" />
-				<input name="memberName" type="hidden" value="${member.memberName}" />
+					id="name" value="${member.memberName}" />
+<%-- 				<input path="memberName" type="hidden" value="${member.memberName}" /> --%>
 			</div>
 			
 			<div class="form-group">

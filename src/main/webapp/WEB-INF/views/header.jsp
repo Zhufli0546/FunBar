@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+ pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
@@ -9,41 +9,41 @@
 <link href="<c:url value="/images/icons/favicon.png" />" rel="icon">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
-	href="<c:url value="/vendor/bootstrap/css/bootstrap.min.css" />">
+ href="<c:url value="/vendor/bootstrap/css/bootstrap.min.css" />">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
-	href="<c:url value="/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>">
+ href="<c:url value="/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
-	href="<c:url value="/fonts/themify/themify-icons.css"/>">
+ href="<c:url value="/fonts/themify/themify-icons.css"/>">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
-	href="<c:url value="/vendor/animate/animate.css"/>">
+ href="<c:url value="/vendor/animate/animate.css"/>">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
-	href="<c:url value="/vendor/css-hamburgers/hamburgers.min.css"/>">
+ href="<c:url value="/vendor/css-hamburgers/hamburgers.min.css"/>">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
-	href="<c:url value="/vendor/animsition/css/animsition.min.css"/>">
+ href="<c:url value="/vendor/animsition/css/animsition.min.css"/>">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
-	href="<c:url value="/vendor/select2/select2.min.css"/>">
+ href="<c:url value="/vendor/select2/select2.min.css"/>">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
-	href="<c:url value="/vendor/daterangepicker/daterangepicker.css"/>">
+ href="<c:url value="/vendor/daterangepicker/daterangepicker.css"/>">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
-	href="<c:url value="/vendor/slick/slick.css"/>">
+ href="<c:url value="/vendor/slick/slick.css"/>">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
-	href="<c:url value="/vendor/lightbox2/css/lightbox.min.css"/>">
+ href="<c:url value="/vendor/lightbox2/css/lightbox.min.css"/>">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
-	href="<c:url value="/css/util.css"/>">
+ href="<c:url value="/css/util.css"/>">
 <link rel="stylesheet" type="text/css"
-	href="<c:url value="/css/main.css"/>">
+ href="<c:url value="/css/main.css"/>">
 <link rel="stylesheet" type="text/css"
-	href="<c:url value="/css/own.css"/>">
+ href="<c:url value="/css/own.css"/>">
 <link href="https://fonts.googleapis.com/css?family=Poller+One|Sarina|Sonsie+One&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Paytone+One|Russo+One&display=swap" rel="stylesheet">
 
@@ -105,8 +105,8 @@
 		             				</div>
 								</li>
 
-								<!-- 會員選單列 -->		
-								<c:choose>
+								<!-- 會員選單列 -->
+									<c:choose>
 									<c:when test="${sessionScope.member.memberName==null}">
 										<li><a href="${pageContext.request.contextPath}/signin">登入</a></li>
 									</c:when>

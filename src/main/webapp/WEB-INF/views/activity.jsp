@@ -20,10 +20,38 @@
 	width: 40px;
 }
 </style>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.0/sweetalert2.all.js"></script>
+    
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
 		setClock(),hidden(),stopTime();
 	});
+	
+	
+	function hoho(){
+	
+	var aaa = $("#test").val();
+	
+	console.log(aaa);
+	
+	if(aaa=='123'){
+		swal({
+		    title: '你已報名過此活動!!!',
+		    text: '2秒後自動關閉',
+		    timer: 2000
+		}).then(
+		    function () {},
+		    // handling the promise rejection
+		    function (dismiss) {
+		        if (dismiss === 'timer') {
+		            console.log('I was closed by the timer')
+		        }
+		    }
+		)
+	}
+	
+	};
 
 	function setClock() {
 		var targetTime = "${activity.eventDate}";
@@ -98,7 +126,7 @@
 
 </head>
 
-<body>
+<body onload="hoho()">
 	<jsp:include page="header.jsp" />
 
 	<div class="container" style="margin-top: 150px; width: 60%">
@@ -108,11 +136,10 @@
 
 
 		<div id="pic" style="min-height: 40px">
-			<img class="pic" alt="" id="picD1" /><img class="pic" alt=""
-				id="picD2" />天 <img class="pic" alt="" id="picH1" /><img
-				class="pic" alt="" id="picH2" />時 <img class="pic" alt=""
-				id="picM1" /><img class="pic" alt="" id="picM2" />分 <img
-				class="pic" alt="" id="picS1" /><img class="pic" alt="" id="picS2" />
+			<img class="pic" alt="" id="picD1" /><img class="pic" alt=""id="picD2" />天
+			<img class="pic" alt="" id="picH1" /><img class="pic" alt="" id="picH2" />時 
+			<img class="pic" alt="" id="picM1" /><img class="pic" alt="" id="picM2" />分 
+			<img class="pic" alt="" id="picS1" /><img class="pic" alt="" id="picS2" />
 		</div>
 		<p id="exp">活動已過期</p>
 
@@ -155,7 +182,9 @@
 		</iframe>
 
 		<div style="width:20%;margin:25px 20% 15px 85%;">
-
+			
+			
+		
 			<a
 				 href="<spring:url value='activityRegistration?id=${activity.activityId}&memberId=${member.memberId}'/>">
 				<button id="signup" type="button" class="btn btn-primary active">我要報名</button>
@@ -164,6 +193,8 @@
 		</div>
 
 	</div>
+	
+	<input type="hidden" id="test" value="${test}">
 
 	<jsp:include page="footer.jsp" />
 </body>

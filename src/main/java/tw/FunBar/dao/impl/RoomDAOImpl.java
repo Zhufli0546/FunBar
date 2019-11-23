@@ -604,4 +604,36 @@ public class RoomDAOImpl implements RoomDAO {
 		return orders;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<RoomOrder> getLatestOrders() {
+		
+		
+		String hql = "From RoomOrder order by order_id DESC";
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		ArrayList<RoomOrder> orders = (ArrayList<RoomOrder>)session.createQuery(hql).setFirstResult(0).setMaxResults(3).getResultList();
+		
+		
+		return orders;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public int getRoomTotalIncome() {
+		
+		String hql = "From RoomOrder";
+		Session session = sessionFactory.getCurrentSession();
+		
+		ArrayList<RoomOrder> orders = (ArrayList<RoomOrder>)session.createQuery(hql).getResultList();
+		
+		int income = 0 ;
+		for(RoomOrder o : orders) {
+			
+			income += o.getTotal();
+		}
+		return income;
+	}
+
 }

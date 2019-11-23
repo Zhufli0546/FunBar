@@ -28,5 +28,9 @@ public interface ApplicantService {
 	public void addSuggestion(Suggestion suggestion);
 	
 	public List<Suggestion> getAllSuggestion();
+	
+	public List<Suggestion> getSuggestionEventName();
+	
+	public List<Suggestion> getSuggestionByEventName(String eventName);
 }
 

@@ -11,17 +11,39 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-	show();
+	show(),hidden();
 });
 	function show(){
 		var ac = "${activity}";
-		console.log("ac=>"+ac );
-		console.log(ac.length);
+// 		console.log("ac=>"+ac );
+// 		console.log(ac.length);
 		if(ac.length == 2 ){
 			document.getElementById("ns").style.display="block";
 			
 		}
 	}
+	
+	function hidden() {
+		var len = $(".eventDate").length;
+		
+		for(let i =0 ; i<len;i++){
+		var date = $(".eventDate").eq(i).val();
+		console.log(date);
+		
+		var theday = new Date();
+		var theTimeArray = date.split("-");
+		var day = new Date(theTimeArray[0], theTimeArray[1] - 1,
+				theTimeArray[2]);
+
+		if (day.getTime() <= theday.getTime()){
+			$(".cancel").eq(i).val("活動已過期");
+			$(".cancel").eq(i).attr('disabled', true);
+		}else{
+			$(".suggestion").eq(i).attr('disabled', true);
+		}
+		
+		}
+		}
 
 </script>
   <script>
@@ -91,6 +113,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     });//end then 
             });
         });
+        
     </script>
 </head>
 <body>
@@ -115,13 +138,14 @@ document.addEventListener("DOMContentLoaded", function() {
 							<p class="card-text">${activity.introduction}</p>
 							
 						</div>
-						<input type="button" value="取消報名" class="btn btn-outline-secondary btn-block" data-memberid="${memberId}" data-activityid="${activity.activityId}" />
+						<input  type="button" value="取消報名" class="btn btn-outline-secondary btn-block cancel" data-memberid="${memberId}" data-activityid="${activity.activityId}" />
 					
 						 
 						<a href="<spring:url value='/addSuggestion?activityId=${activity.activityId}&memberId=${member.memberId}'/>">
-						<button type="button" class="btn btn-outline-secondary btn-block" >我要給意見</button></a>
+						<button  type="button" class="btn btn-outline-secondary btn-block suggestion" >我要給意見</button></a>
 					</div>							
 				</div>
+				<input class = "eventDate" type="hidden" value="${activity.eventDate}" />
 			</c:forEach>
 		</div>
 	</div>
@@ -139,7 +163,11 @@ document.addEventListener("DOMContentLoaded", function() {
 				<button type="button" class="btn btn-outline-secondary">熱門活動</button>
 			</a>
 	</div>
+	
 
 	<jsp:include page="footer.jsp" />
 </body>
+<script>
+
+</script>
 </html>
