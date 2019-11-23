@@ -215,6 +215,8 @@ $(".button-add").click(function(evt) {
     			myFunction();
    				
    				// Fly To Cart
+   				// 避免使用者連續重複點擊導致位置位移
+   				$(".buyBox").css({"top":0, "left":0, "opacity":0});
    				$(".buyBox").css({
    					"background-image": "url(" + productImage + ")",
    					"background-size": "contain",
