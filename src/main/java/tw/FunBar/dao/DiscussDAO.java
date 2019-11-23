@@ -21,6 +21,8 @@ public interface DiscussDAO {
 
 	Post getPostById(Integer postId);
 
+	void reportPostContent(Post post);
+
 	List<LikePost> getLikesById(Integer memberId);
 
 	long getLikeByPostId(Integer postId);
@@ -40,5 +42,7 @@ public interface DiscussDAO {
 	List<Friendship> getAllFriendRequest();
 
 	void confirmFriendRequest(Friendship friendship);
+
+	List<Post> getReportSort(Integer sort);
 
 }

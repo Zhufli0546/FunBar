@@ -106,4 +106,14 @@ public class DiscussServiceImpl implements DiscussService {
 		return dao.getFriendRequest(sender_memberId, receiver_memberId);
 	}
 
+	@Override
+	public void reportPostContent(Post post) {
+		dao.reportPostContent(post);
+	}
+
+	@Override
+	public List<Post> getReportSort(Integer sort) {
+		return dao.getReportSort(sort);
+	}
+
 }
