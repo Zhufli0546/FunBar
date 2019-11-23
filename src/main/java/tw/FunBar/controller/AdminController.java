@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import tw.FunBar.model.RoomOrder;
+import tw.FunBar.service.BookingService;
 import tw.FunBar.service.RoomService;
 
 @Controller
@@ -16,6 +17,9 @@ public class AdminController {
 	
 	@Autowired
 	RoomService roomService;
+	
+	@Autowired
+	BookingService bookingService;
 		
 	@RequestMapping("/admin")
 	public String admin(Model model) {
@@ -25,6 +29,9 @@ public class AdminController {
 		
 		int	roomTotalIncome = roomService.getRoomTotalIncome();
 		
+		int arrival = bookingService.todayArrival();
+		
+		model.addAttribute("arrival",arrival);
 		model.addAttribute("orders", orders);
 		model.addAttribute("roomTotalIncome", roomTotalIncome);
 		

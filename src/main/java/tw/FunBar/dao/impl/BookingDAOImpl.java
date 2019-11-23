@@ -1,5 +1,6 @@
 package tw.FunBar.dao.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -109,10 +110,16 @@ public class BookingDAOImpl implements BookingDAO {
 	@Override
 	public ArrayList<BookingData> queryAllBooking() {
 
-		String hql = "From BookingData order by date asc";
+		String hql = "From BookingData where date>= :date order by Booking_id DESC";
+		
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+
+
+
+		String date = fm.format(new Date());
 		ArrayList<BookingData> bookings = new ArrayList<>();
 		Session session = sessionFactory.getCurrentSession();
-		bookings = (ArrayList<BookingData>) session.createQuery(hql).getResultList();
+		bookings = (ArrayList<BookingData>) session.createQuery(hql).setParameter("date",date).getResultList();
 		return bookings;
 
 	}
@@ -277,6 +284,57 @@ public class BookingDAOImpl implements BookingDAO {
 		
 		BookingData data = (BookingData) session.createQuery(hql).setParameter("booking_id",number).getSingleResult();
 		return data;
+	}
+
+	@Override
+	public void arrival(Integer booking_id) {
+		
+				Session session = sessionFactory.getCurrentSession();
+				
+				BookingData booking = session.get(BookingData.class,booking_id);
+				
+				booking.setStatus(1);
+		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<BookingData> todayBooking() {
+		
+		String hql = "From BookingData where date = :date order by booking_id DESC";
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+
+		String date = fm.format(new Date());
+		
+		ArrayList<BookingData> all = (ArrayList<BookingData>)session.createQuery(hql).setParameter("date",date).getResultList();
+		
+		
+		
+		return all;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public int todayArrival() {
+		
+		
+		String hql = "From BookingData where date = :date and status = 1";
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+
+		String date = fm.format(new Date());
+		
+		ArrayList<BookingData> all = (ArrayList<BookingData>)session.createQuery(hql).setParameter("date",date).getResultList();
+		
+		
+		int count = all.size();
+		
+		return count;
 	}
 
 }

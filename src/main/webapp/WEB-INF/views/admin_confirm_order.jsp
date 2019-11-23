@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>填寫訂位資料</title>
+<title>填寫訂房資料</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -16,7 +16,7 @@
 
 	<!-- Content 區塊 -->
 
-	<div class="page row">
+	<div class="row" style="margin-top:120px;border:3px solid #5B5B5B;margin:120px 1px 0 1px">
 		<div class="col-md-7" style="height: 380px; background-color: #DDDDDD">
 
 			<img

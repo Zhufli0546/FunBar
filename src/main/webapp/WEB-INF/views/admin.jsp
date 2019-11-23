@@ -30,8 +30,8 @@
              </div>
 
              <div class="n3 sub">
-                 <h2><i class="fas fa-boxes"></i>TOTAL COST</h2>
-                 <p style="color:#D0021B">12,660</p>
+                 <h2><i class="fas fa-boxes"></i>當日入場人數</h2>
+                 <p style="color:#D0021B">${arrival}</p>
              </div>
 
              <div class="n3 sub">

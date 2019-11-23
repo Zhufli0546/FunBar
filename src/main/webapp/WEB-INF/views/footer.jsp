@@ -11,7 +11,6 @@
 
 <body>
 	<footer class="bg1">
-		<div class="container p-t-40 p-b-70"></div>
 
 		<div class="end-footer bg2">
 			<div class="container">

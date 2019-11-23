@@ -36,4 +36,10 @@ public interface BookingService {
 	BookingData getBookingByphone(String phone);
 
 	BookingData bookingNumQuery(Integer number);
+
+	void arrival(Integer booking_id);
+
+	ArrayList<BookingData> todayBooking();
+
+	int todayArrival();
 }

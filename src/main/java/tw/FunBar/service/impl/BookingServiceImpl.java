@@ -113,6 +113,27 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 
+	@Override
+	public void arrival(Integer booking_id) {
+		
+		bookingDAO.arrival(booking_id);
+	}
+
+
+	@Override
+	public ArrayList<BookingData> todayBooking() {
+		
+		return bookingDAO.todayBooking();
+	}
+
+
+	@Override
+	public int todayArrival() {
+		
+		return bookingDAO.todayArrival();
+	}
+
+
 
 
 

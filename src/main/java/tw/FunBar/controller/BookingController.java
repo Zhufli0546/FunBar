@@ -132,6 +132,27 @@ public class BookingController {
 	}
 	
 	
+	@RequestMapping("/arrival")
+	public String arrival(@RequestParam Integer id) {
+		
+		
+		bookingService.arrival(id);
+		
+		return "redirect:/todaybooking";
+	}
+	
+	@RequestMapping("/todaybooking")
+	public String todayBooking(Model model) {
+		
+		ArrayList<BookingData> all = bookingService.todayBooking();
+		
+		model.addAttribute("All",all);
+		
+		return "todaybooking";
+		
+	}
+	
+	
 	@RequestMapping("/ad_booking")
 	public String adminBooking() {
 		return "admin_booking";
