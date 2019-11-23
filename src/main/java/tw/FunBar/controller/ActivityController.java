@@ -6,9 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -80,6 +78,8 @@ public class ActivityController {
 		model.addAttribute("categoryList", list);
 		List<Activity> activity = service.getPageActivities(index);
 		model.addAttribute("activities", activity);
+		int count = service.getIndex();
+		model.addAttribute("listCount", count);
 
 		return "activities";
 	}
@@ -249,24 +249,34 @@ public class ActivityController {
 	// 查詢活動前一天並寄送郵件
 	
 	@RequestMapping(value="/getTimeAndSend")
-	public String getTimeAndSend() {
+	public String getTimeAndSend(HttpSession session,HttpServletRequest req) {
 		
-		Activity activity = service.getTimeActivity();
+		Activity activity = service.getTimeActivity();//找到一天後到期活動
+		
 		if(activity == null) {
+			System.out.println("activity=>"+activity);
+			
+			session = req.getSession();
+			
+			session.setAttribute("activity", "na");
+			
+			return "redirect:/activityQuery";
+			
+			
 			
 		}else {
-		List<Applicant> email = service.getTime();
+		List<Applicant> email = service.getTime();//抓到報名此活動使用者
 		emailService.sendActivityEmail(email, activity);
-		}
-		return "redirect:/activityQuery";
 		
+		return "redirect:/activityQuery";
+		}
 	}
 	
 
 	// ---------前台使用者--------
 
 	// 新增使用者報名表單
-	@RequestMapping(value = { "activityRegistration" })
+	@RequestMapping(value="/activityRegistration")
 	public String getActivity2(@RequestParam("id") Integer activityId,
 							   @RequestParam("memberId") String memberId,
 							   Model model, HttpServletRequest request,
@@ -285,7 +295,10 @@ public class ActivityController {
 			return "redirect:/signin";
 		} 
 		else if(id == activityId) {
-			return "redirect:/activities?index=1";
+			
+			model.addAttribute("test","123");
+			
+			return "activity";
 			
 		}else
 			return "activityRegistration";

@@ -28,4 +28,8 @@ public interface ApplicantDao {
 	public void addSuggestion(Suggestion suggestion);
 
 	List<Suggestion> getAllSuggestion();
+	
+	public List<Suggestion> getSuggestionEventName();
+	
+	public List<Suggestion> getSuggestionByEventName(String eventName);
 }

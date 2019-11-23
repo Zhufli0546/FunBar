@@ -28,6 +28,11 @@ public class ActivityServiceImpl implements ActivityService {
 		return dao.getPageActivities(index);
 	}
 	
+	@Override
+	public int getIndex() {
+		return dao.getIndex();
+	}
+	
 	@Transactional
 	@Override
 	public List<Activity> getAllActivities() {
@@ -87,5 +92,6 @@ public class ActivityServiceImpl implements ActivityService {
 	public List<ActivityMap> repeatActivityId(String memberId) {
 		return dao.repeatActivityId(memberId);
 	}
+
 
 }

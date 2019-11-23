@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-
 <head>
 	<title>Home</title>
 	<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -143,7 +142,7 @@
 							<option value="5">5</option>
 						</select> 
 						<input class="pdid" type="hidden" name="productId" value="${pb.productId}">
-						<button type="button" class="btn button-add" data-product="${i.index}" style="margin:10px 0;padding:5px 10px;background-color:#019858;color: #fff;border-radius:5px;">Add to Cart</button>
+						<button type="button" class="btn button-add" data-product="${i.index}" data-productimage="<c:url value='/ProductPicture/${pb.productId}'/>" style="margin:10px 0;padding:5px 10px;background-color:#019858;color: #fff;border-radius:5px;">Add to Cart</button>
 						<div id="snackbar">已加入購物車</div>
 					</figcaption>	
 				</div> 
@@ -181,9 +180,12 @@ function changeCartNum(){
 	})
 }
 
-// Test For Click Event
-$(".button-add").click(function() {
+// Add To Cart Click Event
+$(".button-add").click(function(evt) {
+	let clickEvent = $(this);
 	let index = $(this).data("product");
+	let productImage = $(this).data("productimage");
+	console.log("productImage:" + productImage);
 	console.log("btn index:" + index);
   
 	var url = "/FunBar/";
@@ -209,16 +211,36 @@ $(".button-add").click(function() {
 			if(check) {
 				alert("庫存不足");
    			} else {
+   				// success animation
     			myFunction();
+   				
+   				// Fly To Cart
+   				$(".buyBox").css({
+   					"background-image": "url(" + productImage + ")",
+   					"background-size": "contain",
+   					"background-position": "center center",
+   					"background-repeat": "no-repeat"
+   				});
+
+   				TweenMax.from(".buyBox",0.8,{
+   					left: clickEvent.offset().left-915,
+   					top: clickEvent.offset().top-1200,
+   					opacity: 1,
+   		          	ease: Power1.easeIn
+   				})
+   				console.log("Add To Cart left => " + clickEvent.offset().left);
+   				console.log("Add To Cart top => " + clickEvent.offset().top);
+
+   				// Change Session Cart Num
     			changeCartNum();
 			}
  			}
 		})
 })
 
+//  滑鼠滾輪事件
 let sum = 0;
 let productWheel = 0;
-// mouse wheel
 $("#productOffset").bind("mousewheel",function(event){
 	console.log(event.deltaY);
 	event.preventDefault();

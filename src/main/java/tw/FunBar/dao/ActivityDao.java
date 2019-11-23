@@ -11,6 +11,8 @@ public interface ActivityDao {
 	
 	List<Activity> getPageActivities(int index);
 	
+	public int getIndex();
+	
 	public List<Activity> getAllActivities();
 	
 	public Activity getActivity(int activityId);

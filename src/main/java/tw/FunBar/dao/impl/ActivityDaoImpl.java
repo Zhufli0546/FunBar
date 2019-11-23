@@ -22,8 +22,6 @@ import tw.FunBar.model.Applicant;
 @SuppressWarnings("unchecked")
 public class ActivityDaoImpl implements ActivityDao {
 	
-	final int num = 6;
-	
 	SessionFactory factory;
 	
 	@Autowired
@@ -36,11 +34,26 @@ public class ActivityDaoImpl implements ActivityDao {
 	public List<Activity> getPageActivities(int index) {
 		String hql = "FROM Activity order by eventCreateTime desc";
 		Session session = factory.getCurrentSession();
-		Query query = session.createQuery(hql);
-		query.setFirstResult((index-1)*num);
-		query.setMaxResults(num);
-		return query.list();
+		List<Activity> list = (List<Activity>) session.createQuery(hql)
+				.setFirstResult((index-1)*6).setMaxResults(6).getResultList();
+		return list;
 	}
+	
+	
+	public int getIndex() {
+		String hql = "FROM Activity";
+		Session session = factory.getCurrentSession();
+		List<Activity> list = new ArrayList<>();
+		list = session.createQuery(hql).getResultList();
+		
+		int listCount = list.size()/6;
+		if(list.size()%6==0) {
+			return listCount;
+		}else {
+			return listCount+1;
+		}
+	}
+	
 	
 	//取得全部活動
 	@Override
@@ -150,11 +163,21 @@ public class ActivityDaoImpl implements ActivityDao {
 	//取得一天後到期的活動
 	@Override
 	public Activity getTimeActivity(){
-		Activity ac = new Activity();
+//		Activity ac = new Activity();
+//		String hql = "From Activity where DATEDIFF(day,GETDATE(),eventDate) = 1";
+//		Session session = factory.getCurrentSession();
+//		ac = (Activity) session.createQuery(hql).uniqueResult();
+//
+//		return ac;
+		
+		List<Activity> ac = new ArrayList<>();
 		String hql = "From Activity where DATEDIFF(day,GETDATE(),eventDate) = 1";
 		Session session = factory.getCurrentSession();
-		ac = (Activity) session.createQuery(hql).getSingleResult();
-		return ac;
+		ac = (List<Activity>) session.createQuery(hql).getResultList();
+		if(ac.size() > 0) {
+			return ac.get(0);
+		}else
+			return null;
 	}
 	
 	//取得活動ID和已報名的活動ID是否重複
