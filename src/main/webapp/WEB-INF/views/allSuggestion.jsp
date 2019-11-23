@@ -11,7 +11,6 @@
     body,
     title {
       font-family: "微軟正黑體";
-
     }
 
     td {
@@ -30,30 +29,14 @@
 <body>
 
 <jsp:include page="admin_header.jsp" />
+
 <div class="container">
-    <h2></h2>
-    <hr>
-    
-    <table class="table table-dark table-striped">
-      <thead>
-        <tr>
-          <th>使用者ID</th>
-          <th>姓名</th>
-          <th>E-mail</th>
-          <th>意見內容</th>
-        </tr>
-      </thead>
-      <c:forEach var='su' varStatus='vs' items='${su}'>
-        <tbody>
-          <tr>
-            <td class="tb">${su.memberId}</td>
-            <td class="tb">${su.memberName}</td>
-            <td class="tb">${su.memberEmail}</td>
-            <td class="tb">${su.suggestion} </td>        
-          </tr>
-        </tbody>
-      </c:forEach>
-    </table>
+
+<h2 style="color:rgba(58, 26, 11, 0.877)">--請點選活動查看活動建議--</h2><br>
+   <c:forEach var="eventName" items="${sus}">
+						<a href="${pageContext.request.contextPath}/Suggestions/${eventName}"
+							class="list-group-item">${eventName}</a>
+					</c:forEach>
   </div>
 
 

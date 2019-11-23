@@ -158,5 +158,22 @@ public class ApplicantDaoImpl implements ApplicantDao {
 		return list;
 
 	}
+	
+	@Override
+	public List<Suggestion> getSuggestionEventName(){
+		String hql = "SELECT DISTINCT eventName FROM Suggestion";
+		List<Suggestion> su = new ArrayList<>();
+		Session session = factory.getCurrentSession();
+		su = session.createQuery(hql).getResultList();
+		return su;
+	}
+	
+	public List<Suggestion> getSuggestionByEventName(String eventName){
+		String hql = "FROM Suggestion WHERE eventName = :eventName";
+		List<Suggestion> su = new ArrayList<>();
+		Session session = factory.getCurrentSession();
+		su = session.createQuery(hql).setParameter("eventName", eventName).getResultList();
+		return su;
+	}
 
 }

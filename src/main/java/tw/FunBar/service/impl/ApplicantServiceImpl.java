@@ -73,6 +73,17 @@ public class ApplicantServiceImpl implements ApplicantService {
 	public List<Suggestion> getAllSuggestion() {
 		return dao.getAllSuggestion();
 	}
+
+	@Transactional
+	@Override
+	public List<Suggestion> getSuggestionEventName() {
+		return dao.getSuggestionEventName();
+	}
+
+	@Override
+	public List<Suggestion> getSuggestionByEventName(String eventName) {
+		return dao.getSuggestionByEventName(eventName);
+	}
 	
 
 	
