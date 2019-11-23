@@ -60,6 +60,10 @@ public interface RoomService {
 
 	ArrayList<RoomOrder> personalOrder(String phone);
 
+	ArrayList<RoomOrder> getLatestOrders();
+
+	int getRoomTotalIncome();
+
 	
 
 	

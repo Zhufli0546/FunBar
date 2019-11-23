@@ -180,13 +180,14 @@ public class BookingRoomController {
 	}
 	
 	@RequestMapping("/adpay")
-	public String adOrder(@ModelAttribute("RoomOrder") RoomOrder room_order) throws ParseException {
+	public String adOrder(@ModelAttribute("RoomOrder") RoomOrder room_order,Integer total) throws ParseException {
 		
 		
 		Room room = roomService.getRoomById(room_order.getRoom_id());
 		
 		room_order.setRoom(room);
 		room_order.setCheck_in(0);
+		room_order.setTotal(total);
 		
 		//roomService.addOrderInDays(room_order);
 		

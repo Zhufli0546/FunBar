@@ -121,7 +121,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="pb" items="${all}" >
+				<c:forEach var="pb" items="${showAllProduct}" begin="0" step="1" varStatus="i" >
 					<tr>
 						<th scope="row"><div style="text-align: center">
 								<img src="<c:url value='/ProductPicture/${pb.productId}'/>"
@@ -144,7 +144,7 @@
 							</form>
 							</c:if>
 							<c:if test="${pb.status=='1'}">
-							<form method="post" class="form-group row" action="<c:url value='/pushProduct?id=${pb.productId}'/>">
+							<form method="post" class="form-group row" action="<c:url value='pushProduct?id=${pb.productId}'/>">
 								<input type="hidden" name="id" value="${pb.productId}" /> 
 								<input type="submit" value="上架"  class="button-push" onclick="return confirm('確定重新上架？')"/>
 							</form> 
@@ -156,11 +156,20 @@
 								<input type="hidden" name="id" value="${pb.productId}">
 								<input type="submit" value="修改" class="button" />
 							</form>
+						</c:forEach>
 						</td>
 					</tr>
-				</c:forEach>
+			
 			</tbody>
 		</table>
+		
+		<ul class="pagination justify-content-center">
+				
+			<c:forEach  begin="1" step="1" end="${listCount}" varStatus="i" >
+				<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/showAllProduct?index=${i.index}">${i.index}</a></li>		
+			</c:forEach>
+			
+		</ul>
 	</div>
 
 	<jsp:include page="admin_footer.jsp" />
