@@ -8,9 +8,10 @@
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="<c:url value="/ad_vendor/jquery/jquery.jqzoom.css" />">
 <link rel="stylesheet" href="<c:url value="/css/product.css" />">
-
 </head>
+
 <body>
  <jsp:include page="header.jsp" />
 
@@ -32,10 +33,10 @@
   </div>
 
   <div class="prodBlock">
-   <div class="prodImg" style="width:250px;height:300px">
+   <a href="<c:url value='/ProductPicture/${pb.productId}'/>" class="prodImg jqzoom" style="width:250px;height:300px" title="${pb.productName}">
     <img style="display:block;height:300px;margin:auto;"
      src="<c:url value='/ProductPicture/${pb.productId}'/>" />
-   </div>
+   </a>
 
    <div class="intro">
 
@@ -97,6 +98,8 @@
  <!-- .container -->
 
 <jsp:include page="footer.jsp" />
+<script src="<c:url value="/vendor/jquery/jquery-1.6.js" />"></script>
+<script src="<c:url value="/vendor/jquery/jquery.jqzoom-core.js" />"></script>
 <script>
 function myFunction() {
  var x = document.getElementById("snackbar");
@@ -158,6 +161,18 @@ $(".button-add").click(function() {
   }
  })
 })
+
+//繫結圖片放大外掛jqzoom
+$(".jqzoom").jqzoom({
+	//小圖片所選區域的寬
+	zoomWidth:200,
+
+	//小圖片所選區域的高
+	zoomHeight: 200,
+
+	//設定放大鏡的型別，預設standard即選中的部分變灰，這裡是reverse即非選中變灰
+	zoomType: 'reverse'
+});
 </script>
 
 </body>
