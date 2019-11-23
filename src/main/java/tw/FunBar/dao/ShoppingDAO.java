@@ -7,14 +7,21 @@ import tw.FunBar.model.ProductBean;
 public interface ShoppingDAO {
 	
 	 List <ProductBean> showNewProducts(); //首頁最新商品
-	
-	 List <ProductBean> getAllProducts();
 	 
-	 List <ProductBean> getAllproducts1(); //後台管理顯示所有商品
+	 List <ProductBean> getProductByPage(int index); //Mall分頁
+	 
+	 int getIndex();  //Mall取得分頁數
+	 
+	 List <ProductBean> getAllproducts1(int Index); //後台管理顯示所有商品分頁
+	 	 
+	 int getProdIndex1();  //後台管理商品取得分頁數
 	 
 	 List <String> getAllCategories();
 	 
-	 List <ProductBean> getProductByCategory(String category);
+	 List <ProductBean> getProductByCategory(String category, Integer index);  //Category分頁
 	 
+	 int getCategoryIndex(String category); //Category取得分頁數
+	 
+	 List <ProductBean> getAllProducts(); //顯示所有商品
 	 
 }

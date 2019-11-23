@@ -42,11 +42,6 @@ public class OrderItemBean implements Serializable {
 		this.orderItemId = orderItemId;
 	}
 	
-	
-	
-	
-
-
 
 //	public Integer getOrderId() {
 //		return orderId;
