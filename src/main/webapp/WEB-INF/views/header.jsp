@@ -48,6 +48,17 @@
 <link href="https://fonts.googleapis.com/css?family=Paytone+One|Russo+One&display=swap" rel="stylesheet">
 
 </head>
+<style>
+.buyBoxBlock { relative; z-index: 9999;}
+.buyBox {
+ 	position: absolute;
+ 	top: 0px;
+	width: 60px;
+	height: 60px;
+	opacity: 0;
+	z-index: -1;
+}
+</style>
 <body>
 	<!-- Header -->
 	<header>
@@ -118,6 +129,7 @@
 									<i style="color:red;"class="fa fa-cart-arrow-down"></i>
 		         					<span class="badge badge-danger cart">${fn:length(sessionScope.Cart.cartItems)}</span>
 		         					</a>
+		         					<div class="buyBox"></div>
 		     					</li>
 							</ul>
 						<!-- menu end  -->
@@ -132,12 +144,12 @@
 		</div>
 	</header>
 
-	<!-- Right Sidebar -->
+<!-- 	Right Sidebar -->
 	<aside class="sidebar trans-0-4">
 		<!-- Button Hide sidebar icon -->
 		<button class="btn-hide-sidebar ti-close color0-hov trans-0-4"></button>
 
-		<!-- - -->
+		<!-- menu-sidebar -->
 		<ul class="menu-sidebar p-t-95 p-b-70">
 
 			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/booking_query">訂位、訂房查詢</a></li>
@@ -156,9 +168,7 @@
 
 
 <!-- 			<li class="t-center"> -->
-<!-- 				<a href="reservation.html" -->
-<!-- 				class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto"> -->
-<!-- 					Reservation </a> -->
+<!-- 				<a href="reservation.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">Reservation</a> -->
 <!-- 			</li> -->
 		</ul>
 	</aside>
