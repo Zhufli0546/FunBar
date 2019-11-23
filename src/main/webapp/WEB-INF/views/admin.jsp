@@ -15,6 +15,7 @@
 
 <!-- Content -->
 <div class="container" style="margin-top:10px;margin-bottom:120px">
+
 	<content>
 		<div class="overview" style="">
 			<div class="date">
@@ -32,6 +33,9 @@
              <div class="n3 sub">
                  <h2><i class="fas fa-boxes"></i>當日入場人數</h2>
                  <p style="color:#D0021B">${arrival}</p>
+
+                 <h2><i class="fas fa-boxes"></i>MALL TOTAL INCOME</h2>
+                 <p style="color:#D0021B">${productTotalIncome}</p>
              </div>
 
              <div class="n3 sub">
@@ -51,48 +55,47 @@
          <!-- panel -->
          <div class="n2">
             <!-- panel left -->
-		 	            <div class="panel right">
+                <div class="panel right">
                 <h2>Latest Orders</h2>
                 <div class="list">
+                <c:forEach var="ob" items="${list}">
                     <div class="item">
                         <div class="pic">
                             <img src="https://upload.cc/i1/2018/06/18/hHvc0L.png"></div>
                         <div class="info">
-                            <h3>Vintage T-shirt</h3>
-                            <span><i class="fas fa-clock"></i>2018/6/13 13:42
-                            </span>
-                            <span><i class="fas fa-male" style="font-size:20px;margin-left:4px;"></i>Gong Yoo</span>
+                            <h3>${ob.productName}</h3>
+                            <span><i class="fas fa-clock"></i>${ob.orderTime}</span>
+                            <span><i class="fas fa-male" style="font-size:20px;margin-left:4px;"></i>${ob.memberName}</span>
                         </div>
                         <div class="total">
-                            <p>Toatal</p><b>3,200</b>
+                            <p>Total</p><b>${ob.totalAmount}</b>
                         </div>
                     </div>
                     <div class="item">
                         <div class="pic">
                             <img src="https://upload.cc/i1/2018/06/18/hOEJGW.png"></div>
                         <div class="info">
-                            <h3>Cowboy Jacket</h3>
-                            <span><i class="fas fa-clock"></i>2018/6/13 13:42</span>
-                            <span><i class="fas fa-male" style="font-size:20px;margin-left:4px;"></i>Bangtan
-                                Boys</span>
+                            <h3>${ob.productName}</h3>
+                            <span><i class="fas fa-clock"></i>${ob.orderTime}</span>
+                            <span><i class="fas fa-male" style="font-size:20px;margin-left:4px;"></i>${ob.memberName}</span>
                         </div>
                         <div class="total">
-                            <p>Toatal</p><b>3,200</b>
+                            <p>Total</p><b>${ob.totalAmount}</b>
                         </div>
                     </div>
-                    <div class="item" style="border-bottom: none">
+                 
                         <div class="pic">
                             <img src="https://upload.cc/i1/2018/06/18/3T7qFR.png"></div>
                         <div class="info">
-                            <h3>Coach Coat</h3>
-                            <span><i class="fas fa-clock"></i>2018/6/13 13:42</span>
+                            <h3>${ob.productName}</h3>
+                            <span><i class="fas fa-clock"></i>${ob.orderTime}</span>
                             <span>
-                                <i class="fas fa-male" style="font-size:20px;margin-left:4px;"></i>Super
-                                Junior</span>
+                                <i class="fas fa-male" style="font-size:20px;margin-left:4px;"></i>${ob.memberName}</span>
                         </div>
                         <div class="total">
-                            <p>Total</p><b>3,200</b>
+                            <p>Total</p><b>${ob.totalAmount}</b>
                         </div>
+                        </c:forEach>
                     </div>
                 </div>
         </div> 
@@ -146,7 +149,7 @@
 <!--                     </div> -->
                 </div>
         </div>   
-	</content>
+ </content>
 </div>
 
 

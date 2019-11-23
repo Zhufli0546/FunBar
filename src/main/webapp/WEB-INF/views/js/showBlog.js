@@ -30,6 +30,13 @@ function submit() {
 			$("#commentBlock").html("");
 			$("#commentContent").val("");
 			generateTemplate();
+			setTimeout(function() {
+				let index = $("#commentBlock h5").length-1;
+				$("html,body").animate({
+					scrollTop: $("#commentBlock h5").eq(index).offset().top
+				}, 1000);
+			},1000);
+			
 		}
 	});
 }
@@ -50,6 +57,11 @@ function replySubmit() {
 			$("#commentBlock").html("");
 			$("#replyComment").val("");
 			generateTemplate();
+			setTimeout(function() {
+				$("html,body").animate({
+					scrollTop: $("#commentBlock h5").eq(replyIndex).offset().top
+				}, 1000);
+			},1000);
 		}
 	});
 }
@@ -73,6 +85,7 @@ function reportSubmit(reportcommentid) {
 }
 
 var firstComment = [];
+var replyIndex = -1;
 function generateTemplate() {
 	$.ajax({
 		url: requestUrl + "/blog/" + id,
@@ -90,8 +103,9 @@ function generateTemplate() {
 				}
 			}
 			generateComment();
-			
+
 			$(".replyClick").click(function () {
+				replyIndex = $(this).data("replyindex");
 				parentCommentId = $(this).data("comment");
 				parentCommentName = $(this).data("commentname");
 				console.log("parentCommentId:" + parentCommentId);
@@ -103,22 +117,24 @@ function generateTemplate() {
 
 	var firstTemplate = "<p style='color:red'>{{comment.commentIds}}</p>" +
 						"<h5 class='media mt-4 animated fadeIn'><img width='50px' height='50px' class='d-flex mr-3 rounded-circle' src='{{comment.memberId}}'>{{comment.commentName}}</h5>{{comment.commentContent}}" +
-						"<div><label for='replyComment' class='replyClick' data-comment='{{comment.commentId}}' data-commentname='{{comment.name}}'><a class='mgl5' href='javascript:;'>回覆</a></label>" +
+						"<div><label for='replyComment' class='replyClick' data-replyindex={{replyindex}} data-comment='{{comment.commentId}}' data-commentname='{{comment.name}}'><a class='mgl5' href='javascript:;'>回覆</a></label>" +
 						"<a class='mgl5 reportComment' data-toggle='modal' data-target='#reportModal' data-reportcommentid='{{comment.reportcommentid}}' href='javascript:;'>檢舉</a></div>";
 	var secondTemplate = "<div style='padding-left: 100px'>" +
 					     "<p style='color:red'>{{comment.commentIds}}</p>" +
 					     "<div class='media mt-4 animated fadeIn'><img width='50px' height='50px' class='d-flex mr-3 rounded-circle' src='{{comment.memberId}}'>" +
 					     "<h5 class='mt-0'>{{comment.commentName}}</h5></div>" +
 					     "<div>{{comment.commentContent}}</div>" +
-					     "<div><label for='replyComment' class='replyClick' data-comment='{{comment.commentId}}' data-commentname='{{comment.name}}'><a class='mgl5' href='javascript:;'>回覆</a></label>" +
+					     "<div><label for='replyComment' class='replyClick' data-replyindex={{replyindex}} data-comment='{{comment.commentId}}' data-commentname='{{comment.name}}'><a class='mgl5' href='javascript:;'>回覆</a></label>" +
 					     "<a class='reportComment' class='mgl5' data-toggle='modal' data-target='#reportModal' data-reportcommentid='{{comment.reportcommentid}}' href='javascript:;'>檢舉</a></div>";
 	var tmp;
+	var count = 0;
 	function generateComment() {
 		for(let i=0;i<firstComment.length;i++) {
 			var first_html;
 			if(firstComment[i].commentName) {
 				first_html = firstTemplate
 				.replace("{{comment.memberId}}", requestUrl + "/membergetPicture/" +firstComment[i].memberId)
+				.replace("{{replyindex}}", count)
 				.replace("{{comment.commentIds}}", firstComment[i].commentId)
 				.replace("{{comment.commentName}}", firstComment[i].commentName)
 				.replace("{{comment.commentContent}}", firstComment[i].commentContent)
@@ -134,6 +150,7 @@ function generateTemplate() {
 				var second_html;
 				recursively(tmp);
 			}
+			count++;
 		}
 		
 		$(".reportComment").click(function() {
@@ -143,11 +160,12 @@ function generateTemplate() {
 			reportSubmit(reportcommentid);
 		})
 	}
-	var replys
+	var replys;
 	function recursively(tmp) {
 		for(let j=0;j<tmp.length;j++) {	
 			second_html = secondTemplate
 				.replace("{{comment.memberId}}", requestUrl + "/membergetPicture/" +tmp[j].memberId)
+				.replace("{{replyindex}}", count)
 				.replace("{{comment.commentIds}}", tmp[j].commentId)
 				.replace("{{comment.commentName}}", tmp[j].commentName)
 				.replace("{{comment.commentContent}}", tmp[j].commentContent)
@@ -156,6 +174,7 @@ function generateTemplate() {
 				.replace("{{comment.reportcommentid}}", tmp[j].commentId);;
 			$("#commentBlock").append(second_html);
 			replys = tmp[j].replyComment;
+			count++;
 			recursively(replys);
 		}
 	}

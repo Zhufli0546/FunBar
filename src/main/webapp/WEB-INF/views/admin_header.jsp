@@ -87,7 +87,7 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">######</h6>
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/showAllProduct">所有商品</a> <a
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/showAllProduct?index=1">所有商品</a> <a
 						class="dropdown-item" href="${pageContext.request.contextPath}/addProduct">新增商品</a> <a
 						class="dropdown-item" href="${pageContext.request.contextPath}/showAllOrders">查看所有訂單</a>
 				</div></li>

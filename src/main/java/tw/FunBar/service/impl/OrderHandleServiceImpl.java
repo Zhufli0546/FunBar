@@ -93,6 +93,18 @@ public ArrayList<OrderBean> getAllOrders(HttpServletRequest req) {
 	return dao.getAllOrders(req);
 }
 
+@Transactional
+@Override
+public List<OrderBean> getLatestOrders() {
+	return dao.getLatestOrders();
+}
+
+@Transactional
+@Override
+public int getProductTotalIncome() {
+	return dao.getProductTotalIncome();
+}
+
  
  
  

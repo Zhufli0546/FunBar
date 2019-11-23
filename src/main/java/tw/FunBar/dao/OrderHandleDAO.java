@@ -30,6 +30,10 @@ public interface OrderHandleDAO {
 
 	ArrayList<OrderBean> getMyOrders(Integer memberId,HttpServletRequest req);
 	
-	public ArrayList<OrderBean> getAllOrders(HttpServletRequest req);
+	public ArrayList<OrderBean> getAllOrders(HttpServletRequest req); 
+	
+	List<OrderBean> getLatestOrders();
+	
+	int getProductTotalIncome();
 	
 }
