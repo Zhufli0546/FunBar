@@ -36,7 +36,19 @@ public class AdminController {
 	@RequestMapping("/admin")
 	public String admin(Model model,HttpSession session,HttpServletRequest req) {
 		
-
+		session = req.getSession(false);
+		
+		Member member = (Member)session.getAttribute("member");
+		
+		if(member==null) {
+			return "redirect:/";
+		}
+		
+		int level = member.getMemberLevel();
+		if(level<9){
+			
+			return "redirect:/";
+		}
 		
 		
 		ArrayList<RoomOrder> orders = roomService.getLatestOrders();	
