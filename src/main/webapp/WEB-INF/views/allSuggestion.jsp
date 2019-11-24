@@ -37,6 +37,10 @@
 						<a href="${pageContext.request.contextPath}/Suggestions/${eventName}"
 							class="list-group-item">${eventName}</a>
 					</c:forEach>
+					<br>
+					
+	  <a href="${pageContext.request.contextPath}/activityQuery?index=1">
+    <button style="float: right;" type="button" class="btn btn-outline-secondary">返回</button></a>
   </div>
 
 

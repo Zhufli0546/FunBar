@@ -6,7 +6,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>已報名活動資料</title>
+<title>我已報名的活動</title>
+<style>
+	@media (min-width: 992px) {
+  .pricing .card:hover {
+    margin-top: -.25rem;
+    margin-bottom: .25rem;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+  }
+  .pricing .card:hover {
+    opacity: 1;
+  }
+}	
+	</style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
@@ -119,6 +131,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <body>
 	<jsp:include page="header.jsp" />
 	<div class="container" style="margin-top: 150px">
+		<section class="pricing">
 		<div class="row">
 			<c:forEach var="activity" items="${activity}">
 
@@ -148,6 +161,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				<input class = "eventDate" type="hidden" value="${activity.eventDate}" />
 			</c:forEach>
 		</div>
+		</section>
 	</div>
 	
 	<div id="ns" style="height:50%; width:25%; margin:50px auto; display:none">
@@ -158,9 +172,10 @@ document.addEventListener("DOMContentLoaded", function() {
     </div >
    	<br><br>
 
-	<h2 style="color:rgba(204, 74, 14, 0.438);font-family:微軟正黑體">還沒報名任何活動喔!!</h2><br><br>
+	<h2 style="color:rgba(204, 74, 14, 0.438);font-family:微軟正黑體">你還沒報名任何活動喔!!</h2><br><br>
+	<p style="margin-left:90px;font-size:1.5em;">點我報名活動⇩⇩⇩</p>
 		<a href="${pageContext.request.contextPath}/activities?index=1">
-				<button type="button" class="btn btn-outline-secondary">熱門活動</button>
+				<button type="button" class="btn btn-primary btn-block">熱門活動</button>
 			</a>
 	</div>
 	

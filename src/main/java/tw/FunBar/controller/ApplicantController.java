@@ -68,7 +68,7 @@ public class ApplicantController {
 	@RequestMapping(value="/getsiqnupActivity/{memberId}" ,method=RequestMethod.GET)
 	public String getsiqnupActivity(@PathVariable String memberId,Model model) {
 		
-		Set<Activity> activity = service.QuerySignActivity(memberId);
+		List<Activity> activity = service.QuerySignActivity(memberId);
 		model.addAttribute("activity", activity);
 		
 		return "applicantSignup";

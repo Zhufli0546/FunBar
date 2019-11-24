@@ -15,7 +15,7 @@ public interface ApplicantDao {
 
 	public Set<Applicant> QuerySignupApplicant(int activityId);
 	
-	public Set<Activity> QuerySignActivity(String memberId);
+	public List<Activity> QuerySignActivity(String memberId);
 	
 	public Applicant deleteApplicantById(int applicantId);
 	
