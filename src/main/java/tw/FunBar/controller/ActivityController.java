@@ -81,14 +81,16 @@ public class ActivityController {
 		int count = service.getIndex();
 		model.addAttribute("listCount", count);
 
-		return "activities";
+		return "activities";		
 	}
 
 	// 活動管理查詢
 	@RequestMapping(value = { "/activityQuery" })
 	public String Management(Model model, Integer index) {
-		List<Activity> activity = service.getAllActivities();
+		List<Activity> activity = service.getPageActivities(index);
 		model.addAttribute("activities", activity);
+		int count = service.getIndex();
+		model.addAttribute("listCount", count);
 
 		return "activityQuery";
 	}
@@ -129,14 +131,14 @@ public class ActivityController {
 					category, activity.getPicture());
 
 		}
-		return "redirect:/activityQuery";
+		return "redirect:/activityQuery?index=1";
 	}
 
 	// 刪除
 	@RequestMapping("/deleteActivity")
 	public String deleteActivity(@RequestParam("id") Integer activityId, Model model) {
 		model.addAttribute("ac", service.deleteActivityById(activityId));
-		return "redirect:/activityQuery";
+		return "redirect:/activityQuery?index=1";
 	}
 
 	// 新增資料 送回新增資料的表單
@@ -147,7 +149,7 @@ public class ActivityController {
 	}
 
 	// 新增資料、圖片
-	@RequestMapping(value = "activities", method = RequestMethod.POST)
+	@RequestMapping(value = "addActivity", method = RequestMethod.POST)
 	public String addActivity(@ModelAttribute("activity") Activity activity) {
 		MultipartFile activityImage = activity.getActivityImage();
 		String originalFilename = activityImage.getOriginalFilename();
@@ -176,7 +178,7 @@ public class ActivityController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/activities?index=1";
+		return "redirect:/activityQuery?index=1";
 	}
 
 	// 讀取資料庫圖片
@@ -260,15 +262,14 @@ public class ActivityController {
 			
 			session.setAttribute("activity", "na");
 			
-			return "redirect:/activityQuery";
-			
-			
+			return "redirect:/activityQuery?index=1";
 			
 		}else {
+		session.invalidate();
 		List<Applicant> email = service.getTime();//抓到報名此活動使用者
 		emailService.sendActivityEmail(email, activity);
 		
-		return "redirect:/activityQuery";
+		return "redirect:/activityQuery?index=1";
 		}
 	}
 	

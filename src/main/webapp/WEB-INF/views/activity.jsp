@@ -15,9 +15,17 @@
 	font-family: 微軟正黑體;
 }
 
+.ti {
+	font-family:微軟正黑體;
+	 }
+
 .pic {
 	height: 40px;
 	width: 40px;
+}
+.day{
+	height: 20px;
+	width: 20px;
 }
 </style>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
@@ -136,23 +144,27 @@
 
 
 		<div id="pic" style="min-height: 40px">
-			<img class="pic" alt="" id="picD1" /><img class="pic" alt=""id="picD2" />天
-			<img class="pic" alt="" id="picH1" /><img class="pic" alt="" id="picH2" />時 
-			<img class="pic" alt="" id="picM1" /><img class="pic" alt="" id="picM2" />分 
+			<img class="pic" alt="" id="picD1" /><img class="pic" alt=""id="picD2" />
+			<img class="day" src="${pageContext.request.contextPath}/activityimages/day.png" />
+			<img class="pic" alt="" id="picH1" /><img class="pic" alt="" id="picH2" />
+			<img class="day" src="${pageContext.request.contextPath}/activityimages/hour.png" />
+			<img class="pic" alt="" id="picM1" /><img class="pic" alt="" id="picM2" />
+			<img class="day" src="${pageContext.request.contextPath}/activityimages/minute.png" />
 			<img class="pic" alt="" id="picS1" /><img class="pic" alt="" id="picS2" />
+			<img class="day" src="${pageContext.request.contextPath}/activityimages/second.png" />
 		</div>
-		<p id="exp">活動已過期</p>
+		<p class="ti" style="font-size:2em" id="exp">活動已過期</p>
 
 		<hr>
-
-		<p class="lead">${activity.eventName}</p>
+		<p class="ti"><img src="${pageContext.request.contextPath}/activityimages/activity.PNG">活動名稱</p>
+		<p class="lead" style="color:rgba(58, 26, 11, 0.877)">${activity.eventName}</p>
 		<br>
 
-		<p class="lead">活動時間</p>
-		<p>${activity.eventDate}</p>
+		<p class="ti"><img src="${pageContext.request.contextPath}/activityimages/date.PNG">活動時間</p>
+		<p  class="lead">${activity.eventDate}</p><br>
 
-		<p class="lead">活動地點</p>
-		<p>${activity.address}</p>
+		<p class="ti"><img src="${pageContext.request.contextPath}/activityimages/location.PNG">活動地點</p>
+		<p class="lead">${activity.address}</p>
 		<hr>
 		<br>
 
@@ -166,12 +178,12 @@
 		<br>
 		<p class="lead">活動介紹</p>
 		<hr>
-		<p>${activity.activities}</p>
+		<p class="ti">${activity.activities}</p>
 		<br> <br>
 
 		<p class="lead">活動資訊</p>
 		<hr>
-		<p>${activity.information}</p>
+		<p class="ti">${activity.information}</p>
 
 		<hr>
 		<br>

@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded",function(){
 		            	 flag2 = true;
 		    }	           
 	    } //for迴圈結尾
-// 	    if(flag1 &&flag2) return;  //用break會被告知 ‘Illegal break statement’，用return又不會跳出“正確”訊息，黑人問號？？？
+// 	    if(flag1 &&flag2) return;  //用break會被告知 ‘Illegal break statement’，用return又不會跳出“正確”訊息
 	 
 		if(flag1 && flag2){
 			document.getElementById("msgNo").innerHTML="<img width='25px' height='25px' src='images/sign-ok.png'>正確" ;

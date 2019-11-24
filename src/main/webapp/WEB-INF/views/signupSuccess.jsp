@@ -28,10 +28,11 @@
     <p style="color:gray ;margin-top: 6px ;font-family: 微軟正黑體;font-size:1em; text-align: center;">報名成功</p>
     </div>
     <div style="text-align: center;font-family: 微軟正黑體;margin:auto ;width: 500px;height: 350px;border: 1px gray solid;">
+    <br><br>
     <p style="font-family: 微軟正黑體;font-size: 1.8em;color: rgb(22, 15, 1)">${member.memberName} 你好</p><br>
 <%--     <p style="text-align: center;font-size: 1.5em;color: rgb(128, 128, 128)">${activity.eventName}</p> --%>
     <p style="font-family: 微軟正黑體;font-size: 1.5em;color: rgb(228, 121, 21);">活動已報名成功</p><br>
-    <p style="font-family: 微軟正黑體;font-size: 1.2em;color: gray;">期待您蒞臨參加。</p><br>
+    <p style="font-family: 微軟正黑體;font-size: 1.2em;color: gray;">期待您蒞臨參加。</p><br><br><br>
     
      <a href="${pageContext.request.contextPath}/getsiqnupActivity/${member.memberId}">
 				<button type="button" class="btn btn-outline-secondary">我報名的活動</button>

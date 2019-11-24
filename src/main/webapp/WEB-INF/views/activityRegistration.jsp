@@ -7,7 +7,14 @@
 <head>
 <meta charset="UTF-8">
 <title>活動報名</title>
-
+<style>
+	.mx-auto{
+		border:1px gray solid;
+	 	font-family:微軟正黑體;
+	 	padding:10px;
+	 	border-radius:15px; 
+	}
+</style>
 </head>
 <body>
 
@@ -33,10 +40,9 @@
 				<div class="login d-flex align-items-center py-5">
 					<div class="container">
 						<div class="row">
-							<div style="font-family:微軟正黑體" class="col-md-9 col-lg-8 mx-auto">
+							<div style="" class="col-md-9 col-lg-8 mx-auto">
 								<h3 class="login-heading mb-4">填寫報名資訊</h3>
 								<form action="applicantSignup" method='POST'>
-
 									<div class="form-label-group">
 										<label for="name">姓名:</label> <input name="applicantName"
 											type="text" class="form-control" value="${member.memberName}"

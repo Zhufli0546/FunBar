@@ -38,7 +38,7 @@ public class ApplicantServiceImpl implements ApplicantService {
 
 	@Transactional
 	@Override
-	public Set<Activity> QuerySignActivity(String memberId) {
+	public List<Activity> QuerySignActivity(String memberId) {
 		return dao.QuerySignActivity(memberId);
 	}
 	
