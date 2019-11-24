@@ -85,11 +85,11 @@
 	<!--Chat Box-->
 	<div class="container">
 		<div class="row">
-			<div class="chatbox chatbox22 chatbox--tray rounded-top"
+			<div class="chatbox chatbox22 chatbox--closed rounded-top"
 				style="z-index: 9998">
 				<div class="chatbox__title">
 					<h5>
-						<a id="receiverMemberName" href="javascript:void()">Message</a>
+						<a id="receiverMemberName" href="javascript:void()"></a>
 					</h5>
 					<button class="chatbox__title__close"><i class="fa fa-window-close fa-5" aria-hidden="true"></i></button>
 				</div>

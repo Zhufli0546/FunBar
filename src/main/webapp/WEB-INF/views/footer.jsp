@@ -43,8 +43,8 @@
 
 	<!--===============================================================================================-->
 	<script type="text/javascript"
-	src="<c:url value="/vendor/jquery/jquery-3.2.1.min.js"/>">
-	
+		src="<c:url value="/vendor/jquery/jquery-3.2.1.min.js"/>">
+		
 	</script>
 	<!--===============================================================================================-->
 	<script type="text/javascript"
@@ -93,6 +93,35 @@
 		src="<c:url value="/vendor/lightbox2/js/lightbox.min.js"/>"></script>
 	<!--===============================================================================================-->
 	<script src="<c:url value="/js/main.js"/>"></script>
+
+	<!-- Test Notification -->
+	<!--sockJS cdn-->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+	<!--stomp cdn-->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/web-socket-js/1.0.0/web_socket.js"></script>
+		<input id="websocketUrl" type="hidden" value="<c:url value="/websocket"/> ">
+	<script>
+	function connectNotification() {
+		var socket = new SockJS($("#websocketUrl").val().trim());
+		stompClient = Stomp.over(socket);
+		var sessionId = "";
+		stompClient.connect({}, function(frame) {
+			stompClient.subscribe("/topic/notification", function(notification) {
+				var json = JSON.parse(notification.body);
+				var note = json.notification;
+				console.log("notification == " + note)
+				var n = new Notification(note);
+			});
+		})
+	}
+	$(document).ready(function() {
+		connectNotification();
+	})
+	</script>
 
 </body>
 
