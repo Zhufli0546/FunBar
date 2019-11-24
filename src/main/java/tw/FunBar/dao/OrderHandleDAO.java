@@ -32,7 +32,7 @@ public interface OrderHandleDAO {
 	
 	public ArrayList<OrderBean> getAllOrders(HttpServletRequest req); 
 	
-	List<OrderBean> getLatestOrders();
+	List <OrderBean> getLatestOrders();
 	
 	int getProductTotalIncome();
 	

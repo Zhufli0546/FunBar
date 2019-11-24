@@ -187,6 +187,7 @@ public class OrderHandleDAOImpl implements OrderHandleDAO {
 		session = sessionFactory.getCurrentSession();
 		List <OrderBean> list = new ArrayList<>();
 		list = session.createQuery(hql).setFirstResult(0).setMaxResults(3).getResultList();
+			
 		return list;
 	}
 
