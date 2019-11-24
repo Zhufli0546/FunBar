@@ -1,202 +1,235 @@
 //createPost 
-var requestUrl = "/FunBar/";
-var table = "<tr><th scope='row'>{{post.postId}}</th>" +
-		"<td>{{post.memberId}}</td>" +
-		"<td>{{post.postContent}}</td>" +
-		"<td>{{post.postTime}}</td>" +
-		"<td>{{post.status}}</td>" +
-		"</tr>"
+var requestUrl = "";
+var table = "<tr class='content'><th scope='row'>{{post.postId}}</th>"
+		+ "<td>{{post.memberId}}</td>" 
+		+ "<td>{{post.postContent}}</td>"
+		+ "<td>{{post.postTime}}</td>"
+		+ "<td id='like{{post.postId}}'>0</td>"
+		+ "<td id='report{{post.postId}}'>1</td>"
+		+ "<td><button type='button' class='btn btn-danger ml-2' id='delete{{post.postId}}'>刪除</button></td>"
+		+ "</tr>";
 
 var data;
-
-
-$.ajax({
-	url : "http://localhost:8080" + requestUrl + "discussJson",
-	method : "POST",
-	dataType : "JSON",
-	success : function(postData) {
-		let tableArea = "";
-		data = postData.Post
-
-		for (let i = 0; i < data.length; i++) {
-			let post = data[i];
-			
-
-//			if (post.parentPostId == null) {
-
-				table_html = table.replace(/\{{post.memberId}}/g, post.memberId)
-				.replace(/\{{post.postTime}}/g, post.postTime)
-				.replace(/\{{post.postContent}}/g, post.postContent)
-				.replace(/\{{post.postId}}/g, post.postId)
-				.replace(/\{{post.status}}/g, post.status)
-
-				tableArea += table_html;
-				
-				
-
-//				refreshCommentNumber(post.postId, post.replyPost.length)
-//				refreshLikeNumber(post.postId)
-//				addLike(post.postId, post.memberId)
-//				editContent(post.postId, post.postContent)
-//				deleteContent(post.postId)
-
-//				if (post.replyPost.length > 0) {
-//					let second = "";
-//					let commentPostId = "";
-//
-//					for (let j = 0; j < post.replyPost.length; j++) {
-//						let comment = post.replyPost[j];
-//
-//						secondLevelComment_html = secondLevelComment
-//								.replace(/\{{post.parentPostId}}/g,
-//										comment.parentPostId)
-//								.replace(/\{{post.memberId}}/g,
-//										comment.memberId)
-//								.replace(/\{{post.postTime}}/g,
-//										comment.postTime).replace(
-//										/\{{post.postContent}}/g,
-//										comment.postContent).replace(
-//										/\{{post.postId}}/g, comment.postId)
-//
-//						if (comment.replyPost.length > 0) {
-//							let third = "";
-//							for (let k = 0; k < comment.replyPost.length; k++) {
-//								let thirdComment = comment.replyPost[k];
-//
-//								thirdLevelComment_html = thirdLevelComment
-//										.replace(/\{{post.parentPostId}}/g,
-//												thirdComment.parentPostId)
-//										.replace(/\{{post.memberId}}/g,
-//												thirdComment.memberId).replace(
-//												/\{{post.postTime}}/g,
-//												thirdComment.postTime).replace(
-//												/\{{post.postContent}}/g,
-//												thirdComment.postContent)
-//										.replace(/\{{post.postId}}/g,
-//												thirdComment.postId)
-//
-//								third += thirdLevelComment_html;
-//
-//							}
-//
-//							thirdLevel_html = level.replace(
-//									/\{{post.postId}}/g, comment.postId)
-//							thirdLevel_html = thirdLevel_html + third;
-//
-//							commentPostId = comment.postId;
-//
-//						}
-//
-//						second += secondLevelComment_html;
-//
-//					}
-//
-//					secondLevel_html = level.replace(/\{{post.postId}}/g,
-//							post.postId)
-//					secondLevel_html = secondLevel_html + second;
-//
-//					$("#firstCommentBody" + post.postId).append(
-//							secondLevel_html);
-//					$("#secondCommentBody" + commentPostId).append(
-//							thirdLevel_html);
-//
-//				}
-//			}
-
-//			for (let j = 0; j < post.replyPost.length; j++) {
-//				let comment = post.replyPost[j];
-//
-//				refreshCommentNumber(comment.postId, comment.replyPost.length)
-//				refreshLikeNumber(comment.postId)
-//				addLike(comment.postId, comment.memberId)
-//				editContent(comment.postId, comment.postContent)
-//				deleteContent(comment.postId)
-//
-//				for (let k = 0; k < comment.replyPost.length; k++) {
-//					let thirdComment = comment.replyPost[k];
-//
-//					refreshLikeNumber(thirdComment.postId)
-//					addLike(thirdComment.postId, thirdComment.memberId)
-//					editContent(thirdComment.postId, thirdComment.postContent)
-//					deleteContent(thirdComment.postId)
-//
-//				}
-//			}
-
-				
-		}
-		
-		$("#discussTable").append(tableArea);
-	}
-})
-//}
+var pageNum;
+var NumberOfPage;
 
 function refreshLikeNumber(postId) {
-	$.get('Like', {
+	$.get("Like", {
 		postId : postId
 	}, function(data) {
-		$("#likeCount" + postId).text(data + "  Likes")
+		$("#like" + postId).text(data)
 	})
 }
 
-// like 未完成
-function addLike(postId, memberId) {
-	$("#likebtn" + postId).click(function() {
-		$.get("addLike", {
-			postId : postId,
-			memberId : memberId
-		}, function() {
-		})
-		$(this).text("unLike");
-		$(this).attr("id", "unLikebtn" + postId);
-		unLike(postId, memberId);
-		refreshLikeNumber(postId);
+function checkNumbers(){
+	$.ajax({
+		url : requestUrl + "sortJson",
+		method : "GET",
+		dataType : "JSON",
+		data : {sort : 0},
+		async : false,
+		success : function(postData) {
+			data = postData.sortList
+			for (let i = 0; i < data.length; i++) {
+				let post = data[i];
+				if(post.postStatus > 0){
+				refreshLikeNumber(post.postId)
+				refreshReportNumber(post.postId, post.postStatus)
+				deleteContent(post.postId)
+				}
+				
+			}
+		}
 	})
 }
 
-function unLike(postId, memberId) {
-	$("#unLikebtn" + postId).click(function() {
-		$.get("unLike", {
-			postId : postId,
-			memberId : memberId
-		}, function() {
-		})
-		$(this).text("Like");
-		$(this).attr("id", "likebtn" + postId);
-		addLike(postId, memberId);
-		refreshLikeNumber(postId);
-	})
-}
-
-function editContent(postId, postContent) {
-	$("#edit" + postId).click(function() {
-						$("#postContent" + postId)
-								.html("<textarea id='postContent' name='postContent' class='form-control mt-3'>" + postContent + "</textarea>"
-												+ "<div class='text-right mt-2'><button class='btn btn-primary' type='submit' name='editContent' onclick='reloadPage()'>Edit</button>" 
-												+ "<input id='postId' name='postId' class='form-control' type='hidden' value='" + postId + "'></input>"
-												+ "<button class='btn btn-warning ml-2' name='cancel' id='cancel" + postId + "'>Cancel</button></div>");
-						$("#cancel" + postId).click(function() {
-							$("#postContent" + postId).html(postContent);
-						})	
-
-					})
+function refreshReportNumber(postId, postStatus){
+	$("#report" + postId).text(postStatus)
 }
 
 function deleteContent(postId) {
-	$("#delete" + postId).click(function() {
-		if(confirm("真的要刪除此則留言嗎？")){
-						$.get("deleteContent", {postId : postId}, function(){
-							
-							})
-						}
-					})	
-
-				}
-
-
-
-function refreshCommentNumber(postId, commentCount) {
-	$("#commentCount" + postId).text(commentCount + "  Comments");
+	$("#delete" + postId).unbind().click(function() {
+		if (confirm("真的要刪除此則留言嗎？")) {
+			$.get("deleteContent", {
+				postId : postId
+			}, function() {
+				$(this).attr('disabled', true);
+				window.location.reload();
+			})
+		}
+	})
 
 }
+	
+function sortReportNumber(sort, page){
+		$.ajax({
+			url : requestUrl + "sortJson",
+			method : "GET",
+			dataType : "JSON",
+			data : {sort : sort},
+			async : false,
+			success : function(sortData) {
+				$("#discussTable").html("")
+				let tableArea = "";
+				data = sortData.sortList
+				let start = (page - 1) * 8;
+				let temp = data.length;
+				let end = (page * 8);
+				if(temp < end){
+					end = temp;
+				}
+				for (let i = start; i < end; i++) {
+					let post = data[i];
+					if (post.postStatus > 0) {
+						table_html = table.replace(/\{{post.memberId}}/g,
+								post.memberId).replace(/\{{post.postTime}}/g,
+								post.postTime).replace(/\{{post.postContent}}/g,
+								post.postContent).replace(/\{{post.postId}}/g,
+								post.postId)
 
+						tableArea += table_html;
+
+					}
+				}
+				$("#discussTable").append(tableArea);
+				$("#numberOfReport").text("共" + temp + "則被檢舉貼文")
+			}
+			
+			
+		})
+		checkNumbers()
+	}
+
+function bindsort0(pageNumNow) {
+	$("#sortReport").unbind();
+	$("#sortReport").click(function() {
+		sortReportNumber(1,pageNumNow)
+		$(this).attr("class","fa fa-angle-double-up ml-2");
+		bindsort1(pageNumNow)
+		$("#sortType").text(1)
+		pageBtn(1, pageNum)
+		pageBtnNext(1, pageNumNow, pageNum)
+	})
+}
+
+function bindsort1(pageNumNow) {
+	$("#sortReport").unbind();
+	$("#sortReport").click(function() {
+		sortReportNumber(0,pageNumNow)
+		$(this).attr("class","fa fa-angle-double-down ml-2");
+		bindsort0(pageNumNow)
+		$("#sortType").text(0)
+		pageBtn(0, pageNum)
+		pageBtnNext(0, pageNumNow, pageNum)
+	})
+}
+
+function bindsort2(pageNumNow) {
+	$("#sortTime").unbind();
+	$("#sortTime").click(function() {
+		sortReportNumber(3,pageNumNow)
+		$(this).attr("class","fa fa-angle-double-up ml-2");
+		bindsort3(pageNumNow)
+		$("#sortType").text(3)
+		pageBtn(3, pageNum)
+		pageBtnNext(3, pageNumNow, pageNum)
+	})
+}
+
+function bindsort3(pageNumNow) {
+	$("#sortTime").unbind();
+	$("#sortTime").click(function() {
+		sortReportNumber(2,pageNumNow)
+		$(this).attr("class","fa fa-angle-double-down ml-2");
+		bindsort2(pageNumNow)
+		$("#sortType").text(2)
+		pageBtn(2, pageNum)
+		pageBtnNext(2, pageNumNow, pageNum)
+	})
+}
+
+function search(){
+	$("#searchContent").change(function() {
+		let searchContent = $("#searchContent").val();
+		$(".content").each(function(){
+			var content = $(this).text();
+			var ignoreCaseContent = content.toLowerCase();
+			if(ignoreCaseContent.indexOf(searchContent) == -1){
+				$(this).hide();
+			}else{
+				$(this).show();
+			}
+		})
+	})
+}
+
+function pageBtn(sortType, pageNum){
+	for (let i = 1; i <= pageNum; i++) {
+		$("#page" + i).click(function(){
+			$("#searchContent").val("")
+			sortReportNumber(sortType,i)
+			$("#pageNumNow").text(i)
+			checkPageBtn()
+			pageBtnPrevious(sortType, i, pageNum)
+			pageBtnNext(sortType, i, pageNum)
+		})
+	}
+}
+
+function checkPageBtn(){
+	let checkPage = $("#pageNumNow").text();
+	$("#reportPage li").not("li:last-child").not("li:first-child").attr("class","page-item")
+	$("#page" + checkPage).parent().attr("class","page-item active")
+}
+
+function pageBtnNext(sortType, pageNumNow, pageNum){
+	if(pageNumNow < pageNum){
+		$("#Next").parent().attr("class","page-item");
+		$("#Next").unbind().click(function(){
+			var count = pageNumNow*1+1*1;
+			console.log("pageNum == " + count)
+			$("#pageNumNow").text(count)
+			sortReportNumber(sortType, count);
+			pageBtnPrevious(sortType, count, pageNum)
+			pageBtnNext(sortType, count, pageNum)
+		})
+	}else if(pageNumNow == pageNum){
+		$("#Next").parent().attr("class","page-item disabled");
+	}
+	checkPageBtn()
+}
+
+function pageBtnPrevious(sortType, pageNumNow, pageNum){
+	if(pageNumNow > 1){
+		$("#Previous").parent().attr("class","page-item");
+		$("#Previous").unbind().click(function(){
+			var count = pageNumNow*1-1*1;
+			console.log("pageNum == " + count)
+			$("#pageNumNow").text(count)
+			sortReportNumber(sortType, count);
+			pageBtnPrevious(sortType, count, pageNum)
+			pageBtnNext(sortType, count, pageNum)
+		})
+	}else if(pageNumNow == 1){
+		$("#Previous").parent().attr("class","page-item disabled");
+	}
+	checkPageBtn()
+}
+
+$(document).ready(function(){
+	pageNum = $("#pageNum").text();
+	pageNumNow = $("#pageNumNow").text();
+	sortType = $("#sortType").text();
+	sortReportNumber(sortType,pageNumNow)
+	checkNumbers();
+	bindsort0(pageNumNow);
+	bindsort2(pageNumNow);
+	search();
+	pageBtn(sortType, pageNum)
+	pageBtnNext(sortType, pageNumNow, pageNum)
+	$("#pageNumNow").change(function(){
+		pageBtnNext(sortType,$(this).val() , pageNum);
+		pageBtnPrevious(sortType, $(this).val(), pageNum)
+	})
+	$("#page1").parent().attr("class","page-item active")
+})

@@ -24,7 +24,7 @@
 	<!-- left menu -->
 	<nav class="navbar" id="sidebarbtn">
 		<button type="button" id="sidebarCollapse" class="btn btn-info btn-lg">
-			<h4><span>Friends</span></h4>
+			<h4><span>Chat</span></h4>
 		</button>
 	</nav>
 
@@ -85,13 +85,13 @@
 	<!--Chat Box-->
 	<div class="container">
 		<div class="row">
-			<div class="chatbox chatbox22 chatbox--tray rounded-top"
+			<div class="chatbox chatbox22 chatbox--closed rounded-top"
 				style="z-index: 9998">
 				<div class="chatbox__title">
 					<h5>
-						<a id="receiverMemberName" href="javascript:void()">Message</a>
+						<a id="receiverMemberName" href="javascript:void()"></a>
 					</h5>
-					<button class="chatbox__title__close"></button>
+					<button class="chatbox__title__close"><i class="fa fa-window-close fa-5" aria-hidden="true"></i></button>
 				</div>
 				<div class="chatbox__body">
 					<div class="messages" id="messages">
@@ -125,7 +125,7 @@
 							});
 							$chatbox.on('transitionend', function() {
 								if ($chatbox.hasClass('chatbox--closed'))
-									$chatbox.remove();
+									$chatbox.hide();
 							});
 
 							$('#dismiss , .overlay').on('click', function() {

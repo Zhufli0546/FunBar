@@ -49,8 +49,13 @@ public class ChatController {
 //	上線人數
 	@SubscribeMapping("/chat/participants")
 	public Long getActiveUserNumber() {
-		System.out.println("有執行到喔");
 		return Long.valueOf(participantRepository.getActiveSessions().values().size());
+	}
+	
+	@SubscribeMapping("/topic/notification")
+	public String getNotification(String notification) {
+		System.out.println("有執行到 Notification");
+		return notification;
 	}
 
 //	一對一聊天

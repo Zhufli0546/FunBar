@@ -1,12 +1,12 @@
 var friendshipListTable = "<tr><th scope='row'>"
 		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{member.id}}'></th>"
-		+ "<td>{{member.memberName}}</td>" 
+		+ "<td class='content'>{{member.memberName}}</td>" 
 		+ "<td>{{member.memberBirth}}</td>"
 		+ "<td>{{member.memberEmail}}</td></tr>"
 
 var receiverTable = "<tr id='list{{member.id}}'><th scope='row'>"
 		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{member.id}}'></th>"
-		+ "<td>{{member.memberName}}</td>"
+		+ "<td class='content'>{{member.memberName}}</td>"
 		+ "<td>{{member.memberBirth}}</td>"
 		+ "<td><button type='button' class='btn btn-info' id='confirmbtn{{member.id}}'>Confirm</button>"
 		+ "<button type='button' class='btn btn-danger ml-2' id='cancelbtn{{member.id}}'>Cancel</button></td></tr>"
@@ -101,7 +101,7 @@ $(document).ready(function() {
 										}
 								}
 							})
-
+							search()
 				})
 
 function confirmFriendRequest(loginMemberid, memberIdf) {
@@ -124,5 +124,20 @@ function cancelFriendRequest(memberIdf){
 		}, function() {
 		})
 		$("#list" + memberIdf).hide();
+	})
+}
+
+function search(){
+	$("#searchContent").change(function() {
+		let searchContent = $("#searchContent").val();
+		$(".content").each(function(){
+			var content = $(this).text();
+			var ignoreCaseContent = content.toLowerCase();
+			if(ignoreCaseContent.indexOf(searchContent) == -1){
+				$(this).parent().hide();
+			}else{
+				$(this).parent().show();
+			}
+		})
 	})
 }

@@ -38,7 +38,7 @@
 
 
 		
-	<section class="page animsition">
+	<section class="animsition" style="margin-top:120px">
 		
 
     <!-- Jumbotron Header -->
@@ -134,7 +134,7 @@ $('.slider').slick({
 	<script>
 
 function go() {
-	$('html,body').animate({scrollTop:400},2000);
+	$('html,body').animate({scrollTop:380},2000);
 	}
 </script>
 

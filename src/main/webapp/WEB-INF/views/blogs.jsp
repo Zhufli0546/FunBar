@@ -267,7 +267,7 @@ $(document).ready(function () {
 </script>
 <script src="<c:url value='/js/blog.js'/>"></script>
 
-<!-- Chat Box -->
-<jsp:include page="chatbox.jsp" />
+<%-- <!-- Chat Box -->
+<jsp:include page="chatbox.jsp" /> --%>
 </body>
 </html>

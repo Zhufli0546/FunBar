@@ -48,7 +48,7 @@
 	<jsp:include page="header.jsp" />
 	
 
-	<section class="page animsition" style="background-color:#3C3C3C;height:500px;">
+	<section class="animsition" style="background-color:#3C3C3C;height:500px;margin-top:120px">
 		<div class="calendar"
 			style="border: 1px solid #FF8F59; border-radius: 5px">
 

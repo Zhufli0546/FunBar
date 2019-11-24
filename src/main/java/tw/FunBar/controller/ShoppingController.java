@@ -51,32 +51,40 @@ public class ShoppingController {
 	@Autowired
 	ServletContext context;
 
+
 	//---------前台功能-------	
 	
 	@RequestMapping("/shoppingCart")
-	public String shoppingCart(Model model) {		
-		List<ProductBean> show = shoppingService.getAllProducts();
-		model.addAttribute("all", show);
+	public String shoppingCart(@RequestParam Integer index, Model model) {		
+//		List<ProductBean> show = shoppingService.getAllProducts();    //顯示所有商品
+//		model.addAttribute("all", show);	
+		List<ProductBean> products = shoppingService.getProductByPage(index);   //分頁
+		int count = shoppingService.getIndex();					
+		model.addAttribute("shoppingCart", products);
+		model.addAttribute("listCount", count);
 		return "shoppingCart";
 	}
+	
+	
 	
 	@RequestMapping(value= {"/product"})   //查看單筆商品資訊
 	public String getProduct(@RequestParam("id") Integer productId, Model model) 
 							throws SerialException, SQLException, IOException {
 		model.addAttribute("pb", orderService.getProductById(productId));
-		return "product";
-		
+		return "product";		
 	}
 		
 //	*RequestMapping請求不能有多個相同路徑
-	
 //	依分類查詢商品(點擊分類連結進入分類商品頁面）
 	@RequestMapping("/shoppingCart/{category}")
-	public String getProductByCategory(@PathVariable("category")String category, Model model ) {
-			
-		List <ProductBean> products = shoppingService.getProductByCategory(category);
-		model.addAttribute("category", products);
-		 return "showProductByCategory";		
+	public String getProductByCategory(@PathVariable("category")String category,@RequestParam Integer index, Model model ) {	
+		List <ProductBean> products = shoppingService.getProductByCategory(category,index);	
+		int count = shoppingService.getCategoryIndex(category);	  //分頁
+		 
+		model.addAttribute("shoppingCart", products);
+		model.addAttribute("listCount", count);			
+		return "showProductByCategory";		
+		 
 	}
 	
 	//取得所有分類
@@ -91,21 +99,26 @@ public class ShoppingController {
 		
 	//後臺顯示所有商品
 	@RequestMapping("/showAllProduct")
-	public String showAllProduct(HttpSession session,HttpServletRequest request,HttpServletResponse response,Model model) {
+	public String showAllProduct(HttpSession session,HttpServletRequest request,HttpServletResponse response, Integer index,Model model) {
 		session = request.getSession(false);
 		Member member = (Member)session.getAttribute("member");
 		if(member==null) return "redirect:/signin";
 			
-		List<ProductBean> show = shoppingService.getAllProducts1();
-		model.addAttribute("all", show);
+		List<ProductBean> products = shoppingService.getAllProducts1(index);
+		int count = shoppingService.getProdIndex1();
+		
+		model.addAttribute("showAllProduct", products);
+		model.addAttribute("listCount", count);		
 		return "showAllProduct";
 	}
 	
-	//下架單筆資料
+	
+	
+		//下架單筆資料
 		@RequestMapping("/pullProduct")
 		public String pullProduct(@RequestParam("id") Integer productId, Model model) {
 			orderService.pullProduct(productId);
-			return "redirect:/showAllProduct" ;
+			return "redirect:/showAllProduct?index=1" ;
 		}
 		
 	
@@ -113,7 +126,7 @@ public class ShoppingController {
 		@RequestMapping("/pushProduct")
 		public String pushProduct(@RequestParam("id") Integer productId, Model model) {
 			orderService.pushProduct(productId);
-			return "redirect:/showAllProduct";
+			return "redirect:/showAllProduct?index=1";
 		}
 
 		
@@ -150,7 +163,7 @@ public class ShoppingController {
 			ProductBean product = orderService.getProductById(productId);		
 			orderService.updateProduct(productId,productNo,product.getProductImage(),productDetail, productName,category, discount, stock);
 		}												
-		return "redirect:/showAllProduct";	
+		return "redirect:/showAllProduct?index=1";	
 	}
 	
 		
@@ -210,7 +223,7 @@ public class ShoppingController {
 			throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
 		}
 
-		return "redirect:/showAllProduct";
+		return "redirect:/showAllProduct?index=1";
 	}
 	
 	@RequestMapping(value = "/ProductPicture/{productId}", method = RequestMethod.GET)

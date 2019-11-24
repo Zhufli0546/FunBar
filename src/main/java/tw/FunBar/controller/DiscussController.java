@@ -31,6 +31,8 @@ public class DiscussController {
 	@Autowired
 	MemberService memberService;
 
+	private Integer contentNum = 6;
+
 	@RequestMapping(value = "/discuss", method = RequestMethod.GET)
 	public String discuss(Model model, HttpServletRequest request, HttpSession session) {
 		session = request.getSession(false);
@@ -58,9 +60,8 @@ public class DiscussController {
 	}
 
 	@RequestMapping(value = "replyComment", method = RequestMethod.POST)
-	public String replyComment(@RequestParam String postContent, 
-							   @RequestParam Integer parentPostId,
-							   @RequestParam Integer memberId) {
+	public String replyComment(@RequestParam String postContent, @RequestParam Integer parentPostId,
+			@RequestParam Integer memberId) {
 		Post parentPost = service.findByIdPost(parentPostId);
 		Post post = new Post();
 		post.setPostContent(postContent);
@@ -76,6 +77,18 @@ public class DiscussController {
 		post.setPostContent(postContent);
 		post.setPostId(postId);
 		service.updatePostContent(post);
+		return "redirect:/discuss";
+	}
+
+	@RequestMapping(value = "reportContent", method = RequestMethod.GET)
+	public String reportContent(@RequestParam Integer postId) {
+		Post temp = service.getPostById(postId);
+		Integer status = temp.getPostStatus();
+		Post post = new Post();
+		post.setPostId(postId);
+		status++;
+		post.setPostStatus(status);
+		service.reportPostContent(post);
 		return "redirect:/discuss";
 	}
 
@@ -124,7 +137,13 @@ public class DiscussController {
 
 	@RequestMapping(value = "/admin_discuss", method = RequestMethod.GET)
 	public String admin_discuss(Model model) {
-		model.addAttribute("title", "討論區");
+		List<Post> sortList = service.getReportSort(0);
+		Integer count = sortList.size();
+		Integer countPage = (int) (Math.ceil(count / contentNum));
+		if(count % contentNum > 0) {
+			countPage++;
+		}
+		model.addAttribute("page", countPage);
 		return "admin_discuss";
 	}
 
@@ -133,6 +152,14 @@ public class DiscussController {
 		List<Member> member = service.searchMember(memberName);
 		model.addAttribute("member", member);
 		return "memberJson";
+	}
+
+	@RequestMapping(value = "/allMemberJson", produces = "application/json")
+	public String allMemberJson(Model model) {
+		List<Member> member = memberService.getAllmembers();
+		System.out.println("member ==" + member);
+		model.addAttribute("allMember", member);
+		return "allMemberJson";
 	}
 
 	@GetMapping(value = "sendFriendRequest")
@@ -163,6 +190,12 @@ public class DiscussController {
 	public void friendJson(Model model) {
 		List<Friendship> friendList = service.getAllFriendRequest();
 		model.addAttribute("friend", friendList);
+	}
+
+	@GetMapping(value = "sortJson", produces = "application/json")
+	public void sortReport(@RequestParam(value = "sort") Integer sort, Model model) {
+		List<Post> sortList = service.getReportSort(sort);
+		model.addAttribute("sortList", sortList);
 	}
 
 }

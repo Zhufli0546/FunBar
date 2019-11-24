@@ -13,10 +13,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import net.bytebuddy.asm.Advice.ArgumentHandler.Factory;
 import tw.FunBar.dao.OrderHandleDAO;
 import tw.FunBar.model.OrderBean;
 import tw.FunBar.model.OrderItemBean;
 import tw.FunBar.model.ProductBean;
+import tw.FunBar.model.RoomOrder;
 
 @Repository
 public class OrderHandleDAOImpl implements OrderHandleDAO {
@@ -175,5 +178,37 @@ public class OrderHandleDAOImpl implements OrderHandleDAO {
 
 		return orders;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<OrderBean> getLatestOrders() {
+		String hql = "From OrderBean Order by orderId DESC";
+		Session session = null;
+		session = sessionFactory.getCurrentSession();
+		List <OrderBean> list = new ArrayList<>();
+		list = session.createQuery(hql).setFirstResult(0).setMaxResults(3).getResultList();
+			
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public int getProductTotalIncome() {
+		String hql = "From OrderBean";
+		Session session = null;
+		session = sessionFactory.getCurrentSession();
+		List <OrderBean> list = new ArrayList<>();
+		list = session.createQuery(hql).getResultList();
+		
+		int income = 0 ;
+		for(OrderBean ob : list) {
+			
+			income += ob.getTotalAmount();
+		}
+		return income;
+	}
+
+		
+		
 
 }
