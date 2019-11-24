@@ -33,7 +33,7 @@ public interface OrderHandleService {
 
 	public ArrayList<OrderBean> getAllOrders(HttpServletRequest req);
 	
-	public List <OrderBean> getLatestOrders();
+	public List <ProductBean> getLessStockProduct();
 	
 	int getProductTotalIncome();
 

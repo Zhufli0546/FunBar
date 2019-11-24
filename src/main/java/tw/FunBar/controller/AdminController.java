@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import tw.FunBar.model.OrderBean;
+import tw.FunBar.model.ProductBean;
 import tw.FunBar.model.RoomOrder;
 import tw.FunBar.service.BookingService;
 import tw.FunBar.service.OrderHandleService;
@@ -40,10 +41,10 @@ public class AdminController {
 		
 		model.addAttribute("arrival",arrival);
 
-		List<OrderBean> list = orderService.getLatestOrders();
+		List<ProductBean> list = orderService.getLessStockProduct();
 		int productTotalIncome = orderService.getProductTotalIncome();
 		
-		model.addAttribute("ob", list);
+		model.addAttribute("pb", list);
 		model.addAttribute("productTotalIncome", productTotalIncome);
 		
 
