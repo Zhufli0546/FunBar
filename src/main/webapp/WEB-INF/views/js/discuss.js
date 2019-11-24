@@ -4,22 +4,23 @@ var newPost = "<div class='card-header'>Create Post</div>"
 		+ "<div class='media p-4 bg-light'>" 
 		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{sessionScope.member.id}}'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0'>"
-		+ "<a href='#' class='text-primary'><h5>{{sessionScope.member.memberName}}</h5></a>"
+//		+ "<a href='#' class='text-primary'><h5>{{sessionScope.member.memberName}}</h5></a>"
 		+ "<form method='post' action='createPost'>"
-		+ "<textarea id='postContent' name='postContent' class='form-control mt-1' placeholder='What is on your mind ?'></textarea>"
+		+ "<textarea id='postContent' name='postContent' class='form-control mt-1' placeholder='What is on your mind, {{sessionScope.member.memberName}} ?'></textarea>"
 		+ "<input id='memberId' name='memberId' class='form-control' type='hidden' value='{{sessionScope.member.id}}'></input>"
 		+ "<div class='text-right'><button class='btn btn-info lg mt-3' type='submit' name='submitPost'>POST</button></div>"
 		+ "</form></div></div>";
 
-var firstLevelComment = "<div class='card' id='firstComment{{post.memberId}}' style='display:none;'>"
+var firstLevelComment = "<div class='card firstComment{{post.memberId}}' style='display:none;'>"
 		+ "<div class='media p-4 bg-light'>" 
 		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{post.memberId}}'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0' id='firstCommentBody{{post.postId}}'>"
-		+ "<a href='' class='text-primary'><h5>{{sessionScope.member.memberName}}</h5></a>"
+		+ "<a href='' class='text-primary'><h5 class='memberName{{post.memberId}}'></h5></a>"
 		+ "<div class='media-date'>{{post.postTime}}"
 		+ "<button type='button' id='drop{{post.postId}}' class='btn-sm ml-2 btn-secondary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true'></button>"
 		+ "<div class='dropdown-menu'><a class='dropdown-item' id='edit{{post.postId}}' href='#edit{{post.postId}}'>Edit</a>"
 		+ "<a class='dropdown-item' id='delete{{post.postId}}' href='#delete{{post.postId}}'>Delete</a>"
+		+ "<a class='dropdown-item' id='report{{post.postId}}' href='#report{{post.postId}}'>Report</a>"
 		+ "</div></div>"
 		+ "<form method='post' action='updateContent'>"
 		+ "<blockquote class='blockquote mb-5'><div id='postContent{{post.postId}}' class='font-weight-bold mt-2 mr-4 post-description'>{{post.postContent}}</div></blockquote>"
@@ -48,11 +49,12 @@ var secondLevelComment = "<div class='card mt-3' id='secondComment'>"
 		+ "<div class='media p-4 bg-light'>" 
 		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{post.memberId}}'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0'id='secondCommentBody{{post.postId}}' >"
-		+ "<a href='' class='text-primary'><h5>{{sessionScope.member.memberName}}</h5></a>"
+		+ "<a href='' class='text-primary'><h5 class='memberName{{post.memberId}}'></h5></a>"
 		+ "<div class='media-date'>{{post.postTime}}"
 		+ "<button type='button' id='drop{{post.postId}}' class='btn-sm ml-2 btn-secondary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></button>"
 		+ "<div class='dropdown-menu'><a class='dropdown-item' id='edit{{post.postId}}' href='#edit{{post.postId}}'>Edit</a>"
 		+ "<a class='dropdown-item' id='delete{{post.postId}}' href='#delete{{post.postId}}'>Delete</a>"
+		+ "<a class='dropdown-item' id='report{{post.postId}}' href='#report{{post.postId}}'>Report</a>"
 		+ "</div></div>"
 		+ "<form method='post' action='updateContent'>"
 		+ "<blockquote class='blockquote mb-5'><div id='postContent{{post.postId}}' class='font-weight-bold mt-2 post-description'>{{post.postContent}}</div></blockquote>"
@@ -78,10 +80,11 @@ var thirdLevelComment = "<div class='card mt-3 ml-5' id='thirdComment'>"
 		+ "<div class='media p-4 bg-light'>"
 		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{post.memberId}}'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0'>"
-		+ "<a href='' class='text-primary'><h5>{{sessionScope.member.memberName}}</h5></a>"
+		+ "<a href='' class='text-primary'><h5 class='memberName{{post.memberId}}'></h5></a>"
 		+ "<div class='media-date'>{{post.postTime}}<button type='button' id='drop{{post.postId}}' class='btn-sm ml-2 btn-secondary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></button>"
 		+ "<div class='dropdown-menu'><a class='dropdown-item' id='edit{{post.postId}}' href='#edit{{post.postId}}'>Edit</a>"
 		+ "<a class='dropdown-item' id='delete{{post.postId}}' href='#delete{{post.postId}}'>Delete</a>"
+		+ "<a class='dropdown-item' id='report{{post.postId}}' href='#report{{post.postId}}'>Report</a>"
 		+ "</div></div> "
 		+ "<form method='post' action='updateContent'>"
 		+ "<blockquote class='blockquote mb-5'><div id='postContent{{post.postId}}' class='font-weight-bold mt-2 post-description'>{{post.postContent}}</div></blockquote>"
@@ -126,7 +129,6 @@ $.ajax({
 			let post = data[i];
 
 			if (post.parentPostId == null && post.postStatus == 0) {
-
 				firstLevelComment_html = firstLevelComment
 									.replace(/\{{post.memberId}}/g, post.memberId)
 									.replace(/\{{post.postTime}}/g, post.postTime)
@@ -138,19 +140,17 @@ $.ajax({
 
 				$("#firstLevelComment").append(firstLevelComment_html);
 
-				
-				
 				if(loginMemberid == post.memberId){
-					$("#firstComment" + loginMemberid).show();
+					$(".firstComment" + loginMemberid).show();
 				}
 				
-				if (post.replyPost.length > 0) {
+				if (post.replyPost.length > 0 ) {
 					let second = "";
 					let commentPostId = "";
 
 					for (let j = 0; j < post.replyPost.length; j++) {
 						let comment = post.replyPost[j];
-
+					
 						secondLevelComment_html = secondLevelComment
 								.replace(/\{{post.parentPostId}}/g, comment.parentPostId)
 								.replace(/\{{post.memberId}}/g, comment.memberId)
@@ -160,34 +160,36 @@ $.ajax({
 								.replace(/\{{sessionScope.member.memberName}}/g,loginMemberName)
 								.replace(/\{{sessionScope.member.id}}/g, loginMemberid)
 								.replace(/\{{requestUrl}}/g, requestUrl)
+								
+								second += secondLevelComment_html;
 
-						if (comment.replyPost.length > 0) {
-							let third = "";
-							for (let k = 0; k < comment.replyPost.length; k++) {
-								let thirdComment = comment.replyPost[k];
+//						if (comment.replyPost.length > 0) {
+//							let third = "";
+//							for (let k = 0; k < comment.replyPost.length; k++) {
+//								let thirdComment = comment.replyPost[k];
+//
+//								thirdLevelComment_html = thirdLevelComment
+//										.replace(/\{{post.parentPostId}}/g, thirdComment.parentPostId)
+//										.replace(/\{{post.memberId}}/g, thirdComment.memberId)
+//										.replace(/\{{post.postTime}}/g, thirdComment.postTime)
+//										.replace(/\{{post.postContent}}/g, thirdComment.postContent)
+//										.replace(/\{{post.postId}}/g, thirdComment.postId)
+//										.replace(/\{{sessionScope.member.memberName}}/g,loginMemberName)
+//										.replace(/\{{sessionScope.member.id}}/g, loginMemberid)
+//										.replace(/\{{requestUrl}}/g, requestUrl)
+//
+//								third += thirdLevelComment_html;
+//
+//							}
+//
+//							thirdLevel_html = level.replace(/\{{post.postId}}/g, comment.postId)
+//							thirdLevel_html = thirdLevel_html + third;
+//
+//							commentPostId = comment.postId;
+//
+//						}
 
-								thirdLevelComment_html = thirdLevelComment
-										.replace(/\{{post.parentPostId}}/g, thirdComment.parentPostId)
-										.replace(/\{{post.memberId}}/g, thirdComment.memberId)
-										.replace(/\{{post.postTime}}/g, thirdComment.postTime)
-										.replace(/\{{post.postContent}}/g, thirdComment.postContent)
-										.replace(/\{{post.postId}}/g, thirdComment.postId)
-										.replace(/\{{sessionScope.member.memberName}}/g,loginMemberName)
-										.replace(/\{{sessionScope.member.id}}/g, loginMemberid)
-										.replace(/\{{requestUrl}}/g, requestUrl)
-
-								third += thirdLevelComment_html;
-
-							}
-
-							thirdLevel_html = level.replace(/\{{post.postId}}/g, comment.postId)
-							thirdLevel_html = thirdLevel_html + third;
-
-							commentPostId = comment.postId;
-
-						}
-
-						second += secondLevelComment_html;
+						
 
 					}
 
@@ -195,7 +197,7 @@ $.ajax({
 					secondLevel_html = secondLevel_html + second;
 
 					$("#firstCommentBody" + post.postId).append(secondLevel_html);
-					$("#secondCommentBody" + commentPostId).append(thirdLevel_html);
+//					$("#secondCommentBody" + commentPostId).append(thirdLevel_html);
 
 				}
 			}
@@ -204,6 +206,60 @@ $.ajax({
 		
 	}
 })
+}
+
+function thirdLevel(){
+	$.ajax({
+		url : requestUrl + "discussJson",
+		method : "POST",
+		dataType : "JSON",
+		async : false,
+		success : function(postData) {
+			data = postData.Post
+
+			for (let i = 0; i < data.length; i++) {
+				let post = data[i];
+
+				if (post.parentPostId == null && post.postStatus == 0) {
+					if (post.replyPost.length > 0) {
+						let second = "";
+						let commentPostId = "";
+
+						for (let j = 0; j < post.replyPost.length; j++) {
+							let comment = post.replyPost[j];
+							
+							if (comment.replyPost.length > 0) {
+								let third = "";
+								for (let k = 0; k < comment.replyPost.length; k++) {
+									let thirdComment = comment.replyPost[k];
+									
+									
+									thirdLevelComment_html = thirdLevelComment
+									.replace(/\{{post.parentPostId}}/g, thirdComment.parentPostId)
+									.replace(/\{{post.memberId}}/g, thirdComment.memberId)
+									.replace(/\{{post.postTime}}/g, thirdComment.postTime)
+									.replace(/\{{post.postContent}}/g, thirdComment.postContent)
+									.replace(/\{{post.postId}}/g, thirdComment.postId)
+									.replace(/\{{sessionScope.member.memberName}}/g,loginMemberName)
+									.replace(/\{{sessionScope.member.id}}/g, loginMemberid)
+									.replace(/\{{requestUrl}}/g, requestUrl)
+
+										third += thirdLevelComment_html;
+									
+								}
+								thirdLevel_html = level.replace(/\{{post.postId}}/g, comment.postId)
+								thirdLevel_html = thirdLevel_html + third;
+
+								commentPostId = comment.postId;
+								
+								$("#secondCommentBody" + commentPostId).append(thirdLevel_html);
+							}
+						}
+					}
+				}
+			}
+		}
+	})
 }
 
 function checkAllBtn(){
@@ -221,26 +277,7 @@ function checkAllBtn(){
 				editContent(post.postId, post.postContent)
 				deleteContent(post.postId)
 				checkDropBtn(post.postId, loginMemberid, post.memberId)
-				
-				for (let j = 0; j < post.replyPost.length; j++) {
-				let comment = post.replyPost[j];
-
-				checkLikeBtn(comment.postId)
-				refreshCommentNumber(comment.postId, comment.replyPost.length)
-				editContent(comment.postId, comment.postContent)
-				deleteContent(comment.postId)
-				checkDropBtn(comment.postId, loginMemberid, comment.memberId)
-					
-					for (let k = 0; k < comment.replyPost.length; k++) {
-					let thirdComment = comment.replyPost[k];
-
-					checkLikeBtn(thirdComment.postId)
-					editContent(thirdComment.postId, thirdComment.postContent)
-					deleteContent(thirdComment.postId)
-					checkDropBtn(thirdComment.postId, loginMemberid, thirdComment.memberId)
-
-					}
-				}
+				reportContent(post.postId)
 				
 			}
 		}
@@ -253,14 +290,30 @@ $.ajax({
 		url : requestUrl + "friendJson",
 		method : "POST",
 		dataType : "JSON",
+		async : false,
 		success : function(friendData) {
-			console.log("===================================")
 			fdata = friendData.friend
 			for (let i = 0; i < fdata.length; i++) {
 				let friend = fdata[i];
 				if(friend.sender_memberId == loginMemberid && friend.friendStatus == 2){
-					$("#firstComment" + friend.receiver_memberId).show();
+					$(".firstComment" + friend.receiver_memberId).show();
 				}
+			}
+		}
+	})
+}
+
+function getAllMemberName(){
+	$.ajax({
+		url : requestUrl + "allMemberJson",
+		method : "POST",
+		dataType : "JSON",
+		async : false,
+		success : function(allMemberData) {
+			var allMember = allMemberData.allMember
+			for (let i = 0; i < allMember.length; i++) {
+				let member = allMember[i];
+				$(".memberName" + member.id).text(member.memberName);
 			}
 		}
 	})
@@ -281,7 +334,7 @@ function addLike(postId, memberId) {
 		$.ajax({
 			url : requestUrl + "addLike",
 			data : {postId : postId, memberId : memberId},
-			async:false,
+			async : false,
 			success : function() {
 			}
 		})
@@ -342,7 +395,7 @@ function checkLikeBtn(postId){
 
 
 function editContent(postId, postContent) {
-	$("#edit" + postId).click(function() {
+	$("#edit" + postId).unbind().click(function() {
 						$("#postContent" + postId).html("<textarea id='postContent' name='postContent' class='form-control mt-3'>"
 												+ postContent
 												+ "</textarea>"
@@ -362,13 +415,28 @@ function editContent(postId, postContent) {
 
 function checkDropBtn(postId, loginMemberid, memberId){
 	if(loginMemberid != memberId){
-		$("#drop"+postId).hide();
+		$("#delete" + postId).hide();
+		$("#edit" + postId).hide();
+	}else if(loginMemberid == memberId){
+		$("#report" + postId).hide();
 	}
 	
 }
 
+function reportContent(postId) {
+	$("#report" + postId).unbind().click(function() {
+		if (confirm("真的要檢舉此則留言為不當留言嗎？")) {
+			$.get("reportContent", {
+				postId : postId
+			}, function() {
+				$(this).attr('disabled', true);
+			})	
+		}
+	})
+}
+
 function deleteContent(postId) {
-	$("#delete" + postId).click(function() {
+	$("#delete" + postId).unbind().click(function() {
 		if (confirm("真的要刪除此則留言嗎？")) {
 			$.get("deleteContent", {
 				postId : postId
@@ -386,8 +454,9 @@ function refreshCommentNumber(postId, commentCount) {
 }
 
 
-var memberList = "<div class='list-group-item d-flex justify-content-between align-items-center'>{{member.memberName}}"
-				+ "<button class='badge badge-primary badge-pill btn btn-primary btn-sm' id='friendRequest{{member.memberId}}'>" 
+var memberList = "<div class='list-group-item d-flex justify-content-between align-items-center'>"
+				+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{member.memberId}}'>"
+				+ "{{member.memberName}}<button class='badge badge-primary badge-pill btn btn-primary btn-sm' id='friendRequest{{member.memberId}}'>" 
 				+ "{{friendStatus}}</button></div>";
 
 
@@ -396,6 +465,8 @@ $(document).ready(function(){
 	fdata = getFriendShip();
 	refreshAllPost();
 	showFriendsPost();
+	thirdLevel();
+	getAllMemberName();
 	checkAllBtn();
 	$("#searchMember").click(function(){
 $.ajax({
@@ -416,6 +487,7 @@ $.ajax({
 									memberList_html = memberList.replace(/\{{member.memberName}}/g, member.memberName)
 																.replace(/\{{member.memberId}}/g, member.id)
 																.replace(/\{{friendStatus}}/g, "Add Friend")
+																.replace(/\{{requestUrl}}/g, requestUrl)
 																
 									memberListAll += memberList_html
 						}
@@ -507,4 +579,14 @@ function getFriendShip(){
 	})
 	return fdata;
 }
+
+
+
+
+
+
+
+
+//test
+
 

@@ -24,7 +24,7 @@
 		<h2>新增活動資料</h2>
 		<hr>
 
-		<form:form modelAttribute="activity" action='activities' method='POST'
+		<form:form modelAttribute="activity" method='POST'
 			enctype="multipart/form-data">
 
 			<div class="form-group">
@@ -68,10 +68,10 @@
 			<div class="form-group">
 				<p>活動分類</p>
 				<form:select path="category">
-					<form:option value="其他活動">請選擇分類</form:option>
+					<form:option value="品味生活">請選擇分類</form:option>
 					<form:option value="放肆朵頤"></form:option>
 					<form:option value="藝見自己"></form:option>
-					<form:option value="品味生活"></form:option>
+					<form:option value="戶外出走"></form:option>
 					<form:option value="找點樂子"></form:option>
 				</form:select>
 			</div>

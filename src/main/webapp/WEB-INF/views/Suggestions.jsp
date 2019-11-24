@@ -33,19 +33,22 @@
     <h2>--活動名稱--</h2><br>
     <h2 style="color:rgba(58, 26, 11, 0.877)">${eventName}</h2><br>
     <hr>
-    
-    <table class="table table-dark table-striped">
-      <thead>
+      <a href="${pageContext.request.contextPath}/activityQuery?index=1">
+    <button type="button" class="btn btn-outline-secondary">活動管理</button></a>
+  <a href="${pageContext.request.contextPath}/allSuggestion">
+    <button  type="button" class="btn btn-outline-secondary">返回</button></a><br><br>
+    <table class="table table-striped">
+      <thead class="thead-dark">
         <tr>
-          <th>使用者ID</th>
-          <th>姓名</th>
-          <th>E-mail</th>
+          <th style="width:100px">使用者ID</th>
+          <th style="width:120px">姓名</th>
+          <th style="width:250px">E-mail</th>
           <th>意見內容</th>
         </tr>
       </thead>
       <c:forEach var='su' varStatus='status' items='${su}'>
         <tbody>
-          <tr>
+          <tr class="table-light">
             <td class="tb">${su.memberId}</td>
             <td class="tb">${su.memberName}</td>
             <td class="tb">${su.memberEmail}</td>
@@ -54,7 +57,10 @@
         </tbody>
       </c:forEach>
     </table>
+ 
+
   </div>
+  
 
 
   <jsp:include page="admin_footer.jsp" />

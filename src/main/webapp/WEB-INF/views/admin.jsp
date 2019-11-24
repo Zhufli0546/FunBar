@@ -54,17 +54,17 @@
          <div class="n2">
             <!-- panel left -->
                 <div class="panel right">
-                <h2>Latest Orders</h2>
+                <h2>The Less Stock Products</h2>
                 <div class="list">
                 <c:forEach var="pb" items="${pb}">
                     <div class="item">
                         <div class="pic">
        
-                            <img width="100" height="120"  src="<c:url value='/ProductPicture/${pb.productId}'/>" />
+                            <img width="200" height="100%"  src="<c:url value='/ProductPicture/${pb.productId}'/>" />
      </div>
                         <div class="info">
                             <h3>${pb.productName}</h3>
-                            <span><i class="fas fa-money-bill-wave" style="font-size:12px"></i>${pb.unitPrice}</span>             
+                            <span><i class="fas fa-dollar-sign" style="font-size:12px"></i>${pb.unitPrice}</span>             
                         </div>
                         <div class="total">
                             <p>Stock:</p><b>${pb.stock}</b>
@@ -136,13 +136,13 @@ google.charts.setOnLoadCallback(drawChart);
 
 function drawChart() {
     var data = google.visualization.arrayToDataTable([
-        ['Month', '活動數', '參與數'],
-        ['六月', 3, 0],
-        ['七月', 6, 0],
-        ['八月', 3, 0],
-        ['九月', 6, 0],
-        ['十月', 3, 0],
-        ['十一月', 6,0]
+        ['Month', '活動數', '平均參與人數'],
+        ['六月', 5, 22],
+        ['七月', 4, 32],
+        ['八月', 3, 26],
+        ['九月', 4, 21],
+        ['十月', 6, 19],
+        ['十一月', 6,29]
     ]);
 
     var options = {

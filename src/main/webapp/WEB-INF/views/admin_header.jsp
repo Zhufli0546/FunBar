@@ -99,7 +99,7 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">######</h6>
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/activityQuery">活動管理</a> 
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/activityQuery?index=1">活動管理</a> 
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/addActivity">新增活動</a>
 				</div></li>
 				

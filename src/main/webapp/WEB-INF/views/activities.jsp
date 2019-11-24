@@ -8,6 +8,18 @@
 
 <head>
 	<meta charset="UTF-8">
+	<style>
+	@media (min-width: 992px) {
+  .pricing .card:hover {
+    margin-top: -.25rem;
+    margin-bottom: .25rem;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+  }
+  .pricing .card:hover .btn {
+    opacity: 1;
+  }
+}	
+	</style>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script>
     $(function () {
@@ -51,14 +63,13 @@
 						class="list-group-item">我報名的活動</a>
 						</c:otherwise>
 					</c:choose>
-					
-					
 
 				</div>
 			</div>
 		</div>
-
-		<section>
+		
+		
+		<section class="pricing">
 			<div class="row">
 			<c:if test="${!empty activities}">
 				<c:forEach var="activity" items="${activities}" begin="0" step="1" varStatus="i">

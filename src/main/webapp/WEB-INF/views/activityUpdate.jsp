@@ -83,7 +83,7 @@
 
 	<hr>
     <form:button type="submit" class="btn btn-outline-secondary">修改</form:button>
-    <a href="${pageContext.request.contextPath}/activityQuery">
+    <a href="${pageContext.request.contextPath}/activityQuery?index=1">
     <button type="button" class="btn btn-outline-secondary">取消</button></a>
     </form:form>
         

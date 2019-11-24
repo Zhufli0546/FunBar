@@ -71,7 +71,7 @@
                 <button type="button" class="btn btn-outline-secondary">查看活動建議</button></a>
                 
      <a onclick="noemail()" href="<spring:url value='/getTimeAndSend' />">
-    <button  type="button" class="btn btn-outline-secondary">發送通知email</button></a>
+    <button type="button" class="btn btn-outline-secondary">發送通知email</button></a>
                 <hr>
     <table class="table table-dark table-hover">
       <thead>
@@ -85,7 +85,7 @@
           <th>編輯</th>
         </tr>
       </thead>
-      <c:forEach var='activity' varStatus='vs' items='${activities}'>
+      <c:forEach begin="0" step="1" var='activity' varStatus='i' items='${activities}'>
         <tbody>
           <tr>
             <td class="tb"><img class="card-img-top" src="<c:url value='/ActivitygetPicture/${activity.activityId }'/>">
@@ -97,17 +97,26 @@
             <td class="tb">${activity.information} </td>
             <td style="width:300px">
               <a href="<spring:url value='activityUpdate?id=${activity.activityId}' />">
-                <button type="button" class="btn btn-outline-secondary">修改</button></a>
+                <button type="button" class="btn btn-dark btn-outline-secondary">修改</button></a>
               <a href="<spring:url value='/deleteActivity?id=${activity.activityId}' />">
-                <button type="button" class="btn btn-outline-secondary">刪除</button></a>
+                <button type="button" class="btn btn-dark btn-outline-secondary">刪除</button></a>
               <a href="<spring:url value='/getActivities?activityId=${activity.activityId}' />">
-                <button type="button" class="btn btn-outline-secondary">查詢報名名單</button></a>
+                <button type="button" class="btn btn-light btn-outline-secondary">查詢報名名單</button></a>
             </td>
 			
           </tr>
         </tbody>
       </c:forEach>
     </table>
+    
+    	<ul class="pagination justify-content-center">
+			
+			<c:forEach begin="1" step="1" end="${listCount}" varStatus="i">
+			<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/activityQuery?index=${i.index}">${i.index}</a></li>
+			</c:forEach>
+			
+		</ul>
+    
   </div>
 
 <input type="hidden" id="noactivity" value="${sessionScope.activity}">

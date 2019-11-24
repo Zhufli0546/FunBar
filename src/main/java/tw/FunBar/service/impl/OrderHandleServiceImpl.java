@@ -95,8 +95,8 @@ public ArrayList<OrderBean> getAllOrders(HttpServletRequest req) {
 
 @Transactional
 @Override
-public List<OrderBean> getLatestOrders() {
-	return dao.getLatestOrders();
+public List<ProductBean> getLessStockProduct() {
+	return dao.getLessStockProduct();
 }
 
 @Transactional

@@ -61,7 +61,7 @@ public class ApplicantDaoImpl implements ApplicantDao {
 
 	// 查詢已報名活動
 	@Override
-	public Set<Activity> QuerySignActivity(String memberId) {
+	public List<Activity> QuerySignActivity(String memberId) {
 		String hql = "From Applicant where memberId = :memberId";
 		Session session = factory.getCurrentSession();
 		List<Applicant> al = (List<Applicant>) session.createQuery(hql).setParameter("memberId", memberId)
@@ -78,9 +78,9 @@ public class ApplicantDaoImpl implements ApplicantDao {
 			ams.add(am);
 		}
 
-		Set<Activity> acs = new HashSet<>();
+		List<Activity> acs = new ArrayList<>();
 		for (ActivityMap ap : ams) {
-			String hql3 = "From Activity where activityId=:activityId";
+			String hql3 = "From Activity where activityId=:activityId order by eventDate desc";
 
 			Activity ac = (Activity) session.createQuery(hql3).setParameter("activityId", ap.getActivityId())
 					.getSingleResult();
@@ -168,8 +168,9 @@ public class ApplicantDaoImpl implements ApplicantDao {
 		return su;
 	}
 	
+	@Override
 	public List<Suggestion> getSuggestionByEventName(String eventName){
-		String hql = "FROM Suggestion WHERE eventName = :eventName";
+		String hql = "FROM Suggestion WHERE eventName = :eventName order by suggestionCreateTime desc";
 		List<Suggestion> su = new ArrayList<>();
 		Session session = factory.getCurrentSession();
 		su = session.createQuery(hql).setParameter("eventName", eventName).getResultList();
