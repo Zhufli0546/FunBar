@@ -73,9 +73,8 @@
                         </c:forEach>
                     </div>
                 </div>
-        </div> 
-            <!-- panel right -->
-            <div class="panel right">
+                
+                            <div class="panel right">
                 <h2>Latest Orders</h2>
                 <div class="list">
                 <c:forEach var="o" items="${orders}">
@@ -124,6 +123,9 @@
 <!--                     </div> -->
                 </div>
         </div>   
+        </div> 
+            <!-- panel right -->
+
  </content>
 </div>
 
