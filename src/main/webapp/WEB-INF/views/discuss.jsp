@@ -15,7 +15,7 @@
 	<!-- Header -->
 	<jsp:include page="header.jsp" />
 	<!-- Member detail block -->
-	<div class="col-md-2 fixed-top" style="margin: 270px 120px; width: 200px">
+	<div class="col-md-2 fixed-top" style="margin: 150px 120px; width: 200px">
 		<div class="list-group">
 			<div class="list-group-item list-group-item-action">
 				<img class="card-img-top rounded-circle"

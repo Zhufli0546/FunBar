@@ -11,7 +11,7 @@ var newPost = "<div class='card-header'>Create Post</div>"
 		+ "<div class='text-right'><button class='btn btn-info lg mt-3' type='submit' name='submitPost'>POST</button></div>"
 		+ "</form></div></div>";
 
-var firstLevelComment = "<div class='card' id='firstComment{{post.memberId}}' style='display:none;'>"
+var firstLevelComment = "<div class='card firstComment{{post.memberId}}' style='display:none;'>"
 		+ "<div class='media p-4 bg-light'>" 
 		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{post.memberId}}'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0' id='firstCommentBody{{post.postId}}'>"
@@ -84,6 +84,7 @@ var thirdLevelComment = "<div class='card mt-3 ml-5' id='thirdComment'>"
 		+ "<div class='media-date'>{{post.postTime}}<button type='button' id='drop{{post.postId}}' class='btn-sm ml-2 btn-secondary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></button>"
 		+ "<div class='dropdown-menu'><a class='dropdown-item' id='edit{{post.postId}}' href='#edit{{post.postId}}'>Edit</a>"
 		+ "<a class='dropdown-item' id='delete{{post.postId}}' href='#delete{{post.postId}}'>Delete</a>"
+		+ "<a class='dropdown-item' id='report{{post.postId}}' href='#report{{post.postId}}'>Report</a>"
 		+ "</div></div> "
 		+ "<form method='post' action='updateContent'>"
 		+ "<blockquote class='blockquote mb-5'><div id='postContent{{post.postId}}' class='font-weight-bold mt-2 post-description'>{{post.postContent}}</div></blockquote>"
@@ -140,7 +141,7 @@ $.ajax({
 				$("#firstLevelComment").append(firstLevelComment_html);
 
 				if(loginMemberid == post.memberId){
-					$("#firstComment" + loginMemberid).show();
+					$(".firstComment" + loginMemberid).show();
 				}
 				
 				if (post.replyPost.length > 0 ) {
@@ -196,7 +197,6 @@ $.ajax({
 					secondLevel_html = secondLevel_html + second;
 
 					$("#firstCommentBody" + post.postId).append(secondLevel_html);
-					console.log("第三層 ==== " + commentPostId)
 //					$("#secondCommentBody" + commentPostId).append(thirdLevel_html);
 
 				}
@@ -290,12 +290,13 @@ $.ajax({
 		url : requestUrl + "friendJson",
 		method : "POST",
 		dataType : "JSON",
+		async : false,
 		success : function(friendData) {
 			fdata = friendData.friend
 			for (let i = 0; i < fdata.length; i++) {
 				let friend = fdata[i];
 				if(friend.sender_memberId == loginMemberid && friend.friendStatus == 2){
-					$("#firstComment" + friend.receiver_memberId).show();
+					$(".firstComment" + friend.receiver_memberId).show();
 				}
 			}
 		}
@@ -313,7 +314,6 @@ function getAllMemberName(){
 			for (let i = 0; i < allMember.length; i++) {
 				let member = allMember[i];
 				$(".memberName" + member.id).text(member.memberName);
-				console.log("MemberName =====" + member.memberName)
 			}
 		}
 	})
@@ -579,4 +579,14 @@ function getFriendShip(){
 	})
 	return fdata;
 }
+
+
+
+
+
+
+
+
+//test
+
 

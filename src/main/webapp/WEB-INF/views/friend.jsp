@@ -17,7 +17,7 @@
 		<div class="row">
 			<!-- Member detail block -->
 			<div class="col-md-2 fixed-top"
-				style="margin: 270px 120px; width: 200px">
+				style="margin: 150px 120px; width: 200px">
 				<div class="list-group">
 					<div class="list-group-item list-group-item-action">
 						<img class="card-img-top rounded-circle"
@@ -50,14 +50,14 @@
 						<a class="nav-item nav-link active" id="navFriendList"
 							data-toggle="tab" href="#FriendList" role="tab"
 							aria-controls="nav-home" aria-selected="true">好友列表</a> <a
-							class="nav-item nav-link ml-3 bg-info" id="navReceiver"
+							class="nav-item nav-link ml-3" id="navReceiver"
 							data-toggle="tab" href="#Receiver" role="tab"
 							aria-controls="nav-profile" aria-selected="false">交友邀請</a>
 					</div>
 					<form class="form-inline mr-right">
 						<div class="md-form my-0">
 							<i class="fa fa-search mr-2" aria-hidden="true"></i>
-							<input class="form-control" type="text" placeholder="Search" aria-label="Search"> 		
+							<input class="form-control" type="text" placeholder="Search By Name" aria-label="Search" id="searchContent"> 		
 						</div>
 					</form>
 				</nav>

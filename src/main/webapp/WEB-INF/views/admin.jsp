@@ -136,13 +136,13 @@ google.charts.setOnLoadCallback(drawChart);
 
 function drawChart() {
     var data = google.visualization.arrayToDataTable([
-        ['Month', '活動數', '參與數'],
-        ['六月', 3, 0],
-        ['七月', 6, 0],
-        ['八月', 3, 0],
-        ['九月', 6, 0],
-        ['十月', 3, 0],
-        ['十一月', 6,0]
+        ['Month', '活動數', '平均參與人數'],
+        ['六月', 5, 22],
+        ['七月', 4, 32],
+        ['八月', 3, 26],
+        ['九月', 4, 21],
+        ['十月', 6, 19],
+        ['十一月', 6,29]
     ]);
 
     var options = {
