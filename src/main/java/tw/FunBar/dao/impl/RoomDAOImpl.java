@@ -228,10 +228,14 @@ public class RoomDAOImpl implements RoomDAO {
 	@Override
 	public ArrayList<RoomOrder> allOrder() {
 
-		String hql = "From RoomOrder Order by check_in_time";
+		String hql = "From RoomOrder where check_in_time >= :date Order by order_id DESC";
 		Session session = sessionFactory.getCurrentSession();
+		
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
 
-		ArrayList<RoomOrder> orders = (ArrayList<RoomOrder>) session.createQuery(hql).getResultList();
+		String date = fm.format(new Date());
+
+		ArrayList<RoomOrder> orders = (ArrayList<RoomOrder>) session.createQuery(hql).setParameter("date",date).getResultList();
 
 		return orders;
 	}
@@ -594,11 +598,15 @@ public class RoomDAOImpl implements RoomDAO {
 	@Override
 	public ArrayList<RoomOrder> personalOrder(String phone) {
 		
-		String hql = "From RoomOrder where order_phone = :phone order by order_id DESC";
+		String hql = "From RoomOrder where order_phone = :phone and check_in_time >= :date order by order_id DESC";
 		
 		Session session = sessionFactory.getCurrentSession();
 		
-		ArrayList<RoomOrder> orders =  (ArrayList<RoomOrder>) session.createQuery(hql).setParameter("phone",phone).getResultList();
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+
+		String date = fm.format(new Date());
+		
+		ArrayList<RoomOrder> orders =  (ArrayList<RoomOrder>) session.createQuery(hql).setParameter("phone",phone).setParameter("date",date).getResultList();
 		
 		
 		return orders;
