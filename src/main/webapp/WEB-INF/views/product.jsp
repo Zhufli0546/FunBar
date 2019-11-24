@@ -25,7 +25,7 @@
       class="list-group-item">All Products</a>
      <c:forEach var='category' items='${categoryList}'>
       <a
-       href="${pageContext.request.contextPath}/shoppingCart/${category}"
+       href="${pageContext.request.contextPath}/shoppingCart/${category}?index=1"
        class="list-group-item">${category}</a>
      </c:forEach>
     </div>
@@ -111,17 +111,17 @@ function myFunction() {
 }
 
 function changeCartNum(){
-	$.ajax({
-		url : "http://localhost:8080/FunBar/buyCartJson",
-		method : "POST",
-		dataType : "JSON",
-		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-		success :function(data){
-					
+ $.ajax({
+  url : "http://localhost:8080/FunBar/buyCartJson",
+  method : "POST",
+  dataType : "JSON",
+  contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+  success :function(data){
+     
 
-					$(".cart").text(data.length);
-		}
-	})
+     $(".cart").text(data.length);
+  }
+ })
 }
  
 // Test For Click Event
@@ -155,7 +155,7 @@ $(".button-add").click(function() {
     myFunction();
     changeCartNum();
 
-	
+ 
     
    }
   }
@@ -164,14 +164,14 @@ $(".button-add").click(function() {
 
 //繫結圖片放大外掛jqzoom
 $(".jqzoom").jqzoom({
-	//小圖片所選區域的寬
-	zoomWidth:200,
+ //小圖片所選區域的寬
+ zoomWidth:200,
 
-	//小圖片所選區域的高
-	zoomHeight: 200,
+ //小圖片所選區域的高
+ zoomHeight: 200,
 
-	//設定放大鏡的型別，預設standard即選中的部分變灰，這裡是reverse即非選中變灰
-	zoomType: 'reverse'
+ //設定放大鏡的型別，預設standard即選中的部分變灰，這裡是reverse即非選中變灰
+ zoomType: 'reverse'
 });
 </script>
 
