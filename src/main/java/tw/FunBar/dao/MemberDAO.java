@@ -18,7 +18,7 @@ public interface MemberDAO {
 	void delete(int id);
 
 	void updateMember(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
-			String memberPwd, String memberId, String memberEmail,Blob blob);
+			String memberPwd, String memberId,Integer memberLevel, String memberEmail,Blob blob);
 
 	void updateself(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
 			 String memberEmail,Blob blob);
