@@ -17,7 +17,7 @@
 
 #signup {
     width: 350px;
-    margin: 50px auto 50px auto;
+    margin: 50px auto 0 auto;
     padding: 20px;
     position: relative;
     background: #fff url(data:image/png;base64,iVBORw0K[...]CYII=);
@@ -148,9 +148,10 @@ button{
 
 
 
-	<!-- Blog -->
-	<section class="page animsition" style="background-color:#D0D0D0">
-		<form id="signup" method="post" action="addReservations" style="background-color:white;border:2px solid black">
+	
+	<section class="animsition" style="background-color:#D0D0D0;margin-top:120px;">
+	<div  style=" background-image:url('images/booking.jpg');">
+		<form id="signup" method="post" action="addReservations" style="background-color:white;border:3px solid #FF5809">
     <h1>填寫訂位人資料</h1>
     
     
@@ -176,11 +177,12 @@ button{
     </c:otherwise>
     </c:choose>
     <div style="text-align:center">
-    <button type="button"
+    <button type="button" style="width:130px"
 					onclick="location.href='booking'">返回</button>               
-    <button type="submit">預約</button>
+    <button type="submit" style="width:130px;margin-botton:0px">預約</button>
     </div>
 </form>
+</div>
 	</section>
 
 	<!-- Footer -->
@@ -189,7 +191,7 @@ button{
 	<script>
 
 function go() {
-	$('html,body').animate({scrollTop:200},2000);
+	$('html,body').animate({scrollTop:20},2000);
 	}
 </script>
 	

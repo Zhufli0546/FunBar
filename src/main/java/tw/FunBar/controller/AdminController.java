@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import tw.FunBar.model.OrderBean;
 import tw.FunBar.model.RoomOrder;
+import tw.FunBar.service.BookingService;
 import tw.FunBar.service.OrderHandleService;
 import tw.FunBar.service.RoomService;
 
@@ -21,6 +22,10 @@ public class AdminController {
 	RoomService roomService;
 	
 	@Autowired
+	BookingService bookingService;
+	
+	
+	@Autowired
 	OrderHandleService orderService;
 		
 	@RequestMapping("/admin")
@@ -30,12 +35,18 @@ public class AdminController {
 		ArrayList<RoomOrder> orders = roomService.getLatestOrders();	
 		int	roomTotalIncome = roomService.getRoomTotalIncome();
 		
+
+		int arrival = bookingService.todayArrival();
+		
+		model.addAttribute("arrival",arrival);
+
 		List<OrderBean> list = orderService.getLatestOrders();
 		int productTotalIncome = orderService.getProductTotalIncome();
 		
 		model.addAttribute("ob", list);
 		model.addAttribute("productTotalIncome", productTotalIncome);
 		
+
 		model.addAttribute("orders", orders);
 		model.addAttribute("roomTotalIncome", roomTotalIncome);
 		

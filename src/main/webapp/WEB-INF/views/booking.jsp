@@ -19,7 +19,7 @@
 
 	<jsp:include page="header.jsp" />
 
-	<section class="page animsition">
+	<section class="animsition" style="margin-top: 120px;">
 		<div  style=" background-image:url('images/booking.jpg');">
 		<div class="calendar" style="border:1px solid orange;border-radius:5px;background-color:black;">
 

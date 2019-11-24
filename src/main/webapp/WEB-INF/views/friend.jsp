@@ -10,16 +10,14 @@
 <title>Friend</title>
 
 </head>
-<body class="animsition bg-dark">
+<body class="bg-dark">
 <!-- Header -->
 <jsp:include page="header.jsp" />
-	<br>
-
 	<section class="container page">
-		<div class="row mt-5">
+		<div class="row">
 			<!-- Member detail block -->
 			<div class="col-md-2 fixed-top"
-				style="margin: 192px 120px; width: 200px">
+				style="margin: 270px 120px; width: 200px">
 				<div class="list-group">
 					<div class="list-group-item list-group-item-action">
 						<img class="card-img-top rounded-circle"

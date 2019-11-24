@@ -21,6 +21,8 @@ public interface DiscussService {
 
 	Post getPostById(Integer postId);
 
+	void reportPostContent(Post post);
+
 	List<LikePost> getLikesById(Integer memberId);
 
 	long getLikeByPostId(Integer postId);
@@ -40,5 +42,7 @@ public interface DiscussService {
 	Friendship getFriendRequest(Integer sender_memberId, Integer receiver_memberId);
 
 	List<Member> searchMember(String memberName);
+
+	List<Post> getReportSort(Integer sort);
 
 }

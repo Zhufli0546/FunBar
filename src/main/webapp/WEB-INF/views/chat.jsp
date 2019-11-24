@@ -17,10 +17,10 @@
 <link rel="stylesheet" type="text/css" href="<c:url value="/css/chat.css"/>">
 <jsp:include page="header.jsp" />
 </head>
-<body class="animsition bg-dark">
+<body class="bg-dark">
 	<br>
 	<div class="col-md-2 fixed-top"
-		style="margin: 192px 120px; width: 200px; display: none">
+		style="margin: 150px 120px; width: 200px; display: none">
 		<div class="list-group">
 			<p class="list-group-item list-group-item-action active">${title}</p>
 			<a href="" class="list-group-item list-group-item-action"

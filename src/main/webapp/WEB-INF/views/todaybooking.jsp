@@ -33,10 +33,10 @@ function del() {var msg ="是否刪除";if (confirm(msg)==true){return true;}els
 </head>
 <body id="page-top">
 	<jsp:include page="admin_header.jsp" />
-	<div style="padding: 10px ;border:1px solid black;float:left;width:897px">
+	<div style="padding: 10px ;border:1px solid black;float:left">
 	<table id="ch" class="table table-striped" style="text-align: center" >
 <thead><tr>
-<th>訂單編號<th>訂位人<th>訂位日期<th>訂位時間<th>訂位人數<th>手機<th>取消訂位<th>更改訂位
+<th>訂單編號<th>訂位人<th>訂位日期<th>訂位時間<th>訂位人數<th>手機<th>取消訂位<th>更改訂位<th>入場狀況
 </tr></thead>
 <tbody>
 <c:forEach var="b" items="${All}">
@@ -49,6 +49,12 @@ function del() {var msg ="是否刪除";if (confirm(msg)==true){return true;}els
 <td>${b.phone}</td>
 <td><a href="cancelBooking?id=${b.booking_id}&date=${b.date}&phone=${b.phone}"><button class="button" type="button" onclick="return confirm('是否刪除');">取消訂位</button></a></td>
 <td><a href="pullSingle?id=${b.booking_id}&date=${b.date}&phone=${b.phone}"><button class="button" type="button">更改訂位</button></a></td>
+<c:if test="${b.status!=1}">
+<td><a href="arrival?id=${b.booking_id}"><button class="button" type="button">入場</button></a></td>
+</c:if>
+<c:if test="${b.status ==1}">
+<td><a href="arrival?id=${b.booking_id}"><button class="button" disabled="disabled" type="button">已入場</button></a></td>
+</c:if>
 </tr>
 </c:forEach>
 </tbody>
@@ -65,9 +71,9 @@ function del() {var msg ="是否刪除";if (confirm(msg)==true){return true;}els
 <input class="qb" id="tel" type="text">
 <br><button class="qb" id="P" type="button">查詢</button>
 
-<button class="qb" style="margin-top: 10px" type="button" onclick="javascript:location.href='allbooking'">所有訂位</button>
+<button class="qb" type="button" style="margin-top: 10px" onclick="javascript:location.href='allbooking'">所有訂位</button>
 
-<button class="qb" style="margin-top: 10px" type="button" onclick="javascript:location.href='todaybooking'">當日訂位</button>
+<button class="qb" type="button" style="margin-top: 10px" onclick="javascript:location.href='todaybooking'">當日訂位</button>
 </div>
 	<jsp:include page="admin_footer.jsp" />
 	

@@ -64,6 +64,13 @@ public class DiscussDAOImpl implements DiscussDAO {
 	}
 
 	@Override
+	public void reportPostContent(Post post) {
+		Session session = factory.getCurrentSession();
+		String hql = "UPDATE Post post SET postStatus = :postStatus WHERE post.postId = :postId";
+		session.createQuery(hql).setParameter("postStatus", 9).setParameter("postId", post.getPostId()).executeUpdate();
+	}
+
+	@Override
 	public void deletePostContent(Post post) {
 		Session session = factory.getCurrentSession();
 		session.delete(post);
@@ -171,6 +178,25 @@ public class DiscussDAOImpl implements DiscussDAO {
 		List<Member> list = new ArrayList<Member>();
 		Session session = factory.getCurrentSession();
 		list = session.createQuery(hql).setParameter("memberName", "%" + memberName + "%").getResultList();
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Post> getReportSort(Integer sort) {
+		String hql = null;
+		if (sort == 0) {
+			hql = "FROM Post WHERE postStatus > 0 ORDER BY postStatus desc";
+		} else if (sort == 1) {
+			hql = "FROM Post WHERE postStatus > 0 ORDER BY postStatus asc";
+		} else if (sort == 2) {
+			hql = "FROM Post WHERE postStatus > 0 ORDER BY postTime desc";
+		} else if (sort == 3) {
+			hql = "FROM Post WHERE postStatus > 0 ORDER BY postTime asc";
+		}
+		List<Post> list = new ArrayList<>();
+		Session session = factory.getCurrentSession();
+		list = session.createQuery(hql).getResultList();
 		return list;
 	}
 

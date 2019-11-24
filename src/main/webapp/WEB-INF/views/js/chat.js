@@ -119,7 +119,6 @@ $(function() {
 	 */
 	$("#clearBtn").click(function() {
 		$("#historyMsg").empty();
-		$("#messageInput").focus();
 	});
 
 	/**
@@ -211,7 +210,7 @@ function connect() {
 			var user = "系统消息";
 			var date = null;
 			var msg = loginMemberName + "加入聊天！";
-			showNewMessage(user, date, msg);
+//			showNewMessage(user, date, msg);
 		});
 		stompClient.subscribe("/topic/login", function(message) {
 			showNewUser(message.body);
@@ -265,7 +264,7 @@ function showNewUser(message) {
 	var date = json.loginDate;
 	var user = '系统消息';
 	var msg = newUser + "加入聊天！";
-	showNewMessage(user, date, msg);
+//	showNewMessage(user, date, msg);
 	showAddActiveUserNumber();
 
 }
@@ -386,7 +385,7 @@ function showNewImage(user, date, url) {
 			+ '</span><br/>[' + user + '] : <br/>'
 			+ '<img class="img-thumbnail" src="' + url + '"/>';
 	container.append(msgToDisplay);
-//	container.scrollTop = container.scrollHeight;
+
 }
 /**
  * 发送输入框中的信息
@@ -418,6 +417,7 @@ function sendMessage(loginMemberid, receiverMemberId) {
 			sendMessage(loginMemberid, receiverMemberId);
 			}
 	   });
+	 $(".chatbox").show().attr('class', 'chatbox chatbox22 rounded-top');
 	let receiverMemberName = $("#Name" + receiverMemberId).text();
  	let conn = [ loginMemberid, receiverMemberId];
 	if(conn[0] > conn[1]){
