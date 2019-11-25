@@ -132,17 +132,21 @@
 				var icon = json.icon;
 				var tag = json.tag;
 				var url = json.url;
-
+				var discuss = "discuss";
+				console.log("確認是否為discuss == " + (tag == discuss))
+				if(tag != discuss){
 				var n = new Notification("",{
 					body: note,
 					icon: icon,
 					tag: tag
-				});
-				
+					});
+				}
 				n.onclick = function() {
 					window.open(url);
-				}
+					}
+				
 			});
+			
 		})
 	}
 	$(document).ready(function() {
