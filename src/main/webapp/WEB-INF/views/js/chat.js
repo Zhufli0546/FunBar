@@ -1,9 +1,8 @@
 var stompClient = null;
 var friendList = "<li class='contact'><div class='wrap'><span class='contact-status{{receiverMemberId}} online'></span>"
-		+ "<img src='{{requestUrl}}/membergetPicture/{{receiverMemberId}}'/><div class='meta'>"
+		+ "<img src='{{requestUrl}}/membergetPicture/{{receiverMemberId}}'/><div class='meta' onclick='sendto({{receiverMemberId}})'>"
 		+ "<p class='name' id='Name{{receiverMemberId}}'>{{receiverMemberName}}</p>"
-		+ "<button class='badge badge-primary badge-pill btn btn-primary btn-sm' id='receiver{{receiverMemberId}}'"
-		+ "onclick='sendto({{receiverMemberId}})'>CHAT</button>"
+		+ "<button class='badge badge-primary badge-pill btn btn-primary btn-sm' id='receiver{{receiverMemberId}}'>CHAT</button>"
 		+ "</div></div></li>";
 
 var requestUrl = ""
@@ -108,6 +107,7 @@ $(document).ready(function() {
 	requestUrl = $('#requestUrl_chatbox').text();
 	mdata = getMemberData();
 	friendlist();
+	search();
 
 })
 
@@ -200,7 +200,7 @@ function connect() {
 
 		friends();
 		
-		stompClient.subscribe("/chat/participants", function(message) {
+		stompClient.subscribe("/friends/participants", function(message) {
 			showActiveUserNumber(message.body);
 			console.log(message.body)
 			var user = "系统消息";
@@ -309,9 +309,10 @@ function showNewMessage(user, date, msg, senderMemberId, receiverMemberId) {
 	var messages = document.getElementById("messages");
 	var msgToDisplay = document.createElement('li');
 
-	if (user == "系统消息") {
-		msgToDisplay.style.color = 'red';
-	}
+	
+//	if (user == "系统消息") {
+//		msgToDisplay.style.color = 'red';
+//	}
 	var dateTime = formatDate(date);
 	msg = showEmoji(msg);
 	console.log(msgToDisplay)
@@ -335,6 +336,8 @@ function showNewMessage(user, date, msg, senderMemberId, receiverMemberId) {
 	}
 
 	($('#conversation').children("li:last-child")[0]).scrollIntoView();
+	var x = $('.chatbox').attr("class")
+	console.log(x)
 //	var n = new Notification("You have new message !!");
 }
 /**
@@ -394,6 +397,14 @@ function sendMessage(loginMemberid, receiverMemberId) {
 			'userName' : loginMemberName,
 			'messageContent' : content,
 		}));
+		
+		stompClient.send("/topic/notification", {}, JSON.stringify({
+			'notification' : content,
+			'tag' : 'Discuss',
+			'url' : requestUrl + 'chat',
+			'icon' : requestUrl + 'membergetPicture/' + loginMemberid
+		}));
+		
 
 	}
 }
@@ -404,6 +415,9 @@ function sendMessage(loginMemberid, receiverMemberId) {
 			sendMessage(loginMemberid, receiverMemberId);
 			}
 	   });
+	 $("#btn-chat").click(function(){
+		 sendMessage(loginMemberid, receiverMemberId);
+	 });
 	 $(".chatbox").show().attr('class', 'chatbox chatbox22 rounded-top');
 	let receiverMemberName = $("#Name" + receiverMemberId).text();
  	let conn = [ loginMemberid, receiverMemberId];
@@ -438,6 +452,21 @@ function sendMessage(loginMemberid, receiverMemberId) {
  	})
  }
  
+ 
+ function search(){
+		$("#searchFriends").bind("keyup", function() {
+			let searchFriends = $("#searchFriends").val().toLowerCase();
+			$(".name").each(function(){
+				var frinedContent = $(this).text();
+				var ignoreCasefrinedContent = frinedContent.toLowerCase();
+				if(ignoreCasefrinedContent.indexOf(searchFriends) == -1){
+					$(this).parent().parent().parent().hide();
+				}else{
+					$(this).parent().parent().parent().show();
+				}
+			})
+		})
+	}
  
  
 //通知測試

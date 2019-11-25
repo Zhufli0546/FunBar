@@ -66,20 +66,20 @@
 			</div>
 			<div id="search">
 				<label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
-				<input type="text" placeholder="Search Friends" />
+				<input type="text" placeholder="Search Friends" id="searchFriends"/>
 			</div>
 			<div id="contacts">
 				<ul id="receiverArea">
 				</ul>
 			</div>
-			<div id="bottom-bar">
+			<!-- <div id="bottom-bar">
 				<button id="addcontact">
 					<i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span>
 				</button>
 				<button id="settings">
 					<i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span>
 				</button>
-			</div>
+			</div> -->
 		</nav>
 
 	<!--Chat Box-->
