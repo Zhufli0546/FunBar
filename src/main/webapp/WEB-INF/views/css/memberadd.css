@@ -11,21 +11,7 @@ body{
 	opacity: 0.5;
 	
 }
-.login{
-	position: fixed;
-	border:200px;
-	left: 50%;
-	top:50%;
-	transform: translate(-50%,-50%);
-	background: black;
-	text-align: center;
-	color:white;
-	font-family: "微軟正黑體", sans-serif;
-	border-radius: 10px;
-	padding: 30px;
-	width:25%;
-	background-size: 50%;
-}
+
 .login i{
 	font-size:100px;
 	margin: 20px auto; 

@@ -34,8 +34,7 @@ public interface MemberDAO {
 	
 	void newPwd(String memberId,String memberPwd);
 	
-	
-	
+	boolean checkId(String memberId);
 	
 	
 	
