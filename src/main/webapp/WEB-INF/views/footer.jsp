@@ -103,65 +103,58 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/web-socket-js/1.0.0/web_socket.js"></script>
-		<input id="websocketUrl" type="hidden" value="<c:url value="/websocket"/> ">
+	<input id="websocketUrl" type="hidden"
+		value="<c:url value="/websocket"/> ">
+	<a href="" class="list-group-item list-group-item-action"
+		id="requestUrl_Notification" style="display: none"><c:url
+			value='/' /></a>
 	<script>
-	window.addEventListener('load', function () {
-		  // At first, let's check if we have permission for notification
-		  // If not, let's ask for it
-		  if (Notification && Notification.permission !== "granted") {
-		    Notification.requestPermission(function (status) {
-		      if (Notification.permission !== status) {
-		        Notification.permission = status;
-		      }
-		    });
-		  }
-		  var button = document.getElementsByTagName('button')[0];
-		  button.addEventListener('click', function () {
-		    // If the user agreed to get notified
-		    if (Notification && Notification.permission === "granted") {
-		      var n = new Notification("Hi!");
-		    }
-		    // If the user hasn't told if he wants to be notified or not
-		    // Note: because of Chrome, we are not sure the permission property
-		    // is set, therefore it's unsafe to check for the "default" value.
-		    else if (Notification && Notification.permission !== "denied") {
-		      Notification.requestPermission(function (status) {
-		        if (Notification.permission !== status) {
-		          Notification.permission = status;
-		        }
-		        // If the user said okay
-		        if (status === "granted") {
-		          var n = new Notification("Hi!");
-		        }
-		        // Otherwise, we can fallback to a regular modal alert
-		        else {
-		          alert("Hi!");
-		        }
-		      });
-		    }
-		    // If the user refuses to get notified
-		    else {
-		      // We can fallback to a regular modal alert
-		      alert("Hi!");
-		    }
-		  });
+		window.addEventListener('load', function() {
+			// At first, let's check if we have permission for notification
+			// If not, let's ask for it
+			if (Notification && Notification.permission !== "granted") {
+				Notification.requestPermission(function(status) {
+					if (Notification.permission !== status) {
+						Notification.permission = status;
+					}
+				});
+			}
 		});
-	function connectNotification() {
-		var socket = new SockJS($("#websocketUrl").val().trim());
-		stompClient = Stomp.over(socket);
-		var sessionId = "";
-		stompClient.connect({}, function(frame) {
-			stompClient.subscribe("/topic/notification", function(notification) {
-				var json = JSON.parse(notification.body);
-				var note = json.notification;
-				console.log("notification == " + note)
-				var n = new Notification(note);
-			});
-		})
-	}
-	$(document).ready(function() {
-		connectNotification();
-	})
+
+		function connectNotification() {
+			var socket = new SockJS($("#websocketUrl").val().trim());
+			stompClient = Stomp.over(socket);
+			var sessionId = "";
+			stompClient.connect({}, function(frame) {
+				stompClient.subscribe("/topic/notification", function(
+						notification) {
+					var json = JSON.parse(notification.body);
+					var note = json.notification;
+					var tag = json.tag
+					var url = json.url
+					var img = json.image
+					console.log("notification == " + note)
+					var options = {
+						body : note,
+						tag : tag,
+						image : img
+					}
+					console.log(url)
+					var n = new Notification("FunBar",options)
+					n.onclick = function() {
+						   window.open(url)
+						  }
+				});
+			})
+		}
+		$(document).ready(
+				function() {
+					var requestUrl_Notification = $("#requestUrl_Notification")
+							.text();
+					console.log(requestUrl_Notification
+							+ '/images/icons/favicon.png')
+					connectNotification();
+				})
 	</script>
 
 </body>

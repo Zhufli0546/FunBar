@@ -38,10 +38,10 @@ public class ChatController {
 	public String loginIntoChatRoom(Model model, HttpServletRequest request, HttpSession session) {
 		session = request.getSession(false);
 		Member member = (Member) session.getAttribute("member");
-		participantRepository.add(String.valueOf(member.getId()), member);
+		participantRepository.add(member.getId(), member);
 		System.out.println(member);
-		System.out.println("在線人數：" + participantRepository.getActiveSessions().values().size());
-		System.out.println("member Detail:" + participantRepository.getParticipant(String.valueOf(member.getId())).getId());
+		System.out.println("在線人數：" + participantRepository.getActiveMember().values().size());
+		System.out.println("member Detail:" + participantRepository.getParticipant(member.getId()));
 		model.addAttribute("member", member);
 		return "chat";
 	}
@@ -49,7 +49,7 @@ public class ChatController {
 //	上線人數
 	@SubscribeMapping("/chat/participants")
 	public Long getActiveUserNumber() {
-		return Long.valueOf(participantRepository.getActiveSessions().values().size());
+		return Long.valueOf(participantRepository.getActiveMember().values().size());
 	}
 	
 	@SubscribeMapping("/topic/notification")
