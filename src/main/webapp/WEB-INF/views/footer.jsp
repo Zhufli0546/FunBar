@@ -109,52 +109,46 @@
 		id="requestUrl_Notification" style="display: none"><c:url
 			value='/' /></a>
 	<script>
-		window.addEventListener('load', function() {
-			// At first, let's check if we have permission for notification
-			// If not, let's ask for it
-			if (Notification && Notification.permission !== "granted") {
-				Notification.requestPermission(function(status) {
-					if (Notification.permission !== status) {
-						Notification.permission = status;
-					}
-				});
-			}
-		});
 
-		function connectNotification() {
-			var socket = new SockJS($("#websocketUrl").val().trim());
-			stompClient = Stomp.over(socket);
-			var sessionId = "";
-			stompClient.connect({}, function(frame) {
-				stompClient.subscribe("/topic/notification", function(
-						notification) {
-					var json = JSON.parse(notification.body);
-					var note = json.notification;
-					var tag = json.tag
-					var url = json.url
-					var img = json.image
-					console.log("notification == " + note)
-					var options = {
-						body : note,
-						tag : tag,
-						image : img
-					}
-					console.log(url)
-					var n = new Notification("FunBar",options)
-					n.onclick = function() {
-						   window.open(url)
-						  }
+	window.addEventListener('load', function () {
+		  // At first, let's check if we have permission for notification
+		  // If not, let's ask for it
+		  if (Notification && Notification.permission !== "granted") {
+		    Notification.requestPermission(function (status) {
+		      if (Notification.permission !== status) {
+		        Notification.permission = status;
+		      }
+		    });
+		  }
+		});
+	function connectNotification() {
+		var socket = new SockJS($("#websocketUrl").val().trim());
+		stompClient = Stomp.over(socket);
+		var sessionId = "";
+		stompClient.connect({}, function(frame) {
+			stompClient.subscribe("/topic/notification", function(notification) {
+				var json = JSON.parse(notification.body);
+				var note = json.notification;
+				var icon = json.icon;
+				var tag = json.tag;
+				var url = json.url;
+
+				var n = new Notification("",{
+					body: note,
+					icon: icon,
+					tag: tag
 				});
-			})
-		}
-		$(document).ready(
-				function() {
-					var requestUrl_Notification = $("#requestUrl_Notification")
-							.text();
-					console.log(requestUrl_Notification
-							+ '/images/icons/favicon.png')
-					connectNotification();
-				})
+				
+				n.onclick = function() {
+					window.open(url);
+				}
+			});
+		})
+	}
+	$(document).ready(function() {
+		connectNotification();
+	})
+
 	</script>
 
 </body>
