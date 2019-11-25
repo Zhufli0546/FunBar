@@ -36,7 +36,7 @@ function del() {var msg ="是否刪除";if (confirm(msg)==true){return true;}els
 	<div style="padding: 10px ;border:1px solid black;float:left;width:900px">
 	<table id="ch" class="table table-striped" style="text-align: center" >
 <thead><tr>
-<th>訂單編號<th>訂位人<th>入住日期<th>退房日期<th>手機<th>付款狀態<th>取消訂位
+<th>訂單編號<th>訂位人<th>入住日期<th>退房日期<th>手機<th>付款狀態<th>取消訂房
 </tr></thead>
 <tbody>
 <c:forEach var="o" items="${orders}">
@@ -47,7 +47,7 @@ function del() {var msg ="是否刪除";if (confirm(msg)==true){return true;}els
 <td>${o.check_out_time}</td>
 <td>${o.order_phone}</td>
 <td>${o.status}</td>
-<td><a href="cancelOrder?id=${o.order_id}"><button class="button" type="button" onclick="return confirm('是否刪除');">取消訂位</button></a></td>
+<td><a href="cancelOrder?id=${o.order_id}"><button class="button" type="button" onclick="return confirm('是否刪除');">取消訂房</button></a></td>
 </tr>
 
  
@@ -94,13 +94,13 @@ $("#D").click(function(){
 
 						console.log(data);
 						let txt ="";
-						txt +="<thead><tr><th>訂單編號<th>訂位人<th>入住日期<th>退房日期<th>手機<th>付款狀態<th>取消訂位</tr></thead><tbody>";
+						txt +="<thead><tr><th>訂單編號<th>訂位人<th>入住日期<th>退房日期<th>手機<th>付款狀態<th>取消訂房</tr></thead><tbody>";
 						for(let i=0;i<data.length;i++){
 								txt += "<tr><td>"+data[i].order_id+"</td><td>"
 								+data[i].order_name+"</td><td>"+data[i].check_in_time+"</td><td>"
 								+data[i].check_out_time+"</td><td>"+data[i].order_phone+"</td><td>"
 								+data[i].status+"</td><td>"
-								+"<a href='cancelBooking?id="+data[i].booking_id+"'><button class='button' type='button'"+"onclick='return del()'"+">取消訂位</button></a></td>"
+								+"<a href='cancelBooking?id="+data[i].booking_id+"'><button class='button' type='button'"+"onclick='return del()'"+">取消訂房</button></a></td>"
 								+"</tr>";
 							}
 						txt += "</tbody></table>";
@@ -135,13 +135,13 @@ $("#P").click(function(){
 					}else{
 						let txt ="";
 						console.log(data);
-						txt +="<thead><tr><th>訂單編號<th>訂位人<th>入住日期<th>退房日期<th>手機<th>付款狀態<th>取消訂位</tr></thead><tbody>";
+						txt +="<thead><tr><th>訂單編號<th>訂位人<th>入住日期<th>退房日期<th>手機<th>付款狀態<th>取消訂房</tr></thead><tbody>";
 						for(let i=0;i<data.length;i++){
 								txt += "<tr><td>"+data[i].order_id+"</td><td>"
 								+data[i].order_name+"</td><td>"+data[i].check_in_time+"</td><td>"
 								+data[i].check_out_time+"</td><td>"+data[i].order_phone+"</td><td>"
 								+data[i].status+"</td><td>"
-								+"<a href='cancelBooking?id="+data[i].booking_id+"'><button class='button' type='button'"+"onclick='return del()'"+">取消訂位</button></a></td>"
+								+"<a href='cancelBooking?id="+data[i].booking_id+"'><button class='button' type='button'"+"onclick='return del()'"+">取消訂房</button></a></td>"
 								+"</tr>";
 							}
 						txt += "</tbody></table>";

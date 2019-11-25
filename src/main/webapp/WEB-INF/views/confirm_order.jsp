@@ -15,8 +15,8 @@
 	<jsp:include page="header.jsp" />
 
 	<!-- Content 區塊 -->
-
-	<div class="row" style="margin-top:120px;border:3px solid #5B5B5B;margin:120px 1px 0 1px">
+	<div style="height:100vh;background-color:black">
+	<div class="row" style="padding:10px 0 10px 0 ;background-color:white;margin-top:120px;border:3px solid #5B5B5B;margin:120px 1px 0 1px">
 		<div class="col-md-7" style="height: 380px; background-color: #DDDDDD">
 
 			<img
@@ -129,7 +129,7 @@
 		</c:otherwise>
 		</c:choose>
 	</div>
-
+</div>
 
 	<jsp:include page="footer.jsp" />
 
