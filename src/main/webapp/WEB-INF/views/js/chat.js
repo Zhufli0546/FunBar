@@ -1,5 +1,5 @@
 var stompClient = null;
-var friendList = "<li class='contact'><div class='wrap'><span class='contact-status online'></span>"
+var friendList = "<li class='contact'><div class='wrap'><span class='contact-status{{receiverMemberId}} online'></span>"
 		+ "<img src='{{requestUrl}}/membergetPicture/{{receiverMemberId}}'/><div class='meta'>"
 		+ "<p class='name' id='Name{{receiverMemberId}}'>{{receiverMemberName}}</p>"
 		+ "<button class='badge badge-primary badge-pill btn btn-primary btn-sm' id='receiver{{receiverMemberId}}'"
@@ -115,13 +115,6 @@ $(function() {
 	connect();
 
 	/**
-	 * 清除聊天窗口的所有内容
-	 */
-	$("#clearBtn").click(function() {
-		$("#historyMsg").empty();
-	});
-
-	/**
 	 * 上传图片发送
 	 */
 	$("#sendImage").bind("change", function() {
@@ -205,41 +198,21 @@ function connect() {
 		console.log("Your current session is: " + url);
 		sessionId = url;
 
-//		stompClient.subscribe("/chat/participants", function(message) {
-//			showActiveUserNumber(message.body);
-//			var user = "系统消息";
-//			var date = null;
-//			var msg = loginMemberName + "加入聊天！";
+		friends();
+		
+		stompClient.subscribe("/chat/participants", function(message) {
+			showActiveUserNumber(message.body);
+			console.log(message.body)
+			var user = "系统消息";
+			var date = null;
+			var msg = loginMemberName + "加入聊天！";
 //			var n = new Notification(message);
-//			showNewMessage(user, date, msg);
-//		});
+			showNewMessage(user, date, msg);
+		});
 //		stompClient.subscribe("/topic/login", function(message) {
 //			showNewUser(message.body);
 //		});
 		
-//		stompClient.subscribe("/topic/notification", function(notification) {
-//			var json = JSON.parse(notification.body);
-//			var note = json.notification;
-//			console.log("notification == " + note)
-//			var n = new Notification(note);
-//		});
-		
-		friends();
-		// stompClient.subscribe('/member/message/'+ loginMemberid, function
-		// (message) {
-		// var json = JSON.parse(message.body);
-		// var senderMemberId = json.senderMemberId;
-		// var receiverMemberId = json.receiverMemberId;
-		// var messageType = json.messageType;
-		// var user = json.userName;
-		// var date = json.sendDate;
-		// var msg = json.content;
-		// if (messageType == "text"){
-		// showNewMessage(user, date, msg, senderMemberId, receiverMemberId);
-		// }else if (messageType == "image"){
-		// showNewImage(user, date, msg, senderMemberId, receiverMemberId);
-		// }
-		// })
 
 //		stompClient.subscribe("/topic/logout", function(message) {
 //			showUserLogout(message.body);
@@ -421,9 +394,7 @@ function sendMessage(loginMemberid, receiverMemberId) {
 			'userName' : loginMemberName,
 			'messageContent' : content,
 		}));
-		stompClient.send("/topic/notification", {}, JSON.stringify({
-			'notification' : content
-		}));
+
 	}
 }
 
@@ -466,3 +437,13 @@ function sendMessage(loginMemberid, receiverMemberId) {
 		}
  	})
  }
+ 
+ 
+ 
+//通知測試
+// stompClient.send("/topic/notification", {}, JSON.stringify({
+//		'notification' : content,
+//		'tag' : 'Discuss',
+//		'url' : requestUrl + 'discuss',
+//		'image' : requestUrl + 'membergetPicture/' + loginMemberid
+//	}));

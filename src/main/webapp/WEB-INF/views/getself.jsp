@@ -17,6 +17,9 @@
 <style>
     * {
         font-family: 微軟正黑體;
+      
+       
+        
     }
 
     html,
@@ -49,6 +52,11 @@
     }
     
     .error { color: red}
+    figure{
+    margin: 50px;
+    border: :5px solid rab(8,8,8);
+    
+    }
 </style>
 
 <body>
@@ -59,15 +67,19 @@
 </head>
 
 <body>
-
-		<div class="row">
-			
-			<h2>會員資料</h2>
-			
+<div >
+			<h1 style="float:right;">會員資料</h1>
 				<form action="updatemb1" method="POST" enctype="multipart/form-data">
-
-					<fieldset>
-					<div class="form-group">
+					
+					
+					<figure style="float:left">
+                        <img class="card-img-top rounded-circle"
+								style="height: 220px; width: 220px"
+								src="<c:url value='/membergetPicture/${member.id}'/>">	
+                        <input type="file" name="memberimg" value="${one.memberimg}">
+                        </figure>
+                        <fieldset>
+                        	<div >
                         <label for="memberId">姓名:</label>
                         <input type="text" class="form-control" name="memberName" value="${one.memberName}">
 						<label for="memberAddress">地址:</label>
@@ -81,14 +93,7 @@
                         <label for="memberAddress">帳號:</label>
                         <input type="text" class="form-control" name="memberId" disabled value="${one.memberId}">
                         <label for="memberAddress">信箱:</label>
-                       
-                        <input type="text" class="form-control" name="memberEmail" value="${one.memberEmail}">
-                        <label for="memberAddress">大頭貼:</label>
-                        <img
-											class="card-img-top rounded-circle"
-											style="height: 100px; width: 100px"
-											src="<c:url value='/membergetPicture/${member.id}'/>">
-                        <input type="file" class="form-control" name="memberimg" value="${one.memberimg}">
+                        <input type="text" class="form-control" name="memberEmail" value="${one.memberEmail}">                 
 				</div>
 
 					<div class="button">

@@ -16,26 +16,24 @@
 <!-- Content -->
 <div class="container" style="margin-top:10px;margin-bottom:120px">
 
-	<content>
-		<div class="overview" style="">
-			<div class="date">
-        		<p>2019/6/17 <i class="fas fa-caret-right" style="color:#000"></i> 2019/11/29</p>
-			</div>
-		</div>
-		
-		<!-- overview -->
-		<div class="overviewBox">
+ <content>
+  <div class="overview" style="">
+   <div class="date">
+          <p>2019/6/17 <i class="fas fa-caret-right" style="color:#000"></i> 2019/11/29</p>
+   </div>
+  </div>
+  
+  <!-- overview -->
+  <div class="overviewBox">
              <div class="n3">
                  <h2><i class="fas fa-hand-holding-usd"></i>TOTAL REVENUE</h2>
-                 <p style="color:#7ED321">${roomTotalIncome}</p>
+                 <p style="color:#7ED321">${roomTotalIncome+productTotalIncome}</p>
              </div>
 
              <div class="n3 sub">
                  <h2><i class="fas fa-boxes"></i>當日入場人數</h2>
                  <p style="color:#D0021B">${arrival}</p>
 
-                 <h2><i class="fas fa-boxes"></i>MALL TOTAL INCOME</h2>
-                 <p style="color:#D0021B">${productTotalIncome}</p>
              </div>
 
              <div class="n3 sub">
@@ -56,50 +54,34 @@
          <div class="n2">
             <!-- panel left -->
                 <div class="panel right">
-                <h2>Latest Orders</h2>
+                <h2>The Less Stock Products</h2>
                 <div class="list">
-                <c:forEach var="ob" items="${list}">
+                <c:forEach var="pb" items="${pb}">
                     <div class="item">
                         <div class="pic">
-                            <img src="https://upload.cc/i1/2018/06/18/hHvc0L.png"></div>
+       
+                            <img width="200" height="100%"  src="<c:url value='/ProductPicture/${pb.productId}'/>" />
+     </div>
                         <div class="info">
-                            <h3>${ob.productName}</h3>
-                            <span><i class="fas fa-clock"></i>${ob.orderTime}</span>
-                            <span><i class="fas fa-male" style="font-size:20px;margin-left:4px;"></i>${ob.memberName}</span>
+                            <h3 class="prdouctName">${pb.productName}</h3>
+                            <span><i class="fas fa-wine-bottle" style="font-size:14px"></i>${pb.category}</span> 
+<%--                              <span><i class="fas fa-percent" style="font-size:14px"></i>${pb.discount}</span> --%>
+                            <span><i class="fas fa-dollar-sign" style="font-size:14px"></i>${pb.unitPrice}</span>                                    
                         </div>
                         <div class="total">
-                            <p>Total</p><b>${ob.totalAmount}</b>
+                            <p >Stock</p>
+                            <div align="left">                      
+                            <b>${pb.stock}</b>
+                            </div>
                         </div>
-                    </div>
-                    <div class="item">
-                        <div class="pic">
-                            <img src="https://upload.cc/i1/2018/06/18/hOEJGW.png"></div>
-                        <div class="info">
-                            <h3>${ob.productName}</h3>
-                            <span><i class="fas fa-clock"></i>${ob.orderTime}</span>
-                            <span><i class="fas fa-male" style="font-size:20px;margin-left:4px;"></i>${ob.memberName}</span>
-                        </div>
-                        <div class="total">
-                            <p>Total</p><b>${ob.totalAmount}</b>
-                        </div>
-                    </div>
-                 
-                        <div class="pic">
-                            <img src="https://upload.cc/i1/2018/06/18/3T7qFR.png"></div>
-                        <div class="info">
-                            <h3>${ob.productName}</h3>
-                            <span><i class="fas fa-clock"></i>${ob.orderTime}</span>
-                            <span>
-                                <i class="fas fa-male" style="font-size:20px;margin-left:4px;"></i>${ob.memberName}</span>
-                        </div>
-                        <div class="total">
-                            <p>Total</p><b>${ob.totalAmount}</b>
-                        </div>
+                    </div>            
                         </c:forEach>
                     </div>
                 </div>
-        </div> 
+
+         
             <!-- panel right -->
+          
             <div class="panel right">
                 <h2>Latest Orders</h2>
                 <div class="list">
@@ -116,10 +98,15 @@
                             <span><i class="fas fa-male" style="font-size:20px;margin-left:4px;"></i>${o.order_name}</span>
                         </div>
                         <div class="total">
-                            <p>Toatal</p><b>${o.total}</b>
+                            <p>Toatal</p>
+                            <div align="left">                   
+                            <b>${o.total}</b>
+                             </div>
                         </div>
                     </div>
                     </c:forEach>
+                    </div>
+                   
 <!--                     <div class="item"> -->
 <!--                         <div class="pic"> -->
 <!--                             <img src="https://upload.cc/i1/2018/06/18/hOEJGW.png"></div> -->
@@ -149,6 +136,9 @@
 <!--                     </div> -->
                 </div>
         </div>   
+        </div> 
+            <!-- panel right -->
+
  </content>
 </div>
 

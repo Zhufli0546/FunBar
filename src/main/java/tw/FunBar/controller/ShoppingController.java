@@ -37,6 +37,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import tw.FunBar.model.Member;
 import tw.FunBar.model.ProductBean;
+import tw.FunBar.model.Room;
 import tw.FunBar.service.OrderHandleService;
 import tw.FunBar.service.ShoppingService;
 
@@ -229,7 +230,7 @@ public class ShoppingController {
 	@RequestMapping(value = "/ProductPicture/{productId}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPicture(HttpServletResponse resp, 
 			@PathVariable Integer productId) {
-		String filePath = "/WEB-INF/views/ProductImages/noImage.png";
+		//String filePath = "/WEB-INF/views/ProductImages/noImage.png";
 
 		byte[] media = null;
 		HttpHeaders headers = new HttpHeaders();
@@ -239,30 +240,52 @@ public class ShoppingController {
 		if (pb != null) {
 			Blob blob = pb.getProductImage();
 			filename = pb.getFileName();
-			System.out.println("filename:"+filename);
-			System.out.println("blob:"+blob);
 			if (blob != null) {
 				try {
 					len = (int) blob.length();
 					media = blob.getBytes(1, len);
 				} catch (SQLException e) {
-					throw new RuntimeException("ShoppingController的getPicture()發生SQLException: " + e.getMessage());
+					e.printStackTrace();
 				}
-			} else {
-				media = toByteArray(filePath);
-				filename = filePath;
 			}
-		} else {
-			media = toByteArray(filePath);
-			filename = filePath;
 		}
-		headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-		String mimeType = context.getMimeType(filename);
-		MediaType mediaType = MediaType.valueOf(mimeType);
-		System.out.println("mediaType =" + mediaType);
-		headers.setContentType(mediaType);
-		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media, headers, HttpStatus.OK);
+		
+		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media,HttpStatus.OK);
 		return responseEntity;
+		
+//		============================================
+//		byte[] media = null;
+//		HttpHeaders headers = new HttpHeaders();
+//		String filename = "";
+//		int len = 0;
+//		ProductBean pb = orderService.getProductById(productId);
+//		if (pb != null) {
+//			Blob blob = pb.getProductImage();
+//			filename = pb.getFileName();
+//			System.out.println("filename:"+filename);
+//			System.out.println("blob:"+blob);
+//			if (blob != null) {
+//				try {
+//					len = (int) blob.length();
+//					media = blob.getBytes(1, len);
+//				} catch (SQLException e) {
+//					throw new RuntimeException("ShoppingController的getPicture()發生SQLException: " + e.getMessage());
+//				}
+//			} else {
+//				media = toByteArray(filePath);
+//				filename = filePath;
+//			}
+//		} else {
+//			media = toByteArray(filePath);
+//			filename = filePath;
+//		}
+//		headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+//		String mimeType = context.getMimeType(filename);
+//		MediaType mediaType = MediaType.valueOf(mimeType);
+//		System.out.println("mediaType =" + mediaType);
+//		headers.setContentType(mediaType);
+//		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media, headers, HttpStatus.OK);
+//		return responseEntity;
 	}
 	
 	private byte[] toByteArray(String filepath) {

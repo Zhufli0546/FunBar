@@ -68,8 +68,8 @@
 				</tr>
 
 				<div>
-					<td><a href="${pageContext.request.contextPath}">
-							<button type="button" class="btn btn-outline-secondary">回首頁</button>
+					<td><a href="admin">
+							<button type="button" class="btn btn-outline-secondary">後台管理中心</button>
 					</a></td>
 				</div>
 		</div>

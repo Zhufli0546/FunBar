@@ -30,7 +30,7 @@ $(document).ready(function() {
 			var dec = disc / 10;
 
 			if (num < 1) {
-				alert('數量不可小於1 !');
+				alert('哪有人買零個的啦！');
 				num = 1;
 			}
 			//小計   
