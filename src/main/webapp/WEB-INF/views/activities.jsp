@@ -59,8 +59,10 @@
 						
 						</c:when>
 						<c:otherwise>
-						<a href="${pageContext.request.contextPath}/getsiqnupActivity/${member.memberId}"
-						class="list-group-item">我報名的活動</a>
+						<br>
+						<a href="${pageContext.request.contextPath}/getsiqnupActivity/${member.memberId}">
+						<button style="margin-left:10px;" type="button" class="btn btn-outline-dark">我報名的活動</button>
+						</a>
 						</c:otherwise>
 					</c:choose>
 
