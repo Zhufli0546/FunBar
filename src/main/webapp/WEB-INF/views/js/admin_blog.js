@@ -31,8 +31,7 @@ function init() {
 		txt += "<td>" + blogs[i].blogCreatedTime;
 		txt += "<td><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' id='customSwitch" + i +"'>" +
 				"<label class='customSwitch custom-control-label' data-switchurl='" + requestUrl + "admin_switch/" + blogs[i].blogId +"' data-switch='" + blogs[i].blogIsHot +"' for='customSwitch"+ i +"'></label></div>";
-		txt += "<td><a class='deleteData' href='" + requestUrl
-				+ "admin_delete/" + blogs[i].blogId + "'>刪除</a>";
+		txt += "<td><a href='javascript:;' class='deleteData' data-deleteid='"+ blogs[i].blogId +"'>刪除</a>";
 	}
 	$("#demo").html(txt);
 	hiddenContent();
@@ -40,6 +39,21 @@ function init() {
 		"width" : "200px",
 		"height" : "110px"
 	});
+	
+	// 刪除文章
+	$(".deleteData").click(function() {
+		let deleteId = $(this).data("deleteid");
+		$.ajax({
+			url: requestUrl + "admin_delete/" + deleteId,
+			method: "POST",
+			dataType: "JSON",
+			success: function() {
+				$("#demo").html("");
+				$("#show").html("");
+				generate();
+			}
+		})
+	})
 
 	// 取得頁數
 	let pageNum = Math.ceil(blogs.length / pageRow);

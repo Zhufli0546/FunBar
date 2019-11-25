@@ -23,7 +23,7 @@
 		<div class="col-md-8">
 			<div id="emptyCart">
 				<div align="center" colpsan="8">
-					<a href="/FunBar/shoppingCart"><img src="images/emptyOrder.png"
+					<a href="/FunBar/shoppingCart?index=1"><img src="images/emptyOrder.png"
 						style="height: 367px; filter: grayscale(80%);" alt="emptyOrder"
 						title="back to shop"></a><br>
 					<br>
@@ -31,7 +31,7 @@
 				</div>
 
 				<div align="center" colspan="8" style="margin: 20px">
-					<a href="<c:url value='/shoppingCart' />"><button
+					<a href="<c:url value='/shoppingCart?index=1' />"><button
 							class="btn btn-dark">Back to mall</button></a>
 				</div>
 			</div>

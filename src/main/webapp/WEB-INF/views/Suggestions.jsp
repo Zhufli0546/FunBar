@@ -22,7 +22,7 @@
     }
     .container{
 		font-family:微軟正黑體;
-		margin: 100px auto 150px auto; width: 80%;
+		margin: 80px auto 150px auto; width: 80%;
 	}
   </style>
 </head>
@@ -30,7 +30,7 @@
 
 <jsp:include page="admin_header.jsp" />
 <div class="container">
-    <h2>--活動名稱--</h2><br>
+    <h2>--活動名稱--</h2>
     <h2 style="color:rgba(58, 26, 11, 0.877)">${eventName}</h2><br>
     <hr>
       <a href="${pageContext.request.contextPath}/activityQuery?index=1">

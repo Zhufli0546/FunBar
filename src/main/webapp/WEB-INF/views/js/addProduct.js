@@ -92,6 +92,7 @@ document.addEventListener("DOMContentLoaded",function(){
 		document.getElementById("msgPrice").innerHTML="";
 		let thePrice = document.getElementById("unitPrice").value;
 		let thePriceLen = thePrice.length;
+		let symbol = ["!", " @", "#", "$", "%", "^", "&", "*","-","+"];
 		let flag1= false, flag2= false, flag3= false, flag4= false; 
 		if(thePrice == ""){
 			document.getElementById("msgPrice").innerHTML="<img width='25px' height='25px' src='images/sign-error.png'>請輸入商品價格"
@@ -109,12 +110,21 @@ document.addEventListener("DOMContentLoaded",function(){
 				}else if(thePrice[0] == "0"){
 					console.log("開頭數字:" + thePrice[0]);
 					flag3 = true;
+				}else{
+					for (let i = 0; i < symbol.length; i++) {                
+	                    if (thePrice.indexOf(symbol[i] != -1)) {     
+	                        flag4 = true;
+	                        break;
+	                    }
+	                }
 				}
 			}//for迴圈結尾
 			if(flag1 || flag2){
 				document.getElementById("msgPrice").innerHTML="<img width='25px' height='25px' src='images/sign-error.png'>不可輸入數字以外的字"
 			}else if(flag3){
 				document.getElementById("msgPrice").innerHTML="<img width='25px' height='25px' src='images/sign-error.png'>開頭數字不可為零"
+			}else if(flag4){
+				document.getElementById("msgPrice").innerHTML="<img width='25px' height='25px' src='images/sign-error.png'>價格不可為負數"
 			}else{
 				document.getElementById("msgPrice").innerHTML="<img width='25px' height='25px' src='images/sign-ok.png'>正確"
 			}
@@ -130,6 +140,7 @@ document.addEventListener("DOMContentLoaded",function(){
 		let theDisc = document.getElementById("discount").value;
 		let theDiscLen = theDisc.length;
 		let thePI = new RegExp("^[0-9]*[1-9][0-9]*$");  //宣告thePI 為正整數
+		let symbol = ["!", " @", "#", "$", "%", "^", "&", "*","-","+"];
 		let flag1= false, flag2= false ;
 		
 		if(theDisc == ""){
@@ -142,10 +153,20 @@ document.addEventListener("DOMContentLoaded",function(){
 			for(i=0; i<theDiscLen ; i++){
 				if(theDisc[0] =="0"){
 					flag1= true;
+				}else {
+					for (let i = 0; i < symbol.length; i++) {                 
+                    if (theDisc.indexOf(symbol[i] != -1)) {     
+                        flag2 = true;
+                        break;
+                    }
+                }
+					
 				}
 			}//for迴圈結尾
 			if(flag1){
 				document.getElementById("msgDisc").innerHTML="<img width='25px' height='25px' src='images/sign-error.png'>開頭數字不可為零"
+			}else if(flag2){
+				document.getElementById("msgDisc").innerHTML="<img width='25px' height='25px' src='images/sign-error.png'>折扣不可為負數"
 			}else{
 				document.getElementById("msgDisc").innerHTML="<img width='25px' height='25px' src='images/sign-ok.png'>正確"
 			}
@@ -161,6 +182,8 @@ document.addEventListener("DOMContentLoaded",function(){
 		document.getElementById("msgStock").innerHTML="";
 		let theStock = document.getElementById("stock").value;
 		let theStockLen = theStock.length;
+		let symbol = ["!", " @", "#", "$", "%", "^", "&", "*","-","+"];
+		
 		let flag1= false, flag2= false, flag3= false, flag4= false; 
 		if(theStock == ""){
 			document.getElementById("msgStock").innerHTML="<img width='25px' height='25px' src='images/sign-error.png'>請輸入庫存數量"
@@ -177,12 +200,21 @@ document.addEventListener("DOMContentLoaded",function(){
 					flag2 = true;
 				}else if(theStock[0] == "0"){
 					flag3 = true;
-				}
+				}else {
+                    for (let i = 0; i < symbol.length; i++) {       //一個個查找symbol陣列裡的特殊字元                   
+                        if (theStock.indexOf(symbol[i] != -1)) {     //回傳字元不等於負1就是有找到特殊字元
+                            flag4 = true;
+                            break;
+                        }
+                    }
+                }
 			}//for迴圈結尾
 			if(flag1 || flag2){
 				document.getElementById("msgStock").innerHTML="<img width='25px' height='25px' src='images/sign-error.png'>不可輸入數字以外的字"
 			}else if(flag3){
 				document.getElementById("msgStock").innerHTML="<img width='25px' height='25px' src='images/sign-error.png'>開頭數字不可為零"
+			}else if(flag4){
+				document.getElementById("msgStock").innerHTML="<img width='25px' height='25px' src='images/sign-error.png'>可以不要這樣嗎"
 			}else{
 				document.getElementById("msgStock").innerHTML="<img width='25px' height='25px' src='images/sign-ok.png'>正確"
 			}

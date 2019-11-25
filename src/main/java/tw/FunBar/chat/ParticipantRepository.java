@@ -11,25 +11,25 @@ import tw.FunBar.model.Member;
 @Service("participantRepository")
 public class ParticipantRepository {
 
-	private Map<String, Member> activeSessions = new ConcurrentHashMap<>();
+	private Map<Integer, Member> activeMember = new ConcurrentHashMap<>();
 
-	public void add(String sessionId, Member event) {
-		activeSessions.put(sessionId, event);
+	public void add(Integer memberId, Member member) {
+		activeMember.put(memberId, member);
 	}
 
-	public Member getParticipant(String sessionId) {
-		return activeSessions.get(sessionId);
+	public Member getParticipant(Integer memberId) {
+		return activeMember.get(memberId);
 	}
 
-	public void removeParticipant(String sessionId) {
-		activeSessions.remove(sessionId);
+	public void removeParticipant(Integer memberId) {
+		activeMember.remove(memberId);
 	}
 
-	public Map<String, Member> getActiveSessions() {
-		return activeSessions;
+	public Map<Integer, Member> getActiveMember() {
+		return activeMember;
 	}
 
-	public void setActiveSessions(Map<String, Member> activeSessions) {
-		this.activeSessions = activeSessions;
+	public void setActiveMember(Map<Integer, Member> activeMember) {
+		this.activeMember = activeMember;
 	}
 }

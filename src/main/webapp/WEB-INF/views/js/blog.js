@@ -280,3 +280,22 @@ $(".searchClick").click(function() {
 		}
 	})
 })
+
+// 新增部落格發送通知
+$("#sendBlogMessage").click(function(){
+	sessionScopeMemberId = $('.sessionScopeMemberId').val();
+	let sessionScopeMemberName = $('.sessionScopeMemberName').val();
+	let blogTitle = $("#blogTitle").val();
+	stompClient.send("/topic/notification", {},
+		 JSON.stringify({
+			 'notification' : sessionScopeMemberName + "剛剛新增一篇新文章:" + blogTitle,
+			 'icon': requestUrl_blog + '/membergetPicture/' + sessionScopeMemberId,
+			 'url': requestUrl_blog + '/blogs',
+			 'sessionScopeMemberId' : sessionScopeMemberId
+			 
+		})
+	);
+})
+
+
+

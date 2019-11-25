@@ -19,7 +19,8 @@
 
 
 		<div class="container" style="margin-bottom:100px">
-			<h1 style="font-family: fantasy;">所有訂單</h1>
+			<h1 style="font-family: fantasy; margin-top:30px">所有訂單</h1>
+			<hr>
 			<div id="accordion" style="width:800px">
 				<c:forEach var="o" items="${orders}" begin="0" step="1"
 					end="${fn:length(orders)}" varStatus="i">

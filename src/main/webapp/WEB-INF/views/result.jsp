@@ -106,7 +106,7 @@ p {
 				</div>
 				<div class="row justify-content-end">
 					<div class="col-md-auto col-12-mobile">
-						<a href="<c:url value='/index'/>">
+						<a href="<c:url value='/'/>">
 							<button>回首頁</button>
 						</a>
 					</div>

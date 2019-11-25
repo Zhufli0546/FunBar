@@ -21,7 +21,7 @@
   <div class="row" style="float: left; margin: 50px">
    <div class="col-md-3">
     <div class="list-group" style="width: 150px">
-     <a href="${pageContext.request.contextPath}/shoppingCart"
+     <a href="${pageContext.request.contextPath}/shoppingCart?index=1"
       class="list-group-item">All Products</a>
      <c:forEach var='category' items='${categoryList}'>
       <a
@@ -90,7 +90,7 @@
   <!-- .prodBlock -->
 
   <div align="center" colspan="8">
-   <a href="<c:url value='/shoppingCart' />"><button class="btn-back">Back to shop</button></a>
+   <a href="<c:url value='/shoppingCart?index=1' />"><button class="btn btn-back">Back to shop</button></a>
     <a href="<c:url value='/showCart' />"><button class="btn btn-info">Go to pay</button></a>
   </div>
 
