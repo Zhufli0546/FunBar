@@ -182,7 +182,7 @@ public class OrderHandleDAOImpl implements OrderHandleDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ProductBean> getLessStockProduct() {
-		String hql = "From ProductBean Where stock < 50  Order by stock ASC";
+		String hql = "From ProductBean Where stock < 50 And status=0 Order by stock ASC";
 		Session session = null;
 		session = sessionFactory.getCurrentSession();
 		List <ProductBean> list = new ArrayList<>();

@@ -163,7 +163,7 @@
 			</tbody>
 		</table>
 		
-		<ul class="pagination justify-content-center">
+		<ul class="pagination justify-content-center" style="padding-bottom:20px">
 				
 			<c:forEach  begin="1" step="1" end="${listCount}" varStatus="i" >
 				<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/showAllProduct?index=${i.index}">${i.index}</a></li>		

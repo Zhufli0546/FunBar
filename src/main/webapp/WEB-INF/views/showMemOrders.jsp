@@ -119,7 +119,7 @@
 	<div class="page row">
 		<div class="col-md-2"></div>
 		<div class="col-md-8">
-			<h1 style="font-family:fantasy;"">Dear ${sessionScope.member.memberName} ,</h1>
+			<h1 style="font-family:fantasy;margin-top:5px"">Dear ${sessionScope.member.memberName} ,</h1>
 			<h3 style="font-family:fantasy;">here are all your orders , check out please.</h3><br>
 			<div id="accordion">
 				<c:forEach var="o" items="${orders}" begin="0" step="1"
