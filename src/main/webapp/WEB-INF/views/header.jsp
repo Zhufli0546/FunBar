@@ -119,7 +119,6 @@
 											</a>
 											<div class="dropdown-menu">
 												<a class="dropdown-item" href="<c:url value='/getself?id=${member.id}' />">修改會員資料</a>
-												<a class="dropdown-item" href="<c:url value='/getONE?id=${member.id}' />">修改訂單資料</a>
 												<a class="dropdown-item" href="${pageContext.request.contextPath}/personal_order">我的訂房</a>
 												<a class="dropdown-item" href="javascript:;">${member.memberName},你好</a>
 												<a class="dropdown-item" href="${pageContext.request.contextPath}/logout">登出</a>
