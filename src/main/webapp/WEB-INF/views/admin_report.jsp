@@ -37,7 +37,7 @@
 			  		<select class="custom-select" id="inputGroupSelect04">
 			    		<option value="0" selected>所有檢舉</option>
 			    		<option value="1">留言編號</option>
-			    		<option value="2">留言內容</option>
+			    		<option value="2">檢舉原因</option>
 			    		<option value="3">檢舉人</option>
 			    		<option value="4">被檢舉人</option>
 			  		</select>
