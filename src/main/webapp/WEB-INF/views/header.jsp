@@ -63,7 +63,7 @@
 	<!-- Header -->
 	<header>
 		<!-- Header desktop -->
-		<div class="wrap-menu-header gradient1 trans-0-4" style="background-color: black;">
+		<div class="wrap-menu-header gradient1 trans-0-4" style="background-color: black; opacity: 0.8">
 			<div class="container-fluid h-full">
 				<div class="wrap_header trans-0-3">
 					<!-- Logo -->
@@ -118,8 +118,8 @@
 												<img id="dropdownMenu1" data-toggle="dropdown" class="card-img-top rounded-circle" style="height: 50px; width: 50px" src="<c:url value='/membergetPicture/${member.id}'/>">
 											</a>
 											<div class="dropdown-menu">
-												<a class="dropdown-item" href="<c:url value='getself?id=${member.id}' />">修改會員資料</a>
-												<a class="dropdown-item" href="<c:url value='getONE?id=${member.id}' />">修改訂單資料</a>
+												<a class="dropdown-item" href="<c:url value='/getself?id=${member.id}' />">修改會員資料</a>
+												<a class="dropdown-item" href="<c:url value='/getONE?id=${member.id}' />">修改訂單資料</a>
 												<a class="dropdown-item" href="${pageContext.request.contextPath}/personal_order">我的訂房</a>
 												<a class="dropdown-item" href="${pageContext.request.contextPath}/logout">登出</a>
 											</div>
@@ -164,10 +164,26 @@
 
 			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/discuss" class="txt19">討論區</a></li>
 
-			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/signin">登入</a></li>
+			<c:choose>
+			<c:when test="${sessionScope.member.memberName==null}">
+				<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/signin">登入</a></li>
+			</c:when>
 
-			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/admin">後台管理</a></li>
-
+			<c:otherwise>
+				<li class="t-center m-b-13">
+					<a href="<c:url value='/getself?id=${member.id}' />">
+	     				<img class="card-img-top rounded-circle" style="height: 50px; width: 50px" src="<c:url value='/membergetPicture/${member.id}'/>">
+	     			</a>
+				</li>
+			
+				<c:if test="${sessionScope.member.memberLevel>1}">
+					<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/admin">後台管理</a></li>
+				</c:if>
+				<li class="t-center m-b-13">
+					<a href="${pageContext.request.contextPath}/logout">登出</a>
+				</li>
+			</c:otherwise>
+			</c:choose>
 
 <!-- 			<li class="t-center"> -->
 <!-- 				<a href="reservation.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">Reservation</a> -->

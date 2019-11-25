@@ -77,11 +77,7 @@ public class MemberServiceImp implements MemberService {
 		dao.updateself(id, memberName, memberAddress, memberBirth, memberPhone, memberEmail, blob);
 		
 	}
-	@Override
-	public void updateMember(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
-			String memberPwd, String memberId, String memberEmail,Blob blob) {
-		dao.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberPwd, memberId, memberEmail, blob);
-	}
+	
 
 	@Override
 	public Member forget(String memberId) {
@@ -92,6 +88,12 @@ public class MemberServiceImp implements MemberService {
 	@Override
 	public void newPwd(String memberId, String memberPwd) {
 		dao.newPwd(memberId, memberPwd);
+	}
+
+	@Override
+	public void updateMember(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
+			String memberPwd, String memberId, String memberEmail, Integer memberLevel, Blob blob) {
+		dao.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberPwd, memberId, memberLevel, memberEmail, blob);
 	}
 
 	

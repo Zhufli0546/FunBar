@@ -1,8 +1,8 @@
 @charset "UTF-8";
 body{
-	width:100%;
-	height:100%;
-	padding:0;
+	width:70%;
+	height:70%;
+	padding:20px;
 	margin:0;
 	background: url("../images/member.jpg") ;
 	background-size:cover;
@@ -13,6 +13,7 @@ body{
 }
 .login{
 	position: fixed;
+	border:200px;
 	left: 50%;
 	top:50%;
 	transform: translate(-50%,-50%);
@@ -22,7 +23,8 @@ body{
 	font-family: "微軟正黑體", sans-serif;
 	border-radius: 10px;
 	padding: 30px;
-	width:25%
+	width:25%;
+	background-size: 50%;
 }
 .login i{
 	font-size:100px;

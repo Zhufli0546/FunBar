@@ -115,36 +115,6 @@
 		      }
 		    });
 		  }
-		  var button = document.getElementsByTagName('button')[0];
-		  button.addEventListener('click', function () {
-		    // If the user agreed to get notified
-		    if (Notification && Notification.permission === "granted") {
-		      var n = new Notification("Hi!");
-		    }
-		    // If the user hasn't told if he wants to be notified or not
-		    // Note: because of Chrome, we are not sure the permission property
-		    // is set, therefore it's unsafe to check for the "default" value.
-		    else if (Notification && Notification.permission !== "denied") {
-		      Notification.requestPermission(function (status) {
-		        if (Notification.permission !== status) {
-		          Notification.permission = status;
-		        }
-		        // If the user said okay
-		        if (status === "granted") {
-		          var n = new Notification("Hi!");
-		        }
-		        // Otherwise, we can fallback to a regular modal alert
-		        else {
-		          alert("Hi!");
-		        }
-		      });
-		    }
-		    // If the user refuses to get notified
-		    else {
-		      // We can fallback to a regular modal alert
-		      alert("Hi!");
-		    }
-		  });
 		});
 	function connectNotification() {
 		var socket = new SockJS($("#websocketUrl").val().trim());
@@ -154,8 +124,19 @@
 			stompClient.subscribe("/topic/notification", function(notification) {
 				var json = JSON.parse(notification.body);
 				var note = json.notification;
-				console.log("notification == " + note)
-				var n = new Notification(note);
+				var icon = json.icon;
+				var tag = json.tag;
+				var url = json.url;
+
+				var n = new Notification("",{
+					body: note,
+					icon: icon,
+					tag: tag
+				});
+				
+				n.onclick = function() {
+					window.open(url);
+				}
 			});
 		})
 	}

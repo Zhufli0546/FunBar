@@ -84,6 +84,8 @@
                         <input type="text" class="form-control" name="memberEmail" value="${one.memberEmail}">
                         <label for="memberAddress">大頭貼:</label>
                         <input type="file" class="form-control" name="memberimg" value="${one.memberimg}">
+                        <label for="memberLevel">等級:</label>
+                        <input type="number" class="form-control" name="memberLevel" value="${one.memberLevel}">
 				</div>
 
 					<div class="button">

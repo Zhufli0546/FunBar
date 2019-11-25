@@ -157,7 +157,7 @@
                             <div class="row">
                             	<div class="col-md-4"></div>
                             	<div class="col-md-4">
-                            		<button style="display: block; width: 100px; height: 50px; margin: 0 auto;" class="btn btn-outline-secondary" type="submit">提交</button>
+                            		<button id="sendBlogMessage" style="display: block; width: 100px; height: 50px; margin: 0 auto;" class="btn btn-outline-secondary" type="submit">提交</button>
                             	</div>
                             </div>
                         </div>
@@ -238,6 +238,7 @@
 <!-- Footer -->
 <div style="display:none; " class="requestUrl">${pageContext.request.contextPath}</div>
 <input type="hidden" class="sessionScopeMemberId" value="${sessionScope.member.id}" />
+<input type="hidden" class="sessionScopeMemberName" value="${sessionScope.member.memberName}" />
 <jsp:include page="footer.jsp" />
 <script src="<c:url value='/vendor/ckeditor/ckeditor.js'/>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.0/sweetalert2.all.js"></script>
@@ -266,8 +267,5 @@ $(document).ready(function () {
 })
 </script>
 <script src="<c:url value='/js/blog.js'/>"></script>
-
-<%-- <!-- Chat Box -->
-<jsp:include page="chatbox.jsp" /> --%>
 </body>
 </html>

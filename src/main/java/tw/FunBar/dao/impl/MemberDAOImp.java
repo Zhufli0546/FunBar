@@ -53,16 +53,17 @@ public class MemberDAOImp implements MemberDAO {
 	// 修改
 	@Override
 	public void updateMember(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
-			String memberPwd, String memberId, String memberEmail, Blob blob) {
+			String memberPwd, String memberId,Integer memberLevel, String memberEmail, Blob blob) {
 		Session session = factory.getCurrentSession();
 		String hql = "UPDATE Member SET memberName =:memberName," + "memberAddress =:memberAddress,"
 				+ "memberBirth =:memberBirth," + "memberPhone =:memberPhone," + "memberPwd =:memberPwd,"
-				+ "memberId =:memberId," + "memberEmail =:memberEmail," + "memberPic =:memberPic WHERE id =:id";
+				+ "memberId =:memberId," + "memberEmail =:memberEmail,"+ "memberLevel =:memberLevel," + "memberPic =:memberPic WHERE id =:id";
 
 		session.createQuery(hql).setParameter("id", id).setParameter("memberName", memberName)
 				.setParameter("memberAddress", memberAddress).setParameter("memberBirth", memberBirth)
 				.setParameter("memberPhone", memberPhone).setParameter("memberPwd", memberPwd)
 				.setParameter("memberId", memberId).setParameter("memberEmail", memberEmail)
+				.setParameter("memberLevel", memberLevel)
 				.setParameter("memberPic", blob).executeUpdate();
 
 	}

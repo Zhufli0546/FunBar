@@ -16,15 +16,15 @@
 <!-- Content -->
 <div class="container" style="margin-top:10px;margin-bottom:120px">
 
-	<content>
-		<div class="overview" style="">
-			<div class="date">
-        		<p>2019/6/17 <i class="fas fa-caret-right" style="color:#000"></i> 2019/11/29</p>
-			</div>
-		</div>
-		
-		<!-- overview -->
-		<div class="overviewBox">
+ <content>
+  <div class="overview" style="">
+   <div class="date">
+          <p>2019/6/17 <i class="fas fa-caret-right" style="color:#000"></i> 2019/11/29</p>
+   </div>
+  </div>
+  
+  <!-- overview -->
+  <div class="overviewBox">
              <div class="n3">
                  <h2><i class="fas fa-hand-holding-usd"></i>TOTAL REVENUE</h2>
                  <p style="color:#7ED321">${roomTotalIncome+productTotalIncome}</p>
@@ -61,7 +61,7 @@
                         <div class="pic">
        
                             <img width="200" height="100%"  src="<c:url value='/ProductPicture/${pb.productId}'/>" />
-					</div>
+     </div>
                         <div class="info">
                             <h3 class="prdouctName">${pb.productName}</h3>
                             <span><i class="fas fa-wine-bottle" style="font-size:14px"></i>${pb.category}</span> 
@@ -78,6 +78,7 @@
                         </c:forEach>
                     </div>
                 </div>
+
          
             <!-- panel right -->
           
@@ -136,6 +137,9 @@
 <!--                     </div> -->
                 </div>
         </div>   
+        </div> 
+            <!-- panel right -->
+
  </content>
 </div>
 

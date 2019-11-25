@@ -32,7 +32,7 @@
 <input type="text"  name="memberId" placeholder="請輸入帳號">
 <span class="error">${errorMsg.errUserName}</span>
 <h5>密碼</h5>
-<input type="text" name="memberPwd" placeholder="請輸入密碼">
+<input type="password" name="memberPwd" placeholder="請輸入密碼">
 <span class="error">${errorMsg.errPassword}</span>
 <span><a href="memberforget">忘記密碼</a></span>
 <button type="submit">登入</button>
