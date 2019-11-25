@@ -156,9 +156,9 @@
 
 			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/booking_query">訂位、訂房查詢</a></li>
 
-			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/activities" class="txt19">熱門活動</a></li>
+			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/activities?index=1" class="txt19">熱門活動</a></li>
 
-			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/shoppingCart">購物區</a></li>
+			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/shoppingCart?index=1">購物區</a></li>
 
 			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/blogs" class="txt19">部落格</a></li>
 

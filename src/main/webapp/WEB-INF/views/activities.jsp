@@ -61,7 +61,7 @@
 						<c:otherwise>
 						<br>
 						<a href="${pageContext.request.contextPath}/getsiqnupActivity/${member.memberId}">
-						<button style="margin-left:10px;" type="button" class="btn btn-outline-dark">我報名的活動</button>
+						<button style="margin-left:px;" type="button" class="btn btn-outline-dark">我報名的活動</button>
 						</a>
 						</c:otherwise>
 					</c:choose>
