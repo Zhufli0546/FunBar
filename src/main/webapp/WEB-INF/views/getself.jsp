@@ -85,7 +85,7 @@
 						<label for="memberAddress">地址:</label>
                         <input type="text" class="form-control" name="memberAddress" value="${one.memberAddress}">
 						<label for="memberAddress">生日:</label>
-                        <input type="text" class="form-control" name="memberBirth" value="${one.memberBirth}">
+                        <input type="date" class="form-control" name="memberBirth" value="${one.memberBirth}">
 						<label for="memberAddress">電話:</label>
                         <input type="text" class="form-control" name="memberPhone" value="${one.memberPhone}">
 						<label for="memberAddress">密碼:</label>

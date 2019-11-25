@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import javax.persistence.NoResultException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import tw.FunBar.model.Member;
@@ -72,6 +74,7 @@ public class MemberController {
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
 	public String signinto(@RequestParam("memberId") String memberId, @RequestParam("memberPwd") String memberPwd,
 			Model model, HttpServletRequest request, HttpSession session) {
+
 		
 		Member member = null;
 		try {
@@ -138,14 +141,45 @@ public class MemberController {
 		return "joinus";
 	}
 	@RequestMapping(value = "/joinus", method = RequestMethod.POST)
-	public String dosavemember(@ModelAttribute("Member") Member mb) {
+	public String dosavemember(@ModelAttribute("Member") Member mb,Model model) {
+		HashMap<String,String> errorMsg = new HashMap<String,String>();
 		
-		try {
+		//驗證每個註冊欄位
+		if(mb.getMemberName() == null || mb.getMemberName().length() == 0) {
+            errorMsg.put("errUserName","請輸入您的名子");
+        }
+		
+		if(mb.getMemberAddress() == null || mb.getMemberAddress().length() == 0) {
+            errorMsg.put("errAddress","請輸入您的地址");
+        }
+		
+		if(mb.getMemberBirth() == null || mb.getMemberBirth().length() == 0) {
+            errorMsg.put("errBirth","請輸入您的生日");
+        }
+		
+		if(mb.getMemberPhone() == null || mb.getMemberPhone().length() == 0) {
+            errorMsg.put("errPhone","請輸入您的電話");
+        }
+		
+		if(mb.getMemberId() == null || mb.getMemberId().length() == 0) {
+            errorMsg.put("errId","請輸入您的帳號");
+        }
+		
+		if(mb.getMemberPwd() == null || mb.getMemberPwd().length() == 0) {
+            errorMsg.put("errPwd","請輸入您的密碼");
+        }
+		
+		if(mb.getMemberEmail() == null || mb.getMemberEmail().length() == 0) {
+            errorMsg.put("errEmail","請輸入您的Email");
+        }
+		
+		if(errorMsg.size()!=0) {
 
-	//驗證每個註冊欄位
-	
-		
-		
+            model.addAttribute( "errorMsg", errorMsg);
+            return "joinus";
+        }
+
+		try {
 		MultipartFile IMG = mb.getMemberimg();
 		String originalFilename = IMG.getOriginalFilename();
 		mb.setMemberfileName(originalFilename);
@@ -275,8 +309,19 @@ public class MemberController {
 		return "index";
 			
 		}
-		
-		
+		//驗證是否重複帳號
+		@RequestMapping(value = "/abc", method = RequestMethod.POST)
+		@ResponseBody
+		public String mb(@RequestParam("idno")String memberId) {
+			
+
+			Boolean bb = memberService.checkId(memberId);
+			if(bb) {
+				return "0";
+			}else {
+			return "1";
+		}
+		}
 		
 		
 		

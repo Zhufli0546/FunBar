@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded",function(){
 	document.getElementById("memberName").addEventListener("blur",ckName);
 	document.getElementById("memberId").addEventListener("blur",ckId);
 	document.getElementById("memberPwd").addEventListener("blur",ckPwd);
-
+	
 });
 	function ckName(){
 		document.getElementById("noName").innerHTML="";
@@ -53,13 +53,31 @@ document.addEventListener("DOMContentLoaded",function(){
 		}
 		if(flag1 || flag2){
 			document.getElementById("noId").innerHTML="正確";
+			$.ajax({
+				url:"http://localhost:8080/FunBar/abc",
+				type:"POST",
+				data:{idno:theId},
+				success:function(data){
+					console.log(data);
+					if(data==1){
+						$("#noId").html("此帳號已存在")
+					}else{
+						$("#noId").html("可以使用")
+					}
+				}
+			})
 		}else {
 			document.getElementById("noId").innerHTML="請輸入兩個以上的數字或英文字母"
 		}
 		}
 		else{
 		document.getElementById("noId").innerHTML="請輸入兩個以上的數字或英文字母"
+			
 	}
+		
+			
+			
+		
 	}
 	function ckPwd(){
 		document.getElementById("noPwd").innerHTML="";
