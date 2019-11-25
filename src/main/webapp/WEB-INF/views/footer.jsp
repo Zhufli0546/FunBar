@@ -103,8 +103,13 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/web-socket-js/1.0.0/web_socket.js"></script>
-		<input id="websocketUrl" type="hidden" value="<c:url value="/websocket"/> ">
+	<input id="websocketUrl" type="hidden"
+		value="<c:url value="/websocket"/> ">
+	<a href="" class="list-group-item list-group-item-action"
+		id="requestUrl_Notification" style="display: none"><c:url
+			value='/' /></a>
 	<script>
+
 	window.addEventListener('load', function () {
 		  // At first, let's check if we have permission for notification
 		  // If not, let's ask for it
@@ -143,6 +148,7 @@
 	$(document).ready(function() {
 		connectNotification();
 	})
+
 	</script>
 
 </body>
