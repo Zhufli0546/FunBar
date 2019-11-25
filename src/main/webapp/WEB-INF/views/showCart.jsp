@@ -129,7 +129,7 @@ input {
 						<tr>
 							<td align="right" colspan="8">
 								<div class="col-sm-4 col-xs-12">
-									<a href="<c:url value='/shoppingCart' />"><button
+									<a href="<c:url value='/shoppingCart?index=1' />"><button
 											class="btn btn-back">Back to shop</button></a>
 									<button id="buy" type="button" class="btn btn-info page-btn"
 										data-toggle="modal" data-target="#createForm">Go

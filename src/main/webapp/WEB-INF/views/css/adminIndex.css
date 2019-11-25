@@ -253,11 +253,12 @@ button{
   height: 95px;
   overflow: hidden;
   margin:8px 0 5px 25px;
+  text-align: center;
 }
 
-.pic img{
-  width: 100%;  
-}
+/* .pic img{ */
+/*   width: 100%;   */
+/* } */
 
 .productName{
 	font-size:16px;

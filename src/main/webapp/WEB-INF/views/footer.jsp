@@ -130,21 +130,18 @@
 				var json = JSON.parse(notification.body);
 				var note = json.notification;
 				var icon = json.icon;
-				var tag = json.tag;
 				var url = json.url;
-				var discuss = "discuss";
-				console.log("確認是否為discuss == " + (tag == discuss))
-				if(tag != discuss){
-				var n = new Notification("",{
-					body: note,
-					icon: icon,
-					tag: tag
+				var memberId = json.sessionScopeMemberId;
+
+				if(memberId !=  ${sessionScope.member.id} ) {
+					var n = new Notification("FunBar",{
+						body: note,
+						icon: icon
 					});
+					n.onclick = function() {
+						window.open(url);
+						}
 				}
-				n.onclick = function() {
-					window.open(url);
-					}
-				
 			});
 			
 		})
