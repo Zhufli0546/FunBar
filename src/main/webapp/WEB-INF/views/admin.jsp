@@ -60,7 +60,7 @@
                     <div class="item">
                         <div class="pic">
        
-                            <img width="200" height="100%"  src="<c:url value='/ProductPicture/${pb.productId}'/>" />
+                            <img height="100%"  src="<c:url value='/ProductPicture/${pb.productId}'/>" />
      </div>
                         <div class="info">
                             <h3 class="prdouctName">${pb.productName}</h3>
