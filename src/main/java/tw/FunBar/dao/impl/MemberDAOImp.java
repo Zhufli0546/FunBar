@@ -164,15 +164,38 @@ public class MemberDAOImp implements MemberDAO {
 
 		
 	}
+	//驗證ID有無重複
+	@Override
+	public boolean checkId(String memberId) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM Member WHERE memberId =:memberId";
+		List<Member> list=(List<Member>) session.createQuery(hql).setParameter("memberId", memberId).getResultList();
+		if(list.size()==0) {
+			return true;
+		}else {
+			return false;
+		}
+		
+		
+	}
 
 
 
+	
+	
+	
+	
 	@Override
 	public void stateup(int memberLevel) {
 		Session session = factory.getCurrentSession();
 		
 		
 	}
+
+	
+
+
+	
 	
 
 

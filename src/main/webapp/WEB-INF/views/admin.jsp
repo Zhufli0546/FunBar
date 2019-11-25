@@ -65,12 +65,12 @@
                         <div class="info">
                             <h3 class="prdouctName">${pb.productName}</h3>
                             <span><i class="fas fa-wine-bottle" style="font-size:14px"></i>${pb.category}</span> 
-                             <span><i class="fas fa-percent" style="font-size:14px"></i>${pb.discount}</span>
+<%--                              <span><i class="fas fa-percent" style="font-size:14px"></i>${pb.discount}</span> --%>
                             <span><i class="fas fa-dollar-sign" style="font-size:14px"></i>${pb.unitPrice}</span>                                    
                         </div>
                         <div class="total">
-                            <p>Stock:</p>
-                            <div class="number">                      
+                            <p >Stock</p>
+                            <div align="left">                      
                             <b>${pb.stock}</b>
                             </div>
                         </div>
@@ -99,8 +99,7 @@
                         </div>
                         <div class="total">
                             <p>Toatal</p>
-                            <div class="number">
-                           
+                            <div align="left">                   
                             <b>${o.total}</b>
                              </div>
                         </div>

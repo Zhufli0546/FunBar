@@ -96,6 +96,12 @@ public class MemberServiceImp implements MemberService {
 		dao.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberPwd, memberId, memberLevel, memberEmail, blob);
 	}
 
+	@Override
+	public boolean checkId(String memberId) {
+		return	dao.checkId(memberId);
+		
+	}
+
 	
 
 	
