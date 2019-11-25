@@ -29,7 +29,7 @@
 		</div>
 		 
 		<div align="center" colspan="8" style="margin:20px ">
-		<a href="<c:url value='/shoppingCart' />"><button class="btn btn-dark" >Back to mall</button></a>
+		<a href="<c:url value='/shoppingCart?index=1' />"><button class="btn btn-dark" >Back to mall</button></a>
 		</div>
 	</div>
 	<jsp:include page="footer.jsp" />
