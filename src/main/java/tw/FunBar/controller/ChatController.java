@@ -40,14 +40,16 @@ public class ChatController {
 		Member member = (Member) session.getAttribute("member");
 		participantRepository.add(member.getId(), member);
 		System.out.println(member);
+		Member currentMember = participantRepository.getParticipant(member.getId());
 		System.out.println("在線人數：" + participantRepository.getActiveMember().values().size());
-		System.out.println("member Detail:" + participantRepository.getParticipant(member.getId()));
+		System.out.println("member:" + participantRepository.getParticipant(member.getId()));
+		System.out.println("member Name:" + currentMember.getMemberName() );
 		model.addAttribute("member", member);
 		return "chat";
 	}
 
 //	上線人數
-	@SubscribeMapping("/chat/participants")
+	@SubscribeMapping("/friends/participants")
 	public Long getActiveUserNumber() {
 		return Long.valueOf(participantRepository.getActiveMember().values().size());
 	}
