@@ -1,7 +1,5 @@
 package tw.FunBar.controller;
 
-
-
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -38,31 +36,32 @@ public class MemberController {
 	@Autowired
 	EmailService emailService;
 	ServletContext context;
-	//密碼錯誤
-	@RequestMapping(value="/find",method = RequestMethod.GET)
-	public String find(@RequestParam("memberId")String memberId,Model model) {
-	System.out.println("帳號:"+memberId);
-	model.addAttribute("one", memberService.forget(memberId));
+
+	// 密碼錯誤
+	@RequestMapping(value = "/find", method = RequestMethod.GET)
+	public String find(@RequestParam("memberId") String memberId, Model model) {
+		System.out.println("帳號:" + memberId);
+		model.addAttribute("one", memberService.forget(memberId));
 		return "find";
-		
+
 	}
-	@RequestMapping(value="/findyou",method = RequestMethod.POST)
-	public  String findyou(@RequestParam String memberId,@RequestParam String memberPwd) {	
+
+	@RequestMapping(value = "/findyou", method = RequestMethod.POST)
+	public String findyou(@RequestParam String memberId, @RequestParam String memberPwd) {
 		memberService.newPwd(memberId, memberPwd);
 		return "index";
-		
-	}
-	
 
-	//認證
-		@RequestMapping(value = "/check", method = RequestMethod.GET)
-		public String check(@RequestParam("id") Integer id) {
-			System.out.println("idDDDDDDDDDD"+ id);
-			int memberLevel = 0;
-			memberService.levelup(memberLevel, id);
+	}
+
+	// 認證
+	@RequestMapping(value = "/check", method = RequestMethod.GET)
+	public String check(@RequestParam("id") Integer id) {
+		System.out.println("idDDDDDDDDDD" + id);
+		int memberLevel = 0;
+		memberService.levelup(memberLevel, id);
 		return "index";
-			
-		}
+
+	}
 
 	// 一般登入
 	@RequestMapping(value = "/signin", method = RequestMethod.GET)
@@ -75,18 +74,17 @@ public class MemberController {
 	public String signinto(@RequestParam("memberId") String memberId, @RequestParam("memberPwd") String memberPwd,
 			Model model, HttpServletRequest request, HttpSession session) {
 
-		
 		Member member = null;
 		try {
 			member = memberService.signin(memberId, memberPwd);
-		} catch(NoResultException e) {
+		} catch (NoResultException e) {
 			return "redirect:/signin";
-		
+
 		}
-		
+
 		int level = member.getMemberLevel();
-		System.out.println("level:"+level);
-		
+		System.out.println("level:" + level);
+
 		if (member != null && level == 1) {
 			session = request.getSession(false);
 			session.setAttribute("member", member);
@@ -96,7 +94,7 @@ public class MemberController {
 			session = request.getSession(false);
 			session.setAttribute("member", member);
 			return "redirect:/";
-		} else {	
+		} else {
 			return "signin";
 		}
 	}
@@ -107,17 +105,19 @@ public class MemberController {
 
 		session = request.getSession(false);
 		session.removeAttribute("member");
+		session.removeAttribute("Cart");
 		// 結束妳要去的頁面
 		return "redirect:/";
 	}
 
-    // 查詢單筆
+	// 查詢單筆
 	@RequestMapping("/getONE1")
 	public String getONE1(@RequestParam("id") Integer id, Model model) {
 		model.addAttribute("one", memberService.getONEmember(id));
 
 		return "getONE1";
 	}
+
 	// 查詢全部
 	@RequestMapping("/showAllmember")
 	public String list(Model model) {
@@ -126,81 +126,80 @@ public class MemberController {
 		model.addAttribute("members", list);
 		return "showAllmember";
 	}
-	
-	
-	
-	
+
 	// 新增
-	
+
 	// 這個是對照到jsp的action
 	@RequestMapping(value = "/joinus", method = RequestMethod.GET)
 	public String savemember(Model model) {
 		Member mb = new Member();
-		
+
 		model.addAttribute("Member", mb);
 		return "joinus";
 	}
-	@RequestMapping(value = "/joinus", method = RequestMethod.POST)
-	public String dosavemember(@ModelAttribute("Member") Member mb,Model model) {
-		HashMap<String,String> errorMsg = new HashMap<String,String>();
-		
-		//驗證每個註冊欄位
-		if(mb.getMemberName() == null || mb.getMemberName().length() == 0) {
-            errorMsg.put("errUserName","請輸入您的名子");
-        }
-		
-		if(mb.getMemberAddress() == null || mb.getMemberAddress().length() == 0) {
-            errorMsg.put("errAddress","請輸入您的地址");
-        }
-		
-		if(mb.getMemberBirth() == null || mb.getMemberBirth().length() == 0) {
-            errorMsg.put("errBirth","請輸入您的生日");
-        }
-		
-		if(mb.getMemberPhone() == null || mb.getMemberPhone().length() == 0) {
-            errorMsg.put("errPhone","請輸入您的電話");
-        }
-		
-		if(mb.getMemberId() == null || mb.getMemberId().length() == 0) {
-            errorMsg.put("errId","請輸入您的帳號");
-        }
-		
-		if(mb.getMemberPwd() == null || mb.getMemberPwd().length() == 0) {
-            errorMsg.put("errPwd","請輸入您的密碼");
-        }
-		
-		if(mb.getMemberEmail() == null || mb.getMemberEmail().length() == 0) {
-            errorMsg.put("errEmail","請輸入您的Email");
-        }
-		
-		if(errorMsg.size()!=0) {
 
-            model.addAttribute( "errorMsg", errorMsg);
-            return "joinus";
-        }
+	@RequestMapping(value = "/joinus", method = RequestMethod.POST)
+	public String dosavemember(@ModelAttribute("Member") Member mb, Model model) {
+		HashMap<String, String> errorMsg = new HashMap<String, String>();
+
+		// 驗證每個註冊欄位
+		if (mb.getMemberName() == null || mb.getMemberName().length() == 0) {
+			errorMsg.put("errUserName", "請輸入您的名子");
+		}
+
+		if (mb.getMemberAddress() == null || mb.getMemberAddress().length() == 0) {
+			errorMsg.put("errAddress", "請輸入您的地址");
+		}
+
+		if (mb.getMemberBirth() == null || mb.getMemberBirth().length() == 0) {
+			errorMsg.put("errBirth", "請輸入您的生日");
+		}
+
+		if (mb.getMemberPhone() == null || mb.getMemberPhone().length() == 0) {
+			errorMsg.put("errPhone", "請輸入您的電話");
+		}
+
+		if (mb.getMemberId() == null || mb.getMemberId().length() == 0) {
+			errorMsg.put("errId", "請輸入您的帳號");
+		}
+
+		if (mb.getMemberPwd() == null || mb.getMemberPwd().length() == 0) {
+			errorMsg.put("errPwd", "請輸入您的密碼");
+		}
+
+		if (mb.getMemberEmail() == null || mb.getMemberEmail().length() == 0) {
+			errorMsg.put("errEmail", "請輸入您的Email");
+		}
+
+		if (errorMsg.size() != 0) {
+
+			model.addAttribute("errorMsg", errorMsg);
+			return "joinus";
+		}
 
 		try {
-		MultipartFile IMG = mb.getMemberimg();
-		String originalFilename = IMG.getOriginalFilename();
-		mb.setMemberfileName(originalFilename);
-		if (IMG != null && !IMG.isEmpty() ) {
-			try {
-				byte[] b = IMG.getBytes();
-				Blob blob = new SerialBlob(b);
-				mb.setMemberPic(blob);
-			} catch(Exception e) {
-				e.printStackTrace();
-				throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
+			MultipartFile IMG = mb.getMemberimg();
+			String originalFilename = IMG.getOriginalFilename();
+			mb.setMemberfileName(originalFilename);
+			if (IMG != null && !IMG.isEmpty()) {
+				try {
+					byte[] b = IMG.getBytes();
+					Blob blob = new SerialBlob(b);
+					mb.setMemberPic(blob);
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
+				}
 			}
-		}
-		memberService.saveMember(mb);
-		emailService.sendmembercheck(mb);
-		} catch(Exception e) {
+			memberService.saveMember(mb);
+			emailService.sendmembercheck(mb);
+		} catch (Exception e) {
 			return "redirect:/joinus";
 		}
 		return "redirect:/";
-		
+
 	}
+
 	// 刪除
 	@RequestMapping("/deletemb")
 	public String deletemb(@RequestParam("id") Integer id) {
@@ -217,66 +216,66 @@ public class MemberController {
 		model.addAttribute("one", memberService.getONEmember(id));
 		return "getONE";
 	}
+
 	@RequestMapping(value = "/updatemb", method = RequestMethod.POST)
 	public String updatemb(@RequestParam Integer id, @RequestParam("memberName") String memberName,
 			@RequestParam("memberAddress") String memberAddress, @RequestParam("memberBirth") String memberBirth,
 			@RequestParam("memberPhone") String memberPhone, @RequestParam("memberPwd") String memberPwd,
 			@RequestParam("memberId") String memberId, @RequestParam("memberEmail") String memberEmail,
-			@RequestParam("memberLevel") Integer memberLevel,
-			@RequestParam("memberimg") MultipartFile memberimg,Model model) throws Exception {
+			@RequestParam("memberLevel") Integer memberLevel, @RequestParam("memberimg") MultipartFile memberimg,
+			Model model) throws Exception {
 		System.out.println("Id=" + id);
 		byte[] b1 = memberimg.getBytes();
 		Blob blob = new SerialBlob(b1);
 		memberService.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberPwd, memberId,
-				memberEmail,memberLevel, blob);
+				memberEmail, memberLevel, blob);
 		return "redirect:/showAllmember";
 	}
-	//讀取圖片資料
+
+	// 讀取圖片資料
 	@RequestMapping(value = "/membergetPicture/{id}", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> getPicture(HttpServletResponse resp,@PathVariable Integer id){
-	byte[] media = null;
-	  HttpHeaders headers = new HttpHeaders();
-	  String memberfileName = "";
-	  int len = 0;
-	  Member mm = memberService.getONEmember(id);
-	  if (mm != null) {
-	   Blob memberPic = mm.getMemberPic();
-	   memberfileName = mm.getMemberfileName();
-	   if (mm != null) {
-	    try {
-	     len = (int) memberPic.length();
-	     media = memberPic.getBytes(1, len);
-	    } catch (SQLException e) {
-	     e.printStackTrace();
-	    }
-	   }
-	  }
-	  ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media,HttpStatus.OK);
-	  return responseEntity;
+	public ResponseEntity<byte[]> getPicture(HttpServletResponse resp, @PathVariable Integer id) {
+		byte[] media = null;
+		HttpHeaders headers = new HttpHeaders();
+		String memberfileName = "";
+		int len = 0;
+		Member mm = memberService.getONEmember(id);
+		if (mm != null) {
+			Blob memberPic = mm.getMemberPic();
+			memberfileName = mm.getMemberfileName();
+			if (mm != null) {
+				try {
+					len = (int) memberPic.length();
+					media = memberPic.getBytes(1, len);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media, HttpStatus.OK);
+		return responseEntity;
 	}
-	
-	
+
 	// 修改自己
-		@RequestMapping(value = "/getself", method = RequestMethod.GET)
-		public String getself(@RequestParam("id") Integer id, Model model) {
-			model.addAttribute("one", memberService.getONEmember(id));
-			return "getself";
-		}
-		@RequestMapping(value = "/updatemb1", method = RequestMethod.POST)
-		public String updatemb1(@RequestParam Integer id, @RequestParam("memberName") String memberName,
-				@RequestParam("memberAddress") String memberAddress, @RequestParam("memberBirth") String memberBirth,
-				@RequestParam("memberPhone") String memberPhone,
-				@RequestParam("memberEmail") String memberEmail,
-				@RequestParam("memberimg") MultipartFile memberimg,Model model) throws Exception {
-			System.out.println("Id=" + id);
-			byte[] b1 = memberimg.getBytes();
-			Blob blob = new SerialBlob(b1);
-			memberService.updateself(id, memberName, memberAddress, memberBirth, memberPhone, memberEmail, blob);
-			return "showMAN";
-		}
-	
-		
-		//忘記密碼
+	@RequestMapping(value = "/getself", method = RequestMethod.GET)
+	public String getself(@RequestParam("id") Integer id, Model model) {
+		model.addAttribute("one", memberService.getONEmember(id));
+		return "getself";
+	}
+
+	@RequestMapping(value = "/updatemb1", method = RequestMethod.POST)
+	public String updatemb1(@RequestParam Integer id, @RequestParam("memberName") String memberName,
+			@RequestParam("memberAddress") String memberAddress, @RequestParam("memberBirth") String memberBirth,
+			@RequestParam("memberPhone") String memberPhone, @RequestParam("memberEmail") String memberEmail,
+			@RequestParam("memberimg") MultipartFile memberimg, Model model) throws Exception {
+		System.out.println("Id=" + id);
+		byte[] b1 = memberimg.getBytes();
+		Blob blob = new SerialBlob(b1);
+		memberService.updateself(id, memberName, memberAddress, memberBirth, memberPhone, memberEmail, blob);
+		return "showMAN";
+	}
+
+	// 忘記密碼
 //		@RequestMapping(value = "/memberforget", method = RequestMethod.GET)
 //		public String memberforget(@RequestParam("memberId")String memberId,Model model) {
 //			model.addAttribute("miss", memberService.forget(memberId));
@@ -290,40 +289,37 @@ public class MemberController {
 //			return "redirect:/";
 //			
 //		}
-		// 密碼
-		@RequestMapping(value = "/memberforget", method = RequestMethod.GET)
-		public String memberforget(Model model ) {
-			String memberId = null;
-			System.out.println("55555666666666"+memberId);
+	// 密碼
+	@RequestMapping(value = "/memberforget", method = RequestMethod.GET)
+	public String memberforget(Model model) {
+		String memberId = null;
+		System.out.println("55555666666666" + memberId);
 
-			return "memberforget";
-		}
+		return "memberforget";
+	}
 
-		@RequestMapping(value="/forget",method=RequestMethod.POST)
-		public String forget(@RequestParam("memberId") String memberId) {
-			
-			Member pass = memberService.forget(memberId);
-			System.out.println("7777777777777777"+memberId);
-			
+	@RequestMapping(value = "/forget", method = RequestMethod.POST)
+	public String forget(@RequestParam("memberId") String memberId) {
+
+		Member pass = memberService.forget(memberId);
+		System.out.println("7777777777777777" + memberId);
+
 		emailService.sendpassword(pass);
 		return "index";
-			
-		}
-		//驗證是否重複帳號
-		@RequestMapping(value = "/abc", method = RequestMethod.POST)
-		@ResponseBody
-		public String mb(@RequestParam("idno")String memberId) {
-			
 
-			Boolean bb = memberService.checkId(memberId);
-			if(bb) {
-				return "0";
-			}else {
+	}
+
+	// 驗證是否重複帳號
+	@RequestMapping(value = "/abc", method = RequestMethod.POST)
+	@ResponseBody
+	public String mb(@RequestParam("idno") String memberId) {
+
+		Boolean bb = memberService.checkId(memberId);
+		if (bb) {
+			return "0";
+		} else {
 			return "1";
 		}
-		}
-		
-		
-		
-		
+	}
+
 }

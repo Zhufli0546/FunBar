@@ -108,16 +108,15 @@
 		<table class="table">
 			<thead class="thead-dark">
 				<tr>
-					<th scope="col">照片</th>
+					<th scope="col">picture</th>
 					<th scope="col">ID</th>
-					<th scope="col">編號</th>
-					<th scope="col">名稱</th>
-					<th scope="col">說明</th>
-					<th scope="col">分類</th>
-					<th scope="col">單價</th>
-					<th scope="col">折扣</th>
-					<th scope="col">庫存</th>
-					<th scope="col">編輯</th>
+					<th scope="col">itemsName</th>
+					<th scope="col">description</th>
+					<th scope="col">category</th>
+					<th scope="col">price</th>
+					<th scope="col">discount</th>
+					<th scope="col">stock</th>
+					<th scope="col">edit</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -128,7 +127,6 @@
 									height="120px" />
 							</div></th>
 						<td>${pb.productId}</td>
-						<td>${pb.productNo}</td>
 						<td>${pb.productName}</td>
 						<td>${pb.productDetail}</td>
 						<td>${pb.category}</td>
