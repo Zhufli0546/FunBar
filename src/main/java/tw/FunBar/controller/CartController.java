@@ -402,6 +402,8 @@ public class CartController {
 		session.setAttribute("showOrder", showOrder);
 		session.setAttribute("showProducts", showProducts);
 		session.setAttribute("orderItemList", orderItemList);
+		
+		session.removeAttribute("Cart");
 
 		return "order_result";
 

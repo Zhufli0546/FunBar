@@ -90,7 +90,7 @@
   <!-- .prodBlock -->
 
   <div align="center" colspan="8">
-   <a href="<c:url value='/shoppingCart' />"><button class="btn btn-back">Back to shop</button></a>
+   <a href="<c:url value='/shoppingCart?index=1' />"><button class="btn btn-back">Back to shop</button></a>
     <a href="<c:url value='/showCart' />"><button class="btn btn-info">Go to pay</button></a>
   </div>
 
