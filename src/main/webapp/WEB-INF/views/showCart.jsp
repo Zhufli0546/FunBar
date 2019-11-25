@@ -87,6 +87,7 @@ input {
 							<th>quantity</th>
 							<th>discount</th>
 							<th>subtotal</th>
+							<th>edit</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -129,7 +130,7 @@ input {
 							<td align="right" colspan="8">
 								<div class="col-sm-4 col-xs-12">
 									<a href="<c:url value='/shoppingCart' />"><button
-											class="btn-back">Back to shop</button></a>
+											class="btn btn-back">Back to shop</button></a>
 									<button id="buy" type="button" class="btn btn-info page-btn"
 										data-toggle="modal" data-target="#createForm">Go
 										pay</button>

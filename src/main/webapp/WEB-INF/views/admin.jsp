@@ -63,18 +63,24 @@
                             <img width="200" height="100%"  src="<c:url value='/ProductPicture/${pb.productId}'/>" />
 					</div>
                         <div class="info">
-                            <h3>${pb.productName}</h3>
-                            <span><i class="fas fa-dollar-sign" style="font-size:12px"></i>${pb.unitPrice}</span>             
+                            <h3 class="prdouctName">${pb.productName}</h3>
+                            <span><i class="fas fa-wine-bottle" style="font-size:14px"></i>${pb.category}</span> 
+                             <span><i class="fas fa-percent" style="font-size:14px"></i>${pb.discount}</span>
+                            <span><i class="fas fa-dollar-sign" style="font-size:14px"></i>${pb.unitPrice}</span>                                    
                         </div>
                         <div class="total">
-                            <p>Stock:</p><b>${pb.stock}</b>
+                            <p>Stock:</p>
+                            <div class="number">                      
+                            <b>${pb.stock}</b>
+                            </div>
                         </div>
                     </div>            
                         </c:forEach>
                     </div>
                 </div>
-        </div> 
+         
             <!-- panel right -->
+          
             <div class="panel right">
                 <h2>Latest Orders</h2>
                 <div class="list">
@@ -91,10 +97,16 @@
                             <span><i class="fas fa-male" style="font-size:20px;margin-left:4px;"></i>${o.order_name}</span>
                         </div>
                         <div class="total">
-                            <p>Toatal</p><b>${o.total}</b>
+                            <p>Toatal</p>
+                            <div class="number">
+                           
+                            <b>${o.total}</b>
+                             </div>
                         </div>
                     </div>
                     </c:forEach>
+                    </div>
+                   
 <!--                     <div class="item"> -->
 <!--                         <div class="pic"> -->
 <!--                             <img src="https://upload.cc/i1/2018/06/18/hOEJGW.png"></div> -->
