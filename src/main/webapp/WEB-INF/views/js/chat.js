@@ -207,7 +207,7 @@ function connect() {
 			var date = null;
 			var msg = loginMemberName + "加入聊天！";
 //			var n = new Notification(message);
-			showNewMessage(user, date, msg);
+//			showNewMessage(user, date, msg);
 		});
 //		stompClient.subscribe("/topic/login", function(message) {
 //			showNewUser(message.body);
@@ -336,9 +336,14 @@ function showNewMessage(user, date, msg, senderMemberId, receiverMemberId) {
 	}
 
 	($('#conversation').children("li:last-child")[0]).scrollIntoView();
+	let senderMemberName = $("#Name" + senderMemberId).text();
 	var x = $('.chatbox').attr("class")
-	console.log(x)
-//	var n = new Notification("You have new message !!");
+	var y = "chatbox chatbox22 chatbox--closed rounded-top";
+	if(x == y){
+		$(".chatbox").show().attr('class', 'chatbox chatbox22 rounded-top');
+		$("#receiverMemberName").text(senderMemberName);
+		
+	}
 }
 /**
  * 正则表达式显示消息中的emoji图片
@@ -402,7 +407,8 @@ function sendMessage(loginMemberid, receiverMemberId) {
 			'notification' : content,
 			'tag' : 'Discuss',
 			'url' : requestUrl + 'chat',
-			'icon' : requestUrl + 'membergetPicture/' + loginMemberid
+			'icon' : requestUrl + 'membergetPicture/' + loginMemberid,
+			'sessionScopeMemberId' : loginMemberid
 		}));
 		
 
