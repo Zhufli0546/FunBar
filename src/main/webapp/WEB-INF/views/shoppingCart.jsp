@@ -18,6 +18,18 @@
 
 	<!-- Content 區塊 -->
 	<div class="container" style="margin-top: 150px">
+		<div class="input-group mb-3">
+			<input id="productName" type="text" class="form-control"
+				placeholder="input the product name">
+			<form method="POST" action="XXXXXXXgetProdByName?index=1XXXXXXX">
+				<div class="input-group-append">
+					<input id="n" type="hidden" name="productName" /> 
+					<input
+						class="btn btn-outline-secondary" type="submit" id="button-addon2"
+						value="search" />
+				</div>
+			</form>
+		</div>
 		<div class="row" style="float: left">
 			<div class="col-md-3">
 				<div class="list-group" style="width: 150px">
@@ -39,7 +51,8 @@
 
 
 	<div class="row">
-		<c:forEach var="pb" items="${shoppingCart}" begin="0" step="1" varStatus="i">
+		<c:forEach var="pb" items="${shoppingCart}" begin="0" step="1"
+			varStatus="i">
 			<div class="prodlist">
 				<p>${pb.productDetail}</p>
 				<p class="prodtitle">${pb.productName}</p>
@@ -60,26 +73,37 @@
 		</c:forEach>
 	</div>
 
-	
+
 	<ul class="pagination justify-content-center">
-<%-- 			<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/shoppingCart?index=1" aria-label="Previous">  --%>
-<!-- 			<span aria-hidden="true">&laquo;</span> <span class="sr-only">Previous</span></a></li> -->
-			
-			
-			<c:forEach  begin="1" step="1" end="${listCount}" varStatus="i" >
-				<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/shoppingCart?index=${i.index}">${i.index}</a></li>		
-			</c:forEach>
-			
-		
-<%-- 			<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/shoppingCart?index=${listCount}" aria-label="Next">  --%>
-<!-- 			<span aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span></a></li> -->
-		</ul>
-	</div>
+		<%-- 			<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/shoppingCart?index=1" aria-label="Previous">  --%>
+		<!-- 			<span aria-hidden="true">&laquo;</span> <span class="sr-only">Previous</span></a></li> -->
+
+
+		<c:forEach begin="1" step="1" end="${listCount}" varStatus="i">
+			<li class="page-item"><a class="page-link"
+				href="${pageContext.request.contextPath}/shoppingCart?index=${i.index}">${i.index}</a></li>
+		</c:forEach>
+
+
+		<%-- 			<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/shoppingCart?index=${listCount}" aria-label="Next">  --%>
+		<!-- 			<span aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span></a></li> -->
+	</ul>
 
 	<!-- .container -->
 
 
 	<jsp:include page="footer.jsp" />
+	
+	<script>
+
+		$("#button-addon2").click(function() {
+
+			var on = $("#productName").val();
+
+			$("#n").val(on);
+
+		})
+	</script>
 
 </body>
 </html>
