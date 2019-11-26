@@ -50,6 +50,7 @@
 			<hr>
 
 			<!-- Comments Form -->
+			<c:if test="${sessionScope.member.id!=null}">
 			<div class="card my-4">
 				<h5 class="card-header">Leave a Comment:</h5>
 				<div class="card-body">
@@ -62,8 +63,10 @@
 					<button class="btn btn-primary commentClick">Submit</button>
 				</div>
 			</div>
+			</c:if>
 
 			<!-- Comment with nested comments -->
+			<c:if test="${sessionScope.member.id!=null}">
 			<div class="media mb-4">
 				<div id="commentBlock" class="media-body">
 
@@ -74,6 +77,7 @@
 				<input type="hidden" id="replyMemberId" name="memberId" value="${sessionScope.member.memberId}" />
 				<button id="replySubmit" class="btn btn-primary">送出</button>
 			</div>
+			</c:if>
 		</div>
 	</div>
 

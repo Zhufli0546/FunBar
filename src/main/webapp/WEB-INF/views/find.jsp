@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="<c:url value='/css/bootstrap.min.css' />">
 <script src="<c:url value='/js/jquery-1.12.4.js' />"></script>
 <script src="<c:url value='/js/bootstrap.min.js' />"></script>
+
 </head>
 <style>
 * {
@@ -63,9 +64,10 @@ html, body {
 	<form action="findyou" method="post">
                 <fieldset>
                     <div class="form-group">
-                        <label for="memberPwd">密碼:</label>
-                        <input  type="text" class="form-control" name="memberPwd" placeholder="請輸入新密碼">
+                        <label for="memberPwd">新密碼:</label>
+                        <input  id="memberPwd" type="password" class="form-control" name="memberPwd" placeholder="請輸入新密碼">
                         <span class="error">${errorMsg.errUserName}</span>
+                        <div id="noPwd"></div>
                     </div>  
                 </fieldset>
                 <div class="button">
@@ -75,5 +77,6 @@ html, body {
 							<button type="button" class="btn btn-outline-secondary">回首頁</button>
 					</a></td>
             </form>
+            <script src="${pageContext.request.contextPath }/js/forgetmem.js"></script> 
 		</body>
 </html>

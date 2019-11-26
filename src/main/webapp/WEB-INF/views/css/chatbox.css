@@ -509,7 +509,7 @@ padding-bottom: 5px;padding-top:15px;
 #sidebar.active{
   display: block;
   transition: 0.3s;
-  width: 300px;
+  width: 250px;
   float: left;
   height: 100%;
   background: #2c3e50;
