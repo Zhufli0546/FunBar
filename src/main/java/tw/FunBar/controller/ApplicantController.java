@@ -67,7 +67,6 @@ public class ApplicantController {
 	//查詢已報名活動
 	@RequestMapping(value="/getsiqnupActivity/{memberId}" ,method=RequestMethod.GET)
 	public String getsiqnupActivity(@PathVariable String memberId,Model model) {
-		
 		List<Activity> activity = service.QuerySignActivity(memberId);
 		model.addAttribute("activity", activity);
 		
