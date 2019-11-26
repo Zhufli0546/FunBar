@@ -33,7 +33,7 @@
 						<th scope='col'>檢舉次數<i id="sortReport" class="fa fa-angle-double-down ml-2"></i></th>
 						<th scope='col'><form class="form-inline mr-right">
 								<div class="md-form my-0">
-									<input id="searchContent" class="form-control input-sm" type="text" placeholder="Search" aria-label="Search">
+									<input id="searchContent" class="form-control input-sm" type="text" placeholder="Search By Content" aria-label="Search">
 									<i class="fa fa-search ml-2" aria-hidden="true" id="search"></i>
 								</div>
 							</form></th>

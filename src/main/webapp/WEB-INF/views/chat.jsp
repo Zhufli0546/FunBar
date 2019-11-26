@@ -6,8 +6,6 @@
 <html>
 <head>
 <meta charset='UTF-8'>
-<link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" />
-<link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" />
 <!--sockJS cdn-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
 <!--stomp cdn-->
@@ -73,7 +71,7 @@
 				</div>
 				<div id="search">
 					<label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
-					<input type="text" placeholder="Search contacts..." />
+					<input type="text" placeholder="Search Friends" id="searchFriends"/>
 				</div>
 				<div id="contacts">
 					<ul id="receiverArea">
@@ -94,9 +92,6 @@
 					<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
 					<p id="receiverMemberName"></p>
 					<div class="social-media">
-						<i class="fa fa-facebook" aria-hidden="true"></i> <i
-							class="fa fa-twitter" aria-hidden="true"></i> <i
-							class="fa fa-instagram" aria-hidden="true"></i>
 					</div>
 				</div>
 				<div class="messages">
@@ -107,7 +102,7 @@
 					<div class="wrap">
 						<input type="text" id="messageInput" placeholder="Write your message..." /> <i
 							class="fa fa-paperclip attachment" aria-hidden="true"></i>
-						<button class="submit">
+						<button class="submit" id="btn-chat">
 							<i class="fa fa-paper-plane" aria-hidden="true"></i>
 						</button>
 					</div>

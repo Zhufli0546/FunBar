@@ -38,9 +38,9 @@
 
 						<div class="wrap-btn-slide1 animated visible-false" data-appear="zoomIn">
 							<!-- Button1 -->
-							<a href="menu.html" class="btn1 flex-c-m size1 txt3 trans-0-4">
-								Look Menu
-							</a>
+<!-- 							<a href="menu.html" class="btn1 flex-c-m size1 txt3 trans-0-4"> -->
+<!-- 								Look Menu -->
+<!-- 							</a> -->
 						</div>
 					</div>
 				</div>
@@ -131,9 +131,9 @@
 						</a>						
 					</figure>
 					<figcaption>
-						<p>建議售價:<span style="color:#FF44AA;font-weight:bold;font-size:20px">$ ${pb.unitPrice}</span></p>
-						<p>折扣：<span style="font-weight:bold;color:	#CE0000;font-size:20px">${pb.discount}</span></p>
-	     				<label for="selectCount" style="font-size: 18px; padding: 10px 5px; color: #000">購買數量:</label>
+						<p>Unit Price:<span style="color:#FF44AA;font-weight:bold;font-size:20px">$ ${pb.unitPrice}</span></p>
+						<p>discount：<span style="font-weight:bold;color:	#CE0000;font-size:20px">${pb.discount}</span></p>
+	     				<label for="selectCount" style="font-size: 18px; padding: 10px 5px; color: #000">Quantity：</label>
 	     				<select class="selectCount" id="selectCount" name="count" data-product="${i.index}">
 	      					<option value="1">1</option>
 							<option value="2">2</option>

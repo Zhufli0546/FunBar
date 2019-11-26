@@ -332,7 +332,12 @@ public class BookingDAOImpl implements BookingDAO {
 		ArrayList<BookingData> all = (ArrayList<BookingData>)session.createQuery(hql).setParameter("date",date).getResultList();
 		
 		
-		int count = all.size();
+		
+		int count = 0;
+		
+		for(BookingData b : all) {
+			count += b.getPeople();
+		}
 		
 		return count;
 	}

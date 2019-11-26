@@ -130,19 +130,20 @@
 				var json = JSON.parse(notification.body);
 				var note = json.notification;
 				var icon = json.icon;
-				var tag = json.tag;
 				var url = json.url;
+				var memberId = json.sessionScopeMemberId;
 
-				var n = new Notification("",{
-					body: note,
-					icon: icon,
-					tag: tag
-				});
-				
-				n.onclick = function() {
-					window.open(url);
+				if(memberId !=  ${sessionScope.member.id} ) {
+					var n = new Notification("FunBar",{
+						body: note,
+						icon: icon
+					});
+					n.onclick = function() {
+						window.open(url);
+						}
 				}
 			});
+			
 		})
 	}
 	$(document).ready(function() {

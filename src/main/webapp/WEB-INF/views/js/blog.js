@@ -290,8 +290,9 @@ $("#sendBlogMessage").click(function(){
 		 JSON.stringify({
 			 'notification' : sessionScopeMemberName + "剛剛新增一篇新文章:" + blogTitle,
 			 'icon': requestUrl_blog + '/membergetPicture/' + sessionScopeMemberId,
-			 'tag': 'blog',
-			 'url': requestUrl_blog + '/blogs'
+			 'url': requestUrl_blog + '/blogs',
+			 'sessionScopeMemberId' : sessionScopeMemberId
+			 
 		})
 	);
 })

@@ -119,8 +119,8 @@
 											</a>
 											<div class="dropdown-menu">
 												<a class="dropdown-item" href="<c:url value='/getself?id=${member.id}' />">修改會員資料</a>
-												<a class="dropdown-item" href="<c:url value='/getONE?id=${member.id}' />">修改訂單資料</a>
 												<a class="dropdown-item" href="${pageContext.request.contextPath}/personal_order">我的訂房</a>
+												<a class="dropdown-item" href="javascript:;">${member.memberName},你好</a>
 												<a class="dropdown-item" href="${pageContext.request.contextPath}/logout">登出</a>
 											</div>
 										</li>
@@ -156,9 +156,9 @@
 
 			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/booking_query">訂位、訂房查詢</a></li>
 
-			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/activities" class="txt19">熱門活動</a></li>
+			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/activities?index=1" class="txt19">熱門活動</a></li>
 
-			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/shoppingCart">購物區</a></li>
+			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/shoppingCart?index=1">購物區</a></li>
 
 			<li class="t-center m-b-13"><a href="${pageContext.request.contextPath}/blogs" class="txt19">部落格</a></li>
 

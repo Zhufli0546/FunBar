@@ -1,8 +1,8 @@
 //createPost 
 var requestUrl = "";
-var table = "<tr class='content'><th scope='row'>{{post.postId}}</th>"
+var table = "<tr><th scope='row'>{{post.postId}}</th>"
 		+ "<td>{{post.memberId}}</td>" 
-		+ "<td>{{post.postContent}}</td>"
+		+ "<td class='content'>{{post.postContent}}</td>"
 		+ "<td>{{post.postTime}}</td>"
 		+ "<td id='like{{post.postId}}'>0</td>"
 		+ "<td id='report{{post.postId}}'>1</td>"
@@ -149,15 +149,15 @@ function bindsort3(pageNumNow) {
 }
 
 function search(){
-	$("#searchContent").change(function() {
-		let searchContent = $("#searchContent").val();
+	$("#searchContent").bind("keyup", function() {
+		let searchContent = $("#searchContent").val().toLowerCase();
 		$(".content").each(function(){
 			var content = $(this).text();
 			var ignoreCaseContent = content.toLowerCase();
 			if(ignoreCaseContent.indexOf(searchContent) == -1){
-				$(this).hide();
+				$(this).parent().hide();
 			}else{
-				$(this).show();
+				$(this).parent().show();
 			}
 		})
 	})
