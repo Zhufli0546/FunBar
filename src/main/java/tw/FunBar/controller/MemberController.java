@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import tw.FunBar.model.Member;
 import tw.FunBar.service.EmailService;
@@ -72,16 +73,36 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
-	public String signinto(@RequestParam("memberId") String memberId, @RequestParam("memberPwd") String memberPwd,
-			Model model, HttpServletRequest request, HttpSession session) {
-
+	public String signinto(@RequestParam("memberId") String memberId,
+						   @RequestParam("memberPwd") String memberPwd,
+						   Model model,
+						   RedirectAttributes redirectAttributes,
+						   HttpServletRequest request,
+						   HttpSession session) {
+		HashMap<String,String> errorMsg = new HashMap<String,String>();
 		
 		Member member = null;
 		try {
+			// 判斷使用者輸入是否為空
+			if(memberId == null || memberId.length() == 0) {
+	            errorMsg.put("errId","請輸入帳號");
+	        }
+			
+			if(memberPwd == null || memberPwd.length() == 0) {
+	            errorMsg.put("errPwd","請輸入密碼");
+	        }
+
+			if(errorMsg.size()!=0) {
+	            model.addAttribute( "errorMsg", errorMsg);
+	            return "signin";
+			}
+
 			member = memberService.signin(memberId, memberPwd);
 		} catch(NoResultException e) {
+			errorMsg.put("errId","請輸入正確的帳號或密碼");
+			redirectAttributes.addFlashAttribute("errorMsg", errorMsg);
+
 			return "redirect:/signin";
-		
 		}
 		
 		int level = member.getMemberLevel();
@@ -96,9 +117,9 @@ public class MemberController {
 			session = request.getSession(false);
 			session.setAttribute("member", member);
 			return "redirect:/";
-		} else {	
-			return "signin";
 		}
+		
+		return "signin";
 	}
 
 	// 登出
@@ -272,7 +293,7 @@ public class MemberController {
 			byte[] b1 = memberimg.getBytes();
 			Blob blob = new SerialBlob(b1);
 			memberService.updateself(id, memberName, memberAddress, memberBirth, memberPhone, memberEmail, blob);
-			return "showMAN";
+			return "redirect:/";
 		}
 	
 		
