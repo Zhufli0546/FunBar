@@ -1,5 +1,6 @@
 package tw.FunBar.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import tw.FunBar.model.ProductBean;
@@ -24,7 +25,7 @@ public interface ShoppingService {
 	 
 	 List <ProductBean> getAllProducts();  //顯示所有商品
 	
-	 
+	 ArrayList<ProductBean> getProdById(Integer productId);
 	
-	 
+	 List<ProductBean> getProdByName(String productName);
 }
