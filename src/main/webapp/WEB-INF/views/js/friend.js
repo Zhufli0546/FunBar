@@ -1,12 +1,12 @@
 var friendshipListTable = "<tr><th scope='row'>"
 		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{member.id}}'></th>"
-		+ "<td class='content'>{{member.memberName}}</td>" 
+		+ "<td class='contentName'>{{member.memberName}}</td>" 
 		+ "<td>{{member.memberBirth}}</td>"
 		+ "<td>{{member.memberEmail}}</td></tr>"
 
 var receiverTable = "<tr id='list{{member.id}}'><th scope='row'>"
 		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{member.id}}'></th>"
-		+ "<td class='content'>{{member.memberName}}</td>"
+		+ "<td class='contentName'>{{member.memberName}}</td>"
 		+ "<td>{{member.memberBirth}}</td>"
 		+ "<td><button type='button' class='btn btn-info' id='confirmbtn{{member.id}}'>Confirm</button>"
 		+ "<button type='button' class='btn btn-danger ml-2' id='cancelbtn{{member.id}}'>Cancel</button></td></tr>"
@@ -35,10 +35,12 @@ function getMemberData() {
 $(document).ready(function() {
 						requestUrl = $('#requestUrl').text();
 						mdata = getMemberData();
+
 						$.ajax({
 								url : requestUrl + "friendJson",
 								method : "POST",
 								dataType : "JSON",
+								async : false,
 								success : function(friendData) {
 									var count = 0;
 									let receiverTableArea = "";
@@ -50,9 +52,7 @@ $(document).ready(function() {
 										if(member.memberName != loginMemberName){
 											for(let i = 0; i < fdata.length; i++) {
 													let friend = fdata[i];
-													console.log(friend)
 											if(loginMemberid == friend.sender_memberId && member.id == friend.receiver_memberId && friend.friendStatus == 2) {
-												console.log("已是好友 = " + member.memberName)
 												let temp = member.memberBirth.slice(5)
 												friendshipListTable_html = friendshipListTable
 																			.replace(/\{{member.memberName}}/g, member.memberName)
@@ -62,10 +62,8 @@ $(document).ready(function() {
 																			.replace(/\{{requestUrl}}/g, requestUrl);
 
 													friendshipListTableArea += friendshipListTable_html
-													console.log("執行一次又一次")
 												
 											} else if (loginMemberid == friend.receiver_memberId && member.id == friend.sender_memberId && friend.friendStatus == 1){
-													console.log("收到好友邀請 = " + member.memberName)
 													$("#friendRequest" + member.id).text("Confirm");
 													let temp2 = member.memberBirth.slice(5)
 													receiverTable_html = receiverTable
@@ -91,7 +89,6 @@ $(document).ready(function() {
 											if(member.memberName != loginMemberName){
 												for(let i = 0; i < fdata.length; i++) {
 														let friend = fdata[i];
-														console.log(friend)
 												if(loginMemberid == friend.receiver_memberId && member.id == friend.sender_memberId && friend.friendStatus == 1) {
 														confirmFriendRequest(loginMemberid, member.id)
 														cancelFriendRequest(member.id)
@@ -101,7 +98,7 @@ $(document).ready(function() {
 										}
 								}
 							})
-							search()
+						searchName()
 				})
 
 function confirmFriendRequest(loginMemberid, memberIdf) {
@@ -127,13 +124,16 @@ function cancelFriendRequest(memberIdf){
 	})
 }
 
-function search(){
-	$("#searchContent").change(function() {
-		let searchContent = $("#searchContent").val();
-		$(".content").each(function(){
-			var content = $(this).text();
-			var ignoreCaseContent = content.toLowerCase();
-			if(ignoreCaseContent.indexOf(searchContent) == -1){
+function searchName(){
+	$("#searchName").bind("keyup", function() {
+		let searchName = $("#searchName").val().toLowerCase();
+		$(".contentName").each(function(){
+			var contentName = $(this).text();
+			var ignoreCaseContentName = contentName.toLowerCase();
+			console.log("Search == " + searchName)
+			console.log("Search == " + ignoreCaseContentName)
+			console.log("Search Result == " + ignoreCaseContentName.indexOf(searchName) == -1)
+			if(ignoreCaseContentName.indexOf(searchName) == -1){
 				$(this).parent().hide();
 			}else{
 				$(this).parent().show();

@@ -133,7 +133,7 @@
 				var url = json.url;
 				var memberId = json.sessionScopeMemberId;
 
-				if(memberId !=  ${sessionScope.member.id} ){
+				if(memberId !=  ${sessionScope.member.id} ) {
 					var n = new Notification("FunBar",{
 						body: note,
 						icon: icon
@@ -143,6 +143,7 @@
 						}
 				}
 			});
+			
 		})
 	}
 	$(document).ready(function() {

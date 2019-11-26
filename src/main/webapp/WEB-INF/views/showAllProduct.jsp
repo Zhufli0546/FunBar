@@ -9,8 +9,9 @@
 <title>All Product Management</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
+function on(){var msg="確定重新上架？";if(confirm(msg)==true){return true;}else{return false;}}
+function off(){var msg="確定下架？";if(confirm(msg)==true){return true;}else{return false;}}
 </script>
 </head>
 <style>
@@ -103,21 +104,31 @@
 	<!-- Content 區塊 -->
 
 	<div class="container page" style="margin: 50px auto; width: 100%">
-		<h1>所有商品管理</h1>
-		<hr>
-		<table class="table">
+	
+		<div class=" col-md-4" style="float:left;font-size:44px;margin-top:50px">所有商品管理</div>
+		 <div class="card my-4" style="float:right">
+	          <h5 class="card-header">Search</h5>
+	          <div class="card-body">
+	            <div class="input-group">
+	              <input id="productName" type="text" class="form-control pb">
+	              <span class="input-group-btn">
+	                <button id="D" class="btn btn-secondary pb" type="button">Search</button>
+	              </span>
+	            </div>
+	          </div>
+	        </div>
+		<table class="table" id="abc">
 			<thead class="thead-dark">
 				<tr>
-					<th scope="col">照片</th>
+					<th scope="col">picture</th>
 					<th scope="col">ID</th>
-					<th scope="col">編號</th>
-					<th scope="col">名稱</th>
-					<th scope="col">說明</th>
-					<th scope="col">分類</th>
-					<th scope="col">單價</th>
-					<th scope="col">折扣</th>
-					<th scope="col">庫存</th>
-					<th scope="col">編輯</th>
+					<th scope="col">itemsName</th>
+					<th scope="col">description</th>
+					<th scope="col">category</th>
+					<th scope="col">price</th>
+					<th scope="col">discount</th>
+					<th scope="col">stock</th>
+					<th scope="col">edit</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -128,7 +139,6 @@
 									height="120px" />
 							</div></th>
 						<td>${pb.productId}</td>
-						<td>${pb.productNo}</td>
 						<td>${pb.productName}</td>
 						<td>${pb.productDetail}</td>
 						<td>${pb.category}</td>
@@ -144,7 +154,7 @@
 							</form>
 							</c:if>
 							<c:if test="${pb.status=='1'}">
-							<form method="post" class="form-group row" action="<c:url value='pushProduct?id=${pb.productId}'/>">
+							<form method="post" class="form-group row" action="<c:url value='/pushProduct?id=${pb.productId}'/>">
 								<input type="hidden" name="id" value="${pb.productId}" /> 
 								<input type="submit" value="上架"  class="button-push" onclick="return confirm('確定重新上架？')"/>
 							</form> 
@@ -156,10 +166,10 @@
 								<input type="hidden" name="id" value="${pb.productId}">
 								<input type="submit" value="修改" class="button" />
 							</form>
-						</c:forEach>
+						
 						</td>
 					</tr>
-			
+			</c:forEach>
 			</tbody>
 		</table>
 		
@@ -173,6 +183,84 @@
 	</div>
 
 	<jsp:include page="admin_footer.jsp" />
+	
+	
+	<script>
+	var url = "/FunBar/";
+
+	$("#D").click(function(){
+		console.log("Click!");
+		let productName = $("#productName").val();
+		
+		console.log("productName => " + productName);
+		$.ajax({
+			url:"http://localhost:8080" + url +"getProdByName",
+			type:"POST",
+			data:{
+				productName: productName
+			},
+			dataType:"JSON",
+			success:function(data){
+				console.log("data =>" + data);
+				let txt="";
+				if(data.length ==0 ){
+					console.log(data);
+				}else{
+					console.log(data);
+					
+					console.log(data);
+					txt += "<thead class='thead-dark'><tr>"
+					+"<th scope='col'>picture</th>"
+					+"<th scope='col'>ID</th>"
+					+"<th scope='col'>itemsName</th>"
+					+"<th scope='col'>description</th>"
+					+"<th scope='col'>category</th>"
+					+"<th scope='col'>price</th>"
+					+"<th scope='col'>discount</th>"
+					+"<th scope='col'>stock</th>"
+					+"<th scope='col'>edit</th>"
+					+"</tr></thead><tbody>";
+					
+					
+					for(let i=0;i<data.length;i++){
+						txt += "<tr><td scope='row'>"
+						+"<div style='text-align:center;'>"
+						+"<img src='" + url + "ProductPicture/" + data[i].productId + "' height='120px' />"
+						+"</div></td><td>"
+						+data[i].productId+"</td><td>"
+						+data[i].productName+"</td><td>"
+						+data[i].productDetail+"</td><td>"
+						+data[i].category+"</td><td>"
+						+data[i].unitPrice+"</td><td>"
+						+data[i].discount+"</td><td>"
+						+data[i].stock+"</td><td>";
+						
+						if(data[i].status==0){
+							txt += "<form method='post' class='form-group row' action='http://localhost:8080/FunBar/pullProduct?id="
+									+data[i].productId+"'><input type='hidden' name='id' value='"
+									+data[i].productId+"' /><input type='submit' value='下架'  " 
+									+"class='button-pull' onclick='return off() '/></form>";
+						}else{
+							txt += "<form method='post' class='form-group row' action='http://localhost:8080/FunBar/pushProduct?id="
+								+data[i].productId+"'><input type='hidden' name='id' value='"
+								+data[i].productId+"' /><input type='submit' value='上架'  " 
+								+"class='button-push' onclick='return on() '/></form>";
+						}
+						
+						txt += "<form method='get' class='form-group row' action='update?id="
+						+data[i].productId+"' ><input type='hidden' name='id' value='"
+						+data[i].productId+"'><input type='submit' value='修改' class='button' /></form></td></tr>";
+					}
+					
+						
+					txt += "</tbody></table>"		
+			}
+				$("#abc").html(txt);
+			}
+		})
+	});
+	
+	</script>
 
 </body>
 </html>

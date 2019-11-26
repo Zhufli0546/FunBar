@@ -15,9 +15,10 @@
 	<jsp:include page="header.jsp" />
 
 	<!-- Content 區塊 -->
-
-	<div class="row" style="margin-top:120px;border:3px solid #5B5B5B;margin:120px 1px 0 1px">
-		<div class="col-md-7" style="height: 380px; background-color: #DDDDDD">
+	<div style="height:100vh;background-color:black">
+	<div class="row" style="padding:0 0 10px 0 ;background-color:white;border:3px solid #5B5B5B;margin:120px 1px 0 1px">
+		<div style="height:150px;width:100%;background-color:#3C3C3C;text-align:center;"><img style="height:150px;width:150px;" src="images/icons/logo3.png"></div>
+		<div class="col-md-7" style="margin:5px 0 5px 0;height: 380px; background-color: #DDDDDD;border:2px solid black;border-radius:5px">
 
 			<img
 				style="margin: 5px 5px 5px 5px; border: 2px solid black; border-radius: 10px"
@@ -43,14 +44,14 @@
 		
 		<c:choose>
 		<c:when test="${sessionScope.member ==null }">
-		<div class="col-md-5" style="margin-top: 20px;">
+		<div class="col-md-5" style="border:2px solid black;border-radius:5px;margin:5px 0 5px 0">
 		
 			<form:form modelAttribute="room_order" method="POST" action="pay">
 			
 			<form:input type="hidden" path="room_id" value="${room.room_id}" />
 			<form:input type="hidden" path="total"  value="${total}" />
 			<input type="hidden" name="stay" value="${stay}">
-				<div class="form-group">
+				<div class="form-group" style="margin-top:20px">
 					<label style="float:left" for="inputname">姓名 <span style="color: red">* </span></label>
 					<form:input type="text" class="form-control col-md-6" style="float:left" id="inputname" path="order_name"
 						placeholder="請輸入姓名" /> <input style="margin-left:30px"  type="radio" name="sex"
@@ -93,7 +94,7 @@
 			<form:input type="hidden" path="room_id" value="${room.room_id}" />
 			<form:input type="hidden" path="total"  value="${total}" />
 			<input type="hidden" name="stay" value="${stay}">
-				<div class="form-group">
+				<div class="form-group" style="margin-top:20px">
 					<label style="float:left" for="inputname">姓名 <span style="color: red">* </span></label>
 					<form:input type="text" class="form-control col-md-6" style="float:left" id="inputname" path="order_name"
 						value="${sessionScope.member.memberName}"/> <input style="margin-left:30px"  type="radio" name="sex"
@@ -129,7 +130,7 @@
 		</c:otherwise>
 		</c:choose>
 	</div>
-
+</div>
 
 	<jsp:include page="footer.jsp" />
 

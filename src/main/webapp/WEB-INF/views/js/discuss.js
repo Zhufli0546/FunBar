@@ -580,13 +580,3 @@ function getFriendShip(){
 	return fdata;
 }
 
-
-
-
-
-
-
-
-//test
-
-

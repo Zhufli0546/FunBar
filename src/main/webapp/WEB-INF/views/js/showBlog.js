@@ -86,14 +86,16 @@ function reportSubmit(reportcommentid) {
 
 var firstComment = [];
 var replyIndex = -1;
+var cancelReport;
 function generateTemplate() {
 	$.ajax({
 		url: requestUrl + "/blog/" + id,
 		method: "POST",
 		dataType: "JSON",
 		success: function(res) {
-			console.log(res);
+			//console.log(res);
 			let commentData = res.comments;
+			cancelReport = new Array();
 
 			// 取得第一層評論
 			firstComment = [];
@@ -112,15 +114,16 @@ function generateTemplate() {
 				console.log("parentCommentName:" + parentCommentName);
 				$("#replyComment").attr("placeholder", "@" + parentCommentName).focus();
 			});
+			
+			clearReport();
 		}
 	})
 
-	var firstTemplate = "<p style='color:red'>{{comment.commentIds}}</p>" +
-						"<h5 class='media mt-4 animated fadeIn'><img width='50px' height='50px' class='d-flex mr-3 rounded-circle' src='{{comment.memberId}}'>{{comment.commentName}}</h5>{{comment.commentContent}}" +
+	var firstTemplate = "<h5 class='media mt-4 animated fadeIn'><img width='50px' height='50px' class='d-flex mr-3 rounded-circle' src='{{comment.memberId}}'>{{comment.commentName}}</h5>{{comment.commentContent}}" +
 						"<div><label for='replyComment' class='replyClick' data-replyindex={{replyindex}} data-comment='{{comment.commentId}}' data-commentname='{{comment.name}}'><a class='mgl5' href='javascript:;'>回覆</a></label>" +
 						"<a class='mgl5 reportComment' data-toggle='modal' data-target='#reportModal' data-reportcommentid='{{comment.reportcommentid}}' href='javascript:;'>檢舉</a></div>";
+
 	var secondTemplate = "<div style='padding-left: 100px'>" +
-					     "<p style='color:red'>{{comment.commentIds}}</p>" +
 					     "<div class='media mt-4 animated fadeIn'><img width='50px' height='50px' class='d-flex mr-3 rounded-circle' src='{{comment.memberId}}'>" +
 					     "<h5 class='mt-0'>{{comment.commentName}}</h5></div>" +
 					     "<div>{{comment.commentContent}}</div>" +
@@ -141,16 +144,21 @@ function generateTemplate() {
 				.replace("{{comment.commentId}}", firstComment[i].commentId)
 				.replace("{{comment.name}}", firstComment[i].commentName)
 				.replace("{{comment.reportcommentid}}", firstComment[i].commentId);
+				
+				if(sessionScopeMemberId == firstComment[i].memberId) {
+					cancelReport.push(count);
+					console.log(cancelReport);
+				}
 			}
 
 			$("#commentBlock").append(first_html);
-
+			count++;
 			if(firstComment[i].replyComment.length>0) {
 				tmp = firstComment[i].replyComment;
 				var second_html;
 				recursively(tmp);
 			}
-			count++;
+			
 		}
 		
 		$(".reportComment").click(function() {
@@ -171,7 +179,14 @@ function generateTemplate() {
 				.replace("{{comment.commentContent}}", tmp[j].commentContent)
 				.replace("{{comment.commentId}}", tmp[j].commentId)
 				.replace("{{comment.name}}", tmp[j].commentName)
-				.replace("{{comment.reportcommentid}}", tmp[j].commentId);;
+				.replace("{{comment.reportcommentid}}", tmp[j].commentId);
+			
+			if(sessionScopeMemberId == tmp[j].memberId) {
+				console.log(count);
+				cancelReport.push(count);
+				console.log(cancelReport);
+			}
+			
 			$("#commentBlock").append(second_html);
 			replys = tmp[j].replyComment;
 			count++;
@@ -179,4 +194,13 @@ function generateTemplate() {
 		}
 	}
 }
+
+//cancel reportComment
+function clearReport(){
+	console.log("產生:" + cancelReport);
+	for(let i=0;i<cancelReport.length;i++) {
+		$(".reportComment").eq(cancelReport[i]).html("");
+	}
+}
 generateTemplate();
+

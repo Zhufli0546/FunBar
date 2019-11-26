@@ -17,7 +17,7 @@
 
 #signup {
     width: 350px;
-    margin: 50px auto 50px auto;
+    margin: 0 auto 0 auto;
     padding: 20px;
     position: relative;
     background: #fff url(data:image/png;base64,iVBORw0K[...]CYII=);
@@ -150,6 +150,7 @@ button{
 
 	<!-- Blog -->
 	<section class="page animsition" style="background-color:#D0D0D0">
+	<div style="height:150px;width:100%;background-color:black;"></div>
 		<form id="signup" method="post" action="ad_addReservations" style="background-color:white;border:2px solid black">
     <h1>填寫訂位人資料</h1>
     <input name="date" type="text" value="${date}"  readonly="readonly">
