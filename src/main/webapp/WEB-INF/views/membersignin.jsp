@@ -72,7 +72,7 @@
                     </div>
                     <div class="form-group">
                         <label for="memberPwd">密碼:</label>
-                        <input type="text" class="form-control" id="memberPwd" name="memberPwd" placeholder="請輸入密碼">
+                        <input type="password" class="form-control" id="memberPwd" name="memberPwd" placeholder="請輸入密碼">
                         <span class="error">${errorMsg.errPassword}</span>
                         <span><a href="memberforget">忘記密碼</a></span>
                     </div>

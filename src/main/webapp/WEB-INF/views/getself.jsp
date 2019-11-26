@@ -10,37 +10,18 @@
 <head>
 <meta charset="UTF-8">
 <title>login</title>
-<link rel="stylesheet" href="<c:url value='/css/bootstrap.min.css' />">
-<script src="<c:url value='/js/jquery-1.12.4.js' />"></script>
-<script src="<c:url value='/js/bootstrap.min.js' />"></script>
 </head>
 <style>
 * {
 	font-family: 微軟正黑體;
 }
 
-html, body {
-background: url("../images/member.jpg");
-	background-size: cover;
-	
-	width: 100%;
-	height: 100%;
+body {
+	border: 2px solid;
+	border-radius: 25px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: #eee;
-	padding-top: 20px;
-	padding-bottom:10px;
-}
-
-.login {
-	background-color: black;
-	text-align: center;
-	width: 450px;
-}
-
-.error {
-	color: red
 }
 
 figure {
@@ -48,56 +29,60 @@ figure {
 	border: :5px solid rab(8, 8, 8);
 }
 </style>
-
-<body>
-	<meta charset="UTF-8">
-	<link rel="stylesheet"
-		href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 </head>
 
+<meta charset="UTF-8">
+<jsp:include page="header.jsp" />
 <body>
-	<div>
-		<h1 style="float: right;">會員資料</h1>
-		<form action="updatemb1" method="POST" enctype="multipart/form-data">
 
-
-			<figure style="float: left">
-				<img class="card-img-top rounded-circle"
-					style="height: 220px; width: 220px"
-					src="<c:url value='/membergetPicture/${member.id}'/>">
-				<input type="file" name="memberimg" value="${one.memberimg}">
-			</figure>
-			<fieldset>
-				<div>
-					<label for="memberId">姓名:</label> <input type="text"
-						class="form-control" name="memberName" value="${one.memberName}">
-					<label for="memberAddress">地址:</label> <input type="text"
-						class="form-control" name="memberAddress"
-						value="${one.memberAddress}"> <label for="memberAddress">生日:</label>
-					<input type="date" class="form-control" name="memberBirth"
-						value="${one.memberBirth}"> <label for="memberAddress">電話:</label>
-					<input type="text" class="form-control" name="memberPhone"
-						value="${one.memberPhone}"> <label for="memberAddress">密碼:</label>
-					<input type="password" class="form-control" name="memberPwd"
-						disabled value="${one.memberPwd}"> <label
-						for="memberAddress">帳號:</label> <input type="text"
-						class="form-control" name="memberId" disabled
-						value="${one.memberId}"> <label for="memberAddress">信箱:</label>
-					<input type="text" class="form-control" name="memberEmail"
-						value="${one.memberEmail}">
-				</div>
-
-				<div class="button">
-					<input type="hidden" name="id" value="${one.id}" /> <input
-						type="submit" class="btn btn-outline-secondary" value="送出">
-					<td><a href="${pageContext.request.contextPath}">
-							<button type="button" class="btn btn-outline-secondary">回首頁</button>
-					</a></td>
-				</div>
+	<table style="border: 3px #cccccc solid;" cellpadding="15" border='1';>
+		<div>
+			<h1>會員資料</h1>
+			<form action="updatemb1" method="POST" enctype="multipart/form-data">
+				<figure style="float: left">
+					<img style="height: 310px; width: 310px; border-radius: 25px;"
+						src="<c:url value='/membergetPicture/${member.id}'/>">
+					<br>
+					<input type="file" name="memberimg" value="${one.memberimg}">
+				</figure>
+		</div>
+		<div style="padding-top: 120px">
+			<fieldset style="border: 1px #cccccc solid; width: 220px; border-radius: 20px;">
+				<label for="memberId">姓名:</label> <input type="text"
+					class="form-control" name="memberName" value="${one.memberName}">
+				<label for="memberAddress">地址:</label> <input type="text"
+					class="form-control" name="memberAddress"
+					value="${one.memberAddress}"> <label for="memberAddress">生日:</label>
+				<input type="date" class="form-control" name="memberBirth"
+					value="${one.memberBirth}"> <label for="memberAddress">電話:</label>
+				<input type="text" class="form-control" name="memberPhone"
+					value="${one.memberPhone}"> <label for="memberAddress">密碼:</label>
+				<input type="password" class="form-control" name="memberPwd"
+					disabled value="${one.memberPwd}"> <label
+					for="memberAddress">帳號:</label> <input type="text"
+					class="form-control" name="memberId" disabled
+					value="${one.memberId}"> <label for="memberAddress">信箱:</label>
+				<input type="text" class="form-control" name="memberEmail"
+					value="${one.memberEmail}"> <input type="hidden" name="id"
+					value="${one.id}" />
+					 <input type="submit" id="updateok"
+					class="btn btn-outline-secondary" value="送出"> 
+					<a
+					href="${pageContext.request.contextPath}">
+					<button type="button"  class="btn btn-outline-secondary">回首頁</button>
+				</a>
+		</div>
 		</form>
 		</fieldset>
-	</div>
-	</section>
+	</table>
+	<script type="text/javascript"
+		src="<c:url value="/vendor/jquery/jquery-3.2.1.min.js"/>">
+		
+	</script>
+	<script>
+	$("#updateok").click(function() {
+			alert("修改成功");
+		})
+	</script>
 </body>
-
 </html>

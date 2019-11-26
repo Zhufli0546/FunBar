@@ -12,6 +12,8 @@ import javax.persistence.Transient;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="Products")
 public class ProductBean implements Serializable{
@@ -21,7 +23,9 @@ public class ProductBean implements Serializable{
  private Integer productId ;
  private String productNo ;
  private String productName;
- private String productDetail ;
+ private String productDetail;
+ 
+ @JsonIgnore
  private Blob productImage;
  private String fileName;
  private String category;
@@ -30,8 +34,8 @@ public class ProductBean implements Serializable{
  private Integer stock;
  private Integer status;
 
- 
  @Transient
+ @JsonIgnore
  private MultipartFile productCover;
  public MultipartFile getProductCover() {
   return productCover;

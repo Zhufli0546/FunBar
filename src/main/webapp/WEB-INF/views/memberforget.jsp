@@ -9,15 +9,7 @@
 <head>
  <meta charset="UTF-8">
  <title>login</title>
- <link rel="stylesheet" href="<c:url value='/css/bootstrap.min.css' />">
- <script src="<c:url value='/js/jquery-1.12.4.js' />"></script>
- <script src="<c:url value='/js/bootstrap.min.js' />"></script>
- <script type="text/javascript">
- function enterSomething(){
-	 document.getElementById("user").value='zuo';
-	 document.getElementById("memberPwd").value='password';
- }
- </script>
+
 </head>
 <style>
     * {
@@ -56,9 +48,11 @@
     .error { color: red}
 </style>
 
+
 <body>
+<jsp:include page="header.jsp" />
 <c:set var="go" value="" scope="session"></c:set>
-	<jsp:include page="header.jsp" />
+	
 	
     <div class="row">
         <div class="login col-sm-12">
@@ -72,11 +66,21 @@
                     </div>
                    
                 </fieldset>
-                <button type="submit" class="btn btn-info col-md-12">尋找密碼</button>
+                <button type="submit" id="findpass" class="btn btn-info col-md-12">尋找密碼</button>
             </form>
         </div>
 
         
     </div>
+    <script type="text/javascript"
+		src="<c:url value="/vendor/jquery/jquery-3.2.1.min.js"/>">
+		
+	</script>
+    <script>
+    
+$("#findpass").click(function() {
+	alert("請到信箱收取驗證信");
+})
+</script>
 </body>
 </html>

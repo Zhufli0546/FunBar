@@ -67,17 +67,6 @@ public class MemberDAOImp implements MemberDAO {
 				.setParameter("memberPic", blob).executeUpdate();
 
 	}
-	//修改密碼
-	@Override
-	public void newPwd(String memberId, String memberPwd) {
-		Session session = factory.getCurrentSession();
-		String hql = "UPDATE Member SET memberPwd =:memberPwd WHERE memberId =:memberId";
-		
-		session.createQuery(hql).setParameter("memberPwd", memberPwd)
-								.setParameter("memberId", memberId).executeUpdate();
-	}
-	
-	
 
 //	一般會員打完登入資料，進入這個方法
 	@Override
@@ -178,7 +167,15 @@ public class MemberDAOImp implements MemberDAO {
 		
 		
 	}
-
+	//修改密碼
+		@Override
+		public void newPwd(String memberId, String memberPwd) {
+			Session session = factory.getCurrentSession();
+			String hql = "UPDATE Member SET memberPwd =:memberPwd WHERE memberId =:memberId";
+			
+			session.createQuery(hql).setParameter("memberPwd", memberPwd)
+									.setParameter("memberId", memberId).executeUpdate();
+		}
 
 
 	
