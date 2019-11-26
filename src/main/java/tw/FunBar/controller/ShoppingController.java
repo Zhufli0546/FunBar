@@ -83,7 +83,7 @@ public class ShoppingController {
 		 
 		model.addAttribute("shoppingCart", products);
 		model.addAttribute("listCount", count);			
-		return "showP/roductByCategory";		
+		return "showProductByCategory";		
 		 
 	}
 	
