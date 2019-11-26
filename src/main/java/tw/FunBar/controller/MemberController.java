@@ -257,6 +257,7 @@ public class MemberController {
 	// 讀取圖片資料
 	@RequestMapping(value = "/membergetPicture/{id}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPicture(HttpServletResponse resp, @PathVariable Integer id) {
+//		String filePath = "/WEB-INF/views/ProductImages/noImage.png";
 		byte[] media = null;
 		HttpHeaders headers = new HttpHeaders();
 		String memberfileName = "";

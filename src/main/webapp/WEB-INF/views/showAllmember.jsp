@@ -26,7 +26,7 @@
 	<jsp:include page="admin_header.jsp" />
 
 	<div
-		style="padding: 10px; float: left; width: 1000px",>
+		style="padding: 10px; float: left; width: 1000px;margin-bottom: 100px;">
 		<div class="container" style="text-align: center">
 			<h1>會員管理</h1>
 		</div>
@@ -54,7 +54,10 @@
 							<td>${member.memberPwd}</td>
 							<td>${member.memberId}</td>
 							<td>${member.memberEmail}</td>
-							<td>${member.memberfileName}</td>
+							<td><div style="text-align: center">
+								<img src="<c:url value='/membergetPicture/${member.id}'/>"					
+									height="120px" width="120px" />
+							</div></td>
 							<td>${member.memberLevel}</td>
 							<td ><a
 								href="<spring:url value='deletemb?id=${member.id}' />">
