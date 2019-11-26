@@ -52,7 +52,9 @@
 							aria-controls="nav-home" aria-selected="true">好友列表</a> <a
 							class="nav-item nav-link ml-3" id="navReceiver"
 							data-toggle="tab" href="#Receiver" role="tab"
-							aria-controls="nav-profile" aria-selected="false">交友邀請</a>
+							aria-controls="nav-profile" aria-selected="false">交友邀請<button
+							class='badge badge-primary badge-pill btn btn-primary btn-sm ml-1 mb-1'
+							id='friendRequest2${sessionScope.member.id}'></button></a>
 					</div>
 					<form class="form-inline mr-right">
 						<div class="md-form my-0">

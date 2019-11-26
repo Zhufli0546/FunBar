@@ -48,9 +48,7 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">Login Screens:</h6>
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/showAllmember">查詢所有會員</a> <a
-						class="dropdown-item" href="#">Register</a> <a
-						class="dropdown-item" href="#">Forgot Password</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/showAllmember">查詢所有會員</a>
 				</div></li>
 
 

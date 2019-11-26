@@ -92,6 +92,8 @@ public class ShoppingController {
 	public List<String> getAllCategories() {
 		return shoppingService.getAllCategories();
 	}
+	
+		
 
 	
 	//----------後台功能----------
@@ -269,7 +271,7 @@ public class ShoppingController {
 	@RequestMapping(value = "/ProductPicture/{productId}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPicture(HttpServletResponse resp, 
 			@PathVariable Integer productId) {
-		//String filePath = "/WEB-INF/views/ProductImages/noImage.png";
+		String filePath = "/WEB-INF/views/ProductImages/noImage.png";
 
 		byte[] media = null;
 		HttpHeaders headers = new HttpHeaders();

@@ -51,12 +51,12 @@ public class DiscussController {
 	}
 
 	@RequestMapping(value = "createPost", method = RequestMethod.POST)
-	public String createPost(@RequestParam String postContent, @RequestParam Integer memberId) {
+	public void createPost(@RequestParam String postContent, @RequestParam Integer memberId) {
 		Post post = new Post();
 		post.setPostContent(postContent);
 		post.setMemberId(memberId);
 		service.createPost(post);
-		return "redirect:/discuss";
+//		return "redirect:/discuss";
 	}
 
 	@RequestMapping(value = "replyComment", method = RequestMethod.POST)
@@ -72,12 +72,12 @@ public class DiscussController {
 	}
 
 	@RequestMapping(value = "updateContent", method = RequestMethod.POST)
-	public String updateContent(@RequestParam String postContent, @RequestParam Integer postId) {
+	public void updateContent(@RequestParam String postContent, @RequestParam Integer postId) {
 		Post post = new Post();
 		post.setPostContent(postContent);
 		post.setPostId(postId);
 		service.updatePostContent(post);
-		return "redirect:/discuss";
+//		return "redirect:/discuss";
 	}
 
 	@RequestMapping(value = "reportContent", method = RequestMethod.GET)
@@ -140,7 +140,7 @@ public class DiscussController {
 		List<Post> sortList = service.getReportSort(0);
 		Integer count = sortList.size();
 		Integer countPage = (int) (Math.ceil(count / contentNum));
-		if(count % contentNum > 0) {
+		if (count % contentNum > 0) {
 			countPage++;
 		}
 		model.addAttribute("page", countPage);
@@ -173,17 +173,53 @@ public class DiscussController {
 
 	@GetMapping(value = "confirmFriendRequest")
 	public void confirmFriendRequest(@RequestParam(value = "memberId") Integer memberId,
-			@RequestParam(value = "memberIdf") Integer memberIdf) {
-		Friendship friendshipStatus = new Friendship();
-		friendshipStatus.setSender_memberId(memberIdf);
-		friendshipStatus.setReceiver_memberId(memberId);
-		friendshipStatus.setFriendStatus(2);
-		service.confirmFriendRequest(friendshipStatus);
-		Friendship friendshipInsert = new Friendship();
-		friendshipInsert.setSender_memberId(memberId);
-		friendshipInsert.setReceiver_memberId(memberIdf);
-		friendshipInsert.setFriendStatus(2);
-		service.sendFriendRequest(friendshipInsert);
+			@RequestParam(value = "memberIdf") Integer memberIdf,
+			@RequestParam(value = "friendStatus") Integer friendStatus, Integer check) {
+		if (friendStatus == 2 && check == 2) {
+			Friendship friendshipStatus = new Friendship();
+			friendshipStatus.setSender_memberId(memberIdf);
+			friendshipStatus.setReceiver_memberId(memberId);
+			friendshipStatus.setFriendStatus(friendStatus);
+			service.confirmFriendRequest(friendshipStatus);
+
+			Friendship friendshipInsert = new Friendship();
+			friendshipInsert.setSender_memberId(memberId);
+			friendshipInsert.setReceiver_memberId(memberIdf);
+			friendshipInsert.setFriendStatus(friendStatus);
+			service.sendFriendRequest(friendshipInsert);
+		} else if (friendStatus == 4 && check == 3) {
+			Friendship friendshipStatus = new Friendship();
+			friendshipStatus.setSender_memberId(memberIdf);
+			friendshipStatus.setReceiver_memberId(memberId);
+			friendshipStatus.setFriendStatus(friendStatus);
+			service.confirmFriendRequest(friendshipStatus);
+
+			Friendship blockFriend = new Friendship();
+			blockFriend.setSender_memberId(memberId);
+			blockFriend.setReceiver_memberId(memberIdf);
+			blockFriend.setFriendStatus(check);
+			service.confirmFriendRequest(blockFriend);
+		} else if (friendStatus == 2 && check == 4) {
+			Friendship unBlockFriend = service.getFriendRequest(memberIdf, memberId);
+			Integer checkStatus = unBlockFriend.getFriendStatus();
+			if (checkStatus == 4 || checkStatus == 5) {
+				Friendship unBlockFriend1 = new Friendship();
+				unBlockFriend1.setSender_memberId(memberIdf);
+				unBlockFriend1.setReceiver_memberId(memberId);
+				unBlockFriend1.setFriendStatus(friendStatus);
+				service.confirmFriendRequest(unBlockFriend1);
+				Friendship unBlockFriend2 = new Friendship();
+				unBlockFriend2.setSender_memberId(memberId);
+				unBlockFriend2.setReceiver_memberId(memberIdf);
+				unBlockFriend2.setFriendStatus(friendStatus);
+				service.confirmFriendRequest(unBlockFriend2);
+			}
+			if (checkStatus == null) {
+				Friendship deleteFriend = service.getFriendRequest(memberId, memberIdf);
+				service.cancelFriendRequest(deleteFriend);
+			}
+		}
+
 	}
 
 	@RequestMapping(value = "/friendJson", produces = "application/json")

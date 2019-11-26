@@ -47,7 +47,7 @@
 		swal({
 		    title: '你已報名過此活動!!!',
 		    text: '2秒後自動關閉',
-		    timer: 2000
+		    timer: 3000
 		}).then(
 		    function () {},
 		    // handling the promise rejection

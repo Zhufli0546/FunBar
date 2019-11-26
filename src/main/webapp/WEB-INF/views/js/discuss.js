@@ -4,12 +4,10 @@ var newPost = "<div class='card-header'>Create Post</div>"
 		+ "<div class='media p-4 bg-light'>" 
 		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{sessionScope.member.id}}'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0'>"
-//		+ "<a href='#' class='text-primary'><h5>{{sessionScope.member.memberName}}</h5></a>"
-		+ "<form method='post' action='createPost'>"
-		+ "<textarea id='postContent' name='postContent' class='form-control mt-1' placeholder='What is on your mind, {{sessionScope.member.memberName}} ?'></textarea>"
-		+ "<input id='memberId' name='memberId' class='form-control' type='hidden' value='{{sessionScope.member.id}}'></input>"
-		+ "<div class='text-right'><button class='btn btn-info lg mt-3' type='submit' name='submitPost'>POST</button></div>"
-		+ "</form></div></div>";
+		+ "<textarea id='createPostContent' name='postContent' class='form-control mt-1' placeholder='What is on your mind, {{sessionScope.member.memberName}} ?'></textarea>"
+		+ "<input id='createMemberId' name='memberId' class='form-control' type='hidden' value='{{sessionScope.member.id}}'></input>"
+		+ "<div class='text-right'><button class='btn btn-info lg mt-3' type='button' name='submitPost' id='createPostBtn'>POST</button></div>"
+		+ "</div></div>";
 
 var firstLevelComment = "<div class='card firstComment{{post.memberId}}' style='display:none;'>"
 		+ "<div class='media p-4 bg-light'>" 
@@ -27,8 +25,8 @@ var firstLevelComment = "<div class='card firstComment{{post.memberId}}' style='
 		+ "</form>"
 		+ "<form method='post' action='replyComment'>"
 		+ "<div class='text-right'>"
-		+ "<div class='position:absolute; mr-2' id='likeCount{{post.postId}}'>0 Like</div>"
-		+ "<button id='likebtn{{post.postId}}' type='button' class='btn btn-outline-primary' value='{{post.postId}}'>"
+		+ "<div class='position:absolute; mr-2' id='likeCount{{post.postId}}' style='font-size:20px;'></div>"
+		+ "<button id='likebtn{{post.postId}}' type='button' class='btn btn-outline-danger' value='{{post.postId}}'>"
 		+ "<span id='likeStatus{{post.postId}}'>Like</span></button>"
 		+ "<button type='button' style='display:none' value='{{post.memberId}}'></button>"
 		+ "<a class='btn btn-outline-success btn-circle ml-2 text-uppercase' data-toggle='collapse' href='#comment{{post.postId}}'>"
@@ -40,7 +38,7 @@ var firstLevelComment = "<div class='card firstComment{{post.memberId}}' style='
 		+ "<input id='postContent' name='postContent' class='form-control' type='text' placeholder='Reply...'></input>"
 		+ "<input id='parentPostId' name='parentPostId' class='form-control' type='hidden' value='{{post.postId}}'></input>"
 		+ "<input id='memberId' name='memberId' class='form-control' type='hidden' value='{{sessionScope.member.id}}'></input>"
-		+ "<button class='btn btn-info' type='submit' name='submitPost' onclick='reloadPage()'>Post</button>"
+		+ "<button class='btn btn-info' type='submit' name='submitPost' id='replyPost{{post.postId}}'>Post</button>"
 		+ "</div></div></div></form></div></div></div><br>";
 
 var level = "<div class='collapse' id='comment{{post.postId}}'>"
@@ -61,8 +59,8 @@ var secondLevelComment = "<div class='card mt-3' id='secondComment'>"
 		+ "</form>"
 		+ "<form method='post' action='replyComment'>"
 		+ "<div class='text-right'>"
-		+ "<div class='position:absolute; mr-2' id='likeCount{{post.postId}}'>0 Like</div>"
-		+ "<button id='likebtn{{post.postId}}' type='button' class='btn btn-outline-primary' value='{{post.postId}}'>"
+		+ "<div class='position:absolute; mr-2' id='likeCount{{post.postId}}' style='font-size:20px;'></div>"
+		+ "<button id='likebtn{{post.postId}}' type='button' class='btn btn-outline-danger' value='{{post.postId}}'>"
 		+ "<span id='likeStatus{{post.postId}}'>Like</span></button>"
 		+ "<button type='button' style='display:none' value='{{post.memberId}}'></button>"
 		+ "<a class='btn btn-outline-success btn-circle ml-2 text-uppercase' data-toggle='collapse' href='#comment{{post.postId}}'>"
@@ -90,8 +88,8 @@ var thirdLevelComment = "<div class='card mt-3 ml-5' id='thirdComment'>"
 		+ "<blockquote class='blockquote mb-5'><div id='postContent{{post.postId}}' class='font-weight-bold mt-2 post-description'>{{post.postContent}}</div></blockquote>"
 		+ "</form>"
 		+ "<div class='text-right'>"
-		+ "<div class='position:absolute; mr-2' id='likeCount{{post.postId}}'>0 Like</div>"
-		+ "<button id='likebtn{{post.postId}}' type='button' class='btn btn-outline-primary' value='{{post.postId}}'>"
+		+ "<div class='position:absolute; mr-2' id='likeCount{{post.postId}}' style='font-size:20px;'></div>"
+		+ "<button id='likebtn{{post.postId}}' type='button' class='btn btn-outline-danger' value='{{post.postId}}'>"
 		+ "<span id='likeStatus{{post.postId}}'>Like</span></button>"
 		+ "<button type='button' style='display:none' value='{{post.memberId}}'></button>"
 		+ "</div></div></div></div>";
@@ -122,9 +120,9 @@ $.ajax({
 							  .replace(/\{{sessionScope.member.id}}/g, loginMemberid)
 							  .replace(/\{{requestUrl}}/g, requestUrl)
 						
-		$("#newPost").append(newPost_html);
+		$("#newPost").html("").append(newPost_html);
 		data = postData.Post
-
+		$("#firstLevelComment").html("")
 		for (let i = 0; i < data.length; i++) {
 			let post = data[i];
 
@@ -324,7 +322,7 @@ function refreshLikeNumber(postId) {
 	$.get("Like", {
 		postId : postId
 	}, function(data) {
-		$("#likeCount" + postId).text(data + "  Likes")
+		$("#likeCount" + postId).html(data + "&nbsp;<i class='fa fa-heart' style='color:red; font-size:20px'></i>")
 	})
 }
 
@@ -396,21 +394,33 @@ function checkLikeBtn(postId){
 
 function editContent(postId, postContent) {
 	$("#edit" + postId).unbind().click(function() {
-						$("#postContent" + postId).html("<textarea id='postContent' name='postContent' class='form-control mt-3'>"
+						$("#postContent" + postId).html("<textarea id='editPost' name='postContent' class='form-control mt-3'>"
 												+ postContent
 												+ "</textarea>"
-												+ "<div class='text-right mt-2'><button class='btn btn-primary' type='submit' name='editContent'>Edit</button>"
-												+ "<input id='postId' name='postId' class='form-control' type='hidden' value='"
-												+ postId
-												+ "'></input>"
+												+ "<div class='text-right mt-2'><button class='btn btn-primary' type='button' name='editContent' id='edit'>Edit</button>"
 												+ "<button class='btn btn-warning ml-2' name='cancel' id='cancel"
 												+ postId
 												+ "'>Cancel</button></div>");
 						$("#cancel" + postId).click(function() {
 							$("#postContent" + postId).html(postContent);
 						})
+						
+						$("#edit").click(function(){
+							var editPost = $("#editPost").val();
+							$.ajax({
+								url : requestUrl + "updateContent",
+								method : "POST",
+								dataType : "JSON",
+								data : {postContent : editPost, postId : postId},
+								async:false,
+								success : function() {
+									init();
+				
+								}
+						})	
 
 					})
+		})
 }
 
 function checkDropBtn(postId, loginMemberid, memberId){
@@ -454,13 +464,13 @@ function refreshCommentNumber(postId, commentCount) {
 }
 
 
-var memberList = "<div class='list-group-item d-flex justify-content-between align-items-center'>"
+var memberList = "<div class='list-group-item justify-content-between align-items-center' style='position:relative' id='div{{member.memberId}}'>"
 				+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{member.memberId}}'>"
-				+ "{{member.memberName}}<button class='badge badge-primary badge-pill btn btn-primary btn-sm' id='friendRequest{{member.memberId}}'>" 
+				+ "<span class='ml-3'>{{member.memberName}}</span><button class='badge badge-primary badge-pill btn-primary btn-sm' style='position:absolute; right:10px; top:23px;' id='friendRequest{{member.memberId}}'>"
 				+ "{{friendStatus}}</button></div>";
 
 
-$(document).ready(function(){
+function init(){
 	requestUrl = $('#requestUrl').text();
 	fdata = getFriendShip();
 	refreshAllPost();
@@ -468,12 +478,14 @@ $(document).ready(function(){
 	thirdLevel();
 	getAllMemberName();
 	checkAllBtn();
+	createPostBtn()
 	$("#searchMember").click(function(){
 $.ajax({
 	url : requestUrl + "memberJson",
 	method : "POST",
 	dataType : "JSON",
 	data : {memberName : $("#searchMemberName").val()},
+	async:false,
 	success : function(memberData) {
 					$("#searchResult").empty();
 					var searchMemberName = $("#searchMemberName").val();
@@ -493,22 +505,27 @@ $.ajax({
 						}
 
 					}
-					$("#searchResult").append(memberListAll);
+					$("#searchResult").html("").append(memberListAll);
 					for (let j = 0; j < mdata.length; j++) {
 							let member = mdata[j];
-							if(member.memberName != loginMemberName){
+							if(member.id != loginMemberid){
 								sendFriendRequest(loginMemberid, member.id);
 								for(let i = 0; i < fdata.length; i++) {
 										let friend = fdata[i];
 								if(loginMemberid == friend.sender_memberId && member.id == friend.receiver_memberId && friend.friendStatus == 2) {
-									$("#friendRequest" + member.id).text("Friend")
+									$("#friendRequest" + member.id).text("Friend").attr("class" , "badge badge-primary badge-pill btn btn-success btn-sm");
 									$("#friendRequest" + member.id).attr('disabled', true);
 								} else if(loginMemberid == friend.sender_memberId && member.id == friend.receiver_memberId && friend.friendStatus == 1) {
-									$("#friendRequest" + member.id).text("Request Sended")
+									$("#friendRequest" + member.id).text("Sent")
 									$("#friendRequest" + member.id).attr('disabled', true);
 									} else if (loginMemberid == friend.receiver_memberId && member.id == friend.sender_memberId && friend.friendStatus == 1){
-										$("#friendRequest" + member.id).text("Confirm");
+										$("#friendRequest" + member.id).text("Confirm").attr("class" , "badge badge-primary badge-pill btn btn-info btn-sm");
 										confirmFriendRequest(loginMemberid, friend.sender_memberId);
+									}  else if (loginMemberid == friend.receiver_memberId && member.id == friend.sender_memberId && friend.friendStatus > 3){
+										$("#friendRequest" + member.id).text("Blocked").attr("class" , "badge badge-primary badge-pill btn btn-danger btn-sm");
+										$("#friendRequest" + member.id).attr('disabled', true);
+									}else if (loginMemberid == friend.receiver_memberId && member.id == friend.sender_memberId && friend.friendStatus == 3){
+										$("#div" + member.id).hide();
 									}
 									
 							}
@@ -520,6 +537,10 @@ $.ajax({
 	}
 })
 })
+}
+
+$(document).ready(function(){
+	init()
 })
 
 function sendFriendRequest(memberId, memberIdf) {
@@ -529,16 +550,20 @@ function sendFriendRequest(memberId, memberIdf) {
 			memberIdf : memberIdf
 		}, function() {
 		})
-		$(this).text("Send Request")
+		$(this).text("Sent")
 		$(this).attr('disabled', true);
 	})
 }
 
 function confirmFriendRequest(loginMemberid, memberIdf) {
 	$("#friendRequest" + memberIdf).unbind().click(function() {
+		var status = 2;
+		var check = 2;
 		$.get("confirmFriendRequest", {
 			memberId : loginMemberid,
-			memberIdf : memberIdf
+			memberIdf : memberIdf,
+			friendStatus : status,
+			check : check
 		}, function() {
 		})
 		$(this).text("Friend")
@@ -580,3 +605,43 @@ function getFriendShip(){
 	return fdata;
 }
 
+//Test
+function createPostBtn(){
+	$("#createPostBtn").click(function(){
+		var createPostContent = $("#createPostContent").val();
+		var createMemberId = $("#createMemberId").val();
+		$.ajax({
+			url : requestUrl + "createPost",
+			method : "POST",
+			dataType : "JSON",
+			data : { memberId : createMemberId, postContent : createPostContent},
+			async:false,
+			success : function() {
+				init();
+				
+			}
+		})
+	})
+}
+
+//function replyPost(){
+//	$("#replyPost").click(function(){
+//		
+//		$.ajax({
+//			url : requestUrl + "createPost",
+//			method : "POST",
+//			dataType : "JSON",
+//			data : { memberId : createMemberId, postContent : createPostContent},
+//			async:false,
+//			success : function() {
+//				init();
+//				
+//			}
+//		})
+//	})
+//}
+
+//else if (loginMemberid == friend.receiver_memberId && member.id == friend.sender_memberId && friend.friendStatus == 3){
+//	$("#friendRequest" + member.id).text("Friend").attr("class" , "badge badge-primary badge-pill btn btn-success btn-sm");
+//	$("#friendRequest" + member.id).attr('disabled', true);
+//}
