@@ -64,8 +64,7 @@
      </div>
                         <div class="info">
                             <h3 class="prdouctName">${pb.productName}</h3>
-                            <span><i class="fas fa-wine-bottle" style="font-size:14px"></i>${pb.category}</span> 
-<%--                              <span><i class="fas fa-percent" style="font-size:14px"></i>${pb.discount}</span> --%>
+                            <span><i class="fas fa-id-card" style="font-size:14px"></i>${pb.productId}</span> 
                             <span><i class="fas fa-dollar-sign" style="font-size:14px"></i>${pb.unitPrice}</span>                                    
                         </div>
                         <div class="total">
