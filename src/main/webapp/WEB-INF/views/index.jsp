@@ -38,9 +38,9 @@
 
 						<div class="wrap-btn-slide1 animated visible-false" data-appear="zoomIn">
 							<!-- Button1 -->
-							<a href="menu.html" class="btn1 flex-c-m size1 txt3 trans-0-4">
-								Look Menu
-							</a>
+<!-- 							<a href="menu.html" class="btn1 flex-c-m size1 txt3 trans-0-4"> -->
+<!-- 								Look Menu -->
+<!-- 							</a> -->
 						</div>
 					</div>
 				</div>

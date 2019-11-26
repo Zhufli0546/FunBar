@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.script.ScriptContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,10 +20,8 @@ import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,12 +32,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import tw.FunBar.model.Member;
 import tw.FunBar.model.ProductBean;
-import tw.FunBar.model.Room;
 import tw.FunBar.service.OrderHandleService;
 import tw.FunBar.service.ShoppingService;
 
@@ -93,6 +92,8 @@ public class ShoppingController {
 	public List<String> getAllCategories() {
 		return shoppingService.getAllCategories();
 	}
+	
+		
 
 	
 	//----------後台功能----------
@@ -113,6 +114,45 @@ public class ShoppingController {
 		return "showAllProduct";
 	}
 	
+	
+	//後台所有商品查詢
+	@RequestMapping("/getProdByName")
+	public String getProdByName(@RequestParam Integer index,
+								@RequestParam String productName
+								,Model model ) {	
+		List <ProductBean> products = shoppingService.getProdByName(productName, index);
+		int count = shoppingService.getPBNIndex(productName);	  //分頁
+		 
+		model.addAttribute("showAllProduct", products);
+		model.addAttribute("listCount", count);	
+		model.addAttribute("productName", productName);
+		model.addAttribute("index",index);
+		return "showProductBySearch";		
+		 
+	}
+	
+	@RequestMapping("/pullProductOne")
+	public String pullProductOne(@RequestParam("id") Integer productId,String productName,Integer index, Model model,
+			HttpServletRequest req, HttpServletResponse response) throws UnsupportedEncodingException {
+		
+		System.out.println("ProductName => " + productName);
+		orderService.pullProduct(productId);
+		
+		
+		 String name = URLEncoder.encode(productName,"UTF-8");
+		
+		
+		 
+		return "redirect:/getProdByName?index="+index+"&productName="+name;
+	}
+	
+	@RequestMapping("/pushProductOne")
+	public String pushProductOne(@RequestParam("id") Integer productId,String productName,Integer index, Model model) throws UnsupportedEncodingException {
+		orderService.pushProduct(productId);
+		
+		 String name = URLEncoder.encode(productName,"UTF-8");
+		return "redirect:/getProdByName?index="+index+"&productName="+name;
+	}
 	
 	
 		//下架單筆資料
@@ -227,10 +267,11 @@ public class ShoppingController {
 		return "redirect:/showAllProduct?index=1";
 	}
 	
+	@SuppressWarnings("unused")
 	@RequestMapping(value = "/ProductPicture/{productId}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPicture(HttpServletResponse resp, 
 			@PathVariable Integer productId) {
-		//String filePath = "/WEB-INF/views/ProductImages/noImage.png";
+		String filePath = "/WEB-INF/views/ProductImages/noImage.png";
 
 		byte[] media = null;
 		HttpHeaders headers = new HttpHeaders();
@@ -288,6 +329,7 @@ public class ShoppingController {
 //		return responseEntity;
 	}
 	
+	@SuppressWarnings("unused")
 	private byte[] toByteArray(String filepath) {
 		byte[] b = null;
 		String realPath = context.getRealPath(filepath);
@@ -306,7 +348,19 @@ public class ShoppingController {
 	}
 	
 
-	
-	
-	
+//	@RequestMapping("/getProdById")
+//	@ResponseBody
+//	public ArrayList<ProductBean> getProdById(@RequestParam Integer productId) {
+//		ArrayList<ProductBean> pb = shoppingService.getProdById(productId);
+//		return pb ;
+//	}
+//	
+//	@RequestMapping("/getProdByName")
+//	@ResponseBody
+//	public List<ProductBean> getProdByName(@RequestParam String productName) {
+//		
+//		System.out.println("===================" +productName);
+//		List<ProductBean> pb = shoppingService.getProdByName(productName);
+//		return pb ;
+//	}
 }

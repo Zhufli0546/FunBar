@@ -82,6 +82,9 @@ function friends(){
 						conn[0] = conn[1];
 						conn[1] = temp;
 					}
+					let subscribe = conn[0] + "/" + conn[1];
+					
+					
 					stompClient.subscribe('/member/message/' + conn[0] + "/" + conn[1], function(message) {
 						var json = JSON.parse(message.body);
 						var senderMemberId = json.senderMemberId;
@@ -105,10 +108,11 @@ function friends(){
 
 $(document).ready(function() {
 	requestUrl = $('#requestUrl_chatbox').text();
+	var count = 0;
 	mdata = getMemberData();
 	friendlist();
 	search();
-
+	
 })
 
 $(function() {
@@ -207,7 +211,7 @@ function connect() {
 			var date = null;
 			var msg = loginMemberName + "加入聊天！";
 //			var n = new Notification(message);
-			showNewMessage(user, date, msg);
+//			showNewMessage(user, date, msg);
 		});
 //		stompClient.subscribe("/topic/login", function(message) {
 //			showNewUser(message.body);
@@ -304,41 +308,88 @@ function formatDate(dateTime) {
  * @param msg
  *            消息内容
  */
+var count = 0;
 function showNewMessage(user, date, msg, senderMemberId, receiverMemberId) {
 	var container = document.getElementById("conversation");
 	var messages = document.getElementById("messages");
 	var msgToDisplay = document.createElement('li');
-
+	var x = $('.chatbox').attr("class")
+	var y = "chatbox chatbox22 chatbox--closed rounded-top";
+	var z = "chatbox chatbox22 rounded-top chatbox--closed";
+	var chatBoxMemberName;
+	var j = "chatbox chatbox22 rounded-top chatbox--tray";
+	var k = "chatbox chatbox22 chatbox--tray rounded-top";
 	
-//	if (user == "系统消息") {
-//		msgToDisplay.style.color = 'red';
-//	}
+	
+	if(x == y || x == z){
+		$(".chatbox").show().attr('class', 'chatbox chatbox22 rounded-top');
+		let conn = [ loginMemberid, senderMemberId];
+		if(conn[0] > conn[1]){
+			let temp = conn[0];
+			conn[0] = conn[1];
+			conn[1] = temp;
+		}
+		let subscribe = conn[0] + "/" + conn[1];
+		 history(subscribe);
 	var dateTime = formatDate(date);
 	msg = showEmoji(msg);
 	console.log(msgToDisplay)
 
-	if (senderMemberId == loginMemberid) {
-		msgToDisplay.setAttribute("class", "replies");
-		msgToDisplay.innerHTML = "" 
-				+ "<img class='card-img-top rounded-circle' style='height: 30px; width: 30px' src='" + requestUrl + "membergetPicture/" 
-				+ "" + senderMemberId + "'>"
-				+ "<p>" + msg + "</p>"
-		container.append(msgToDisplay);
+//	if (senderMemberId == loginMemberid) {
+//		msgToDisplay.setAttribute("class", "replies");
+//		msgToDisplay.innerHTML = "" 
+//				+ "<img class='card-img-top rounded-circle' style='height: 30px; width: 30px' src='" + requestUrl + "membergetPicture/" 
+//				+ "" + senderMemberId + "'>"
+//				+ "<p>" + msg + "</p>"
+//		container.append(msgToDisplay);
+//		chatBoxMemberName = $("#Name" + receiverMemberId).text();
+//		
+//	} else {
+//		msgToDisplay.setAttribute("class", "sent");
+//		msgToDisplay.innerHTML = ""
+//				+ "<img class='card-img-top rounded-circle' style='height: 30px; width: 30px' src='" + requestUrl + "membergetPicture/" 
+//				+ "" + senderMemberId + "'>"
+//				+ "<p>" + msg + "</p>"
+//		container.append(msgToDisplay);
+//		chatBoxMemberName = $("#Name" + senderMemberId).text();
+//		
+//	}
+	sendToBinding(senderMemberId)
+	
+	}else{
+		if(x == j || x == k){
+			count++;
+			$("#notificationChatBox").text(count)
+			
+		}
 		
-	} else {
-		msgToDisplay.setAttribute("class", "sent");
-		msgToDisplay.innerHTML = ""
-				+ "<img class='card-img-top rounded-circle' style='height: 30px; width: 30px' src='" + requestUrl + "membergetPicture/" 
-				+ "" + senderMemberId + "'>"
-				+ "<p>" + msg + "</p>"
-		container.append(msgToDisplay);
-		
-	}
+		var dateTime = formatDate(date);
+		msg = showEmoji(msg);
+		console.log(msgToDisplay)
 
+		if (senderMemberId == loginMemberid) {
+			msgToDisplay.setAttribute("class", "replies");
+			msgToDisplay.setAttribute("loading", "lazy");
+			msgToDisplay.innerHTML = "" 
+					+ "<img class='card-img-top rounded-circle' style='height: 30px; width: 30px' src='" + requestUrl + "membergetPicture/" 
+					+ "" + senderMemberId + "'>"
+					+ "<p>" + msg + "</p>"
+			container.append(msgToDisplay);
+			chatBoxMemberName = $("#Name" + receiverMemberId).text();
+		} else {
+			msgToDisplay.setAttribute("class", "sent");
+			msgToDisplay.setAttribute("loading", "lazy");
+			msgToDisplay.innerHTML = ""
+					+ "<img class='card-img-top rounded-circle' style='height: 30px; width: 30px' src='" + requestUrl + "membergetPicture/" 
+					+ "" + senderMemberId + "'>"
+					+ "<p>" + msg + "</p>"
+			container.append(msgToDisplay);
+			chatBoxMemberName = $("#Name" + senderMemberId).text();
+			
+		}
+	}
 	($('#conversation').children("li:last-child")[0]).scrollIntoView();
-	var x = $('.chatbox').attr("class")
-	console.log(x)
-//	var n = new Notification("You have new message !!");
+	$("#receiverMemberName").text(chatBoxMemberName);
 }
 /**
  * 正则表达式显示消息中的emoji图片
@@ -398,13 +449,6 @@ function sendMessage(loginMemberid, receiverMemberId) {
 			'messageContent' : content,
 		}));
 		
-		stompClient.send("/topic/notification", {}, JSON.stringify({
-			'notification' : content,
-			'tag' : 'Discuss',
-			'url' : requestUrl + 'chat',
-			'icon' : requestUrl + 'membergetPicture/' + loginMemberid
-		}));
-		
 
 	}
 }
@@ -427,10 +471,32 @@ function sendMessage(loginMemberid, receiverMemberId) {
 		conn[1] = temp;
 	}
 	let subscribe = conn[0] + "/" + conn[1];
-	$("#receiverMemberName").text(receiverMemberName);
+	
  	getHistoryMessage(subscribe)
+ 	$("#receiverProfile").html("").append("<img class='online' id='profile-img' src='" + requestUrl + "membergetPicture/" + receiverMemberId + "'/>" +
+ 			"<span id='receiverMemberName'></span>")
+ 	$("#receiverMemberName").text(receiverMemberName);
  }
 
+ function sendToBinding(receiverMemberId){
+	 $("#messageInput").unbind("keyup").bind("keyup", function(event) {
+			if (event.keyCode == 13) {
+				sendMessage(loginMemberid, receiverMemberId);
+				}
+		   });
+		 $("#btn-chat").click(function(){
+			 sendMessage(loginMemberid, receiverMemberId);
+		 });
+		let receiverMemberName = $("#Name" + receiverMemberId).text();
+	 	let conn = [ loginMemberid, receiverMemberId];
+		if(conn[0] > conn[1]){
+			let temp = conn[0];
+			conn[0] = conn[1];
+			conn[1] = temp;
+		}
+		$("#receiverMemberName").text(receiverMemberName);
+ }
+ 
  function getHistoryMessage(subscribe){
 	 $("#conversation").html("");
  $.ajax({
@@ -468,7 +534,49 @@ function sendMessage(loginMemberid, receiverMemberId) {
 		})
 	}
  
+ function history(subscribe){
+ $.ajax({
+		url : requestUrl + "getHistoryMessageJson",
+		method : "POST",
+		dataType : "JSON",
+		async : false,
+		data : {subscribe : subscribe},
+		success : function(messageHistoryData) {
+			let messageArea = "";
+			let messageData = messageHistoryData.message
+			for(let i = 0; i < messageData.length; i++){
+				let message = messageData[i];
+				printHistoryMessage(message.senderMemberId, message.receiverMemberId , loginMemberid, message.messageContent, message.userName)
+			}
+		}
+ })
+ }
  
+ function printHistoryMessage(senderMemberId, receiverMemberId , loginMemberid, msg, user){
+	 var container = document.getElementById("conversation");
+	 var msgToDisplay = document.createElement('li');
+ if (senderMemberId == loginMemberid) {
+		msgToDisplay.setAttribute("class", "replies");
+		msgToDisplay.setAttribute("loading", "lazy");
+		msgToDisplay.innerHTML = "" 
+				+ "<img class='card-img-top rounded-circle' style='height: 30px; width: 30px' src='" + requestUrl + "membergetPicture/" 
+				+ "" + senderMemberId + "'>"
+				+ "<p>" + msg + "</p>"
+		container.append(msgToDisplay);
+		chatBoxMemberName = $("#Name" + receiverMemberId).text();
+		
+	} else {
+		msgToDisplay.setAttribute("class", "sent");
+		msgToDisplay.setAttribute("loading", "lazy");
+		msgToDisplay.innerHTML = ""
+				+ "<img class='card-img-top rounded-circle' style='height: 30px; width: 30px' src='" + requestUrl + "membergetPicture/" 
+				+ "" + senderMemberId + "'>"
+				+ "<p>" + msg + "</p>"
+		container.append(msgToDisplay);
+		chatBoxMemberName = $("#Name" + senderMemberId).text();
+		
+	}
+ }
 //通知測試
 // stompClient.send("/topic/notification", {}, JSON.stringify({
 //		'notification' : content,

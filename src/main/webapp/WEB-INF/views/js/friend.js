@@ -2,7 +2,11 @@ var friendshipListTable = "<tr><th scope='row'>"
 		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{member.id}}'></th>"
 		+ "<td class='contentName'>{{member.memberName}}</td>" 
 		+ "<td>{{member.memberBirth}}</td>"
-		+ "<td>{{member.memberEmail}}</td></tr>"
+		+ "<td>{{member.memberEmail}}</td>"
+		+ "<td><button type='button' class='btn btn-info' id='unBlockBtn{{member.id}}' style='display:none'>unBlock</button>"
+		+ "<button type='button' class='btn btn-warning ml-2' id='blockBtn{{member.id}}' style='display:none'>Block</button>" 
+		+ "<button type='button' class='btn btn-danger ml-2' id='deleteBtn{{member.id}}' style='display:none'>Delete</button>" 
+		+ "</td></tr>"
 
 var receiverTable = "<tr id='list{{member.id}}'><th scope='row'>"
 		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{member.id}}'></th>"
@@ -32,7 +36,7 @@ function getMemberData() {
 	return mdata;
 }
 
-$(document).ready(function() {
+function init() {
 						requestUrl = $('#requestUrl').text();
 						mdata = getMemberData();
 
@@ -60,10 +64,25 @@ $(document).ready(function() {
 																			.replace(/\{{member.memberEmail}}/g, member.memberEmail)
 																			.replace(/\{{member.id}}/g, member.id)
 																			.replace(/\{{requestUrl}}/g, requestUrl);
+												
+												console.log("memberId == " + member.id)
+												console.log("Status == " + friend.friendStatus)
+												console.log("MemberName == " + member.memberName)
 
 													friendshipListTableArea += friendshipListTable_html
 												
-											} else if (loginMemberid == friend.receiver_memberId && member.id == friend.sender_memberId && friend.friendStatus == 1){
+											}else if(loginMemberid == friend.sender_memberId && member.id == friend.receiver_memberId && friend.friendStatus == 3){
+												let temp = member.memberBirth.slice(5)
+												friendshipListTable_html = friendshipListTable
+															.replace(/\{{member.memberName}}/g, member.memberName)
+															.replace(/\{{member.memberBirth}}/g, temp)
+															.replace(/\{{member.memberEmail}}/g, member.memberEmail)
+															.replace(/\{{member.id}}/g, member.id)
+															.replace(/\{{requestUrl}}/g, requestUrl);
+												
+												friendshipListTableArea += friendshipListTable_html
+												
+											}else if (loginMemberid == friend.receiver_memberId && member.id == friend.sender_memberId && friend.friendStatus == 1){
 													$("#friendRequest" + member.id).text("Confirm");
 													let temp2 = member.memberBirth.slice(5)
 													receiverTable_html = receiverTable
@@ -80,49 +99,155 @@ $(document).ready(function() {
 										}
 									}
 
-										$("#friendshipTable").append(receiverTableArea);
-										$("#friendshipList").append(friendshipListTableArea);
+										$("#friendshipTable").html("").append(receiverTableArea);
+										$("#friendshipList").html("").append(friendshipListTableArea);
 										$("#friendRequest" + loginMemberid).text(count);
-
+										$("#friendRequest2" + loginMemberid).text(count);
 										for (let j = 0; j < mdata.length; j++) {
 											let member = mdata[j];
-											if(member.memberName != loginMemberName){
+											if(member.id != loginMemberid){
 												for(let i = 0; i < fdata.length; i++) {
 														let friend = fdata[i];
 												if(loginMemberid == friend.receiver_memberId && member.id == friend.sender_memberId && friend.friendStatus == 1) {
 														confirmFriendRequest(loginMemberid, member.id)
 														cancelFriendRequest(member.id)
+													}else if(loginMemberid == friend.receiver_memberId && member.id == friend.sender_memberId && friend.friendStatus == 2) {
+														blockFriend(loginMemberid, member.id)
+														deleteFriend(loginMemberid, member.id)
+													}else if(loginMemberid == friend.sender_memberId && member.id == friend.receiver_memberId && friend.friendStatus == 3) {
+														unBlockBtn(member.id)
+														deleteFriend(loginMemberid, member.id)
+													}else if(loginMemberid == friend.sender_memberId && member.id == friend.receiver_memberId && friend.friendStatus > 3 && friend.friendStatus < 5) {
+														deleteFriend(loginMemberid, member.id)
+													}else if(loginMemberid == friend.receiver_memberId && member.id == friend.sender_memberId && friend.friendStatus == 5 ) {
+														unBlockBtn(member.id)
+														$("#deleteBtn" + member.id).show().unbind().attr("disabled", true);
 													}
+												
 												}
 											}
 										}
 								}
 							})
 						searchName()
-				})
+				}
+
+$(document).ready(function(){
+	init();
+})
 
 function confirmFriendRequest(loginMemberid, memberIdf) {
 	$("#confirmbtn" + memberIdf).unbind().click(function() {
-		$.get("confirmFriendRequest", {
-			memberId : loginMemberid,
-			memberIdf : memberIdf
-		}, function() {
-		})
-		$(this).text("Friend")
-		$(this).attr('disabled', true);
-	})
+		var status = 2;
+		var check = 2;
+		$.ajax({
+			url : requestUrl + "confirmFriendRequest",
+			method : "GET",
+			dataType : "JSON",
+			data : {
+				memberId : loginMemberid,
+				memberIdf : memberIdf,
+				friendStatus : status,
+				check : check
+			},
+			async : false,
+			success : function() {
+		
+	}
+			
+})
+			$(this).text("Friend")
+			$(this).attr('disabled', true);
+			$("#cancelbtn" + memberIdf).hide()
+})
 }
 
 function cancelFriendRequest(memberIdf){
 	$("#cancelbtn" + memberIdf).unbind().click(function() {
-		$.get("cancelFriendRequest", {
-			sender_memberId : memberIdf,
-			receiver_memberId : loginMemberid,
-		}, function() {
-		})
-		$("#list" + memberIdf).hide();
+		$.ajax({
+			url : requestUrl + "cancelFriendRequest",
+			method : "GET",
+			dataType : "JSON",
+			data : {
+				sender_memberId : memberIdf,
+				receiver_memberId : loginMemberid
+			},
+			async : false,
+			success : function() {
+				
+			}
 	})
+	$("#list" + memberIdf).hide();
+		init()
+	
+})
 }
+
+function blockFriend(loginMemberid, memberIdf){
+	$("#blockBtn" + memberIdf).show().unbind().click(function() {
+		var status = 4;
+		var check = 3;
+		$.ajax({
+			url : requestUrl + "confirmFriendRequest",
+			method : "GET",
+			dataType : "JSON",
+			data : {
+				memberId : loginMemberid,
+				memberIdf : memberIdf,
+				friendStatus : status,
+				check : check
+			},
+			async : false,
+			success : function() {
+			}
+	})
+	$(this).attr("disabled", true);
+		init();
+})
+}
+
+function unBlockBtn(memberIdf){
+	$("#unBlockBtn" + memberIdf).show().unbind().click(function() {
+		var status = 2;
+		var check = 4;
+		$.ajax({
+			url : requestUrl + "confirmFriendRequest",
+			method : "GET",
+			dataType : "JSON",
+			data : {
+				memberId : loginMemberid,
+				memberIdf : memberIdf,
+				friendStatus : status,
+				check : check
+			},
+			async : false,
+			success : function() {
+			}
+	})
+	$(this).attr("disabled", true);
+		init()
+})
+}
+
+function deleteFriend(loginMemberid, memberIdf){
+	$("#deleteBtn" + memberIdf).show().unbind().click(function() {
+		$.ajax({
+			url : requestUrl + "deleteFriend",
+			method : "GET",
+			dataType : "JSON",
+			data : {
+				sender_memberId : loginMemberid,
+				receiver_memberId : memberIdf
+			},
+			async : false,
+			success : function() {
+			}
+	})
+	$(this).attr("disabled", true);
+		init()
+})
+}
+
 
 function searchName(){
 	$("#searchName").bind("keyup", function() {

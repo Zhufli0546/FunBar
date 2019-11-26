@@ -109,14 +109,18 @@ document.addEventListener("DOMContentLoaded", function() {
 									memberId: memberId
 								},
 								success: function() {
-// 									window.location.href = requestUrl + "/activities?index=1";
-									window.location.href = requestUrl + "/getsiqnupActivity/${member.memberId}";
-									
+									//window.location.href = requestUrl + "/activities?index=1";
+
+									//window.location.href = requestUrl + "/getsiqnupActivity/"+memberId;
+									setTimeout(function() {
+										window.location.href = requestUrl + "/getsiqnupActivity/" + memberId;
+									}, 1000);
 								}
 							})
-							
                             
                             swal("成功", "活動已經取消", "success");
+                            
+                            
                         } else if (result.dismiss === "cancel")
                         {
                              //使用者按下「取消」要做的事

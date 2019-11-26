@@ -8,73 +8,74 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 <title>showAllmember</title>
-<link rel='stylesheet'
-	href='${pageContext.request.contextPath}/css/styles.css'
-	type="text/css" />
 </head>
-
+<style>
+  button  {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    }
+</style>
 <body>
-	<section>
-		<div>
-			<div class="container" style="text-align: center">
-				<h1>會員管理</h1>
-			</div>
-			<table align="center"
-				style="border: 3px #FFAC55 double; padding: 5px;" rules="all";>
-				<tr bgcolor="#8fefa">
-				<tr>
-					<th>會員編號
-					<th>姓名
-					<th>地址
-					<th>生日
-					<th>電話
-					<th>密碼
-					<th>帳號
-					<th>email
-					<th>大頭貼 
-					<th>等級
-					<th>功能
-					<c:forEach var="member" items="${members}">
-							<!--  隨便取                      對應Controller-->
-							<tr>
-								<td>${member.id}</td>
-								<td>${member.memberName}</td>
-								<td>${member.memberAddress}</td>
-								<td>${member.memberBirth}</td>
-								<td>${member.memberPhone}</td>
-								<td>${member.memberPwd}</td>
-								<td>${member.memberId}</td>
-								<td>${member.memberEmail}</td>
-								<td>${member.memberPic}</td>
-								<td>${member.memberLevel}</td>	
-								
-								
-								
+	<jsp:include page="admin_header.jsp" />
 
-
-								<td><a
-									href="<spring:url value='deletemb?id=${member.id}' />">
-										<button type="button" class="btn btn-outline-secondary">刪除</button>
-								</a></td>
-								<td><a href="<spring:url value='getONE?id=${member.id}' />">
-										<button type="button" class="btn btn-outline-secondary">修改</button>
-								</a></td>
-							</tr>
-						</c:forEach>
-					</th>
-				</tr>
-
-				<div>
-					<td><a href="admin">
-							<button type="button" class="btn btn-outline-secondary">後台管理中心</button>
-					</a></td>
-				</div>
+	<div
+		style="padding: 10px; float: left; width: 1000px;margin-bottom: 100px;">
+		<div class="container" style="text-align: center">
+			<h1>會員管理</h1>
 		</div>
+		<table style="border:3px #cccccc solid;" cellpadding="15" border='1'>
+			<tr bgcolor="#8fefa">
+			<tr>
+				<th style="width:50px;">會員編號
+				<th>姓名
+				<th>地址
+				<th>生日
+				<th>電話
+				<th>密碼
+				<th>帳號
+				<th>email
+				<th>大頭貼
+				<th>等級
+				<th style="width:50px;">功能 <c:forEach var="member" items="${members}">
+						<!--  隨便取                      對應Controller-->
+						<tr>
+							<td>${member.id}</td>
+							<td>${member.memberName}</td>
+							<td>${member.memberAddress}</td>
+							<td>${member.memberBirth}</td>
+							<td>${member.memberPhone}</td>
+							<td>${member.memberPwd}</td>
+							<td>${member.memberId}</td>
+							<td>${member.memberEmail}</td>
+							<td><div style="text-align: center">
+								<img src="<c:url value='/membergetPicture/${member.id}'/>"					
+									height="120px" width="120px" />
+							</div></td>
+							<td>${member.memberLevel}</td>
+							<td ><a
+								href="<spring:url value='deletemb?id=${member.id}' />">
+									<button type="button" class="btn btn-outline-secondary"style="background-color:red;color: black;">刪除</button>
+							</a>
+							<a href="<spring:url value='getONE?id=${member.id}' />">
+									<button type="button" class="btn btn-outline-secondary"style="background-color: #4CAF50;color: black;">修改</button>
+							</a>
+							</td>
+							
+						</tr>
+					</c:forEach>
+				</th>
+			</tr>
+			</div>
 		</table>
-	</section>
+
+		<jsp:include page="admin_footer.jsp" />
 </body>
 </html>
 

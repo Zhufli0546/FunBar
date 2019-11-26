@@ -151,14 +151,18 @@ function off(){var msg="確定下架？";if(confirm(msg)==true){return true;}els
 						<td>
 							
 							<c:if test="${pb.status=='0'}">
-							<form method="post" class="form-group row" action="<c:url value='/pullProduct?id=${pb.productId}'/>">
+							<form method="post" class="form-group row" action="<c:url value='/pullProductOne?id=${pb.productId}'/>">
 									<input type="hidden" name="id" value="${pb.productId}" /> 
+									<input type="hidden" name="productName" value="${productName}" /> 
+									<input type="hidden" name="index" value="${index}" /> 
 									<input type="submit" value="下架"  class="button-pull" onclick="return confirm('確定下架？')" />				
 							</form>
 							</c:if>
 							<c:if test="${pb.status=='1'}">
-							<form method="post" class="form-group row" action="<c:url value='/pushProduct?id=${pb.productId}'/>">
+							<form method="post" class="form-group row" action="<c:url value='/pushProductOne?id=${pb.productId}'/>">
 								<input type="hidden" name="id" value="${pb.productId}" /> 
+									<input type="hidden" name="productName" value="${productName}" /> 
+									<input type="hidden" name="index" value="${index}" /> 
 								<input type="submit" value="上架"  class="button-push" onclick="return confirm('確定重新上架？')"/>
 							</form> 
 							</c:if>
@@ -179,7 +183,7 @@ function off(){var msg="確定下架？";if(confirm(msg)==true){return true;}els
 		<ul class="pagination justify-content-center" style="padding-bottom:20px">
 				
 			<c:forEach  begin="1" step="1" end="${listCount}" varStatus="i" >
-				<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/showAllProduct?index=${i.index}">${i.index}</a></li>		
+				<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/getProdByName?productName=${productName}&index=${i.index}">${i.index}</a></li>		
 			</c:forEach>
 			
 		</ul>

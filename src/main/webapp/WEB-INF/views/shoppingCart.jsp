@@ -6,11 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Shopping Center</title>
-<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="<c:url value="/css/shoppingCart.css" />">
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+
 </head>
 
 <body>
@@ -30,10 +30,14 @@
 					</c:forEach>
 				</div>
 				<div style="margin-top: 5px">
-					<a href="<c:url value='/showCart' />"><button
-							class="btn btn-info">My Cart</button></a>
-				</div>
+					<a href="<c:url value='/showCart' />">
+					<button class="btn btn-info">My Cart</button>
+					</a>
+				</div>	
+				
 			</div>
+			
+			
 		</div>
 	</div>
 

@@ -129,7 +129,7 @@
 
 				<div class="form-group">
 					<label class='control-label col-lg-2 col-lg-2' for="discount">庫存數量</label>
-					<form:input autocomplete="off" id="stock" path="stock" type='text' class='form:input-large' />
+					<form:input autocomplete="off" id="stock" path="stock" type='text' class='form:input-large' min="1" />
 					<span id="msgStock"></span>
 				</div>
 

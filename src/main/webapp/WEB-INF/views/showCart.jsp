@@ -105,7 +105,7 @@ input {
 
 								<td style="width: 200px">
 									<button type="button" class="minus" data-product="${i.index}">-</button>
-									<input id="count" type="text" maxlength="2" value="${ci.count}"
+									<input id="count" type="text" maxlength="2" size="3" value="${ci.count}"
 									size="1" class="num" data-product="${i.index}" /> <input
 									class="pdid" type="hidden" value="${ci.product.productId}"
 									data-product="${i.index}">
@@ -191,7 +191,7 @@ input {
 					</div>
 					<form method="post" action="orderSetUp" style="padding: 0 10px">
 						<div>
-							<p>請填寫以下聯絡資料</p>
+							<p>請再次確認以下聯絡資料</p>
 						</div>
 						<div>
 							<label>姓名</label> <input type="text" name="memberName"
