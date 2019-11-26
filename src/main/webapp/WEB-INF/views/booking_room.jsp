@@ -31,7 +31,6 @@
 	float:left;
 	display:block;
 	margin-left:2px;
-	margin-top:52px;
 	border: 1px solid #FF8F59;
 	border-radius: 5px;
 
@@ -48,7 +47,8 @@
 	<jsp:include page="header.jsp" />
 	
 
-	<section class="animsition" style="background-color:#3C3C3C;height:500px;margin-top:120px">
+	<section class="animsition" style="background-color:#3C3C3C;height:650px;margin-top:120px">
+	<div style="height:150px;width:100%;background-color:#3C3C3C;border:2px solid black;text-align:center;"><img style="height:150px;width:150px;" src="images/icons/logo3.png"></div>
 		<div class="calendar"
 			style="border: 1px solid #FF8F59; border-radius: 5px">
 
