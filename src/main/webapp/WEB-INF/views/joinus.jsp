@@ -37,16 +37,21 @@
 <td><p> 帳號 : </p> <form:input autocomplete="off" id="memberId" type="text" path="memberId"  value=""/></td>
 <div id="noId"></div>
 <div class="error">${errorMsg.errId}</div>
-<td><p> 密碼 : </p> <form:input autocomplete="off" id="memberPwd" type="text"  path="memberPwd"  value=""/></td>
+<td><p> 密碼 : </p> <form:input autocomplete="off" id="memberPwd" type="password"  path="memberPwd"  value=""/></td>
 <div id="noPwd"></div>
 <div class="error">${errorMsg.errPwd}</div>
 <td><p> Email : </p> <form:input type="text" path="memberEmail"  value=""/></td>
 <div class="error">${errorMsg.errEmail}</div>
 <td><p> 大頭貼 : </p> <form:input path = "memberimg" type ="file"   maxlength="40"/> </td>
-      <br>	<button  type="submit">送出</button>
+      <br>	<button id="signUpBtn"  type="submit">送出</button>
         	<button  type="reset">清除</button>
         </fieldset>
 </form:form>
 </div>
+<script>
+$("#signUpBtn").click(function() {
+	alert("請到信箱收取驗證信");
+})
+</script>
 </body>
 </html>

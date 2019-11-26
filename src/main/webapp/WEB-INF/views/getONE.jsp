@@ -19,7 +19,6 @@
         font-family: 微軟正黑體;
     }
 
-    html,
     body {
         width: 100%;
         height: 100%;
@@ -28,27 +27,19 @@
         align-items: center;
         background-color: #eee;
     }
-
-    .login {
-        background-color: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        padding: 20px;
-        margin-bottom: 10px;
-        font-weight: bold;
+    button  {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
     }
 
-    .registerBox {
-        background-color: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        padding: 10px;
-        font-weight: bold;
-    }
-
-    .registerBox a {
-        text-decoration: none;
-    }
     
-    .error { color: red}
+   
 </style>
 
 <body>
@@ -90,7 +81,7 @@
 
 					<div class="button">
 						<input type="hidden" name="id" value="${one.id}" />
-						<input type="submit" class="btn btn-outline-secondary" value="送出">
+						<button type="submit" class="btn btn-outline-secondary" >送出</button>
 						<td><a href="${pageContext.request.contextPath}">
 							<button type="button" class="btn btn-outline-secondary">回首頁</button>
 					</a></td>

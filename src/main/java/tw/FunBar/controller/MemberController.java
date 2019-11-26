@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import tw.FunBar.model.Member;
 import tw.FunBar.service.EmailService;
@@ -71,15 +72,36 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
-	public String signinto(@RequestParam("memberId") String memberId, @RequestParam("memberPwd") String memberPwd,
-			Model model, HttpServletRequest request, HttpSession session) {
+	public String signinto(@RequestParam("memberId") String memberId,
+						   @RequestParam("memberPwd") String memberPwd,
+						   Model model,
+						   RedirectAttributes redirectAttributes,
+						   HttpServletRequest request,
+						   HttpSession session) {
+		HashMap<String,String> errorMsg = new HashMap<String,String>();
 
 		Member member = null;
 		try {
-			member = memberService.signin(memberId, memberPwd);
-		} catch (NoResultException e) {
-			return "redirect:/signin";
+			// 判斷使用者輸入是否為空
+			if(memberId == null || memberId.length() == 0) {
+	            errorMsg.put("errId","請輸入帳號");
+	        }
+			
+			if(memberPwd == null || memberPwd.length() == 0) {
+	            errorMsg.put("errPwd","請輸入密碼");
+	        }
 
+			if(errorMsg.size()!=0) {
+	            model.addAttribute( "errorMsg", errorMsg);
+	            return "signin";
+			}
+
+			member = memberService.signin(memberId, memberPwd);
+		} catch(NoResultException e) {
+			errorMsg.put("errId","請輸入正確的帳號或密碼");
+			redirectAttributes.addFlashAttribute("errorMsg", errorMsg);
+
+			return "redirect:/signin";
 		}
 
 		int level = member.getMemberLevel();
@@ -94,9 +116,10 @@ public class MemberController {
 			session = request.getSession(false);
 			session.setAttribute("member", member);
 			return "redirect:/";
-		} else {
-			return "signin";
 		}
+
+		return "signin";
+		
 	}
 
 	// 登出
@@ -128,7 +151,6 @@ public class MemberController {
 	}
 
 	// 新增
-
 	// 這個是對照到jsp的action
 	@RequestMapping(value = "/joinus", method = RequestMethod.GET)
 	public String savemember(Model model) {
@@ -235,6 +257,7 @@ public class MemberController {
 	// 讀取圖片資料
 	@RequestMapping(value = "/membergetPicture/{id}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPicture(HttpServletResponse resp, @PathVariable Integer id) {
+//		String filePath = "/WEB-INF/views/ProductImages/noImage.png";
 		byte[] media = null;
 		HttpHeaders headers = new HttpHeaders();
 		String memberfileName = "";
@@ -255,8 +278,8 @@ public class MemberController {
 		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media, HttpStatus.OK);
 		return responseEntity;
 	}
-
-	// 修改自己
+		
+	//忘記密碼
 	@RequestMapping(value = "/getself", method = RequestMethod.GET)
 	public String getself(@RequestParam("id") Integer id, Model model) {
 		model.addAttribute("one", memberService.getONEmember(id));
@@ -275,20 +298,6 @@ public class MemberController {
 		return "showMAN";
 	}
 
-	// 忘記密碼
-//		@RequestMapping(value = "/memberforget", method = RequestMethod.GET)
-//		public String memberforget(@RequestParam("memberId")String memberId,Model model) {
-//			model.addAttribute("miss", memberService.forget(memberId));
-//			return "memberforget";
-//		}
-//	
-//		@RequestMapping(value="/forget",method=RequestMethod.POST)
-//		public String forget(@RequestParam("memberId") String memberId,Model model) {
-//			
-//			memberService.forget(memberId);
-//			return "redirect:/";
-//			
-//		}
 	// 密碼
 	@RequestMapping(value = "/memberforget", method = RequestMethod.GET)
 	public String memberforget(Model model) {

@@ -177,10 +177,9 @@ public class EmailDAOImpl implements EmailDAO {
 			htmlCode += "<tr><td>電話:</td><td>" + mail.getMemberPhone() + "</td></tr>";
 			htmlCode += "<tr><td>日期:</td><td>" + mail.getMemberBirth() + "</td></tr>";
 			htmlCode += "<tr><td>帳號:</td><td>" + mail.getMemberId() + "</td></tr>";
-			htmlCode += "<tr><td>密碼:</td><td>" + mail.getMemberPwd() + "</td></tr>";
 			htmlCode += "<tr><td>大頭貼:</td><td>" + mail.getMemberfileName() + "</td></tr>";
 			htmlCode += "<tr><td>認證:</td><td>" + "<a href =http://localhost:8080/FunBar/check?id=" + mail.getId()
-					+ ">點及認證</a>" + "</td></tr>";
+					+ ">點擊認證</a>" + "</td></tr>";
 
 			message.setContent(htmlCode, "text/html;charset=UTF-8");
 
@@ -293,11 +292,10 @@ public class EmailDAOImpl implements EmailDAO {
 	    htmlCode += "<tr><td>姓名:</td><td>"+pass.getMemberName()+"</td></tr>";
 	    htmlCode += "<tr><td>信箱:</td><td>"+pass.getMemberEmail()+"</td></tr>";
 	    htmlCode += "<tr><td>電話:</td><td>"+pass.getMemberPhone()+"</td></tr>";
-	    htmlCode += "<tr><td>日期:</td><td>"+pass.getMemberBirth()+"</td></tr>";
+	    htmlCode += "<tr><td>生日</td><td>"+pass.getMemberBirth()+"</td></tr>";
 	    htmlCode += "<tr><td>帳號:</td><td>"+pass.getMemberId()+"</td></tr>";
-	    htmlCode += "<tr><td>密碼:</td><td>"+pass.getMemberPwd()+"</td></tr>";
 	    htmlCode += "<tr><td>大頭貼:</td><td>"+pass.getMemberfileName()+"</td></tr>";
-	    htmlCode += "<tr><td>認證:</td><td>"+ "<a href =http://localhost:8080/FunBar/find?memberId="+pass.getMemberId() +">點及認證</a>"+ "</td></tr>";
+	    htmlCode += "<tr><td>認證:</td><td>"+ "<a href =http://localhost:8080/FunBar/find?memberId="+pass.getMemberId() +">點擊認證</a>"+ "</td></tr>";
 	    message.setContent(htmlCode,"text/html;charset=UTF-8");
 	 
 	    
