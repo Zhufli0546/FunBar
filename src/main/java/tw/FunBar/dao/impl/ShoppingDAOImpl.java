@@ -154,13 +154,33 @@ public class ShoppingDAOImpl implements ShoppingDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ProductBean> getProdByName(String productName) {
+	public List<ProductBean> getProdByName(String productName, Integer index) {
 		String hql = "From ProductBean Where productName Like :productName";
 		Session session = factory.getCurrentSession();
-		List<ProductBean> pb = (List<ProductBean>) session.createQuery(hql)
-									.setParameter("productName", "%" + productName + "%").getResultList();
+		List<ProductBean> pb = new ArrayList<>();
+		pb = session.createQuery(hql).setParameter("productName", "%" + productName + "%").setFirstResult((index - 1) * 15)
+				.setMaxResults(15).getResultList();
 
 		return pb;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public int getPBNIndex(String productName) { // Category取得分頁數
+		String hql = "From ProductBean Where productName Like :productName";
+		List<ProductBean> list = new ArrayList<>();
+		Session session = factory.getCurrentSession();
+		list = session.createQuery(hql).setParameter("productName", "%" + productName + "%").getResultList();
+
+		int listCount = list.size() / 15;
+
+		if (list.size() % 15 == 0) {
+			return listCount;
+		} else {
+			listCount = listCount + 1;
+			return listCount;
+
+		}
+
+	}
 }

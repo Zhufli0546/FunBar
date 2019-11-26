@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -80,7 +83,7 @@ public class ShoppingController {
 		 
 		model.addAttribute("shoppingCart", products);
 		model.addAttribute("listCount", count);			
-		return "showProductByCategory";		
+		return "showP/roductByCategory";		
 		 
 	}
 	
@@ -109,6 +112,45 @@ public class ShoppingController {
 		return "showAllProduct";
 	}
 	
+	
+	//後台所有商品查詢
+	@RequestMapping("/getProdByName")
+	public String getProdByName(@RequestParam Integer index,
+								@RequestParam String productName
+								,Model model ) {	
+		List <ProductBean> products = shoppingService.getProdByName(productName, index);
+		int count = shoppingService.getPBNIndex(productName);	  //分頁
+		 
+		model.addAttribute("showAllProduct", products);
+		model.addAttribute("listCount", count);	
+		model.addAttribute("productName", productName);
+		model.addAttribute("index",index);
+		return "showProductBySearch";		
+		 
+	}
+	
+	@RequestMapping("/pullProductOne")
+	public String pullProductOne(@RequestParam("id") Integer productId,String productName,Integer index, Model model,
+			HttpServletRequest req, HttpServletResponse response) throws UnsupportedEncodingException {
+		
+		System.out.println("ProductName => " + productName);
+		orderService.pullProduct(productId);
+		
+		
+		 String name = URLEncoder.encode(productName,"UTF-8");
+		
+		
+		 
+		return "redirect:/getProdByName?index="+index+"&productName="+name;
+	}
+	
+	@RequestMapping("/pushProductOne")
+	public String pushProductOne(@RequestParam("id") Integer productId,String productName,Integer index, Model model) throws UnsupportedEncodingException {
+		orderService.pushProduct(productId);
+		
+		 String name = URLEncoder.encode(productName,"UTF-8");
+		return "redirect:/getProdByName?index="+index+"&productName="+name;
+	}
 	
 	
 		//下架單筆資料
@@ -304,19 +346,19 @@ public class ShoppingController {
 	}
 	
 
-	@RequestMapping("/getProdById")
-	@ResponseBody
-	public ArrayList<ProductBean> getProdById(@RequestParam Integer productId) {
-		ArrayList<ProductBean> pb = shoppingService.getProdById(productId);
-		return pb ;
-	}
-	
-	@RequestMapping("/getProdByName")
-	@ResponseBody
-	public List<ProductBean> getProdByName(@RequestParam String productName) {
-		
-		System.out.println("===================" +productName);
-		List<ProductBean> pb = shoppingService.getProdByName(productName);
-		return pb ;
-	}
+//	@RequestMapping("/getProdById")
+//	@ResponseBody
+//	public ArrayList<ProductBean> getProdById(@RequestParam Integer productId) {
+//		ArrayList<ProductBean> pb = shoppingService.getProdById(productId);
+//		return pb ;
+//	}
+//	
+//	@RequestMapping("/getProdByName")
+//	@ResponseBody
+//	public List<ProductBean> getProdByName(@RequestParam String productName) {
+//		
+//		System.out.println("===================" +productName);
+//		List<ProductBean> pb = shoppingService.getProdByName(productName);
+//		return pb ;
+//	}
 }

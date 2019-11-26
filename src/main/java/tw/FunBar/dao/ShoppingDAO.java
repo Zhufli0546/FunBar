@@ -27,6 +27,8 @@ public interface ShoppingDAO {
 
 	ArrayList<ProductBean> getProdById(Integer productId);
 	
-	List<ProductBean> getProdByName(String productName);
+	List<ProductBean> getProdByName(String productName , Integer index);
+	
+	int getPBNIndex(String productName);
 
 }
