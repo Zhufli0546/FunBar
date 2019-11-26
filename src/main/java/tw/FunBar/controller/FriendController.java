@@ -49,8 +49,34 @@ public class FriendController {
 	public void cancelFriendRequest(@RequestParam(value = "sender_memberId") Integer sender_memberId,
 									@RequestParam(value = "receiver_memberId") Integer receiver_memberId) {
 		Friendship friendship = service.getFriendRequest(sender_memberId, receiver_memberId);
-		System.out.println(friendship);
 		service.cancelFriendRequest(friendship);
 	}
+	
+	@GetMapping(value = "deleteFriend")
+	public void deleteFriend(@RequestParam(value = "sender_memberId") Integer sender_memberId,
+									@RequestParam(value = "receiver_memberId") Integer receiver_memberId) {
+		Friendship friendship = service.getFriendRequest(receiver_memberId, sender_memberId);
+		Integer check = friendship.getFriendStatus();
+		System.out.println("Check == " + check);
+		if(check == 4) {
+			System.out.println("有到這");
+			friendship.setFriendStatus(5);
+			service.confirmFriendRequest(friendship);
+		}else {
+		service.cancelFriendRequest(friendship);
+		Friendship friendshipf = service.getFriendRequest(sender_memberId,receiver_memberId);
+		service.cancelFriendRequest(friendshipf);
+		}
+	}
+	
+//	@GetMapping(value = "unBlockFriend")
+//	public void unBlockFriend(@RequestParam(value = "sender_memberId") Integer sender_memberId,
+//									@RequestParam(value = "receiver_memberId") Integer receiver_memberId) {
+//		Friendship friendship1 = service.getFriendRequest(sender_memberId, receiver_memberId);
+//		System.out.println(friendship1);
+//		service.cancelFriendRequest(friendship1);
+//		Friendship friendship2 = service.getFriendRequest(receiver_memberId, sender_memberId);
+//		service.cancelFriendRequest(friendship2);
+//	}	
 
 }
