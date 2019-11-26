@@ -36,5 +36,7 @@ public interface OrderHandleService {
 	public List <ProductBean> getLessStockProduct();
 	
 	int getProductTotalIncome();
+	
+	
 
 }
