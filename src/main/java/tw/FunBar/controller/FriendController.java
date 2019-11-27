@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import tw.FunBar.chat.ParticipantRepository;
 import tw.FunBar.model.Friendship;
 import tw.FunBar.model.Member;
 import tw.FunBar.service.DiscussService;
@@ -26,6 +27,8 @@ public class FriendController {
 	MemberService memberService;
 	@Autowired
 	DiscussService service;
+	@Autowired
+	private ParticipantRepository participantRepository;
 
 	@RequestMapping(value = "/friend", method = RequestMethod.GET)
 	public String friend(Model model, HttpServletRequest request, HttpSession session) {
@@ -34,7 +37,9 @@ public class FriendController {
 		System.out.println(member);
 		if (member == null)
 			return "redirect:/signin";
+		participantRepository.add(member.getId(), member);
 		model.addAttribute("title", "好友");
+		model.addAttribute("member", member);
 		return "friend";
 	}
 
@@ -47,28 +52,28 @@ public class FriendController {
 
 	@GetMapping(value = "cancelFriendRequest")
 	public void cancelFriendRequest(@RequestParam(value = "sender_memberId") Integer sender_memberId,
-									@RequestParam(value = "receiver_memberId") Integer receiver_memberId) {
+			@RequestParam(value = "receiver_memberId") Integer receiver_memberId) {
 		Friendship friendship = service.getFriendRequest(sender_memberId, receiver_memberId);
 		service.cancelFriendRequest(friendship);
 	}
-	
+
 	@GetMapping(value = "deleteFriend")
 	public void deleteFriend(@RequestParam(value = "sender_memberId") Integer sender_memberId,
-									@RequestParam(value = "receiver_memberId") Integer receiver_memberId) {
+			@RequestParam(value = "receiver_memberId") Integer receiver_memberId) {
 		Friendship friendship = service.getFriendRequest(receiver_memberId, sender_memberId);
 		Integer check = friendship.getFriendStatus();
 		System.out.println("Check == " + check);
-		if(check == 4) {
+		if (check == 4) {
 			System.out.println("有到這");
 			friendship.setFriendStatus(5);
 			service.confirmFriendRequest(friendship);
-		}else {
-		service.cancelFriendRequest(friendship);
-		Friendship friendshipf = service.getFriendRequest(sender_memberId,receiver_memberId);
-		service.cancelFriendRequest(friendshipf);
+		} else {
+			service.cancelFriendRequest(friendship);
+			Friendship friendshipf = service.getFriendRequest(sender_memberId, receiver_memberId);
+			service.cancelFriendRequest(friendshipf);
 		}
 	}
-	
+
 //	@GetMapping(value = "unBlockFriend")
 //	public void unBlockFriend(@RequestParam(value = "sender_memberId") Integer sender_memberId,
 //									@RequestParam(value = "receiver_memberId") Integer receiver_memberId) {

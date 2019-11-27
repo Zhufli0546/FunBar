@@ -46,8 +46,7 @@
 			<!-- Post area -->
 			<!--create new post block-->
 			<div class="col-md-7">
-				<div class='card' id="newPost"></div>
-				<br>
+				<div class='card mb-4' id="newPost"></div>
 				<!-- 第一層Post -->
 				<div id="firstLevelComment">
 					<!-- 第二層Post -->
