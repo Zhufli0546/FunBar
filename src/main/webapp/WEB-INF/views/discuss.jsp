@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>討論區</title>
+<title>FunBar 討論區</title>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/discuss.css'/>">
 </head>
