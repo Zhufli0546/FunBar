@@ -30,7 +30,7 @@ $(document).ready(function() {
 			var dec = disc / 10;
 
 			if (num < 1) {
-				alert('哪有人買零個的啦！');
+				alert('請輸入大於零的數字！');
 				num = 1;
 			}
 			//小計   
@@ -81,7 +81,7 @@ $(document).ready(function() {
 					
 			if (num >50 ) {
 				if(num > stc){
-					alert("選購數量不可大於庫存！");
+					alert("庫存不足！");
 					num = stc;
 				}else{
 					alert("數量不得超過50份！");
@@ -93,7 +93,7 @@ $(document).ready(function() {
 					alert("數量不得超過50份！")
 					num = 50;
 				}
-				alert("選購數量不可大於庫存！");
+				alert("庫存不足！");
 					num = stc;
 				return;
 			}
@@ -146,7 +146,7 @@ $(document).ready(function() {
 			
 			
 			if (num>stc) {
-				alert("數量不得超過庫存!");
+				alert("庫存不足!");
 				var smallPrice = unitPrice * stc * dec;
 				var int_smallPrice = parseInt(smallPrice);
 				$(".pd").eq(index).text(int_smallPrice);
@@ -226,7 +226,7 @@ $(document).ready(function() {
 			} else if (num < 1) {
 				
 
-				alert("數量不得小於1!");
+				alert("請輸入大於零的數字!");
 
 				var smallPrice = unitPrice * 1 * dec;
 				var int_smallPrice = parseInt(smallPrice);
@@ -265,7 +265,7 @@ $(document).ready(function() {
 
 				$(".totalAmount").text(totalPrice);
 			}else if (num > stc){
-				alert("數量不得超過庫存!");
+				alert("庫存不足!");
 
 				var smallPrice = unitPrice * num * dec;
 				var int_smallPrice = parseInt(smallPrice);
