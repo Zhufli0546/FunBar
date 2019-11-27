@@ -236,8 +236,7 @@ public class EmailDAOImpl implements EmailDAO {
 						htmlCode += "<p style='text-align: center;font-size: 1.8em;color: rgb(22, 15, 1)'>"+"親愛的 "+a.getApplicantName()+" 您好</p>";
 
 						htmlCode += "<p style='text-align: center;font-size: 1.5em;color: gray'>您報名的活動：</p>";
-						htmlCode += "<p style='text-align: center;font-size: 2em;color:rgb(228, 121, 21)'>"+activity.getEventName()+ "</p>";
-						
+						htmlCode += "<p style='text-align: center;'><a style='font-size: 2em;color:rgb(228, 121, 21);text-decoration:none;' href =http://localhost:8080/FunBar/activity?id="+activity.getActivityId()+">"+activity.getEventName()+"</a></p>";
 						htmlCode += "<p style='text-align: center;font-size: 1.5em;color: gray'>將於明天舉行</p>";
 						htmlCode += "<p style='text-align: center;font-size: 1.5em;color: gray'>期待您蒞臨參加。</div>";
 						

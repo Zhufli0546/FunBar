@@ -40,7 +40,7 @@
       <c:forEach var='al' varStatus='vs' items='${al}'>
         <tbody>
           <tr>
-            <td style="width:100px">${al.applicantName}</td>
+            <td style="width:150px">${al.applicantName}</td>
             <td style="width:100px">${al.gender} </td>
             <td style="width:100px">${al.applicantEmail}</td>
             <td >${al.applicantPhone}</td>

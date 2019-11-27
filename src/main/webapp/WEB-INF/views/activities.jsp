@@ -41,7 +41,7 @@
 <body>
 	<jsp:include page="header.jsp" />
 
-	<div class="container" style="margin-top: 150px">
+	<div class="container" style="margin: 150px auto">
 
 		<div class="row" style="float: left">
 
