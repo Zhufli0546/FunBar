@@ -113,6 +113,26 @@ $(document).ready(function() {
 	friendlist();
 	search();
 	
+//	$($('#conversation li:lt(1)').toArray().reverse()).animate({'opacity':'1'},3000);
+//	//Test
+//	$(".chatbox__body").scroll( function(){
+//		console.log("有觸發到 最外層")
+//	$($('#conversation li').toArray().reverse()).each( function(){
+//        
+//        var bottom_of_object = $(this).offset().top + $(this).outerHeight();
+//        var bottom_of_div = $(".chatbox__body").scrollTop() + $(".chatbox__body").height();
+//        console.log("bottom_of_object == " +  bottom_of_object)
+//        console.log("bottom_of_window == " + bottom_of_div)
+//        console.log("有捲動到 外層")
+//        /* If the object is completely visible in the window, fade it it */
+//        if( bottom_of_div > bottom_of_object ){
+//            console.log("有捲動到 聊天和子")
+//            $(this).animate({'opacity':'1'},3000);
+//                
+//        }
+//        
+//    }); 
+//})
 })
 
 $(function() {
@@ -206,10 +226,10 @@ function connect() {
 		
 		stompClient.subscribe("/friends/participants", function(message) {
 			showActiveUserNumber(message.body);
-			console.log(message.body)
-			var user = "系统消息";
-			var date = null;
-			var msg = loginMemberName + "加入聊天！";
+			console.log("From Friends == " + message.body)
+//			var user = "系统消息";
+//			var date = null;
+//			var msg = loginMemberName + "加入聊天！";
 //			var n = new Notification(message);
 //			showNewMessage(user, date, msg);
 		});
@@ -369,7 +389,8 @@ function showNewMessage(user, date, msg, senderMemberId, receiverMemberId) {
 
 		if (senderMemberId == loginMemberid) {
 			msgToDisplay.setAttribute("class", "replies");
-			msgToDisplay.setAttribute("loading", "lazy");
+//			msgToDisplay.setAttribute("loading", "lazy");
+//			msgToDisplay.style.opacity = "0"
 			msgToDisplay.innerHTML = "" 
 					+ "<img class='card-img-top rounded-circle' style='height: 30px; width: 30px' src='" + requestUrl + "membergetPicture/" 
 					+ "" + senderMemberId + "'>"
@@ -378,7 +399,8 @@ function showNewMessage(user, date, msg, senderMemberId, receiverMemberId) {
 			chatBoxMemberName = $("#Name" + receiverMemberId).text();
 		} else {
 			msgToDisplay.setAttribute("class", "sent");
-			msgToDisplay.setAttribute("loading", "lazy");
+//			msgToDisplay.setAttribute("loading", "lazy");
+//			msgToDisplay.style.opacity = "0"
 			msgToDisplay.innerHTML = ""
 					+ "<img class='card-img-top rounded-circle' style='height: 30px; width: 30px' src='" + requestUrl + "membergetPicture/" 
 					+ "" + senderMemberId + "'>"
@@ -390,6 +412,7 @@ function showNewMessage(user, date, msg, senderMemberId, receiverMemberId) {
 	}
 	($('#conversation').children("li:last-child")[0]).scrollIntoView();
 	$("#receiverMemberName").text(chatBoxMemberName);
+	
 }
 /**
  * 正则表达式显示消息中的emoji图片
@@ -514,8 +537,30 @@ function sendMessage(loginMemberid, receiverMemberId) {
 						, message.senderMemberId, message.receiverMemberId);
 				
 			}
+			
 		}
+		
  	})
+// 		$('#conversation li').slice(-5).animate({'opacity':'1'},3000);
+//	//Test
+//	$(".chatbox__body").scroll( function(){
+//		console.log("有觸發到 最外層")
+//	$($('#conversation li').toArray().reverse()).each( function(){
+//        
+//        var bottom_of_object = $(this).offset().top + $(this).outerHeight();
+//        var bottom_of_div = $(".chatbox__body").scrollTop() + $(".chatbox__body").height();
+//        console.log("bottom_of_object == " +  bottom_of_object)
+//        console.log("bottom_of_div == " + bottom_of_div)
+//        console.log("有捲動到 外層")
+//        /* If the object is completely visible in the window, fade it it */
+//        if( 500 < bottom_of_object ){
+//            console.log("有捲動到 聊天和子")
+//            $(this).animate({'opacity':'1'},3000);
+//                
+//        }
+//        
+//    }); 
+//})
  }
  
  

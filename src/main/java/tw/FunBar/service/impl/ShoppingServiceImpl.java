@@ -76,12 +76,22 @@ public class ShoppingServiceImpl implements ShoppingService {
 
 	@Override
 	public List<ProductBean> getProdByName(String productName, Integer index) {
-		return dao.getProdByName(productName,index);
+		return dao.getProdByName(productName, index);
 	}
 
 	@Override
 	public int getPBNIndex(String productName) {
 		return dao.getPBNIndex(productName);
+	}
+
+	@Override
+	public List<ProductBean> getProdByName2(String productName, Integer index) {
+		return dao.getProdByName2(productName, index);
+	}
+
+	@Override
+	public int getPBNIndex2(String productName) {
+		return dao.getPBNIndex2(productName);
 	}
 
 }

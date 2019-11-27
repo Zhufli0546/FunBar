@@ -23,7 +23,8 @@
 				placeholder="input the product name">
 			<form method="POST" action="getProdByName2?index=1">
 				<div class="input-group-append">
-					<input id="n" type="hidden" name="productName" /> <input
+					<input id="n" type="hidden" name="productName" /> 
+					<input
 						class="btn btn-outline-secondary" type="submit" id="button-addon2"
 						value="search" />
 				</div>
@@ -42,13 +43,13 @@
 				</div>
 				<div style="margin-top: 5px">
 					<a href="<c:url value='/showCart' />">
-						<button class="btn btn-info">My Cart</button>
+					<button class="btn btn-info">My Cart</button>
 					</a>
-				</div>
-
+				</div>	
+				
 			</div>
-
-
+			
+			
 		</div>
 	</div>
 
@@ -84,7 +85,7 @@
 
 		<c:forEach begin="1" step="1" end="${listCount}" varStatus="i">
 			<li class="page-item"><a class="page-link"
-				href="${pageContext.request.contextPath}/shoppingCart?index=${i.index}">${i.index}</a></li>
+				href="${pageContext.request.contextPath}/getProdByName2?productName=${productName}&index=${i.index}"">${i.index}</a></li>
 		</c:forEach>
 
 
@@ -96,8 +97,9 @@
 
 
 	<jsp:include page="footer.jsp" />
-
+	
 	<script>
+
 		$("#button-addon2").click(function() {
 
 			var on = $("#productName").val();

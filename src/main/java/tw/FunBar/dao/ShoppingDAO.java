@@ -26,9 +26,13 @@ public interface ShoppingDAO {
 	List<ProductBean> getAllProducts(); // 顯示所有商品
 
 	ArrayList<ProductBean> getProdById(Integer productId);
-	
-	List<ProductBean> getProdByName(String productName , Integer index);
-	
+
+	List<ProductBean> getProdByName(String productName, Integer index);
+
+	List<ProductBean> getProdByName2(String productName, Integer index);
+
 	int getPBNIndex(String productName);
+
+	int getPBNIndex2(String productName);
 
 }

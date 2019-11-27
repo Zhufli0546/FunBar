@@ -36,7 +36,7 @@ public class ShoppingDAOImpl implements ShoppingDAO {
 		Session session = null;
 		session = factory.getCurrentSession();
 		List<ProductBean> list;
-		list = (List<ProductBean>) session.createQuery(hql).setFirstResult((index - 1) * 15).setMaxResults(15)
+		list = (List<ProductBean>) session.createQuery(hql).setFirstResult((index - 1) * 12).setMaxResults(12)
 				.getResultList();
 		return list;
 	}
@@ -44,14 +44,20 @@ public class ShoppingDAOImpl implements ShoppingDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public int getIndex() { // Mall取得分頁數
-		String hql = "From ProductBean";
+		String hql = "From ProductBean Where stock!=0 And status=0";
 		List<ProductBean> list = new ArrayList<>();
 		Session session = factory.getCurrentSession();
 		list = session.createQuery(hql).getResultList();
 
-		int listCount = list.size() / 15;
-		listCount = listCount + 1;
-		return listCount;
+		int listCount = list.size() / 12;
+
+		if (list.size() % 12 == 0) {
+			return listCount;
+		} else {
+			listCount = listCount + 1;
+			return listCount;
+
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -61,7 +67,7 @@ public class ShoppingDAOImpl implements ShoppingDAO {
 		Session session = null;
 		session = factory.getCurrentSession();
 		List<ProductBean> list = new ArrayList<>();
-		list = session.createQuery(hql).setFirstResult((index - 1) * 15).setMaxResults(15).getResultList();
+		list = session.createQuery(hql).setFirstResult((index - 1) * 12).setMaxResults(12).getResultList();
 		return list;
 	}
 
@@ -74,9 +80,9 @@ public class ShoppingDAOImpl implements ShoppingDAO {
 		List<ProductBean> list = new ArrayList<>();
 		list = session.createQuery(hql).getResultList();
 
-		int listCount = list.size() / 15;
+		int listCount = list.size() / 12;
 
-		if (list.size() % 15 == 0) {
+		if (list.size() % 12 == 0) {
 			return listCount;
 		} else {
 			listCount = listCount + 1;
@@ -101,8 +107,8 @@ public class ShoppingDAOImpl implements ShoppingDAO {
 		String hql = "From ProductBean Where category = :category And stock != 0 And status=0";
 		Session session = factory.getCurrentSession();
 		List<ProductBean> list = new ArrayList<>();
-		list = session.createQuery(hql).setParameter("category", category).setFirstResult((index - 1) * 15)
-				.setMaxResults(15).getResultList();
+		list = session.createQuery(hql).setParameter("category", category).setFirstResult((index - 1) * 12)
+				.setMaxResults(12).getResultList();
 
 		for (ProductBean p : list) {
 			System.out.println("ProductBean:" + p.getCategory());
@@ -114,14 +120,14 @@ public class ShoppingDAOImpl implements ShoppingDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public int getCategoryIndex(String category) { // Category取得分頁數
-		String hql = "From ProductBean Where category = :category";
+		String hql = "From ProductBean Where category = :category And stock != 0 And status=0";
 		List<ProductBean> list = new ArrayList<>();
 		Session session = factory.getCurrentSession();
 		list = session.createQuery(hql).setParameter("category", category).getResultList();
 
-		int listCount = list.size() / 15;
+		int listCount = list.size() / 12;
 
-		if (list.size() % 15 == 0) {
+		if (list.size() % 12 == 0) {
 			return listCount;
 		} else {
 			listCount = listCount + 1;
@@ -158,8 +164,8 @@ public class ShoppingDAOImpl implements ShoppingDAO {
 		String hql = "From ProductBean Where productName Like :productName";
 		Session session = factory.getCurrentSession();
 		List<ProductBean> pb = new ArrayList<>();
-		pb = session.createQuery(hql).setParameter("productName", "%" + productName + "%").setFirstResult((index - 1) * 15)
-				.setMaxResults(15).getResultList();
+		pb = session.createQuery(hql).setParameter("productName", "%" + productName + "%")
+				.setFirstResult((index - 1) * 12).setMaxResults(12).getResultList();
 
 		return pb;
 	}
@@ -172,9 +178,9 @@ public class ShoppingDAOImpl implements ShoppingDAO {
 		Session session = factory.getCurrentSession();
 		list = session.createQuery(hql).setParameter("productName", "%" + productName + "%").getResultList();
 
-		int listCount = list.size() / 15;
+		int listCount = list.size() / 12;
 
-		if (list.size() % 15 == 0) {
+		if (list.size() % 12 == 0) {
 			return listCount;
 		} else {
 			listCount = listCount + 1;
@@ -182,5 +188,36 @@ public class ShoppingDAOImpl implements ShoppingDAO {
 
 		}
 
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ProductBean> getProdByName2(String productName, Integer index) {
+		String hql = "From ProductBean Where productName Like :productName And stock != 0 And status=0";
+		Session session = factory.getCurrentSession();
+		List<ProductBean> pb = new ArrayList<>();
+		pb = session.createQuery(hql).setParameter("productName", "%" + productName + "%")
+				.setFirstResult((index - 1) * 12).setMaxResults(12).getResultList();
+
+		return pb;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public int getPBNIndex2(String productName) {
+		String hql = "From ProductBean Where productName Like :productName And stock != 0 And status=0";
+		List<ProductBean> list = new ArrayList<>();
+		Session session = factory.getCurrentSession();
+		list = session.createQuery(hql).setParameter("productName", "%" + productName + "%").getResultList();
+
+		int listCount = list.size() / 12;
+
+		if (list.size() % 12 == 0) {
+			return listCount;
+		} else {
+			listCount = listCount + 1;
+			return listCount;
+
+		}
 	}
 }
