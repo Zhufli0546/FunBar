@@ -80,7 +80,7 @@
 			<div class="form-group">
 			<p>上傳圖片</p>
 				<form:input id="activityImage" path="activityImage" type='file'
-					class='form:input-large' />
+					class='form:input-large' required="required" />
 			</div>
 
 			<hr>

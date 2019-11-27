@@ -7,11 +7,6 @@
 <!DOCTYPE html>
 <html>
 <script type="text/javascript">
-
-
-
-
-
 </script>
 <head>
 <title>login</title>
