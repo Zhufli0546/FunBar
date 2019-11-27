@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
- pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,11 +9,13 @@
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="<c:url value="/ad_vendor/jquery/jquery.jqzoom.css" />">
+<link rel="stylesheet"
+	href="<c:url value="/ad_vendor/jquery/jquery.jqzoom.css" />">
 <link rel="stylesheet" href="<c:url value="/css/product.css" />">
 </head>
 
 <body>
+
  <jsp:include page="header.jsp" />
 
 
@@ -54,11 +57,30 @@
        ${pb.unitPrice}</span>
      </p>
     </div>
-    <div>
+    
+    <c:choose>
+    <c:when test="${pb.discount==10.0}">
+   
+    
+    <div style="display:none;">
      <p style="font-size: 18px; padding: 10px 5px; color: #000">
-      折扣: <span style="font-weight: bold; color: #CE0000;">${pb.discount}</span>
+     	<fmt:formatNumber type="number" value="${pb.discount}" maxFractionDigits="0" var="discount" />
+      折扣: <span style="font-weight: bold; color: #CE0000;visibility:hidden;">${discount}</span>
      </p>
     </div>
+    </c:when>
+    <c:otherwise>
+    
+    <div>
+     <p style="font-size: 18px; padding: 10px 5px; color: #000">
+     <fmt:formatNumber type="number" value="${pb.discount}" maxFractionDigits="0" var="discount" />
+      折扣: <span style="font-weight: bold; color: #CE0000;">${discount} 折</span>
+     </p>
+    </div>
+    </c:otherwise>
+    
+     </c:choose>
+    
     <div>
      <p style="font-size: 18px; padding: 10px 5px; color: #000">庫存:
       ${pb.stock}</p>
@@ -174,6 +196,7 @@ $(".jqzoom").jqzoom({
  zoomType: 'reverse'
 });
 </script>
+
 
 </body>
 </html>

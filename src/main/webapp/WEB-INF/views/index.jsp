@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -132,7 +133,22 @@
 					</figure>
 					<figcaption>
 						<p>Unit Price:<span style="color:#FF44AA;font-weight:bold;font-size:20px">$ ${pb.unitPrice}</span></p>
-						<p>discount：<span style="font-weight:bold;color:	#CE0000;font-size:20px">${pb.discount}</span></p>
+						
+						<c:choose>
+						<c:when test="${pb.discount==10.0}">
+							<p>
+								<fmt:formatNumber type="number" value="${pb.discount}" maxFractionDigits="0" var="discount" />
+								<span style="font-weight:bold;color:#CE0000;font-size:20px;visibility:hidden;">${discount}</span>
+							</p>
+						</c:when>
+						<c:otherwise>
+							<p>discount:
+								<fmt:formatNumber type="number" value="${pb.discount}" maxFractionDigits="0" var="discount" />
+								<span style="font-weight:bold;color:#CE0000;font-size:20px">${discount} 折</span>		
+							</p>			
+						</c:otherwise>		
+						</c:choose>
+						
 	     				<label for="selectCount" style="font-size: 18px; padding: 10px 5px; color: #000">Quantity：</label>
 	     				<select class="selectCount" id="selectCount" name="count" data-product="${i.index}">
 	      					<option value="1">1</option>

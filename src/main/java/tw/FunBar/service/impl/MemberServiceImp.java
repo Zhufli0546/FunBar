@@ -91,9 +91,8 @@ public class MemberServiceImp implements MemberService {
 	}
 
 	@Override
-	public void updateMember(int id, String memberName, String memberAddress, String memberBirth, String memberPhone,
-			String memberPwd, String memberId, String memberEmail, Integer memberLevel, Blob blob) {
-		dao.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberPwd, memberId, memberLevel, memberEmail, blob);
+	public void updateMember(int id, String memberName, String memberAddress, String memberBirth, String memberPhone, String memberId, String memberEmail, Integer memberLevel, Blob blob) {
+		dao.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberId, memberLevel, memberEmail, blob);
 	}
 
 	@Override

@@ -293,8 +293,7 @@ public class EmailDAOImpl implements EmailDAO {
 	    htmlCode += "<tr><td>電話:</td><td>"+pass.getMemberPhone()+"</td></tr>";
 	    htmlCode += "<tr><td>生日</td><td>"+pass.getMemberBirth()+"</td></tr>";
 	    htmlCode += "<tr><td>帳號:</td><td>"+pass.getMemberId()+"</td></tr>";
-	    htmlCode += "<tr><td>大頭貼:</td><td>"+pass.getMemberfileName()+"</td></tr>";
-	    htmlCode += "<tr><td>認證:</td><td>"+ "<a href =http://localhost:8080/FunBar/find?memberId="+pass.getMemberId() +">點擊認證</a>"+ "</td></tr>";
+	    htmlCode += "<tr><td>認證:</td><td>"+ "<a href =http://localhost:8080/FunBar/find?memberId="+pass.getMemberId() +">更換新密碼</a>"+ "</td></tr>";
 	    message.setContent(htmlCode,"text/html;charset=UTF-8");
 	 
 	    

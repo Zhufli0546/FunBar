@@ -242,14 +242,14 @@ public class MemberController {
 	@RequestMapping(value = "/updatemb", method = RequestMethod.POST)
 	public String updatemb(@RequestParam Integer id, @RequestParam("memberName") String memberName,
 			@RequestParam("memberAddress") String memberAddress, @RequestParam("memberBirth") String memberBirth,
-			@RequestParam("memberPhone") String memberPhone, @RequestParam("memberPwd") String memberPwd,
+			@RequestParam("memberPhone") String memberPhone,
 			@RequestParam("memberId") String memberId, @RequestParam("memberEmail") String memberEmail,
 			@RequestParam("memberLevel") Integer memberLevel, @RequestParam("memberimg") MultipartFile memberimg,
 			Model model) throws Exception {
 		System.out.println("Id=" + id);
 		byte[] b1 = memberimg.getBytes();
 		Blob blob = new SerialBlob(b1);
-		memberService.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberPwd, memberId,
+		memberService.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberId,
 				memberEmail, memberLevel, blob);
 		return "redirect:/showAllmember";
 	}
@@ -295,7 +295,7 @@ public class MemberController {
 		byte[] b1 = memberimg.getBytes();
 		Blob blob = new SerialBlob(b1);
 		memberService.updateself(id, memberName, memberAddress, memberBirth, memberPhone, memberEmail, blob);
-		return "showMAN";
+		return "redirect:/";
 	}
 
 	// 密碼

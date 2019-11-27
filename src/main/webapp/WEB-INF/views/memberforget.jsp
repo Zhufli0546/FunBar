@@ -7,24 +7,24 @@
 <html>
 
 <head>
- <meta charset="UTF-8">
- <title>login</title>
-
+	<meta charset="UTF-8">
+	<title>login</title>
 </head>
 <style>
     * {
         font-family: 微軟正黑體;
     }
 
-    html,
-    body {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #eee;
-    }
+	.contentPage{
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-image: url('/FunBar/images/001.jpg');
+		background-position: top center;
+		background-size: cover;
+	}
 
     .login {
         background-color: #fff;
@@ -32,6 +32,7 @@
         padding: 20px;
         margin-bottom: 10px;
         font-weight: bold;
+        border-radius: 5px;
     }
 
     .registerBox {
@@ -50,36 +51,39 @@
 
 
 <body>
+<!-- header -->
 <jsp:include page="header.jsp" />
-<c:set var="go" value="" scope="session"></c:set>
-	
-	
-    <div class="row">
-        <div class="login col-sm-12">
-            <h2>FunBar</h2>
-            <form action="forget" method="post">
-                <fieldset>
-                    <div class="form-group">
-                        <label for="memberId">帳號:</label>
-                        <input id="user" type="text" class="form-control" name="memberId" placeholder="請輸入帳號">
-                        <span class="error">${errorMsg.errUserName}</span>
-                    </div>
-                   
-                </fieldset>
-                <button type="submit" id="findpass" class="btn btn-info col-md-12">尋找密碼</button>
-            </form>
-        </div>
 
-        
+<!-- Content -->
+<div class="row contentPage">
+    <div class="login col-sm-2">
+        <h2>FunBar</h2>
+        <form action="forget" method="post">
+            <fieldset>
+                <div class="form-group">
+                    <label for="memberId">帳號:</label>
+                    <input id="user" type="text" class="form-control" name="memberId" placeholder="請輸入帳號">
+                    <span class="error">${errorMsg.errUserName}</span>
+                </div>
+               
+            </fieldset>
+            <button type="submit" id="findpass" class="btn btn-info col-md-12">尋找密碼</button>
+        </form>
     </div>
-    <script type="text/javascript"
-		src="<c:url value="/vendor/jquery/jquery-3.2.1.min.js"/>">
-		
-	</script>
-    <script>
+
     
+</div>
+<!--     <script type="text/javascript" -->
+<%-- 		src="<c:url value="/vendor/jquery/jquery-3.2.1.min.js"/>"> --%>
+		
+<!-- 	</script> -->
+	<jsp:include page="footer.jsp" />
+    <script>
+
 $("#findpass").click(function() {
-	alert("請到信箱收取驗證信");
+	if($("#user").val().length>0) {
+		alert("請到信箱收取驗證信");
+	}
 })
 </script>
 </body>

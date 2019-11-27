@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,9 +69,23 @@
 					Unit Price:<span style="color: #FF44AA; font-weight: bold">$
 						${pb.unitPrice}</span>
 				</p>
-				<p>
-					discount：<span style="font-weight: bold; color: #CE0000;">${pb.discount}</span>
-				</p>
+				
+				<c:choose>
+					<c:when test="${pb.discount==10.0}">
+						
+						<p>
+							<fmt:formatNumber type="number" value="${pb.discount}" maxFractionDigits="0" var="discount" />
+							<span style="font-weight: bold; color: #CE0000; visibility:hidden">${discount}</span>
+						</p>
+					</c:when>
+					<c:otherwise>
+						
+						<p>
+							<fmt:formatNumber type="number" value="${pb.discount}" maxFractionDigits="0" var="discount" />
+							discount：<span style="font-weight: bold; color: #CE0000;">${discount} 折</span>
+						</p>
+    				</c:otherwise>
+				</c:choose>
 			</div>
 			<!-- .prodlist -->
 		</c:forEach>
