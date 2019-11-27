@@ -42,7 +42,7 @@
 <div class="error">${errorMsg.errPwd}</div>
 <td><p> Email : </p> <form:input type="text" path="memberEmail"  value=""/></td>
 <div class="error">${errorMsg.errEmail}</div>
-<td><p> 大頭貼 : </p> <form:input path = "memberimg" type ="file"   maxlength="40"/> </td>
+<td><p> 大頭貼 : </p> <form:input path = "memberimg"  type ="file" required="required"  maxlength="40"/> </td>
       <br>	<button id="signUpBtn"  type="submit">送出</button>
         	<button  type="reset">清除</button>
         </fieldset>
@@ -50,7 +50,9 @@
 </div>
 <script>
 $("#signUpBtn").click(function() {
-	alert("請到信箱收取驗證信");
+	if($("memberId").val().length>0 && $("memberPwd").val().length>0") {
+		alert("請到信箱收取驗證信");
+	}
 })
 </script>
 </body>

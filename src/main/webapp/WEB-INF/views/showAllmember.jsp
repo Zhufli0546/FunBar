@@ -38,7 +38,6 @@
 				<th>地址
 				<th>生日
 				<th>電話
-				<th>密碼
 				<th>帳號
 				<th>email
 				<th>大頭貼
@@ -50,13 +49,12 @@
 							<td>${member.memberName}</td>
 							<td>${member.memberAddress}</td>
 							<td>${member.memberBirth}</td>
-							<td>${member.memberPhone}</td>
-							<td>${member.memberPwd}</td>
+							<td >${member.memberPhone}</td>
 							<td>${member.memberId}</td>
 							<td>${member.memberEmail}</td>
 							<td><div style="text-align: center">
-								<img src="<c:url value='/membergetPicture/${member.id}'/>"					
-									height="120px" width="120px" />
+								<img src="<c:url value='/membergetPicture/${member.id}'/> "					
+									height="120px" width="120px" required="required" />
 							</div></td>
 							<td>${member.memberLevel}</td>
 							<td ><a
