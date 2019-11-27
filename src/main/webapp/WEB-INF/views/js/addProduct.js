@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded",function(){
 		let flag1= false, flag2= false;
 		if (theDetail == ""){
 			document.getElementById("msgDetail").innerHTML="<img width='25px' height='25px' src='images/sign-error.png'>請輸入商品說明";			
-		}else if (theDetailLen >= 1 && theDetailLen <= 10){
+		}else if (theDetailLen >= 1 && theDetailLen <= 12){
 			for (i=0; i<theDetailLen ; i++){
 				let DetailChr = theDetail.charAt(i).toUpperCase();
 				let ch = theDetail.charCodeAt(i);
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded",function(){
 			}		
 		}//else if結尾
 		else{
-			document.getElementById("msgDetail").innerHTML="<img width='25px' height='25px' src='images/sign-error.png'>請輸入一個以上十個以下的中文字或英文字母"
+			document.getElementById("msgDetail").innerHTML="<img width='25px' height='25px' src='images/sign-error.png'>請輸入1個以上12個以下的中文字或英文字母"
 		}
 	}//function chkDetail結尾
 	
@@ -141,8 +141,8 @@ document.addEventListener("DOMContentLoaded",function(){
 			document.getElementById("msgDisc").innerHTML="<img width='25px' height='25px' src='images/sign-error.png'>請輸入折扣"
 		}else if(theDisc == 0){
 			document.getElementById("msgDisc").innerHTML="<img width='25px' height='25px' src='images/sign-error.png'>若無折扣，請輸入10"
-		}else if(theDiscLen >=3){
-			document.getElementById("msgDisc").innerHTML="<img width='25px' height='25px' src='images/sign-error.png'>不可輸入小數點或超過三位數"
+		}else if(theDiscLen >=4){
+			document.getElementById("msgDisc").innerHTML="<img width='25px' height='25px' src='images/sign-error.png'>不可輸入超過四位數"
 		}else if(theDiscLen >= 1){
 			for(i=0; i<theDiscLen ; i++){
 				if(theDisc[0] =="0"){
