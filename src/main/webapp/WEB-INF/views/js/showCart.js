@@ -138,7 +138,7 @@ $(document).ready(function() {
 			var index = $(this).data("product");
 			var unitPrice = $(".unit").eq(index).text();
 			var num = $(".num").eq(index).val();
-			var stc = $(".theStock").eq(index).text();
+			let stc = $(".theStock").eq(index).text();
 			var disc = $(".hallin").eq(index).text(); //折扣
 			var dec = disc / 10;
 			var smallPrice;
@@ -147,22 +147,26 @@ $(document).ready(function() {
 			
 			if (num>stc) {
 				alert("數量不得超過庫存!");
-
 				var smallPrice = unitPrice * stc * dec;
 				var int_smallPrice = parseInt(smallPrice);
 				$(".pd").eq(index).text(int_smallPrice);
-
+				
 				totalPrice = 0;
 				for (let i = 0; i < $(".pd").length; i++) {
+					let new_stc = $(".theStock").eq(i).text();
 					unitPrice = $(".unit").eq(i).text();
 					number = $(".num").eq(i).val();
-
-					if (number > stc) {
-						number = stc;
+					
+					new_stc = parseInt(new_stc);
+					
+					if (number > new_stc) {
+						number = new_stc;
+						$(".num").eq(i).val(number);
+						
 					}
 					var disc = $(".hallin").eq(i).text();
 					var dec = disc / 10;
-					$(this).val(stc); 
+					
 
 					subTotal = unitPrice * number * dec;
 					var int_subTotal = parseInt(subTotal);
