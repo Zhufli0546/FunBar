@@ -43,16 +43,18 @@ function init() {
 	// 刪除文章
 	$(".deleteData").click(function() {
 		let deleteId = $(this).data("deleteid");
-		$.ajax({
-			url: requestUrl + "admin_delete/" + deleteId,
-			method: "POST",
-			dataType: "JSON",
-			success: function() {
-				$("#demo").html("");
-				$("#show").html("");
-				generate();
-			}
-		})
+		if(confirm('確定刪除此篇文章嗎?')) {
+			$.ajax({
+				url: requestUrl + "admin_delete/" + deleteId,
+				method: "POST",
+				dataType: "JSON",
+				success: function() {
+					$("#demo").html("");
+					$("#show").html("");
+					generate();
+				}
+			})
+		}
 	})
 
 	// 取得頁數

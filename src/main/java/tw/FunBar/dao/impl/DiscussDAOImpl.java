@@ -157,7 +157,6 @@ public class DiscussDAOImpl implements DiscussDAO {
 	@Override
 	public void cancelFriendRequest(Friendship friendship) {
 		Session session = factory.getCurrentSession();
-		System.out.println();
 		session.delete(friendship);
 	}
 

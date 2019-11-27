@@ -79,10 +79,22 @@ $(document).ready(function() {
 			var disc = $(".hallin").eq(index).text(); //折扣
 			var dec = disc / 10;
 					
-			if (num < stc && num >50 ) {
-				alert("數量不得超過50份！");
+			if (num >50 ) {
+				if(num > stc){
+					alert("選購數量不可大於庫存！");
+					num = stc;
+				}else{
+					alert("數量不得超過50份！");
+					num = 50;
+				}
+			
 			}else if(num > stc){
+				if(num >50){
+					alert("數量不得超過50份！")
+					num = 50;
+				}
 				alert("選購數量不可大於庫存！");
+					num = stc;
 				return;
 			}
 			
@@ -126,11 +138,55 @@ $(document).ready(function() {
 			var index = $(this).data("product");
 			var unitPrice = $(".unit").eq(index).text();
 			var num = $(".num").eq(index).val();
-			var stc = $(".theStock").eq(index).text();
+			let stc = $(".theStock").eq(index).text();
 			var disc = $(".hallin").eq(index).text(); //折扣
 			var dec = disc / 10;
 			var smallPrice;
-			if (num > 50) {
+			
+			
+			
+			if (num>stc) {
+				alert("數量不得超過庫存!");
+				var smallPrice = unitPrice * stc * dec;
+				var int_smallPrice = parseInt(smallPrice);
+				$(".pd").eq(index).text(int_smallPrice);
+				
+				totalPrice = 0;
+				for (let i = 0; i < $(".pd").length; i++) {
+					let new_stc = $(".theStock").eq(i).text();
+					unitPrice = $(".unit").eq(i).text();
+					number = $(".num").eq(i).val();
+					
+					new_stc = parseInt(new_stc);
+					
+					if (number > new_stc) {
+						number = new_stc;
+						$(".num").eq(i).val(number);
+						
+					}
+					var disc = $(".hallin").eq(i).text();
+					var dec = disc / 10;
+					
+
+					subTotal = unitPrice * number * dec;
+					var int_subTotal = parseInt(subTotal);
+					totalPrice = totalPrice + int_subTotal;
+
+					var url = "/FunBar/"
+					$.ajax({
+						url : "http://localhost:8080" + url + "changecart",
+						data : {
+							count : number,
+							productId : $(".pdid").eq(i).val()
+						},
+						type : "POST",
+						dataType : "JSON",
+						success : function() {
+						}
+					})
+				}
+				$(".totalAmount").text(totalPrice);
+			}else if (num > 50) {
 				alert("數量不得超過50份!");
 
 				var smallPrice = unitPrice * 50 * dec;
@@ -168,6 +224,7 @@ $(document).ready(function() {
 				}
 				$(".totalAmount").text(totalPrice);
 			} else if (num < 1) {
+				
 
 				alert("數量不得小於1!");
 

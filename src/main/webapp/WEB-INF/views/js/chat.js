@@ -82,6 +82,9 @@ function friends(){
 						conn[0] = conn[1];
 						conn[1] = temp;
 					}
+					let subscribe = conn[0] + "/" + conn[1];
+					
+					
 					stompClient.subscribe('/member/message/' + conn[0] + "/" + conn[1], function(message) {
 						var json = JSON.parse(message.body);
 						var senderMemberId = json.senderMemberId;
@@ -105,10 +108,31 @@ function friends(){
 
 $(document).ready(function() {
 	requestUrl = $('#requestUrl_chatbox').text();
+	var count = 0;
 	mdata = getMemberData();
 	friendlist();
 	search();
-
+	
+//	$($('#conversation li:lt(1)').toArray().reverse()).animate({'opacity':'1'},3000);
+//	//Test
+//	$(".chatbox__body").scroll( function(){
+//		console.log("有觸發到 最外層")
+//	$($('#conversation li').toArray().reverse()).each( function(){
+//        
+//        var bottom_of_object = $(this).offset().top + $(this).outerHeight();
+//        var bottom_of_div = $(".chatbox__body").scrollTop() + $(".chatbox__body").height();
+//        console.log("bottom_of_object == " +  bottom_of_object)
+//        console.log("bottom_of_window == " + bottom_of_div)
+//        console.log("有捲動到 外層")
+//        /* If the object is completely visible in the window, fade it it */
+//        if( bottom_of_div > bottom_of_object ){
+//            console.log("有捲動到 聊天和子")
+//            $(this).animate({'opacity':'1'},3000);
+//                
+//        }
+//        
+//    }); 
+//})
 })
 
 $(function() {
@@ -202,10 +226,10 @@ function connect() {
 		
 		stompClient.subscribe("/friends/participants", function(message) {
 			showActiveUserNumber(message.body);
-			console.log(message.body)
-			var user = "系统消息";
-			var date = null;
-			var msg = loginMemberName + "加入聊天！";
+			console.log("From Friends == " + message.body)
+//			var user = "系统消息";
+//			var date = null;
+//			var msg = loginMemberName + "加入聊天！";
 //			var n = new Notification(message);
 //			showNewMessage(user, date, msg);
 		});
@@ -304,46 +328,91 @@ function formatDate(dateTime) {
  * @param msg
  *            消息内容
  */
+var count = 0;
 function showNewMessage(user, date, msg, senderMemberId, receiverMemberId) {
 	var container = document.getElementById("conversation");
 	var messages = document.getElementById("messages");
 	var msgToDisplay = document.createElement('li');
-
+	var x = $('.chatbox').attr("class")
+	var y = "chatbox chatbox22 chatbox--closed rounded-top";
+	var z = "chatbox chatbox22 rounded-top chatbox--closed";
+	var chatBoxMemberName;
+	var j = "chatbox chatbox22 rounded-top chatbox--tray";
+	var k = "chatbox chatbox22 chatbox--tray rounded-top";
 	
-//	if (user == "系统消息") {
-//		msgToDisplay.style.color = 'red';
-//	}
+	
+	if(x == y || x == z){
+		$(".chatbox").show().attr('class', 'chatbox chatbox22 rounded-top');
+		let conn = [ loginMemberid, senderMemberId];
+		if(conn[0] > conn[1]){
+			let temp = conn[0];
+			conn[0] = conn[1];
+			conn[1] = temp;
+		}
+		let subscribe = conn[0] + "/" + conn[1];
+		 history(subscribe);
 	var dateTime = formatDate(date);
 	msg = showEmoji(msg);
 	console.log(msgToDisplay)
 
-	if (senderMemberId == loginMemberid) {
-		msgToDisplay.setAttribute("class", "replies");
-		msgToDisplay.innerHTML = "" 
-				+ "<img class='card-img-top rounded-circle' style='height: 30px; width: 30px' src='" + requestUrl + "membergetPicture/" 
-				+ "" + senderMemberId + "'>"
-				+ "<p>" + msg + "</p>"
-		container.append(msgToDisplay);
+//	if (senderMemberId == loginMemberid) {
+//		msgToDisplay.setAttribute("class", "replies");
+//		msgToDisplay.innerHTML = "" 
+//				+ "<img class='card-img-top rounded-circle' style='height: 30px; width: 30px' src='" + requestUrl + "membergetPicture/" 
+//				+ "" + senderMemberId + "'>"
+//				+ "<p>" + msg + "</p>"
+//		container.append(msgToDisplay);
+//		chatBoxMemberName = $("#Name" + receiverMemberId).text();
+//		
+//	} else {
+//		msgToDisplay.setAttribute("class", "sent");
+//		msgToDisplay.innerHTML = ""
+//				+ "<img class='card-img-top rounded-circle' style='height: 30px; width: 30px' src='" + requestUrl + "membergetPicture/" 
+//				+ "" + senderMemberId + "'>"
+//				+ "<p>" + msg + "</p>"
+//		container.append(msgToDisplay);
+//		chatBoxMemberName = $("#Name" + senderMemberId).text();
+//		
+//	}
+	sendToBinding(senderMemberId)
+	
+	}else{
+		if(x == j || x == k){
+			count++;
+			$("#notificationChatBox").text(count)
+			
+		}
 		
-	} else {
-		msgToDisplay.setAttribute("class", "sent");
-		msgToDisplay.innerHTML = ""
-				+ "<img class='card-img-top rounded-circle' style='height: 30px; width: 30px' src='" + requestUrl + "membergetPicture/" 
-				+ "" + senderMemberId + "'>"
-				+ "<p>" + msg + "</p>"
-		container.append(msgToDisplay);
-		
-	}
+		var dateTime = formatDate(date);
+		msg = showEmoji(msg);
+		console.log(msgToDisplay)
 
-	($('#conversation').children("li:last-child")[0]).scrollIntoView();
-	let senderMemberName = $("#Name" + senderMemberId).text();
-	var x = $('.chatbox').attr("class")
-	var y = "chatbox chatbox22 chatbox--closed rounded-top";
-	if(x == y){
-		$(".chatbox").show().attr('class', 'chatbox chatbox22 rounded-top');
-		$("#receiverMemberName").text(senderMemberName);
-		
+		if (senderMemberId == loginMemberid) {
+			msgToDisplay.setAttribute("class", "replies");
+//			msgToDisplay.setAttribute("loading", "lazy");
+//			msgToDisplay.style.opacity = "0"
+			msgToDisplay.innerHTML = "" 
+					+ "<img class='card-img-top rounded-circle' style='height: 30px; width: 30px' src='" + requestUrl + "membergetPicture/" 
+					+ "" + senderMemberId + "'>"
+					+ "<p>" + msg + "</p>"
+			container.append(msgToDisplay);
+			chatBoxMemberName = $("#Name" + receiverMemberId).text();
+		} else {
+			msgToDisplay.setAttribute("class", "sent");
+//			msgToDisplay.setAttribute("loading", "lazy");
+//			msgToDisplay.style.opacity = "0"
+			msgToDisplay.innerHTML = ""
+					+ "<img class='card-img-top rounded-circle' style='height: 30px; width: 30px' src='" + requestUrl + "membergetPicture/" 
+					+ "" + senderMemberId + "'>"
+					+ "<p>" + msg + "</p>"
+			container.append(msgToDisplay);
+			chatBoxMemberName = $("#Name" + senderMemberId).text();
+			
+		}
 	}
+	($('#conversation').children("li:last-child")[0]).scrollIntoView();
+	$("#receiverMemberName").text(chatBoxMemberName);
+	
 }
 /**
  * 正则表达式显示消息中的emoji图片
@@ -403,14 +472,6 @@ function sendMessage(loginMemberid, receiverMemberId) {
 			'messageContent' : content,
 		}));
 		
-		stompClient.send("/topic/notification", {}, JSON.stringify({
-			'notification' : content,
-			'tag' : 'Discuss',
-			'url' : requestUrl + 'chat',
-			'icon' : requestUrl + 'membergetPicture/' + loginMemberid,
-			'sessionScopeMemberId' : loginMemberid
-		}));
-		
 
 	}
 }
@@ -433,10 +494,32 @@ function sendMessage(loginMemberid, receiverMemberId) {
 		conn[1] = temp;
 	}
 	let subscribe = conn[0] + "/" + conn[1];
-	$("#receiverMemberName").text(receiverMemberName);
+	
  	getHistoryMessage(subscribe)
+ 	$("#receiverProfile").html("").append("<img class='online' id='profile-img' src='" + requestUrl + "membergetPicture/" + receiverMemberId + "'/>" +
+ 			"<span id='receiverMemberName'></span>")
+ 	$("#receiverMemberName").text(receiverMemberName);
  }
 
+ function sendToBinding(receiverMemberId){
+	 $("#messageInput").unbind("keyup").bind("keyup", function(event) {
+			if (event.keyCode == 13) {
+				sendMessage(loginMemberid, receiverMemberId);
+				}
+		   });
+		 $("#btn-chat").click(function(){
+			 sendMessage(loginMemberid, receiverMemberId);
+		 });
+		let receiverMemberName = $("#Name" + receiverMemberId).text();
+	 	let conn = [ loginMemberid, receiverMemberId];
+		if(conn[0] > conn[1]){
+			let temp = conn[0];
+			conn[0] = conn[1];
+			conn[1] = temp;
+		}
+		$("#receiverMemberName").text(receiverMemberName);
+ }
+ 
  function getHistoryMessage(subscribe){
 	 $("#conversation").html("");
  $.ajax({
@@ -454,8 +537,30 @@ function sendMessage(loginMemberid, receiverMemberId) {
 						, message.senderMemberId, message.receiverMemberId);
 				
 			}
+			
 		}
+		
  	})
+// 		$('#conversation li').slice(-5).animate({'opacity':'1'},3000);
+//	//Test
+//	$(".chatbox__body").scroll( function(){
+//		console.log("有觸發到 最外層")
+//	$($('#conversation li').toArray().reverse()).each( function(){
+//        
+//        var bottom_of_object = $(this).offset().top + $(this).outerHeight();
+//        var bottom_of_div = $(".chatbox__body").scrollTop() + $(".chatbox__body").height();
+//        console.log("bottom_of_object == " +  bottom_of_object)
+//        console.log("bottom_of_div == " + bottom_of_div)
+//        console.log("有捲動到 外層")
+//        /* If the object is completely visible in the window, fade it it */
+//        if( 500 < bottom_of_object ){
+//            console.log("有捲動到 聊天和子")
+//            $(this).animate({'opacity':'1'},3000);
+//                
+//        }
+//        
+//    }); 
+//})
  }
  
  
@@ -474,7 +579,49 @@ function sendMessage(loginMemberid, receiverMemberId) {
 		})
 	}
  
+ function history(subscribe){
+ $.ajax({
+		url : requestUrl + "getHistoryMessageJson",
+		method : "POST",
+		dataType : "JSON",
+		async : false,
+		data : {subscribe : subscribe},
+		success : function(messageHistoryData) {
+			let messageArea = "";
+			let messageData = messageHistoryData.message
+			for(let i = 0; i < messageData.length; i++){
+				let message = messageData[i];
+				printHistoryMessage(message.senderMemberId, message.receiverMemberId , loginMemberid, message.messageContent, message.userName)
+			}
+		}
+ })
+ }
  
+ function printHistoryMessage(senderMemberId, receiverMemberId , loginMemberid, msg, user){
+	 var container = document.getElementById("conversation");
+	 var msgToDisplay = document.createElement('li');
+ if (senderMemberId == loginMemberid) {
+		msgToDisplay.setAttribute("class", "replies");
+		msgToDisplay.setAttribute("loading", "lazy");
+		msgToDisplay.innerHTML = "" 
+				+ "<img class='card-img-top rounded-circle' style='height: 30px; width: 30px' src='" + requestUrl + "membergetPicture/" 
+				+ "" + senderMemberId + "'>"
+				+ "<p>" + msg + "</p>"
+		container.append(msgToDisplay);
+		chatBoxMemberName = $("#Name" + receiverMemberId).text();
+		
+	} else {
+		msgToDisplay.setAttribute("class", "sent");
+		msgToDisplay.setAttribute("loading", "lazy");
+		msgToDisplay.innerHTML = ""
+				+ "<img class='card-img-top rounded-circle' style='height: 30px; width: 30px' src='" + requestUrl + "membergetPicture/" 
+				+ "" + senderMemberId + "'>"
+				+ "<p>" + msg + "</p>"
+		container.append(msgToDisplay);
+		chatBoxMemberName = $("#Name" + senderMemberId).text();
+		
+	}
+ }
 //通知測試
 // stompClient.send("/topic/notification", {}, JSON.stringify({
 //		'notification' : content,

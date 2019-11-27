@@ -44,181 +44,181 @@ import tw.FunBar.service.ShoppingService;
 public class ShoppingController {
 	@Autowired
 	ShoppingService shoppingService;
-	
+
 	@Autowired
 	OrderHandleService orderService;
 
 	@Autowired
 	ServletContext context;
 
+	// ---------前台功能-------
 
-	//---------前台功能-------	
-	
 	@RequestMapping("/shoppingCart")
-	public String shoppingCart(@RequestParam Integer index, Model model) {		
+	public String shoppingCart(@RequestParam Integer index, Model model) {
 //		List<ProductBean> show = shoppingService.getAllProducts();    //顯示所有商品
 //		model.addAttribute("all", show);	
-		List<ProductBean> products = shoppingService.getProductByPage(index);   //分頁
-		int count = shoppingService.getIndex();					
+		List<ProductBean> products = shoppingService.getProductByPage(index); // 分頁
+		int count = shoppingService.getIndex();
 		model.addAttribute("shoppingCart", products);
 		model.addAttribute("listCount", count);
 		return "shoppingCart";
 	}
-	
-	
-	
-	@RequestMapping(value= {"/product"})   //查看單筆商品資訊
-	public String getProduct(@RequestParam("id") Integer productId, Model model) 
-							throws SerialException, SQLException, IOException {
+
+	@RequestMapping(value = { "/product" }) // 查看單筆商品資訊
+	public String getProduct(@RequestParam("id") Integer productId, Model model)
+			throws SerialException, SQLException, IOException {
 		model.addAttribute("pb", orderService.getProductById(productId));
-		return "product";		
+		return "product";
 	}
-		
+
 //	*RequestMapping請求不能有多個相同路徑
 //	依分類查詢商品(點擊分類連結進入分類商品頁面）
 	@RequestMapping("/shoppingCart/{category}")
-	public String getProductByCategory(@PathVariable("category")String category,@RequestParam Integer index, Model model ) {	
-		List <ProductBean> products = shoppingService.getProductByCategory(category,index);	
-		int count = shoppingService.getCategoryIndex(category);	  //分頁
-		 
+	public String getProductByCategory(@PathVariable("category") String category, @RequestParam Integer index,
+			Model model) {
+		List<ProductBean> products = shoppingService.getProductByCategory(category, index);
+		int count = shoppingService.getCategoryIndex(category); // 分頁
+
 		model.addAttribute("shoppingCart", products);
-		model.addAttribute("listCount", count);			
-		return "showProductByCategory";		
-		 
+		model.addAttribute("listCount", count);
+		return "showProductByCategory";
+
 	}
-	
-	//取得所有分類
+
+	// 取得所有分類
 	@ModelAttribute("categoryList")
 	public List<String> getAllCategories() {
 		return shoppingService.getAllCategories();
 	}
 
-	
-	//----------後台功能----------
+	// ----------後台功能----------
 
-		
-	//後臺顯示所有商品
+	// 後臺顯示所有商品
 	@RequestMapping("/showAllProduct")
-	public String showAllProduct(HttpSession session,HttpServletRequest request,HttpServletResponse response, Integer index,Model model) {
+	public String showAllProduct(HttpSession session, HttpServletRequest request, HttpServletResponse response,
+			Integer index, Model model) {
 		session = request.getSession(false);
-		Member member = (Member)session.getAttribute("member");
-		if(member==null) return "redirect:/signin";
-			
+		Member member = (Member) session.getAttribute("member");
+		if (member == null)
+			return "redirect:/signin";
+
 		List<ProductBean> products = shoppingService.getAllProducts1(index);
 		int count = shoppingService.getProdIndex1();
-		
+
 		model.addAttribute("showAllProduct", products);
-		model.addAttribute("listCount", count);		
+		model.addAttribute("listCount", count);
 		return "showAllProduct";
 	}
-	
-	
-	//後台所有商品查詢
+
+	// 後台所有商品名稱模糊查詢
 	@RequestMapping("/getProdByName")
-	public String getProdByName(@RequestParam Integer index,
-								@RequestParam String productName
-								,Model model ) {	
-		List <ProductBean> products = shoppingService.getProdByName(productName, index);
-		int count = shoppingService.getPBNIndex(productName);	  //分頁
-		 
+	public String getProdByName(@RequestParam Integer index, @RequestParam String productName, Model model) {
+		List<ProductBean> products = shoppingService.getProdByName(productName, index);
+		int count = shoppingService.getPBNIndex(productName); // 分頁
+
 		model.addAttribute("showAllProduct", products);
-		model.addAttribute("listCount", count);	
+		model.addAttribute("listCount", count);
 		model.addAttribute("productName", productName);
-		model.addAttribute("index",index);
-		return "showProductBySearch";		
-		 
+		model.addAttribute("index", index);
+		return "showProductBySearch";
+
 	}
-	
+
+	// 前台所有商品名稱模糊查詢
+	@RequestMapping("/getProdByName2")
+	public String getProdByName2(@RequestParam Integer index, @RequestParam String productName, Model model) {
+		List<ProductBean> products = shoppingService.getProdByName2(productName, index);
+		int count = shoppingService.getPBNIndex2(productName); // 分頁
+
+		model.addAttribute("shoppingCart", products);
+		model.addAttribute("listCount", count);
+		model.addAttribute("productName", productName);
+		model.addAttribute("index", index);
+		return "shoppingCartBySearch";
+
+	}
+
 	@RequestMapping("/pullProductOne")
-	public String pullProductOne(@RequestParam("id") Integer productId,String productName,Integer index, Model model,
+	public String pullProductOne(@RequestParam("id") Integer productId, String productName, Integer index, Model model,
 			HttpServletRequest req, HttpServletResponse response) throws UnsupportedEncodingException {
-		
+
 		System.out.println("ProductName => " + productName);
 		orderService.pullProduct(productId);
-		
-		
-		 String name = URLEncoder.encode(productName,"UTF-8");
-		
-		
-		 
-		return "redirect:/getProdByName?index="+index+"&productName="+name;
-	}
-	
-	@RequestMapping("/pushProductOne")
-	public String pushProductOne(@RequestParam("id") Integer productId,String productName,Integer index, Model model) throws UnsupportedEncodingException {
-		orderService.pushProduct(productId);
-		
-		 String name = URLEncoder.encode(productName,"UTF-8");
-		return "redirect:/getProdByName?index="+index+"&productName="+name;
-	}
-	
-	
-		//下架單筆資料
-		@RequestMapping("/pullProduct")
-		public String pullProduct(@RequestParam("id") Integer productId, Model model) {
-			orderService.pullProduct(productId);
-			return "redirect:/showAllProduct?index=1" ;
-		}
-		
-	
-		//上架單筆資料
-		@RequestMapping("/pushProduct")
-		public String pushProduct(@RequestParam("id") Integer productId, Model model) {
-			orderService.pushProduct(productId);
-			return "redirect:/showAllProduct?index=1";
-		}
 
-		
-	//點擊"修改"按鈕單筆查詢該資料
+		String name = URLEncoder.encode(productName, "UTF-8");
+
+		return "redirect:/getProdByName?index=" + index + "&productName=" + name;
+	}
+
+	@RequestMapping("/pushProductOne")
+	public String pushProductOne(@RequestParam("id") Integer productId, String productName, Integer index, Model model)
+			throws UnsupportedEncodingException {
+		orderService.pushProduct(productId);
+
+		String name = URLEncoder.encode(productName, "UTF-8");
+		return "redirect:/getProdByName?index=" + index + "&productName=" + name;
+	}
+
+	// 下架單筆資料
+	@RequestMapping("/pullProduct")
+	public String pullProduct(@RequestParam("id") Integer productId, Model model) {
+		orderService.pullProduct(productId);
+		return "redirect:/showAllProduct?index=1";
+	}
+
+	// 上架單筆資料
+	@RequestMapping("/pushProduct")
+	public String pushProduct(@RequestParam("id") Integer productId, Model model) {
+		orderService.pushProduct(productId);
+		return "redirect:/showAllProduct?index=1";
+	}
+
+	// 點擊"修改"按鈕單筆查詢該資料
 	@RequestMapping("/update")
-	public String getProductsById(@RequestParam("id") Integer productId, Model model) throws SerialException, SQLException, IOException {
+	public String getProductsById(@RequestParam("id") Integer productId, Model model)
+			throws SerialException, SQLException, IOException {
 		model.addAttribute("pb", orderService.getProductById(productId));
-		
+
 		return "updateProduct";
 	}
-	
-	
-		
-	//修改單筆資料
+
+	// 修改單筆資料
 	@SuppressWarnings("unused")
-	@RequestMapping(value="/updateProduct", method = RequestMethod.POST)
-	public String updateProduct(@RequestParam("id") Integer productId,
-								@RequestParam("productName") String productName,
-								@RequestParam("productDetail") String productDetail,
-								@RequestParam("category")String category,
-								@RequestParam("image")MultipartFile productCover,
-								@RequestParam("discount")Double discount,
-								@RequestParam("stock")Integer stock,
-								@RequestParam("productNo") String productNo, Model model) throws IOException, SerialException, SQLException {
-					
-		
-		String filename = productCover.getOriginalFilename();	
-		if(filename.length()!=0) {  //如果有重新上傳圖片
+	@RequestMapping(value = "/updateProduct", method = RequestMethod.POST)
+	public String updateProduct(@RequestParam("id") Integer productId, @RequestParam("productName") String productName,
+			@RequestParam("productDetail") String productDetail, @RequestParam("category") String category,
+			@RequestParam("image") MultipartFile productCover, @RequestParam("discount") Double discount,
+			@RequestParam("stock") Integer stock, @RequestParam("productNo") String productNo, Model model)
+			throws IOException, SerialException, SQLException {
+
+		String filename = productCover.getOriginalFilename();
+		if (filename.length() != 0) { // 如果有重新上傳圖片
 			Blob blob;
 			byte[] b = productCover.getBytes();
 			blob = new SerialBlob(b);
-			orderService.updateProduct(productId,productNo,blob,productDetail, productName,category, discount, stock);
-		} else {  //如果沒有重新上傳圖片， 呼叫service依照productId取得原本的圖片檔
-			ProductBean product = orderService.getProductById(productId);		
-			orderService.updateProduct(productId,productNo,product.getProductImage(),productDetail, productName,category, discount, stock);
-		}												
-		return "redirect:/showAllProduct?index=1";	
+			orderService.updateProduct(productId, productNo, blob, productDetail, productName, category, discount,
+					stock);
+		} else { // 如果沒有重新上傳圖片， 呼叫service依照productId取得原本的圖片檔
+			ProductBean product = orderService.getProductById(productId);
+			orderService.updateProduct(productId, productNo, product.getProductImage(), productDetail, productName,
+					category, discount, stock);
+		}
+		return "redirect:/showAllProduct?index=1";
 	}
-	
-		
-	
-	//新增商品資料
+
+	// 新增商品資料
 	@RequestMapping(value = "/addProduct", method = RequestMethod.GET)
-	public String getAddNewProductForm(HttpSession session,HttpServletRequest request,HttpServletResponse response,Model model) {
+	public String getAddNewProductForm(HttpSession session, HttpServletRequest request, HttpServletResponse response,
+			Model model) {
 		session = request.getSession(false);
-		Member member = (Member)session.getAttribute("member");
-		if(member==null) return "redirect:/signin";
-		
+		Member member = (Member) session.getAttribute("member");
+		if (member == null)
+			return "redirect:/signin";
+
 		ProductBean pb = new ProductBean();
 		model.addAttribute("productBean", pb);
 		return "addProduct";
 	}
-	
 
 	@RequestMapping(value = "/addProduct", method = RequestMethod.POST)
 	public String addProduct(@ModelAttribute("productBean") ProductBean pb, BindingResult result) {
@@ -230,12 +230,11 @@ public class ShoppingController {
 			pb.setStock(0);
 		}
 		MultipartFile productCover = pb.getProductCover();
-		
+
 		String originalFilename = productCover.getOriginalFilename();
 		pb.setFileName(originalFilename);
 		System.out.println("originalFilename:" + originalFilename);
-		
-		
+
 		// 建立Blob物件，交由 Hibernate 寫入資料庫
 		if (productCover != null && !productCover.isEmpty()) {
 			try {
@@ -247,7 +246,7 @@ public class ShoppingController {
 				throw new RuntimeException("檔案上傳發生異常: " + e.getMessage());
 			}
 		}
-		
+
 		orderService.addProduct(pb);
 		String ext = originalFilename.substring(originalFilename.lastIndexOf("."));
 		String rootDirectory = context.getRealPath("/");
@@ -264,12 +263,11 @@ public class ShoppingController {
 
 		return "redirect:/showAllProduct?index=1";
 	}
-	
+
 	@SuppressWarnings("unused")
 	@RequestMapping(value = "/ProductPicture/{productId}", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> getPicture(HttpServletResponse resp, 
-			@PathVariable Integer productId) {
-		//String filePath = "/WEB-INF/views/ProductImages/noImage.png";
+	public ResponseEntity<byte[]> getPicture(HttpServletResponse resp, @PathVariable Integer productId) {
+		String filePath = "/WEB-INF/views/ProductImages/noImage.png";
 
 		byte[] media = null;
 		HttpHeaders headers = new HttpHeaders();
@@ -288,10 +286,10 @@ public class ShoppingController {
 				}
 			}
 		}
-		
-		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media,HttpStatus.OK);
+
+		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media, HttpStatus.OK);
 		return responseEntity;
-		
+
 //		============================================
 //		byte[] media = null;
 //		HttpHeaders headers = new HttpHeaders();
@@ -326,7 +324,7 @@ public class ShoppingController {
 //		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media, headers, HttpStatus.OK);
 //		return responseEntity;
 	}
-	
+
 	@SuppressWarnings("unused")
 	private byte[] toByteArray(String filepath) {
 		byte[] b = null;
@@ -344,7 +342,6 @@ public class ShoppingController {
 		}
 		return b;
 	}
-	
 
 //	@RequestMapping("/getProdById")
 //	@ResponseBody

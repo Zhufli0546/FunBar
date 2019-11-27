@@ -47,10 +47,8 @@
 				aria-expanded="false"> <i class="fas fa-fw fa-folder"></i> <span>會員管理</span>
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-					<h6 class="dropdown-header">Login Screens:</h6>
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/showAllmember">查詢所有會員</a> <a
-						class="dropdown-item" href="#">Register</a> <a
-						class="dropdown-item" href="#">Forgot Password</a>
+					<!-- <h6 class="dropdown-header"></h6> -->
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/showAllmember">查詢所有會員</a>
 				</div></li>
 
 
@@ -61,7 +59,7 @@
 				aria-expanded="false"> <i class="fas fa-fw fa-folder"></i> <span>訂位</span>
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-					<h6 class="dropdown-header">######</h6>
+					<!-- <h6 class="dropdown-header"></h6> -->
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/allbooking">查詢所有訂位</a> <a
 						class="dropdown-item" href="${pageContext.request.contextPath}/ad_booking">新增訂位</a> <a
 						class="dropdown-item" href="${pageContext.request.contextPath}/reset_time_people">重設時段及人數</a>
@@ -73,7 +71,7 @@
 				aria-expanded="false"> <i class="fas fa-fw fa-folder"></i> <span>訂房</span>
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-					<h6 class="dropdown-header">######</h6>
+					<!-- <h6 class="dropdown-header"></h6> -->
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/allOrder">查詢所有訂房</a> <a
 						class="dropdown-item" href="${pageContext.request.contextPath}/admin_RoomBooking">新增訂房</a> <a
 						class="dropdown-item" href="${pageContext.request.contextPath}/room_type">房型</a>
@@ -86,7 +84,7 @@
 				aria-expanded="false"> <i class="fas fa-fw fa-folder"></i> <span>購物車</span>
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-					<h6 class="dropdown-header">######</h6>
+					<!-- <h6 class="dropdown-header"></h6> -->
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/showAllProduct?index=1">所有商品</a> <a
 						class="dropdown-item" href="${pageContext.request.contextPath}/addProduct">新增商品</a> <a
 						class="dropdown-item" href="${pageContext.request.contextPath}/showAllOrders">查看所有訂單</a>
@@ -98,7 +96,7 @@
 				aria-expanded="false"> <i class="fas fa-fw fa-folder"></i> <span>活動</span>
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-					<h6 class="dropdown-header">######</h6>
+					<!-- <h6 class="dropdown-header"></h6> -->
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/activityQuery?index=1">活動管理</a> 
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/addActivity">新增活動</a>
 				</div></li>
@@ -109,7 +107,7 @@
 				aria-expanded="false"> <i class="fas fa-fw fa-folder"></i> <span>部落格</span>
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-					<h6 class="dropdown-header">######</h6>
+					<!-- <h6 class="dropdown-header"></h6> -->
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin_blog">部落格管理</a>
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin_report">部落格檢舉管理</a> 
 				</div></li>
@@ -121,10 +119,8 @@
 				aria-expanded="false"> <i class="fas fa-fw fa-folder"></i> <span>討論區</span>
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-					<h6 class="dropdown-header">Discuss</h6>
-					<a class="dropdown-item" href="#">好友系統</a> <a
-						class="dropdown-item" href="${pageContext.request.contextPath}/admin_discuss">貼文管理</a> <a
-						class="dropdown-item" href="#"></a>
+					<h6 class="dropdown-header">Discuss</h6> 
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin_discuss">貼文管理</a> 
 				</div></li>
 		</ul>
 </body>
