@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset='UTF-8'>
+<title>FunBar 聊天</title>
 <!--sockJS cdn-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
 <!--stomp cdn-->

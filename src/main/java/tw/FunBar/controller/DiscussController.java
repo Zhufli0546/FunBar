@@ -163,7 +163,6 @@ public class DiscussController {
 	@RequestMapping(value = "/allMemberJson", produces = "application/json")
 	public String allMemberJson(Model model) {
 		List<Member> member = memberService.getAllmembers();
-		System.out.println("member ==" + member);
 		model.addAttribute("allMember", member);
 		return "allMemberJson";
 	}

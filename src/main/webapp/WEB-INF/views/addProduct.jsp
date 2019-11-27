@@ -85,7 +85,7 @@
 			class='form-horizontal' enctype="multipart/form-data">
 			<fieldset>
 				<div class="form-group">
-					<label class='control-label col-lg-2 col-lg-2' for="productNo">商品編號</label>
+					<label class='control-label col-lg-2 col-lg-2' for="productNo" style="display:none;">商品編號</label>
 					<form:input  type="hidden" autocomplete="off" id="productNo" path="productNo" class='form:input-large' />
 					<span id="msgNo"></span>
 				</div>
@@ -136,7 +136,7 @@
 
 				<div class="form-group">
 					<label class='control-label col-lg-2 col-lg-2' for="productCover">商品圖片</label>
-					<form:input id="productCover" path="productCover" type='file' class='form:input-large' />
+					<form:input id="productCover" path="productCover" type='file' class='form:input-large' required="required"/>
 				</div>
 				
 				<!-- 預設商品為上架狀態 -->

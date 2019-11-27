@@ -74,8 +74,9 @@ input {
 		<div class="col-md-8">
 			<div align="right" colspan="8"
 				style="float: fight; margin: 10px 10px 0px 0px">
-				<a class="orderBtn" href="<c:url value='/deleteCartItem' />">remove
-					the cart</a>
+
+				<a class="orderBtn" href="<c:url value='/deleteCartItem' />" onclick="confirm('確定清空購物車？')">remove the cart</a>
+
 			</div>
 			<div class="table-responsive">
 				<table class="table" style="margin: 20px 0">

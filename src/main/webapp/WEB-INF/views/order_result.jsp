@@ -51,7 +51,7 @@ p {
 											<div class="h2">
 												<strong>訂單編號 : ${sessionScope.showOrder.orderId}</strong>
 											</div>
-											<small class="text-muted" style="font-size: 14px">以下為此次訂單詳細資訊，並已經將相關資訊寄送到您的信箱，請妥善保存取票序號及訂購人資料以便日後查詢該筆訂單</small>
+											<small class="text-muted" style="font-size: 14px">以下為此次訂單詳細資訊，您可以在我My Orders內查看您的訂單</small>
 										</th>
 									</tr>
 								</thead>
