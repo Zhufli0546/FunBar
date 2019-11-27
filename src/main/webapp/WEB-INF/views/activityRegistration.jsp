@@ -50,9 +50,9 @@
 									</div>
 									<br>
 									<div class="form-label-group">
-										<label for="gender">性別:</label> <br> <input type="radio"
-											name="gender" value="女" id="gender" />女 <input type="radio"
-											name="gender" value="男" id="gender" />男
+										<label for="gender">性別:</label> <br> 
+										<input type="radio" name="gender" value="女" id="gender" CHECKED />女 
+										<input type="radio" name="gender" value="男" id="gender" />男
 									</div>
 									<br>
 

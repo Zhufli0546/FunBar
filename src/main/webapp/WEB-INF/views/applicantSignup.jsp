@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </head>
 <body>
 	<jsp:include page="header.jsp" />
-	<div class="container" style="margin-top: 150px">
+	<div class="container" style="margin: 150px auto 200px auto">
 		<section class="pricing">
 		<div class="row">
 			<c:forEach var="activity" items="${activity}">
