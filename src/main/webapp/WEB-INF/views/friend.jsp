@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Friend</title>
+<title>FunBar 好友</title>
 
 </head>
 <body class="bg-dark">

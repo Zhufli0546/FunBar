@@ -9,7 +9,7 @@ var newPost = "<div class='card-header'>Create Post</div>"
 		+ "<div class='text-right'><button class='btn btn-info lg mt-3' type='button' name='submitPost' id='createPostBtn'>POST</button></div>"
 		+ "</div></div>";
 
-var firstLevelComment = "<div class='card firstComment{{post.memberId}}' style='display:none;'>"
+var firstLevelComment = "<div class='card firstComment{{post.memberId}} mb-4' style='display:none;'>"
 		+ "<div class='media p-4 bg-light'>" 
 		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{post.memberId}}'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0' id='firstCommentBody{{post.postId}}'>"
@@ -39,7 +39,7 @@ var firstLevelComment = "<div class='card firstComment{{post.memberId}}' style='
 		+ "<input id='parentPostId' name='parentPostId' class='form-control' type='hidden' value='{{post.postId}}'></input>"
 		+ "<input id='memberId' name='memberId' class='form-control' type='hidden' value='{{sessionScope.member.id}}'></input>"
 		+ "<button class='btn btn-info' type='submit' name='submitPost' id='replyPost{{post.postId}}'>Post</button>"
-		+ "</div></div></div></form></div></div></div><br>";
+		+ "</div></div></div></form></div></div></div>";
 
 var level = "<div class='collapse' id='comment{{post.postId}}'>"
 
@@ -536,11 +536,33 @@ $.ajax({
 			}
 	}
 })
+
 })
+
+
+
+
 }
 
 $(document).ready(function(){
 	init()
+//	$('.card:lt(4)').animate({'opacity':'1'},1000);
+//	//Test
+//	$(window).scroll( function(){
+//	$('.card').each( function(){
+//        
+//        var bottom_of_object = $(this).offset().top + $(this).outerHeight();
+//        var bottom_of_window = $(window).scrollTop() + $(window).height();
+//        
+//        /* If the object is completely visible in the window, fade it it */
+//        if( bottom_of_window > bottom_of_object ){
+//
+//            $(this).animate({'opacity':'1'},1000);
+//                
+//        }
+//        
+//    }); 
+//})
 })
 
 function sendFriendRequest(memberId, memberIdf) {
