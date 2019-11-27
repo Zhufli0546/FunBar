@@ -139,22 +139,28 @@ $(document).ready(function() {
 		var dec = disc / 10;
 		var smallPrice;
 		let new_stc = parseInt(stc);
-		
+		let new_num;
 		if (num > new_stc) {
 			
 			if (new_stc >= 50) {
 				alert("數量不得超過庫存且數量不得超過50!");
-				$(".num").eq(index).val(50);
+				new_num = $(".num").eq(index).val(50);
+				var smallPrice = unitPrice * 50 * dec;
+				var int_smallPrice = parseInt(smallPrice);
+				$(".pd").eq(index).text(int_smallPrice);
+				
+				
 			}else if(new_stc<50){
 				alert("數量不得超過庫存");
-				$(".num").eq(index).val(num);
+				new_num = $(".num").eq(index).val(num);
+				var smallPrice = unitPrice * new_stc * dec;
+				var int_smallPrice = parseInt(smallPrice);
+				$(".pd").eq(index).text(int_smallPrice);
 			}
 			
 			
 
-			var smallPrice = unitPrice * new_stc * dec;
-			var int_smallPrice = parseInt(smallPrice);
-			$(".pd").eq(index).text(int_smallPrice);
+
 
 			totalPrice = 0;
 			for (let i = 0; i < $(".pd").length; i++) {
