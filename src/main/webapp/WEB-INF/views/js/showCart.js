@@ -32,6 +32,8 @@ $(document).ready(function() {
 			if (num < 1) {
 				alert('哪有人買零個的啦！');
 				num = 1;
+			}else if(num>50){
+				num = 50 ;
 			}
 			//小計   
 			var smallPrice = unitPrice * num * dec;
@@ -70,33 +72,30 @@ $(document).ready(function() {
 		//數量增加
 		$(".add").click(function() {
 			var index = $(this).data("product");
-			var num = $(this).siblings(".num").val();
-			num++;
+			var num = $(".num").eq(index).val();
 			var stc = $(".theStock").eq(index).text();
-			$(this).siblings(".num").val(num > 50 ? 50 : num);	
-			$(this).siblings(".num").val(num > stc? stc : num);
+			let new_stc = parseInt(stc);
+				num++;
+			//$(this).siblings(".num").val(num > 50 ? 50 : num);	
+			//$(this).siblings(".num").val(num > stc? stc : num);
 			var unitPrice = $(".unit").eq(index).text();
 			var disc = $(".hallin").eq(index).text(); //折扣
 			var dec = disc / 10;
 					
-			if (num >50 ) {
-				if(num > stc){
+			if (num >new_stc ) {
+				
 					alert("選購數量不可大於庫存！");
-					num = stc;
-				}else{
+					num = new_stc;
+					$(".num").eq(index).val(num);
+				}else if(num>50){
 					alert("數量不得超過50份！");
 					num = 50;
+					$(".num").eq(index).val(num);
+				}else{
+					$(".num").eq(index).val(num);
 				}
+
 			
-			}else if(num > stc){
-				if(num >50){
-					alert("數量不得超過50份！")
-					num = 50;
-				}
-				alert("選購數量不可大於庫存！");
-					num = stc;
-				return;
-			}
 			
 			var smallPrice = unitPrice * num * dec;
 			var int_smallPrice = parseInt(smallPrice);
@@ -142,11 +141,15 @@ $(document).ready(function() {
 			var disc = $(".hallin").eq(index).text(); //折扣
 			var dec = disc / 10;
 			var smallPrice;
-			
-			
-			
+				
 			if (num>stc) {
 				alert("數量不得超過庫存!");
+				
+				if(stc>50){
+					alert("數量不得超過50!");
+					$(".num").eq(index).val(50);
+				}
+				
 				var smallPrice = unitPrice * stc * dec;
 				var int_smallPrice = parseInt(smallPrice);
 				$(".pd").eq(index).text(int_smallPrice);
