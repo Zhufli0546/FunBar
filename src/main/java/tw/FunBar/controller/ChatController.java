@@ -3,6 +3,7 @@ package tw.FunBar.controller;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -34,26 +35,33 @@ public class ChatController {
 	@Autowired
 	private ChatService service;
 
+	@SuppressWarnings("unused")
 	@RequestMapping(value = "/chat", method = RequestMethod.GET)
 	public String loginIntoChatRoom(Model model, HttpServletRequest request, HttpSession session) {
 		session = request.getSession(false);
 		Member member = (Member) session.getAttribute("member");
 		participantRepository.add(member.getId(), member);
+		if (member == null)
+			return "redirect:/signin";
 		System.out.println(member);
 		Member currentMember = participantRepository.getParticipant(member.getId());
 		System.out.println("在線人數：" + participantRepository.getActiveMember().values().size());
-		System.out.println("member:" + participantRepository.getParticipant(member.getId()));
-		System.out.println("member Name:" + currentMember.getMemberName() );
+		System.out.println("在線會員資料：" + participantRepository.getActiveMember().values());
+		System.out.println("member 資料取得 :" + (participantRepository.getParticipant(member.getId())).getMemberName());
+//		System.out.println("member Name:" + currentMember.getMemberName());
 		model.addAttribute("member", member);
 		return "chat";
 	}
 
 //	上線人數
 	@SubscribeMapping("/friends/participants")
-	public Long getActiveUserNumber() {
-		return Long.valueOf(participantRepository.getActiveMember().values().size());
+	public Integer getActiveUserNumber(Model model) {
+		System.out.println("在線人數：" + participantRepository.getActiveMember().values().size());
+		Map<Integer, Member> activeMemberMap = participantRepository.getActiveMember();
+		System.out.println(activeMemberMap);
+		return participantRepository.getActiveMember().values().size();
 	}
-	
+
 	@SubscribeMapping("/topic/notification")
 	public String getNotification(String notification) {
 		System.out.println("有執行到 Notification");
@@ -82,7 +90,7 @@ public class ChatController {
 	@RequestMapping(value = "/getHistoryMessageJson", produces = "application/json")
 	public String getHistoryMessage(@RequestParam(value = "subscribe") String subscribe, Model model) {
 		List<Message> list = service.getHistoryMessage(subscribe);
-		model.addAttribute("message",list);
+		model.addAttribute("message", list);
 		return "getHistoryMessageJson";
 	}
 

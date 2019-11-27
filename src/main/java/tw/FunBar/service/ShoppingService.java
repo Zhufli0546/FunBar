@@ -27,5 +27,11 @@ public interface ShoppingService {
 	
 	 ArrayList<ProductBean> getProdById(Integer productId);
 	
-	 List<ProductBean> getProdByName(String productName);
+	 List<ProductBean> getProdByName(String productName , Integer index);
+	 
+	 List<ProductBean> getProdByName2(String productName , Integer index);
+	 
+	 int getPBNIndex(String productName);
+	 
+	int getPBNIndex2(String productName);
 }

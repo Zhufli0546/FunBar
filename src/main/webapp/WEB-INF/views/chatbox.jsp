@@ -91,6 +91,7 @@
 					<h5>
 						<a id="receiverMemberName" href="javascript:void()"></a>
 					</h5>
+					<span class="badge badge-danger mr-2" id="notificationChatBox"></span>
 					<button class="chatbox__title__close"><i class="fa fa-window-close fa-5" aria-hidden="true"></i></button>
 				</div>
 				<div class="chatbox__body">
@@ -118,6 +119,8 @@
 							var $chatbox = $('.chatbox'), $chatboxTitle = $('.chatbox__title'), $chatboxTitleClose = $('.chatbox__title__close'), $chatboxCredentials = $('.chatbox__credentials');
 							$chatboxTitle.on('click', function() {
 								$chatbox.toggleClass('chatbox--tray');
+								$("#notificationChatBox").text("")
+								count = 0;
 							});
 							$chatboxTitleClose.on('click', function(e) {
 								e.stopPropagation();

@@ -265,7 +265,7 @@ public class ActivityController {
 			return "redirect:/activityQuery?index=1";
 			
 		}else {
-		session.invalidate();
+		session.removeAttribute("activity");
 		List<Applicant> email = service.getTime();//抓到報名此活動使用者
 		emailService.sendActivityEmail(email, activity);
 		

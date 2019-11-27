@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset='UTF-8'>
+<title>FunBar 聊天</title>
 <!--sockJS cdn-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
 <!--stomp cdn-->
@@ -88,11 +89,10 @@
 				</div>
 			</div>
 			<div class="content">
-				<div class="contact-profile">
-					<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-					<p id="receiverMemberName"></p>
-					<div class="social-media">
-					</div>
+				<div class="contact-profile"  id="receiverProfile">
+					
+					<span id="receiverMemberName"></span>
+					
 				</div>
 				<div class="messages">
 					<ul id="conversation">

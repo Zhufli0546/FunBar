@@ -74,7 +74,9 @@ input {
 		<div class="col-md-8">
 			<div align="right" colspan="8"
 				style="float: fight; margin: 10px 10px 0px 0px">
-				<a class="orderBtn" href="<c:url value='/deleteCartItem' />">remove the cart</a>
+
+				<a class="orderBtn" href="<c:url value='/deleteCartItem' />" onclick="confirm('確定清空購物車？')">remove the cart</a>
+
 			</div>
 			<div class="table-responsive">
 				<table class="table" style="margin: 20px 0">
@@ -99,16 +101,16 @@ input {
 											src="<c:url value='/ProductPictures/${ci.product.productId}' />"
 											height="120px">
 									</div></td>
-								<td>${ci.product.productName}</td>
+								<td style="font-size:18px;">${ci.product.productName}</td>
 								<td class="unit" data-product="${i.index}">${ci.product.unitPrice}</td>
 								<td align="left" class="theStock" data-product="${i.index}">${ci.product.stock}</td>
 
 								<td style="width: 200px">
 									<button type="button" class="minus" data-product="${i.index}">-</button>
-									<input id="count" type="text" maxlength="2" value="${ci.count}"
-									size="1" class="num" data-product="${i.index}" /> <input
-									class="pdid" type="hidden" value="${ci.product.productId}"
-									data-product="${i.index}">
+									<input id="count" type="text" maxlength="2" size="3"
+									value="${ci.count}" size="1" class="num"
+									data-product="${i.index}" /> <input class="pdid" type="hidden"
+									value="${ci.product.productId}" data-product="${i.index}">
 									<button type="button" class="add" data-product="${i.index}">+</button>
 								</td>
 								<td class="hallin" data-product="${i.index}">${ci.product.discount}</td>
@@ -132,8 +134,7 @@ input {
 									<a href="<c:url value='/shoppingCart?index=1' />"><button
 											class="btn btn-back">Back to shop</button></a>
 									<button id="buy" type="button" class="btn btn-info page-btn"
-										data-toggle="modal" data-target="#createForm">Go
-										pay</button>
+										data-toggle="modal" data-target="#createForm">Go pay</button>
 								</div>
 							</td>
 						</tr>
@@ -147,7 +148,8 @@ input {
 		<div class="modal fade" id="createForm" role="dialog"
 			aria-labelledby="myModalLabel1"
 			style="background: rgba(0, 0, 0, 0.8)">
-			<div class="modal-dialog" role="document">
+			<div class="modal-dialog modal-dialog-centered modal-lg"
+				role="document">
 				<div class="modal-content" style="padding: 10px">
 
 					<div class="modal-header">
@@ -162,11 +164,11 @@ input {
 							<table class="table" style="margin: 5px 0;">
 								<thead>
 									<tr>
-										<th>商品名稱</th>
-										<th>單價</th>
-										<th>數量</th>
-										<th>折扣</th>
-										<th>小計</th>
+										<th>Item</th>
+										<th>price</th>
+										<th>quantity</th>
+										<th>discount</th>
+										<th>subtotal</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -189,29 +191,33 @@ input {
 
 						</div>
 					</div>
-					<form method="post" action="orderSetUp" style="padding: 0 10px">
-						<div>
-							<p>請填寫以下聯絡資料</p>
-						</div>
-						<div>
-							<label>姓名</label> <input type="text" name="memberName"
-								value="${sessionScope.member.memberName}" class="orderN" />
-						</div>
-						<div>
-							<label>手機</label> <input type="text" name="memberPhone"
-								value="${sessionScope.member.memberPhone}" />
-						</div>
-						<div>
-							<label>地址</label> <input type="text" name="shippingAddress"
-								value="${sessionScope.member.memberAddress}" />
-						</div>
-						<div>
-							<label>備註</label> <input type="text" name="remark"
-								placeholder="請填寫注意事項" />
-						</div>
-						<input type="submit" value="確認結帳" class="btn btn-success pay"
-							style="float: right" />
 
+
+
+					<form method="post" action="orderSetUp" style="margin:0 50px 10px 50px">
+						<div>
+							<h4>check again your information</h4>
+						</div><br>
+						<div class="form-group">
+							<label for="CCname">Name</label> <input
+								type="text" class="form-control" id="CCname"
+								value="${sessionScope.member.memberName}">
+						</div>
+						<div class="form-group">
+							<label for="CCphone">Phone</label> <input
+								type="text" class="form-control" id="CCphone"
+								value="${sessionScope.member.memberPhone}">
+							
+						</div>
+						<div class="form-group">
+							<label for="CCaddress">Address</label> <input
+								type="text" class="form-control" id="CCaddress"
+								value="${sessionScope.member.memberAddress}">
+							<small class="form-text text-muted">We'll never share your address with anyone else.</small>
+						</div>
+						
+						<input type="submit" value="CHECK!" class="btn btn-success pay"
+							style="float: right" />
 					</form>
 				</div>
 
@@ -221,6 +227,10 @@ input {
 		<!-- modal-dialog -->
 	</div>
 	<!-- modal -->
+
+
+
+
 
 	<jsp:include page="footer.jsp" />
 	<script>

@@ -148,7 +148,7 @@ $("#P").click(function(){
 								+data[i].people+"</td><td>"+data[i].phone+"</td><td>"
 								+"<a href='cancelBooking?id="+data[i].booking_id+"'><button class='button' type='button'"+"onclick='return del()'"+">取消訂位</button></a></td>"
 								+"<td><a href='pullSingle?id="+data[i].booking_id+"'><button class='button' type='button'>更改訂位</button></a></td>"
-								+"</tr>";
+								+"</tr>"
 							}
 						txt += "</tbody></table>";
 
