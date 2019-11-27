@@ -9,7 +9,7 @@ var newPost = "<div class='card-header'>Create Post</div>"
 		+ "<div class='text-right'><button class='btn btn-info lg mt-3' type='button' name='submitPost' id='createPostBtn'>POST</button></div>"
 		+ "</div></div>";
 
-var firstLevelComment = "<div class='card firstComment{{post.memberId}} mb-4' style='display:none; opacity:0;'>"
+var firstLevelComment = "<div class='card firstComment{{post.memberId}} mb-4' style='display:none;'>"
 		+ "<div class='media p-4 bg-light'>" 
 		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{post.memberId}}'>"
 		+ "<div class='media-body text-md-left ml-md-2 ml-0' id='firstCommentBody{{post.postId}}'>"
@@ -546,23 +546,23 @@ $.ajax({
 
 $(document).ready(function(){
 	init()
-	$('.card:lt(4)').animate({'opacity':'1'},1000);
-	//Test
-	$(window).scroll( function(){
-	$('.card').each( function(){
-        
-        var bottom_of_object = $(this).offset().top + $(this).outerHeight();
-        var bottom_of_window = $(window).scrollTop() + $(window).height();
-        
-        /* If the object is completely visible in the window, fade it it */
-        if( bottom_of_window > bottom_of_object ){
-
-            $(this).animate({'opacity':'1'},1000);
-                
-        }
-        
-    }); 
-})
+//	$('.card:lt(4)').animate({'opacity':'1'},1000);
+//	//Test
+//	$(window).scroll( function(){
+//	$('.card').each( function(){
+//        
+//        var bottom_of_object = $(this).offset().top + $(this).outerHeight();
+//        var bottom_of_window = $(window).scrollTop() + $(window).height();
+//        
+//        /* If the object is completely visible in the window, fade it it */
+//        if( bottom_of_window > bottom_of_object ){
+//
+//            $(this).animate({'opacity':'1'},1000);
+//                
+//        }
+//        
+//    }); 
+//})
 })
 
 function sendFriendRequest(memberId, memberIdf) {
