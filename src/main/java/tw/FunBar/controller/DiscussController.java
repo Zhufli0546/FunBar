@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import tw.FunBar.chat.ParticipantRepository;
 import tw.FunBar.model.Friendship;
 import tw.FunBar.model.LikePK;
 import tw.FunBar.model.LikePost;
@@ -31,6 +32,9 @@ public class DiscussController {
 	@Autowired
 	MemberService memberService;
 
+	@Autowired
+	private ParticipantRepository participantRepository;
+
 	private Integer contentNum = 6;
 
 	@RequestMapping(value = "/discuss", method = RequestMethod.GET)
@@ -39,7 +43,9 @@ public class DiscussController {
 		Member member = (Member) session.getAttribute("member");
 		if (member == null)
 			return "redirect:/signin";
+		participantRepository.add(member.getId(), member);
 		model.addAttribute("title", "討論區");
+		model.addAttribute("member", member);
 		return "discuss";
 	}
 

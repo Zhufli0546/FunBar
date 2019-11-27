@@ -1,4 +1,4 @@
-var friendshipListTable = "<tr><th scope='row'>"
+var friendshipListTable = "<tr class='list' style='opacity:0;'><th scope='row'>"
 		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{member.id}}'></th>"
 		+ "<td class='contentName'>{{member.memberName}}</td>" 
 		+ "<td>{{member.memberBirth}}</td>"
@@ -8,7 +8,7 @@ var friendshipListTable = "<tr><th scope='row'>"
 		+ "<button type='button' class='btn btn-danger ml-2' id='deleteBtn{{member.id}}' style='display:none'>Delete</button>" 
 		+ "</td></tr>"
 
-var receiverTable = "<tr id='list{{member.id}}'><th scope='row'>"
+var receiverTable = "<tr class='list' id='list{{member.id}}' style='opacity:0;'><th scope='row'>"
 		+ "<img class='card-img-top rounded-circle' style='height: 40px; width: 40px' src='{{requestUrl}}membergetPicture/{{member.id}}'></th>"
 		+ "<td class='contentName'>{{member.memberName}}</td>"
 		+ "<td>{{member.memberBirth}}</td>"
@@ -134,6 +134,26 @@ function init() {
 
 $(document).ready(function(){
 	init();
+	
+	$('.list:lt(10)').animate({'opacity':'1'},1000);
+	//Test
+	$(window).scroll( function(){
+	$('.list').each( function(){
+        
+        var bottom_of_object = $(this).offset().top + $(this).outerHeight();
+        var bottom_of_window = $(window).scrollTop() + $(window).height();
+        console.log("bottom_of_object == " +  bottom_of_object)
+        console.log("bottom_of_window == " + bottom_of_window)
+        
+        /* If the object is completely visible in the window, fade it it */
+        if( bottom_of_window > bottom_of_object ){
+            console.log("有捲動到")
+            $(this).animate({'opacity':'1'},1000);
+                
+        }
+        
+    }); 
+})
 })
 
 function confirmFriendRequest(loginMemberid, memberIdf) {
