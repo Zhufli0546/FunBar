@@ -479,13 +479,13 @@ function init(){
 	getAllMemberName();
 	checkAllBtn();
 	createPostBtn()
-	$("#searchMember").click(function(){
+	$("#searchMember").mousedown(function(){
 $.ajax({
 	url : requestUrl + "memberJson",
 	method : "POST",
 	dataType : "JSON",
 	data : {memberName : $("#searchMemberName").val()},
-	async:false,
+	async : false,
 	success : function(memberData) {
 					$("#searchResult").empty();
 					var searchMemberName = $("#searchMemberName").val();
@@ -498,7 +498,7 @@ $.ajax({
 
 									memberList_html = memberList.replace(/\{{member.memberName}}/g, member.memberName)
 																.replace(/\{{member.memberId}}/g, member.id)
-																.replace(/\{{friendStatus}}/g, "Add Friend")
+																.replace(/\{{friendStatus}}/g, "")
 																.replace(/\{{requestUrl}}/g, requestUrl)
 																
 									memberListAll += memberList_html
@@ -506,6 +506,13 @@ $.ajax({
 
 					}
 					$("#searchResult").html("").append(memberListAll);
+					
+			}
+	}
+})
+
+$("#searchMember").mouseup(function(){
+	fdata = getFriendShip();
 					for (let j = 0; j < mdata.length; j++) {
 							let member = mdata[j];
 							if(member.id != loginMemberid){
@@ -533,8 +540,6 @@ $.ajax({
 					}
 							
 				}
-			}
-	}
 })
 
 })
@@ -566,6 +571,7 @@ $(document).ready(function(){
 })
 
 function sendFriendRequest(memberId, memberIdf) {
+	$("#friendRequest" + memberIdf).text("Add Friend")
 	$("#friendRequest" + memberIdf).unbind().click(function() {
 		$.get("sendFriendRequest", {
 			memberId : memberId,

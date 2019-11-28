@@ -1,4 +1,4 @@
-//createPost 
+//admin_Post
 var requestUrl = "";
 var table = "<tr><th scope='row'>{{post.postId}}</th>"
 		+ "<td>{{post.memberId}}</td>" 
@@ -12,6 +12,17 @@ var table = "<tr><th scope='row'>{{post.postId}}</th>"
 var data;
 var pageNum;
 var NumberOfPage;
+
+function textContent() {
+    var len = 25; // 超過字數以"..."取代
+    $(".content").each(function (i) {
+      if ($(this).text().length > len) {
+        $(this).attr("title", $(this).text());
+        var text = $(this).text().substring(0, len - 1) + "...";
+        $(this).text(text);
+      }
+    });
+  }
 
 function refreshLikeNumber(postId) {
 	$.get("Like", {
@@ -109,6 +120,7 @@ function bindsort0(pageNumNow) {
 		$("#sortType").text(1)
 		pageBtn(1, pageNum)
 		pageBtnNext(1, pageNumNow, pageNum)
+		textContent()
 	})
 }
 
@@ -121,6 +133,7 @@ function bindsort1(pageNumNow) {
 		$("#sortType").text(0)
 		pageBtn(0, pageNum)
 		pageBtnNext(0, pageNumNow, pageNum)
+		textContent()
 	})
 }
 
@@ -133,6 +146,7 @@ function bindsort2(pageNumNow) {
 		$("#sortType").text(3)
 		pageBtn(3, pageNum)
 		pageBtnNext(3, pageNumNow, pageNum)
+		textContent()
 	})
 }
 
@@ -145,6 +159,7 @@ function bindsort3(pageNumNow) {
 		$("#sortType").text(2)
 		pageBtn(2, pageNum)
 		pageBtnNext(2, pageNumNow, pageNum)
+		textContent()
 	})
 }
 
@@ -161,6 +176,7 @@ function search(){
 			}
 		})
 	})
+	textContent()
 }
 
 function pageBtn(sortType, pageNum){
@@ -174,6 +190,7 @@ function pageBtn(sortType, pageNum){
 			pageBtnNext(sortType, i, pageNum)
 		})
 	}
+	textContent()
 }
 
 function checkPageBtn(){
@@ -197,6 +214,7 @@ function pageBtnNext(sortType, pageNumNow, pageNum){
 		$("#Next").parent().attr("class","page-item disabled");
 	}
 	checkPageBtn()
+	textContent()
 }
 
 function pageBtnPrevious(sortType, pageNumNow, pageNum){
@@ -214,6 +232,7 @@ function pageBtnPrevious(sortType, pageNumNow, pageNum){
 		$("#Previous").parent().attr("class","page-item disabled");
 	}
 	checkPageBtn()
+	textContent()
 }
 
 $(document).ready(function(){
@@ -232,4 +251,5 @@ $(document).ready(function(){
 		pageBtnPrevious(sortType, $(this).val(), pageNum)
 	})
 	$("#page1").parent().attr("class","page-item active")
+	textContent()
 })

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +35,9 @@ public class DiscussController {
 
 	@Autowired
 	private ParticipantRepository participantRepository;
-
+	@Autowired
+	private SimpMessagingTemplate messagingTemplate;
+	
 	private Integer contentNum = 6;
 
 	@RequestMapping(value = "/discuss", method = RequestMethod.GET)
@@ -44,6 +47,7 @@ public class DiscussController {
 		if (member == null)
 			return "redirect:/signin";
 		participantRepository.add(member.getId(), member);
+		messagingTemplate.convertAndSend("/topic/friends/participants", participantRepository.getActiveMember().values());
 		model.addAttribute("title", "討論區");
 		model.addAttribute("member", member);
 		return "discuss";

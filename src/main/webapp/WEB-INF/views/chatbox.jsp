@@ -17,7 +17,7 @@
 <body>
 
 	<input id="websocketUrl" type="hidden" value="<c:url value="/websocket"/> ">
-	<%-- <input id="emojiBaseUri" type="hidden" value="<c:url value="/resources/media/emoji/"/> "> --%>
+	 <input id="emojiBaseUri" type="hidden" value="<c:url value="/images/media/emoji/"/> ">
 	<a id="loginMemberid_chatbox" style="display: none">${sessionScope.member.id}</a>
 	<a id="loginMemberName_chatbox" style="display: none">${sessionScope.member.memberName}</a>
 	<a href="" class="list-group-item list-group-item-action" id="requestUrl_chatbox" style="display:none"><c:url value='/'/></a>
@@ -38,7 +38,7 @@
 					<img id="profile-img"
 						src="<c:url value='/membergetPicture/${member.id}'/>"
 						class="online" />
-					<p>${sessionScope.member.memberName}</p>
+					<p style="font-family: 'Russo One', sans-serif; font-size: 20px; color:white;">${sessionScope.member.memberName}</p>
 					<!-- <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
 					<div id="status-options">
 						<ul>

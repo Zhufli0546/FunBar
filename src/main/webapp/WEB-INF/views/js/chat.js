@@ -1,7 +1,7 @@
 var stompClient = null;
-var friendList = "<li class='contact'><div class='wrap'><span class='contact-status{{receiverMemberId}} online'></span>"
+var friendList = "<li class='contact mt-2'><div class='wrap'><span id='checkMemberOnline{{receiverMemberId}}' class='contact-status{{receiverMemberId}} offline'></span>"
 		+ "<img src='{{requestUrl}}/membergetPicture/{{receiverMemberId}}'/><div class='meta' onclick='sendto({{receiverMemberId}})'>"
-		+ "<p class='name' id='Name{{receiverMemberId}}'>{{receiverMemberName}}</p>"
+		+ "<p class='name' id='Name{{receiverMemberId}}' style='color:white;'>{{receiverMemberName}}</p>"
 		+ "<button class='badge badge-primary badge-pill btn btn-primary btn-sm' id='receiver{{receiverMemberId}}'>CHAT</button>"
 		+ "</div></div></li>";
 
@@ -9,6 +9,7 @@ var requestUrl = ""
 var loginMemberName = $('#loginMemberName_chatbox').text();
 var loginMemberid = $('#loginMemberid_chatbox').text();
 var friendList_html = null;
+var allMemberData;
 
 function getMemberData() {
 	var mdata = null;
@@ -21,6 +22,7 @@ function getMemberData() {
 			let friendshipListTableArea = "";
 			requestUrl = $('#requestUrl_chatbox').text();
 			mdata = memberData.Member;
+			allMemberDataLength = mdata.length;
 			for (let i = 0; i < mdata.length; i++) {
 				let member = mdata[i];
 			}
@@ -34,6 +36,7 @@ function friendlist() {
 		url : requestUrl + "friendJson",
 		method : "POST",
 		dataType : "JSON",
+		async : false,
 		success : function(friendData) {
 			let receiverTableArea = "";
 			var fdata = friendData.friend
@@ -70,6 +73,7 @@ function friends(){
 		url : requestUrl + "friendJson",
 		method : "POST",
 		dataType : "JSON",
+		async : false,
 		success : function(friendData) {
 			var fdata = friendData.friend
 			for (let i = 0; i < fdata.length; i++) {
@@ -93,7 +97,7 @@ function friends(){
 						var user = json.userName;
 						var date = json.sendDate;
 						var msg = json.messageContent;
-						if (messageType == "text") {
+						if (messageType == "text" || messageType == "emoji") {
 							showNewMessage(user, date, msg, senderMemberId, receiverMemberId);
 						} else if (messageType == "image") {
 							showNewImage(user, date, msg, senderMemberId, receiverMemberId);
@@ -113,6 +117,8 @@ $(document).ready(function() {
 	friendlist();
 	search();
 	
+	getOnlineJson();
+	connect();
 //	$($('#conversation li:lt(1)').toArray().reverse()).animate({'opacity':'1'},3000);
 //	//Test
 //	$(".chatbox__body").scroll( function(){
@@ -135,8 +141,30 @@ $(document).ready(function() {
 //})
 })
 
+function getOnlineJson(){
+	$.ajax({
+		url : requestUrl + "activeMember",
+		method : "POST",
+		dataType : "JSON",
+		async : false,
+		success : function(onlineData) {
+			console.log("========================")
+			console.log(onlineData)
+			console.log(Object.keys(onlineData).length)
+			var x = allMemberDataLength;
+				for(let i = 1 ; i <= x ; i++){
+					var member = onlineData[i];
+					if(typeof member === 'undefined'){continue;}
+					console.log("onlineMemberid = " + member.id)
+					$("#checkMemberOnline" + member.id).attr("class","contact-status" + member.id + " online")
+				}
+			
+		}
+	})
+}
+
 $(function() {
-	connect();
+	
 
 	/**
 	 * 上传图片发送
@@ -177,16 +205,16 @@ function initEmoji() {
 	}
 	emojiContainer.append(documentFragment);
 
-	$("#emoji").click(function(event) {
-		emojiContainer.css("display", "block");
-		event.stopPropagation(); // 阻止事件的传递，防止body监听到
-	});
-
-	$("body").click(function(event) {
-		if (event.target != emojiContainer) {
-			emojiContainer.css("display", "none");
-		}
-	});
+//	$("#emoji").click(function(event) {
+//		emojiContainer.css("display", "block");
+//		event.stopPropagation(); // 阻止事件的传递，防止body监听到
+//	});
+//
+//	$(".wrap").click(function(event) {
+//		if (event.target != emojiContainer) {
+//			emojiContainer.css("display", "none");
+//		}
+//	});
 
 	$("#emojiWrapper").click(
 			function(event) {
@@ -222,11 +250,14 @@ function connect() {
 		console.log("Your current session is: " + url);
 		sessionId = url;
 
-		friends();
 		
-		stompClient.subscribe("/friends/participants", function(message) {
-			showActiveUserNumber(message.body);
+		
+		stompClient.subscribe("/topic/friends/participants", function(message) {
+			var json = JSON.parse(message.body);
 			console.log("From Friends == " + message.body)
+			console.log(json)
+			console.log("抓取memberName == " + json.length)
+			checkOnline(json)
 //			var user = "系统消息";
 //			var date = null;
 //			var msg = loginMemberName + "加入聊天！";
@@ -243,7 +274,19 @@ function connect() {
 //		})
 
 	});
+	
+	friends();
 }
+
+function checkOnline(json){
+	
+	for(let i=0;i<json.length;i++){
+		var member = json[i];
+		$("#checkMemberOnline" + member.id).attr("class","contact-status" + member.id + " online")
+	}
+	
+}
+
 /**
  * 显示用户离线消息
  * 
@@ -385,7 +428,7 @@ function showNewMessage(user, date, msg, senderMemberId, receiverMemberId) {
 		
 		var dateTime = formatDate(date);
 		msg = showEmoji(msg);
-		console.log(msgToDisplay)
+		console.log("Emoji == " + msg)
 
 		if (senderMemberId == loginMemberid) {
 			msgToDisplay.setAttribute("class", "replies");

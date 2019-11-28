@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import tw.FunBar.chat.ParticipantRepository;
 import tw.FunBar.model.Member;
@@ -40,26 +41,31 @@ public class ChatController {
 	public String loginIntoChatRoom(Model model, HttpServletRequest request, HttpSession session) {
 		session = request.getSession(false);
 		Member member = (Member) session.getAttribute("member");
-		participantRepository.add(member.getId(), member);
 		if (member == null)
 			return "redirect:/signin";
+		participantRepository.add(member.getId(), member);
 		System.out.println(member);
 		Member currentMember = participantRepository.getParticipant(member.getId());
 		System.out.println("在線人數：" + participantRepository.getActiveMember().values().size());
 		System.out.println("在線會員資料：" + participantRepository.getActiveMember().values());
 		System.out.println("member 資料取得 :" + (participantRepository.getParticipant(member.getId())).getMemberName());
 //		System.out.println("member Name:" + currentMember.getMemberName());
+		messagingTemplate.convertAndSend("/topic/friends/participants", participantRepository.getActiveMember().values());
 		model.addAttribute("member", member);
 		return "chat";
 	}
 
 //	上線人數
-	@SubscribeMapping("/friends/participants")
-	public Integer getActiveUserNumber(Model model) {
+	@RequestMapping(value = "/activeMember", produces = "application/json")
+	@ResponseBody
+	public Map<Integer, Member> getActiveMember(Model model) {
 		System.out.println("在線人數：" + participantRepository.getActiveMember().values().size());
 		Map<Integer, Member> activeMemberMap = participantRepository.getActiveMember();
+//		activeMemberMap.
 		System.out.println(activeMemberMap);
-		return participantRepository.getActiveMember().values().size();
+//		model.addAttribute("member", activeMemberMap);
+		
+		return activeMemberMap;
 	}
 
 	@SubscribeMapping("/topic/notification")
@@ -77,6 +83,9 @@ public class ChatController {
 		System.out.println("sessionId = " + sessionId);
 		System.out.println("name = " + message.getUserName());
 		System.out.println("chatValue = " + message.getMessageContent());
+		if(message.getMessageContent().equalsIgnoreCase("[EMOJI:")) {
+			message.setMessageType("emoji");
+		}
 		message.setMessageType("text");
 		Date sendDate = new Date();
 		message.setSendDate(sendDate);
@@ -94,4 +103,5 @@ public class ChatController {
 		return "getHistoryMessageJson";
 	}
 
+	
 }
