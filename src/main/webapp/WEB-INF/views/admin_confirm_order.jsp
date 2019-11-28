@@ -26,13 +26,13 @@
 				src="room/${room.room_id}" alt="" title="" height="220px" width="835px">
 			<div style="padding: 5px 10px">
 				<span style="font-weight: bold;">訂房日期:<span
-					style="margin-left: 350px">${date}</span></span><br> <span
+					style="margin-left: 320px">${date}</span></span><br> <span
 					style="font-weight: bold;">入住天數:<span
-					style="margin-left: 380px">${stay}</span></span><br> <span
+					style="margin-left: 350px">${stay}</span></span><br> <span
 					style="font-weight: bold;">客房數:<span
-					style="margin-left: 390px">${rooms} 間</span></span>
+					style="margin-left: 360px">${rooms} 間</span></span>
 			</div>
-			<div style="text-align:right; margin-bottom: 0px;">
+			<div style="margin-left: 280px; margin-bottom: 0px;">
 				<button type="submit" class="btn btn-primary"
 					onclick="location.href='booking_room'"
 					style="background-color: #66B3FF; border: 2px solid black;height:50px;width:300px">重新選擇日期</button>
