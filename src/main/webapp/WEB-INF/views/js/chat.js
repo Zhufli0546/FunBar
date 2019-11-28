@@ -1,6 +1,6 @@
 var stompClient = null;
-var friendList = "<li class='contact mt-2'><div class='wrap'><span id='checkMemberOnline{{receiverMemberId}}' class='contact-status{{receiverMemberId}} offline'></span>"
-		+ "<img src='{{requestUrl}}/membergetPicture/{{receiverMemberId}}'/><div class='meta' onclick='sendto({{receiverMemberId}})'>"
+var friendList = "<li class='contact mt-2'><div class='wrap'>"
+		+ "<img class='card-img-top rounded-circle' style='height: 50px; width: 50px' src='{{requestUrl}}/membergetPicture/{{receiverMemberId}}'/><div class='meta' onclick='sendto({{receiverMemberId}})'>"
 		+ "<p class='name' id='Name{{receiverMemberId}}' style='color:white;'>{{receiverMemberName}}</p>"
 		+ "<button class='badge badge-primary badge-pill btn btn-primary btn-sm' id='receiver{{receiverMemberId}}'>CHAT</button>"
 		+ "</div></div></li>";
@@ -73,7 +73,6 @@ function friends(){
 		url : requestUrl + "friendJson",
 		method : "POST",
 		dataType : "JSON",
-		async : false,
 		success : function(friendData) {
 			var fdata = friendData.friend
 			for (let i = 0; i < fdata.length; i++) {
