@@ -169,6 +169,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	</div>
 	
 	<div id="ns" style="height:50%; width:25%; margin:50px auto; display:none">
+	
 	<div style="height:100px;background-color:black;">
     <h2 style="margin-bottom:0px; font-size: 4em;color :white;font-family:Copperplate;
 	font-weight:bold;font-style:italic;text-decoration:underline;text-align: center;">FunBar</h2>
