@@ -83,7 +83,7 @@
 						
 						<p>
 							<fmt:formatNumber type="number" value="${pb.discount}" maxFractionDigits="0" var="discount" />
-							discount：<span style="font-weight: bold; color: #CE0000;">${discount} 折</span>
+							discount：<span style="font-weight: bold; color: #CE0000;">${100-discount*10} %off</span>
 						</p>
     				</c:otherwise>
 				</c:choose>
