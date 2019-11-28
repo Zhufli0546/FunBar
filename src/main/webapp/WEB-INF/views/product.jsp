@@ -172,7 +172,7 @@ $(".button-add").click(function() {
    }
    
    if(check) {
-    alert("加入購物車失敗");
+    alert("加入購物車失敗，選購數量不可超過庫存！");
    } else {
     myFunction();
     changeCartNum();
