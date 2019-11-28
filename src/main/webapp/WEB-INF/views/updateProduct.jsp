@@ -74,9 +74,9 @@ img {
 			</div>
 
 
-			<div>
-				<label for="productNo">商品編號</label> <input id="productNo"
-					name="productNo" value="${pb.productNo}" type='text' />
+			<div style="display:none;">
+				<label for="productNo">商品編號</label> 
+				<input id="productNo" name="productNo" value="${pb.productNo}" type="hidden"/>
 			</div>
 
 			<div>
@@ -105,9 +105,8 @@ img {
 			</div>
 
 			<div>
-				<label for="unitPrice">商品單價</label> <input autocomplete="off"
-					name="unitPrice" id="unitPrice" value="${pb.unitPrice}" type='text'
-					disabled />
+				<label for="unitPrice">商品單價</label> 
+				<input autocomplete="off" name="unitPrice" id="unitPrice" value="${pb.unitPrice}" type='text' maxlength=5/>
 			</div>
 
 			<div>
@@ -117,7 +116,7 @@ img {
 
 			<div>
 				<label for="stock">庫存數量</label> <input autocomplete="off"
-					name="stock" id="stock" value="${pb.stock}" type='text' />
+					name="stock" id="stock" value="${pb.stock}" type='text' maxlength=3 />
 			</div>
 
 

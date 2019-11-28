@@ -337,7 +337,7 @@ color:blue;
 	<jsp:include page="admin_header.jsp" />
 	
 	
-	<div id="today_status" style="height:590px;margin-top:60px"></div>
+	<div id="today_status" style="height:590px;"></div>
 	
 	<div class="calendar" style="border:1px solid #003C9D;border-radius:5px;margin-top:50px">
 

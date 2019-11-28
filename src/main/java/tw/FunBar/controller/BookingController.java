@@ -96,7 +96,7 @@ public class BookingController {
 		
 		BookingData data = (BookingData) session.getAttribute("data");
 		
-		emailService.sendBookingEmail(data);
+		//emailService.sendBookingEmail(data);
 		
 		String date = (String)session.getAttribute("date");
 		

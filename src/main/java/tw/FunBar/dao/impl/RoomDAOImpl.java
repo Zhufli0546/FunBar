@@ -228,7 +228,7 @@ public class RoomDAOImpl implements RoomDAO {
 	@Override
 	public ArrayList<RoomOrder> allOrder() {
 
-		String hql = "From RoomOrder where check_in_time >= :date Order by order_id DESC";
+		String hql = "From RoomOrder where check_out_time >= :date Order by check_out_time ASC";
 		Session session = sessionFactory.getCurrentSession();
 		
 		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");

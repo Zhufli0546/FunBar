@@ -140,6 +140,15 @@ $(document).ready(function() {
 		var smallPrice;
 		let new_stc = parseInt(stc);
 		let new_num;
+		
+		
+		if(num<new_stc && num==50){
+			new_num = $(".num").eq(index).val(num);
+			var smallPrice = unitPrice * new_stc * dec;
+			var int_smallPrice = parseInt(smallPrice);
+			$(".pd").eq(index).text(int_smallPrice);
+		}
+		
 		if (num > new_stc) {
 			
 			if (new_stc >= 50) {
@@ -158,7 +167,7 @@ $(document).ready(function() {
 				$(".pd").eq(index).text(int_smallPrice);
 			}
 			
-			
+
 
 
 
@@ -273,8 +282,8 @@ $(document).ready(function() {
 			}
 
 			$(".totalAmount").text(totalPrice);
-		} else if (num > stc) {
-			alert("數量不得超過庫存!");
+		} else if (num > new_stc) {
+			
 
 			var smallPrice = unitPrice * num * dec;
 			var int_smallPrice = parseInt(smallPrice);
@@ -315,7 +324,7 @@ $(document).ready(function() {
 			var smallPrice = unitPrice * num * dec;
 			var int_smallPrice = parseInt(smallPrice);
 			$(".pd").eq(index).text(int_smallPrice);
-
+	
 			totalPrice = 0;
 			for (let i = 0; i < $(".pd").length; i++) {
 				unitPrice = $(".unit").eq(i).text();

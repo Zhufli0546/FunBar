@@ -33,7 +33,7 @@ function del() {var msg ="是否刪除";if (confirm(msg)==true){return true;}els
 </head>
 <body id="page-top">
 	<jsp:include page="admin_header.jsp" />
-	<div style="padding: 10px ;border:1px solid black;float:left;width:900px">
+	<div style="padding: 10px ;border:1px solid black;float:left;width:1200px">
 	<table id="ch" class="table table-striped" style="text-align: center" >
 <thead><tr>
 <th>訂單編號<th>訂位人<th>入住日期<th>退房日期<th>手機<th>付款狀態<th>取消訂房
