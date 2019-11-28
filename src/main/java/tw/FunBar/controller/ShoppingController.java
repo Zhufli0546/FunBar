@@ -187,7 +187,7 @@ public class ShoppingController {
 	@RequestMapping(value = "/updateProduct", method = RequestMethod.POST)
 	public String updateProduct(@RequestParam("id") Integer productId, @RequestParam("productName") String productName,
 			@RequestParam("productDetail") String productDetail, @RequestParam("category") String category,
-			@RequestParam("image") MultipartFile productCover, @RequestParam("discount") Double discount,
+			@RequestParam("image") MultipartFile productCover,@RequestParam("unitPrice") Double unitPrice, @RequestParam("discount") Double discount,
 			@RequestParam("stock") Integer stock, @RequestParam("productNo") String productNo, Model model)
 			throws IOException, SerialException, SQLException {
 
@@ -196,12 +196,12 @@ public class ShoppingController {
 			Blob blob;
 			byte[] b = productCover.getBytes();
 			blob = new SerialBlob(b);
-			orderService.updateProduct(productId, productNo, blob, productDetail, productName, category, discount,
+			orderService.updateProduct(productId, productNo, blob, productDetail, productName, category, unitPrice,discount,
 					stock);
 		} else { // 如果沒有重新上傳圖片， 呼叫service依照productId取得原本的圖片檔
 			ProductBean product = orderService.getProductById(productId);
 			orderService.updateProduct(productId, productNo, product.getProductImage(), productDetail, productName,
-					category, discount, stock);
+					category,unitPrice ,discount, stock);
 		}
 		return "redirect:/showAllProduct?index=1";
 	}

@@ -58,13 +58,14 @@ public class OrderHandleDAOImpl implements OrderHandleDAO {
 
 	@Override
 	public void updateProduct(Integer productId, String productNo, Blob productCover, String productDetail,
-			String productName, String category, Double discount, Integer stock) {
+			String productName, String category, Double unitPrice,Double discount, Integer stock) {
 
 		System.out.print(productDetail);
-		String hql = "Update ProductBean Set productName= :productName, productDetail= :productDetail,productImage= :productImage ,category= :category, discount= :discount,stock= :stock,productNo = :productNo Where productId= :id";
+		String hql = "Update ProductBean Set productName= :productName, productDetail= :productDetail,productImage= :productImage ,category= :category, unitPrice= :unitPrice,discount= :discount,stock= :stock,productNo = :productNo Where productId= :id";
 		Session session = sessionFactory.getCurrentSession();
 		session.createQuery(hql).setParameter("productName", productName).setParameter("productDetail", productDetail)
 				.setParameter("productImage", productCover).setParameter("category", category)
+				.setParameter("unitPrice", unitPrice)
 				.setParameter("discount", discount).setParameter("stock", stock).setParameter("productNo", productNo)
 				.setParameter("id", productId).executeUpdate();
 

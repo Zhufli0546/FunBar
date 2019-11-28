@@ -65,7 +65,7 @@
     <div style="display:none;">
      <p style="font-size: 18px; padding: 10px 5px; color: #000">
      	<fmt:formatNumber type="number" value="${pb.discount}" maxFractionDigits="0" var="discount" />
-      折扣: <span style="font-weight: bold; color: #CE0000;visibility:hidden;">${discount}</span>
+      折扣: <span style="font-weight: bold; color: #CE0000;visibility:hidden;">${100-discount*10} %off</span>
      </p>
     </div>
     </c:when>
@@ -74,7 +74,7 @@
     <div>
      <p style="font-size: 18px; padding: 10px 5px; color: #000">
      <fmt:formatNumber type="number" value="${pb.discount}" maxFractionDigits="0" var="discount" />
-      折扣: <span style="font-weight: bold; color: #CE0000;">${discount} 折</span>
+      折扣: <span style="font-weight: bold; color: #CE0000;">${100-discount*10} %off</span>
      </p>
     </div>
     </c:otherwise>

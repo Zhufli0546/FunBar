@@ -35,8 +35,8 @@ public class DiscussController {
 
 	@Autowired
 	private ParticipantRepository participantRepository;
-	@Autowired
-	private SimpMessagingTemplate messagingTemplate;
+//	@Autowired
+//	private SimpMessagingTemplate messagingTemplate;
 	
 	private Integer contentNum = 6;
 
@@ -47,7 +47,8 @@ public class DiscussController {
 		if (member == null)
 			return "redirect:/signin";
 		participantRepository.add(member.getId(), member);
-		messagingTemplate.convertAndSend("/topic/friends/participants", participantRepository.getActiveMember().values());
+		//上下線不能用同個channel
+//		messagingTemplate.convertAndSend("/topic/friends/participants", participantRepository.getActiveMember().values());
 		model.addAttribute("title", "討論區");
 		model.addAttribute("member", member);
 		return "discuss";

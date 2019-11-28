@@ -106,7 +106,7 @@ img {
 
 			<div>
 				<label for="unitPrice">商品單價</label> 
-				<input autocomplete="off" name="unitPrice" id="unitPrice" value="${pb.unitPrice}" type='text' maxlength=5/>
+				<input autocomplete="off" name="unitPrice" id="unitPrice" value="${pb.unitPrice}" type='text'/>
 			</div>
 
 			<div>
@@ -116,7 +116,7 @@ img {
 
 			<div>
 				<label for="stock">庫存數量</label> <input autocomplete="off"
-					name="stock" id="stock" value="${pb.stock}" type='text' maxlength=3 />
+					name="stock" id="stock" value="${pb.stock}" type='text' />
 			</div>
 
 

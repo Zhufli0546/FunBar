@@ -117,7 +117,7 @@
 
 				<div class="form-group">
 					<label class='control-label col-lg-2 col-lg-2' for="unitPrice">單價</label>
-					<form:input autocomplete="off" id="unitPrice" path="unitPrice" type='text' class='form:input-large' maxlength=5 />
+					<form:input autocomplete="off" id="unitPrice" path="unitPrice" type='text' class='form:input-large'/>
 					<span id="msgPrice"></span>
 				</div>
 
@@ -129,7 +129,7 @@
 
 				<div class="form-group">
 					<label class='control-label col-lg-2 col-lg-2' for="discount">庫存數量</label>
-					<form:input autocomplete="off" id="stock" path="stock" type='text' class='form:input-large' maxlength=3 />
+					<form:input autocomplete="off" id="stock" path="stock" type='text' class='form:input-large'/>
 					<span id="msgStock"></span>
 				</div>
 

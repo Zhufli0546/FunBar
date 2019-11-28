@@ -22,7 +22,7 @@ public interface OrderHandleDAO {
 	void pushProduct(Integer productId);  //商品重新上架
 
 	void updateProduct(Integer productId, String productNo,Blob productCover,String productDetail, String productName, 
-			String category, Double discount, Integer stock);
+			String category,Double unitPrice, Double discount, Integer stock);
 
 	int addOrder(OrderBean order);
 

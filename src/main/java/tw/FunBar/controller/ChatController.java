@@ -49,8 +49,9 @@ public class ChatController {
 		System.out.println("在線人數：" + participantRepository.getActiveMember().values().size());
 		System.out.println("在線會員資料：" + participantRepository.getActiveMember().values());
 		System.out.println("member 資料取得 :" + (participantRepository.getParticipant(member.getId())).getMemberName());
+		//上下線不能用同個channel
 //		System.out.println("member Name:" + currentMember.getMemberName());
-		messagingTemplate.convertAndSend("/topic/friends/participants", participantRepository.getActiveMember().values());
+//		messagingTemplate.convertAndSend("/topic/friends/participants", participantRepository.getActiveMember().values());
 		model.addAttribute("member", member);
 		return "chat";
 	}
