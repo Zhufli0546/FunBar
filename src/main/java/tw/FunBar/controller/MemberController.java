@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import tw.FunBar.model.Member;
+import tw.FunBar.model.ProductBean;
 import tw.FunBar.service.EmailService;
 import tw.FunBar.service.MemberService;
 
@@ -50,8 +51,7 @@ public class MemberController {
 	@RequestMapping(value = "/findyou", method = RequestMethod.POST)
 	public String findyou(@RequestParam String memberId, @RequestParam String memberPwd) {
 		memberService.newPwd(memberId, memberPwd);
-		return "index";
-
+		return "redirect:/";
 	}
 
 	// 認證
@@ -135,7 +135,7 @@ public class MemberController {
 		session.removeAttribute("member");
 		session.removeAttribute("Cart");
 		// 結束妳要去的頁面
-		return "redirect:/";
+		return "redirect:/signin";
 	}
 
 	// 查詢單筆
@@ -148,10 +148,15 @@ public class MemberController {
 
 	// 查詢全部
 	@RequestMapping("/showAllmember")
-	public String list(Model model) {
+	public String list(Model model,@RequestParam Integer index) {
 
-		List<Member> list = memberService.getAllmembers();
-		model.addAttribute("members", list);
+//		List<Member> list = memberService.getAllmembers();
+//		model.addAttribute("members", list);
+		
+		List<Member> members = memberService.getMemberByPage(index);
+		int count = memberService.getMemberIndex();
+		model.addAttribute("members", members);
+		model.addAttribute("count", count);
 		return "showAllmember";
 	}
 
@@ -335,5 +340,17 @@ public class MemberController {
 			return "1";
 		}
 	}
+	//會員模糊查詢
+	@RequestMapping("/getMemberByName")
+	public String getMemberByName( @RequestParam String memberName, Model model) {
+		List<Member> list = memberService.getMemberByName(memberName);
+		
+
+		model.addAttribute("members", list);
+		return "showAllmember";
+
+	}
+	
+
 
 }

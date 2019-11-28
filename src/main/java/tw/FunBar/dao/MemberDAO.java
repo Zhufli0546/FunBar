@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import tw.FunBar.model.Member;
+import tw.FunBar.model.ProductBean;
 
 public interface MemberDAO {
 	List<Member> getAllmembers();
@@ -35,8 +36,11 @@ public interface MemberDAO {
 	
 	boolean checkId(String memberId);
 	
+	List<Member> getMemberByName(String memberName);//模糊查詢
 	
+	int getMemberIndex();//分頁
 	
+	List<Member> getMemberByPage(Integer index);
 	
 	
 	

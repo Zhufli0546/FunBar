@@ -101,6 +101,24 @@ public class MemberServiceImp implements MemberService {
 		
 	}
 
+	@Override
+	public List<Member> getMemberByName(String memberName) {
+		
+		return dao.getMemberByName(memberName);
+	}
+
+	@Override
+	public int getMemberIndex() {
+		
+		return dao.getMemberIndex();
+	}
+
+	@Override
+	public List<Member> getMemberByPage(Integer index) {
+		
+		return dao.getMemberByPage(index);
+	}
+
 	
 
 	

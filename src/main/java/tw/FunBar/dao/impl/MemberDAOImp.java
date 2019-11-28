@@ -2,6 +2,7 @@ package tw.FunBar.dao.impl;
 
 
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import tw.FunBar.dao.MemberDAO;
 import tw.FunBar.model.Member;
+import tw.FunBar.model.ProductBean;
 
 @Repository
 public class MemberDAOImp implements MemberDAO {
@@ -186,6 +188,53 @@ public class MemberDAOImp implements MemberDAO {
 		Session session = factory.getCurrentSession();
 		
 		
+	}
+
+
+	//模糊查詢
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Member> getMemberByName(String memberName) {
+		String hql = "From Member Where memberName Like :memberName ";
+		Session session = factory.getCurrentSession();
+		List<Member> mb = new ArrayList<>();
+		mb = session.createQuery(hql).setParameter("memberName", "%" + memberName + "%")
+				.getResultList();
+
+		return mb;
+	}
+
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public int getMemberIndex() {//全部分頁
+		String hql = "From Member ";
+		List<Member> list = new ArrayList<>();
+		Session session = factory.getCurrentSession();
+		list = session.createQuery(hql).getResultList();
+
+		int listCount = list.size() / 5;
+
+		if (list.size() % 5 == 0) {
+			return listCount;
+		} else {
+			listCount = listCount + 1;
+			return listCount;
+
+		}
+	}
+
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Member> getMemberByPage(Integer index) {//一頁幾筆
+		String hql = "From Member ";
+		List<Member> list;
+		Session session = factory.getCurrentSession();
+		list = session.createQuery(hql).setFirstResult((index-1)*5).setMaxResults(5).getResultList();
+		return list;
 	}
 
 	

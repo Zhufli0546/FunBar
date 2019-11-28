@@ -34,4 +34,10 @@ public interface MemberService {
 	void newPwd(String memberId,String memberPwd);
 	
 	boolean checkId(String memberId);
+	
+	List<Member> getMemberByName(String memberName);//模糊查詢
+	
+	int getMemberIndex();//分頁
+	
+	List<Member> getMemberByPage(Integer index);
 }

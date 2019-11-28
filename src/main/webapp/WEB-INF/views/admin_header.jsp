@@ -48,7 +48,7 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<!-- <h6 class="dropdown-header"></h6> -->
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/showAllmember">查詢所有會員</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/showAllmember?index=1">查詢所有會員</a>
 				</div></li>
 
 
