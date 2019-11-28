@@ -238,7 +238,7 @@ public class MemberController {
 		System.out.println("id=" + id);
 		memberService.delete(id);
 		// model.addAttribute("mb",memberService.delete(id));
-		return "redirect:/showAllmember";
+		return "redirect:/showAllmember?index=1";
 
 	}
 
@@ -261,7 +261,7 @@ public class MemberController {
 		Blob blob = new SerialBlob(b1);
 		memberService.updateMember(id, memberName, memberAddress, memberBirth, memberPhone, memberId,
 				memberEmail, memberLevel, blob);
-		return "redirect:/showAllmember";
+		return "redirect:/showAllmember?index=1";
 	}
 
 	// 讀取圖片資料

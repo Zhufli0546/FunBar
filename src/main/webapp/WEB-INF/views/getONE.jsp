@@ -66,7 +66,7 @@
 				<input type="hidden" name="id" value="${one.id}" />
 				<button type="submit" class="btn btn-outline-secondary" >送出</button>
 
-				<a href="${pageContext.request.contextPath}/showAllmember">
+				<a href="${pageContext.request.contextPath}/showAllmember?index=1">
 					<button type="button" class="btn btn-outline-secondary">會員管理</button>
 				</a>
 			</div>
