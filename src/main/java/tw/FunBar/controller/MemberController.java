@@ -97,6 +97,11 @@ public class MemberController {
 			}
 
 			member = memberService.signin(memberId, memberPwd);
+			if(member.getMemberLevel()==0) {
+				errorMsg.put("errId","此帳號尚未驗證");
+				model.addAttribute( "errorMsg", errorMsg);
+	            return "signin";
+			}
 		} catch(NoResultException e) {
 			errorMsg.put("errId","請輸入正確的帳號或密碼");
 			redirectAttributes.addFlashAttribute("errorMsg", errorMsg);
